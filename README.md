@@ -1,13 +1,14 @@
-
+<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Zep Swipe — Neon Campus Wallet</title>
 
-<!-- Tailwind + Fonts -->
+<!-- Tailwind + Fonts + Icons -->
 <script src="https://cdn.tailwindcss.com"></script>
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700&family=Roboto:wght@400;500&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
 
 <style>
 body {
@@ -80,9 +81,58 @@ body {
   background: rgba(124, 99, 255, 0.2);
   transform: scale(1.03);
 }
+
+/* Header Gradient Blur */
+.header {
+  width: 100%;
+  padding: 1rem 2rem;
+  position: fixed;
+  top: 0;
+  left: 0;
+  backdrop-filter: blur(10px);
+  background: linear-gradient(90deg, rgba(0,240,255,0.3), rgba(255,0,240,0.3));
+  display: flex;
+  justify-content: flex-end;
+  z-index: 50;
+  box-shadow: 0 0 20px rgba(255,0,240,0.3);
+}
+
+.header button {
+  font-size: 1.5rem;
+  color: #fff;
+}
+
+/* Footer Navigation */
+.footer {
+  width: 100%;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  backdrop-filter: blur(10px);
+  background: linear-gradient(90deg, rgba(0,240,255,0.2), rgba(255,0,240,0.2));
+  display: flex;
+  justify-content: space-around;
+  padding: 0.75rem 0;
+  box-shadow: 0 -2px 20px rgba(255,0,240,0.2);
+}
+
+.footer a {
+  color: #fff;
+  font-size: 1.5rem;
+  transition: transform 0.2s ease;
+}
+
+.footer a:hover {
+  transform: scale(1.2);
+}
 </style>
 </head>
 <body>
+
+<!-- Header -->
+<header class="header">
+  <button><i class="fas fa-bars"></i></button>
+</header>
 
 <h1 class="neon-text">Zep Swipe — Neon Campus Wallet</h1>
 <p class="subtitle">
@@ -92,6 +142,14 @@ Earn <span style="color:#ff00f0;">$ZAC</span> for learning and engagement. Redee
 <button class="btn btn-gradient">Connect Wallet</button>
 <button class="btn btn-outline">Connect with Mobile Number</button>
 <button class="btn btn-outline">Start Quiz</button>
+
+<!-- Footer -->
+<footer class="footer">
+  <a href="#"><i class="fas fa-home"></i></a>
+  <a href="#"><i class="fas fa-wallet"></i></a>
+  <a href="#"><i class="fas fa-store"></i></a>
+  <a href="#"><i class="fas fa-comment-dots"></i></a>
+</footer>
 
 </body>
 </html>
