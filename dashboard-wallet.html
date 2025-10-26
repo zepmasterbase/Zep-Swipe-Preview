@@ -46,17 +46,13 @@ body {
   max-width:420px; 
   text-align:center; 
   transition:0.3s; 
-  display:none; /* All cards hidden by default */ 
-}    
-.card.active { 
-  display:block; 
 }    
 .card:hover { transform:scale(1.05); }    
 
 .balance { 
-  font-size:1.5rem; 
-  font-weight:600; 
-  margin-top:0.5rem; 
+  font-size:1.8rem; 
+  font-weight:bold; 
+  margin:0.5rem 0; 
   color:#00f0ff; 
 }    
 
@@ -64,28 +60,8 @@ body {
   font-family:'Orbitron',sans-serif; 
   font-size:1.2rem; 
   color:#ff00f0; 
+  margin-top:0.5rem;
 }    
-
-.address-box { 
-  background:rgba(255,255,255,0.1); 
-  padding:0.5rem; 
-  border-radius:0.5rem; 
-  font-size:0.9rem; 
-  word-break:break-all; 
-  margin-top:0.5rem; 
-}    
-
-button { 
-  margin-top:1rem; 
-  background:linear-gradient(90deg,#00f0ff,#ff00f0); 
-  color:#fff; 
-  padding:0.5rem 1.2rem; 
-  border:none; 
-  border-radius:0.5rem; 
-  cursor:pointer; 
-  font-weight:500; 
-}    
-button:hover { opacity:0.9; }    
 
 .actions { 
   display:flex; 
@@ -133,60 +109,38 @@ button:hover { opacity:0.9; }
   <i class="fas fa-bars"></i>
 </div>
 
-<!-- Wallet Actions: Top Up, Withdraw, Request Swap -->
-<div id="actionsCard" class="card active">
-  <h2 class="token-label">Wallet Actions</h2>
+<!-- Balances -->
+<div class="card" id="balanceCard">
+  <div class="token-label">Total Balance</div>
+  <div id="zacBalance" class="balance">0.00 ZAC</div>
+  <div class="token-label">USDT Balance</div>
+  <div id="usdtBalance" class="balance" style="font-weight:normal;">0.00 USDT</div>
+</div>
+
+<!-- Swap Mini Placeholder: Withdraw, Request, Send, Top Up -->
+<div class="card" id="swapCard">
   <div class="actions">
     <button onclick="topUp()"><i class="fas fa-plus-circle"></i>Top Up</button>
     <button onclick="withdraw()"><i class="fas fa-arrow-up"></i>Withdraw</button>
-    <button onclick="requestSwap()"><i class="fas fa-exchange-alt"></i>Swap</button>
+    <button onclick="requestSwap()"><i class="fas fa-exchange-alt"></i>Request</button>
+    <button onclick="sendFunds()"><i class="fas fa-paper-plane"></i>Send</button>
   </div>
-</div>
-
-<!-- Wallet Connection / Address -->
-<div id="walletCard" class="card">
-  <h2 class="token-label">In-App Wallet</h2>
-  <p>Each student gets a unique wallet address to receive ZAC tokens.</p>
-  <div id="walletAddress" class="address-box">No wallet generated yet.</div>
-  <button onclick="generateWallet()">Generate Wallet</button>
-</div>
-
-<!-- ZAC Balance (Native Token) -->
-<div id="zacCard" class="card">
-  <h2 class="token-label">$ZAC Balance</h2>
-  <div id="zacBalance" class="balance">0.00 ZAC</div>
-  <button onclick="refreshZACBalance()">Refresh</button>
-</div>
-
-<!-- USDT Balance (Secondary Token) -->
-<div id="usdtCard" class="card">
-  <h2 class="token-label">$USDT Balance</h2>
-  <div id="usdtBalance" class="balance">0.00 USDT</div>
-  <button onclick="refreshUSDTBalance()">Refresh</button>
 </div>
 
 <!-- Footer -->
 <div class="footer">
-  <i class="fas fa-home active" onclick="showSection('actionsCard', this)"></i>
-  <i class="fas fa-wallet" onclick="showSection('walletCard', this)"></i>
-  <i class="fas fa-comment-dots" onclick="showSection('zacCard', this)"></i>
-  <i class="fas fa-store" onclick="showSection('usdtCard', this)"></i>
-  <i class="fas fa-dollar-sign" onclick="showSection('actionsCard', this)"></i>
-  <i class="fas fa-user" onclick="showSection('walletCard', this)"></i>
+  <i class="fas fa-home active" onclick="showCard('balanceCard', this)"></i>
+  <i class="fas fa-wallet" onclick="showCard('swapCard', this)"></i>
+  <i class="fas fa-comment-dots" onclick="alert('Chat coming soon!')"></i>
+  <i class="fas fa-store" onclick="alert('Marketplace coming soon!')"></i>
+  <i class="fas fa-dollar-sign" onclick="alert('Sell feature coming soon!')"></i>
+  <i class="fas fa-user" onclick="alert('Profile coming soon!')"></i>
 </div>
 
 <script>
-function generateWallet() {
-  const newAddress = 'ZAC-' + Math.random().toString(36).substring(2, 15).toUpperCase();
-  document.getElementById('walletAddress').innerText = newAddress;
-  alert('New in-app wallet generated!');
-}
-
-function refreshZACBalance() {
+// Balance placeholders
+function refreshBalances() {
   document.getElementById('zacBalance').innerText = (Math.random() * 100).toFixed(2) + ' ZAC';
-}
-
-function refreshUSDTBalance() {
   document.getElementById('usdtBalance').innerText = (Math.random() * 50).toFixed(2) + ' USDT';
 }
 
@@ -202,20 +156,29 @@ function withdraw() {
 }
 
 function requestSwap() {
-  const amount = prompt("Enter amount to swap:");
+  const amount = prompt("Enter amount to request swap:");
   if(amount) alert(`Swap request for ${amount} ZAC submitted!`);
 }
 
-// Show section function for footer navigation
-function showSection(sectionId, icon) {
+function sendFunds() {
+  const amount = prompt("Enter amount to send:");
+  if(amount) alert(`Successfully sent ${amount} ZAC!`);
+}
+
+// Footer navigation
+function showCard(cardId, icon) {
   // Hide all cards
-  document.querySelectorAll('.card').forEach(c => c.classList.remove('active'));
+  document.querySelectorAll('.card').forEach(c => c.style.display = 'none');
   // Show selected card
-  document.getElementById(sectionId).classList.add('active');
-  // Update active footer icon
+  document.getElementById(cardId).style.display = 'block';
+  // Highlight active footer icon
   document.querySelectorAll('.footer i').forEach(i => i.classList.remove('active'));
   icon.classList.add('active');
 }
+
+// Initialize
+refreshBalances();
+document.getElementById('balanceCard').style.display = 'block';
 </script>
 
 </body>    
