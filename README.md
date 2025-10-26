@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -23,7 +24,6 @@ body {
   align-items: center;
 }
 
-/* Gradient Neon Text */
 .neon-text {
   font-family: 'Orbitron', sans-serif;
   font-weight: 700;
@@ -32,20 +32,24 @@ body {
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   text-align: center;
-  margin-top: 3rem;
+  margin-top: 5rem;
   margin-bottom: 1rem;
+  animation: neonPulse 2s infinite alternate;
 }
 
-/* Subtitle */
+@keyframes neonPulse {
+  from { text-shadow: 0 0 5px #00f0ff, 0 0 10px #ff00f0; }
+  to { text-shadow: 0 0 20px #00f0ff, 0 0 30px #ff00f0; }
+}
+
 .subtitle {
   color: #c0bdf4;
   text-align: center;
-  max-width: 320px;
+  max-width: 360px;
   margin-bottom: 2rem;
   line-height: 1.5;
 }
 
-/* Buttons */
 .btn {
   display: block;
   width: 260px;
@@ -58,7 +62,6 @@ body {
   transition: all 0.3s ease;
 }
 
-/* Gradient Neon Button */
 .btn-gradient {
   background: linear-gradient(90deg, #00f0ff, #ff00f0);
   color: #1b0f3a;
@@ -69,7 +72,6 @@ body {
   transform: scale(1.05);
 }
 
-/* Outlined Button */
 .btn-outline {
   border: 2px solid #7c63ff;
   color: #c0bdf4;
@@ -81,7 +83,6 @@ body {
   transform: scale(1.03);
 }
 
-/* Header Gradient Blur */
 .header {
   width: 100%;
   padding: 1rem 2rem;
@@ -113,7 +114,6 @@ body {
   cursor: pointer;
 }
 
-/* Dropdown Menu */
 .dropdown {
   position: absolute;
   top: 60px;
@@ -140,7 +140,6 @@ body {
   background: rgba(124,99,255,0.2);
 }
 
-/* Footer Navigation */
 .footer {
   width: 100%;
   position: fixed;
@@ -167,10 +166,9 @@ body {
 </head>
 <body>
 
-<!-- Header -->
 <header class="header">
   <h1>Zep Swipe</h1>
-  <div class="menu-container">
+  <div class="menu-container relative">
     <span class="menu-button"><i class="fas fa-bars"></i></span>
     <div class="dropdown">
       <a href="#">Roadmap</a>
@@ -189,16 +187,14 @@ Earn <span style="color:#ff00f0;">$ZAC</span> for learning and engagement. Redee
 <button class="btn btn-outline">Connect with Mobile Number</button>
 <button class="btn btn-outline">Start Quiz</button>
 
-<!-- Footer -->
 <footer class="footer">
-  <a href="#"><i class="fas fa-home"></i></a>
-  <a href="#"><i class="fas fa-wallet"></i></a>
-  <a href="#"><i class="fas fa-store"></i></a>
-  <a href="#"><i class="fas fa-comment-dots"></i></a>
+  <a href="dashboard-home.html"><i class="fas fa-home"></i></a>
+  <a href="dashboard-wallet.html"><i class="fas fa-wallet"></i></a>
+  <a href="dashboard-store.html"><i class="fas fa-store"></i></a>
+  <a href="dashboard-chat.html"><i class="fas fa-comment-dots"></i></a>
 </footer>
 
 <script>
-// Dropdown toggle
 const menuButton = document.querySelector('.menu-button');
 const dropdown = document.querySelector('.dropdown');
 
@@ -206,7 +202,6 @@ menuButton.addEventListener('click', () => {
   dropdown.style.display = dropdown.style.display === 'flex' ? 'none' : 'flex';
 });
 
-// Close dropdown when clicking outside
 document.addEventListener('click', (e) => {
   if (!e.target.closest('.menu-container')) {
     dropdown.style.display = 'none';
