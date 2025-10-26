@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -13,22 +14,24 @@
 /* Base */
 body {
   font-family: 'Roboto', sans-serif;
-  background: radial-gradient(circle at top, #050505, #0a0a0f, #111124);
+  background: rgba(10,10,20,0.9); /* clearer background */
+  overflow-x: hidden;
   color: #fff;
   scroll-behavior: smooth;
+  position: relative;
 }
 
-/* Headers */
-h1,h2,h3,h4 { font-family: 'Orbitron', sans-serif; }
-
-/* Neon Text */
+/* Neon Text with Gradient Glow */
 .neon-text {
-  color: #0ff;
-  text-shadow: 0 0 5px #0ff, 0 0 10px #0ff, 0 0 20px #0ff, 0 0 40px #0ff;
+  font-family: 'Orbitron', sans-serif;
+  background: linear-gradient(45deg, #0ff, #ff0, #f0f);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow: 0 0 5px #0ff, 0 0 10px #ff0, 0 0 20px #f0f, 0 0 40px #0ff;
   transition: all 0.3s ease;
 }
 .neon-text:hover {
-  text-shadow: 0 0 10px #0ff, 0 0 20px #0ff, 0 0 40px #0ff, 0 0 60px #0ff;
+  text-shadow: 0 0 10px #0ff, 0 0 20px #ff0, 0 0 40px #f0f, 0 0 60px #0ff;
 }
 
 /* Glass Panels */
@@ -40,7 +43,7 @@ h1,h2,h3,h4 { font-family: 'Orbitron', sans-serif; }
   transition: all 0.3s ease;
 }
 .glass:hover {
-  box-shadow: 0 0 25px #0ff, 0 0 40px #0ff;
+  box-shadow: 0 0 25px #0ff, 0 0 40px #ff0;
 }
 
 /* Buttons */
@@ -71,6 +74,20 @@ section#home { text-align: center; }
 
 /* Footer */
 footer button span { font-size: 0.75rem; }
+
+/* Floating Neon Orbs */
+.neon-orb {
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+  mix-blend-mode: screen;
+  animation: floatOrb linear infinite;
+}
+@keyframes floatOrb {
+  0% { transform: translateY(0) scale(1); opacity: 0.6; }
+  50% { transform: translateY(-40px) scale(1.2); opacity: 1; }
+  100% { transform: translateY(0) scale(1); opacity: 0.6; }
+}
 </style>
 </head>
 
@@ -132,6 +149,9 @@ footer button span { font-size: 0.75rem; }
   </button>
 </footer>
 
+<!-- Neon Orbs -->
+<div id="orbs-container"></div>
+
 <script>
 lucide.createIcons();
 
@@ -142,6 +162,21 @@ window.addEventListener('scroll', () => {
     if(el.getBoundingClientRect().top < window.innerHeight - 100) el.classList.add('show');
   });
 });
+
+// Create Neon Orbs
+const orbsContainer = document.getElementById('orbs-container');
+for(let i=0;i<10;i++){
+  const orb = document.createElement('div');
+  orb.classList.add('neon-orb');
+  const size = Math.random()*30+20;
+  orb.style.width = orb.style.height = size + 'px';
+  orb.style.background = `radial-gradient(circle, rgba(${Math.floor(Math.random()*255)},${Math.floor(Math.random()*255)},255,0.7), transparent)`;
+  orb.style.top = Math.random()*window.innerHeight + 'px';
+  orb.style.left = Math.random()*window.innerWidth + 'px';
+  orb.style.animationDuration = (Math.random()*10 + 5) + 's';
+  orbsContainer.appendChild(orb);
+}
 </script>
+
 </body>
 </html>
