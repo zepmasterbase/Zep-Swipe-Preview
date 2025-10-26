@@ -13,16 +13,31 @@ body {
   color:#fff; 
   margin:0; 
   padding:0; 
+  display:flex; 
+  flex-direction:column; 
+  min-height:100vh; 
 }    
+
+/* Header */
 .header { 
   font-family:'Orbitron',sans-serif; 
-  font-size:2rem; 
-  text-align:center; 
-  margin:2rem 0; 
+  font-size:1.8rem; 
+  display:flex; 
+  justify-content:space-between; 
+  align-items:center; 
+  padding:1rem 2rem; 
+  background:#0f0520; 
+}    
+.header h1 { 
   background:linear-gradient(90deg,#00f0ff,#ff00f0); 
   -webkit-background-clip:text; 
   -webkit-text-fill-color:transparent; 
 }    
+.header i { 
+  font-size:1.5rem; 
+  cursor:pointer; 
+}    
+
 .card { 
   background: rgba(124,99,255,0.2); 
   margin:1rem auto; 
@@ -31,19 +46,26 @@ body {
   max-width:420px; 
   text-align:center; 
   transition:0.3s; 
+  display:none; /* All cards hidden by default */ 
+}    
+.card.active { 
+  display:block; 
 }    
 .card:hover { transform:scale(1.05); }    
+
 .balance { 
   font-size:1.5rem; 
   font-weight:600; 
   margin-top:0.5rem; 
   color:#00f0ff; 
 }    
+
 .token-label { 
   font-family:'Orbitron',sans-serif; 
   font-size:1.2rem; 
   color:#ff00f0; 
 }    
+
 .address-box { 
   background:rgba(255,255,255,0.1); 
   padding:0.5rem; 
@@ -52,6 +74,7 @@ body {
   word-break:break-all; 
   margin-top:0.5rem; 
 }    
+
 button { 
   margin-top:1rem; 
   background:linear-gradient(90deg,#00f0ff,#ff00f0); 
@@ -81,35 +104,37 @@ button:hover { opacity:0.9; }
   margin-bottom:0.3rem; 
   color:#00f0ff; 
 }    
+
+/***** Footer *****/
+.footer { 
+  margin-top:auto; 
+  background:#0f0520; 
+  padding:0.5rem 0; 
+  display:flex; 
+  justify-content:space-around; 
+  align-items:center; 
+}    
+.footer i { 
+  font-size:1.5rem; 
+  color:#00f0ff; 
+  cursor:pointer; 
+  transition:0.2s; 
+}    
+.footer i.active { 
+  color:#ff00f0; 
+}    
 </style>    
 </head>    
 <body>    
-<h1 class="header">Student Wallet Dashboard</h1>    
 
-<!-- Wallet Connection / Address -->
-<div class="card">
-  <h2 class="token-label">In-App Wallet</h2>
-  <p>Each student gets a unique wallet address to receive ZAC tokens.</p>
-  <div id="walletAddress" class="address-box">No wallet generated yet.</div>
-  <button onclick="generateWallet()">Generate Wallet</button>
-</div>
-
-<!-- ZAC Balance (Native Token) -->
-<div class="card">
-  <h2 class="token-label">$ZAC Balance</h2>
-  <div id="zacBalance" class="balance">0.00 ZAC</div>
-  <button onclick="refreshZACBalance()">Refresh</button>
-</div>
-
-<!-- USDT Balance (Secondary Token) -->
-<div class="card">
-  <h2 class="token-label">$USDT Balance</h2>
-  <div id="usdtBalance" class="balance">0.00 USDT</div>
-  <button onclick="refreshUSDTBalance()">Refresh</button>
+<!-- Header -->
+<div class="header">
+  <h1>Zep Swipe</h1>
+  <i class="fas fa-bars"></i>
 </div>
 
 <!-- Wallet Actions: Top Up, Withdraw, Request Swap -->
-<div class="card">
+<div id="actionsCard" class="card active">
   <h2 class="token-label">Wallet Actions</h2>
   <div class="actions">
     <button onclick="topUp()"><i class="fas fa-plus-circle"></i>Top Up</button>
@@ -118,7 +143,37 @@ button:hover { opacity:0.9; }
   </div>
 </div>
 
-<a href="index.html" style="display:block;text-align:center;margin:2rem;color:#ff00f0;">Back</a>    
+<!-- Wallet Connection / Address -->
+<div id="walletCard" class="card">
+  <h2 class="token-label">In-App Wallet</h2>
+  <p>Each student gets a unique wallet address to receive ZAC tokens.</p>
+  <div id="walletAddress" class="address-box">No wallet generated yet.</div>
+  <button onclick="generateWallet()">Generate Wallet</button>
+</div>
+
+<!-- ZAC Balance (Native Token) -->
+<div id="zacCard" class="card">
+  <h2 class="token-label">$ZAC Balance</h2>
+  <div id="zacBalance" class="balance">0.00 ZAC</div>
+  <button onclick="refreshZACBalance()">Refresh</button>
+</div>
+
+<!-- USDT Balance (Secondary Token) -->
+<div id="usdtCard" class="card">
+  <h2 class="token-label">$USDT Balance</h2>
+  <div id="usdtBalance" class="balance">0.00 USDT</div>
+  <button onclick="refreshUSDTBalance()">Refresh</button>
+</div>
+
+<!-- Footer -->
+<div class="footer">
+  <i class="fas fa-home active" onclick="showSection('actionsCard', this)"></i>
+  <i class="fas fa-wallet" onclick="showSection('walletCard', this)"></i>
+  <i class="fas fa-comment-dots" onclick="showSection('zacCard', this)"></i>
+  <i class="fas fa-store" onclick="showSection('usdtCard', this)"></i>
+  <i class="fas fa-dollar-sign" onclick="showSection('actionsCard', this)"></i>
+  <i class="fas fa-user" onclick="showSection('walletCard', this)"></i>
+</div>
 
 <script>
 function generateWallet() {
@@ -149,6 +204,17 @@ function withdraw() {
 function requestSwap() {
   const amount = prompt("Enter amount to swap:");
   if(amount) alert(`Swap request for ${amount} ZAC submitted!`);
+}
+
+// Show section function for footer navigation
+function showSection(sectionId, icon) {
+  // Hide all cards
+  document.querySelectorAll('.card').forEach(c => c.classList.remove('active'));
+  // Show selected card
+  document.getElementById(sectionId).classList.add('active');
+  // Update active footer icon
+  document.querySelectorAll('.footer i').forEach(i => i.classList.remove('active'));
+  icon.classList.add('active');
 }
 </script>
 
