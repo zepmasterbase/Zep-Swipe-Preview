@@ -1,9 +1,8 @@
-<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Zep Swipe — Neon Campus Web3 App</title>
+<title>Zep Swipe — Futuristic Metaverse Campus</title>
 
 <!-- Tailwind + Lucide + Fonts -->
 <script src="https://cdn.tailwindcss.com"></script>
@@ -11,76 +10,80 @@
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700&family=Roboto:wght@400;500&display=swap" rel="stylesheet" />
 
 <style>
-/* Base */
+/* Base & Background */
 body {
   font-family: 'Roboto', sans-serif;
-  background: #0a0a10;
+  background: radial-gradient(circle at top left, #0a0a10, #0f0f25 80%);
   color: #fff;
   overflow-x: hidden;
   scroll-behavior: smooth;
   position: relative;
 }
 
-/* Animated background streak */
+/* Animated Cyber Grid */
 body::before {
   content: "";
   position: fixed;
   top:0; left:0;
   width:100%; height:100%;
-  background: linear-gradient(135deg, #0ff 0%, #f0f 50%, #ff0 100%);
-  background-size: 400% 400%;
-  z-index: -1;
-  animation: gradientMove 20s linear infinite;
-  opacity: 0.15;
+  background: repeating-linear-gradient(
+    45deg,
+    rgba(0,255,255,0.05) 0px,
+    rgba(0,255,255,0.05) 1px,
+    transparent 1px,
+    transparent 20px
+  );
+  background-size: 200% 200%;
+  z-index: -2;
+  animation: gridMove 25s linear infinite;
 }
-@keyframes gradientMove {
-  0%{background-position:0% 50%;}
-  50%{background-position:100% 50%;}
-  100%{background-position:0% 50%;}
+@keyframes gridMove {
+  0% { background-position: 0 0; }
+  100% { background-position: 200% 200%; }
 }
 
 /* Neon Text */
 .neon-text {
   font-family: 'Orbitron', sans-serif;
-  background: linear-gradient(90deg, #0ff, #ff0, #f0f);
+  background: linear-gradient(90deg, #0ff, #ff0, #ff00ff);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-  text-shadow: 0 0 8px #0ff, 0 0 20px #ff0, 0 0 35px #f0f;
+  text-shadow: 0 0 10px #0ff, 0 0 20px #ff0, 0 0 40px #ff00ff;
   transition: all 0.4s ease;
 }
 .neon-text:hover {
-  text-shadow: 0 0 15px #0ff, 0 0 30px #ff0, 0 0 50px #f0f;
+  text-shadow: 0 0 20px #0ff, 0 0 40px #ff0, 0 0 70px #ff00ff;
 }
 
 /* Glass Panels */
 .glass {
-  background: rgba(255,255,255,0.04);
-  backdrop-filter: blur(25px);
-  border: 1px solid rgba(0,255,255,0.2);
+  background: rgba(255,255,255,0.03);
+  backdrop-filter: blur(35px);
+  border: 1px solid rgba(0,255,255,0.25);
   border-radius: 2rem;
   transition: all 0.4s ease;
 }
 .glass:hover {
-  box-shadow: 0 0 25px #0ff, 0 0 40px #ff0, 0 0 60px #f0f;
-  transform: scale(1.03);
+  box-shadow: 0 0 30px #0ff, 0 0 50px #ff0, 0 0 80px #ff00ff;
+  transform: scale(1.05);
 }
 
 /* Buttons */
 .neon-btn {
-  background: linear-gradient(90deg, #0ff, #ff0, #f0f);
-  color: #111124;
+  background: linear-gradient(90deg, #0ff, #ff0, #ff00ff);
+  color: #0a0a10;
   font-weight: 600;
   border-radius: 1.5rem;
-  padding: 0.75rem 2rem;
+  padding: 0.75rem 2.5rem;
   transition: all 0.4s ease;
 }
 .neon-btn:hover {
   transform: translateY(-3px) scale(1.1);
-  box-shadow: 0 0 20px #0ff, 0 0 35px #ff0, 0 0 50px #f0f;
+  box-shadow: 0 0 25px #0ff, 0 0 40px #ff0, 0 0 60px #ff00ff;
 }
 
 /* Footer Icons */
-.footer-icon { width:28px;height:28px; }
+.footer-icon { width:28px; height:28px; }
 
 /* Fade-up Animations */
 .fade-up { opacity: 0; transform: translateY(30px); transition: all 0.8s cubic-bezier(0.68,-0.55,0.27,1.55); }
@@ -103,9 +106,9 @@ footer button span { font-size: 0.75rem; }
   animation: floatOrb ease-in-out infinite;
 }
 @keyframes floatOrb {
-  0% { transform: translateY(0) scale(1); opacity:0.4; }
-  50% { transform: translateY(-60px) scale(1.2); opacity:1; }
-  100% { transform: translateY(0) scale(1); opacity:0.4; }
+  0% { transform: translateY(0) scale(1); opacity:0.3; }
+  50% { transform: translateY(-70px) scale(1.3); opacity:0.8; }
+  100% { transform: translateY(0) scale(1); opacity:0.3; }
 }
 </style>
 </head>
@@ -114,7 +117,7 @@ footer button span { font-size: 0.75rem; }
 
 <header class="fixed top-0 left-0 w-full glass px-8 py-4 flex justify-between items-center z-50">
   <h1 class="text-3xl md:text-4xl font-bold neon-text">Zep Swipe</h1>
-  <div class="flex items-center gap-4 text-sm text-cyan-200">
+  <div class="flex items-center gap-4 text-sm text-cyan-300">
     <i data-lucide="wallet" class="footer-icon text-cyan-400"></i>
     <span>Balance: <span id="wallet">120</span> ZAC</span>
   </div>
@@ -184,17 +187,18 @@ window.addEventListener('scroll', () => {
 
 // Neon Orbs
 const orbsContainer = document.getElementById('orbs-container');
-for(let i=0;i<12;i++){
+for(let i=0;i<15;i++){
   const orb = document.createElement('div');
   orb.classList.add('neon-orb');
-  const size = Math.random()*40+30;
+  const size = Math.random()*50+30;
   orb.style.width = orb.style.height = size + 'px';
   const colors = [
     "rgba(0,255,255,0.7)",
     "rgba(255,0,255,0.7)",
-    "rgba(255,255,0,0.7)"
+    "rgba(255,255,0,0.7)",
+    "rgba(0,255,128,0.7)"
   ];
-  orb.style.background = `radial-gradient(circle, ${colors[Math.floor(Math.random()*3)]}, transparent)`;
+  orb.style.background = `radial-gradient(circle, ${colors[Math.floor(Math.random()*4)]}, transparent)`;
   orb.style.top = Math.random()*window.innerHeight + 'px';
   orb.style.left = Math.random()*window.innerWidth + 'px';
   orb.style.animationDuration = (Math.random()*10 + 5) + 's';
