@@ -2,7 +2,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Zep Swipe — Chat Dashboard</title>
+<title>Zep Swipe — Web3 Chat</title>
 <script src="https://cdn.tailwindcss.com"></script>
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700&family=Roboto:wght@400;500&display=swap" rel="stylesheet" />
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
@@ -26,6 +26,18 @@ body {
   -webkit-background-clip:text;
   -webkit-text-fill-color:transparent;
 }
+button.gradient-btn {
+  background:linear-gradient(90deg,#00f0ff,#ff00f0);
+  color:#1b0f3a;
+  font-weight:600;
+  border:none;
+  border-radius:0.75rem;
+  padding:0.75rem 1rem;
+  cursor:pointer;
+  transition:0.3s;
+}
+button.gradient-btn:hover { opacity:0.9; }
+
 #contactsList button {
   background:rgba(124,99,255,0.2);
   width:100%;
@@ -36,6 +48,7 @@ body {
   transition:0.3s;
 }
 #contactsList button:hover { background:rgba(124,99,255,0.4); }
+
 .chat-container {
   display:flex;
   flex-direction:column;
@@ -80,31 +93,26 @@ input[type="text"] {
   color:#fff;
   background:rgba(255,255,255,0.1);
 }
-button.send-btn {
-  background:linear-gradient(90deg,#00f0ff,#ff00f0);
-  border:none;
-  border-radius:0.75rem;
-  padding:0.75rem 1rem;
-  cursor:pointer;
-  color:#1b0f3a;
-  font-weight:600;
-}
-button.send-btn:hover { opacity:0.9; }
 </style>
 </head>
 <body>
 
-<h1 class="header">Zep Swipe Chat</h1>
+<h1 class="header">Zep Swipe Web3 Chat</h1>
+
+<div id="walletSection" class="text-center my-4">
+  <button id="connectWalletBtn" class="gradient-btn">Connect MetaMask / Base Wallet</button>
+  <p id="walletAddress" class="mt-2 text-sm text-[#c0bdf4]"></p>
+</div>
 
 <!-- Upload contacts -->
-<div class="px-4 mb-4 text-center">
+<div id="uploadSection" class="px-4 mb-4 text-center hidden">
   <label class="block mb-2 text-sm text-[#c0bdf4]">Upload Contacts (.csv or .vcf)</label>
   <input type="file" id="contactUpload" accept=".csv,.vcf"
     class="text-sm text-white bg-[#2a1d50] border border-[#7c63ff] rounded-lg p-2 w-full max-w-xs"/>
 </div>
 
 <!-- Contact List -->
-<div id="contactsList" class="px-4"></div>
+<div id="contactsList" class="px-4 hidden"></div>
 
 <!-- Chat Interface -->
 <div id="chatSection" class="chat-container hidden">
@@ -112,19 +120,48 @@ button.send-btn:hover { opacity:0.9; }
   <div id="messages"></div>
   <div class="input-container">
     <input type="text" id="messageInput" placeholder="Type a message...">
-    <button class="send-btn" id="sendMessageBtn">Send</button>
+    <button class="gradient-btn" id="sendMessageBtn">Send</button>
   </div>
 </div>
 
-<a href="index.html" style="display:block;text-align:center;margin:1rem;color:#ff00f0;">Back</a>
+<script type="module">
+// --- IMPORT XMTP + ETHERS ---
+import { ethers } from "https://cdn.jsdelivr.net/npm/ethers@5.7.2/dist/ethers.esm.min.js";
+import * as XMTP from "https://esm.sh/@xmtp/xmtp-js@11.3.0";
 
-<script>
-// Load contacts from uploaded file
+let signer, xmtpClient, currentContact;
+
+// --- Connect Wallet ---
+const connectWalletBtn = document.getElementById("connectWalletBtn");
+connectWalletBtn.onclick = async () => {
+  if (!window.ethereum) return alert("Please install MetaMask or use Base Wallet.");
+  try {
+    const provider = new ethers.providers.Web3Provider(window.ethereum);
+    await provider.send("eth_requestAccounts", []);
+    signer = provider.getSigner();
+    const addr = await signer.getAddress();
+    document.getElementById("walletAddress").textContent = `Connected: ${addr}`;
+    connectWalletBtn.textContent = "Connected ✅";
+
+    // Initialize XMTP client
+    xmtpClient = await XMTP.Client.create(signer);
+    console.log("XMTP client ready:", xmtpClient.address);
+
+    // Show next steps
+    document.getElementById("uploadSection").classList.remove("hidden");
+    document.getElementById("contactsList").classList.remove("hidden");
+  } catch (err) {
+    console.error(err);
+    alert("Failed to connect wallet.");
+  }
+};
+
+// --- Upload and parse contacts ---
 document.getElementById("contactUpload").addEventListener("change", function(e) {
   const file = e.target.files[0];
   if (!file) return;
   const reader = new FileReader();
-  reader.onload = function(evt) {
+  reader.onload = evt => {
     const text = evt.target.result;
     const contacts = parseContacts(text);
     renderContacts(contacts);
@@ -132,76 +169,79 @@ document.getElementById("contactUpload").addEventListener("change", function(e) 
   reader.readAsText(file);
 });
 
-// Simple CSV/VCF parser
 function parseContacts(text) {
   const contacts = [];
   if (text.includes("BEGIN:VCARD")) {
     const matches = text.match(/FN:(.+)/g);
     matches?.forEach((line, i) => contacts.push({ name: line.replace("FN:", "").trim(), id: i }));
-  } else { // CSV
+  } else {
     const lines = text.split("\n");
     lines.forEach((line, i) => {
-      const [name, number] = line.split(",");
-      if (name && number) contacts.push({ name: name.trim(), number: number.trim(), id: i });
+      const [name, wallet] = line.split(",");
+      if (name && wallet) contacts.push({ name: name.trim(), wallet: wallet.trim(), id: i });
     });
   }
   return contacts;
 }
 
-// Render contacts to UI
 function renderContacts(contacts) {
   const list = document.getElementById("contactsList");
   list.innerHTML = "";
   contacts.forEach(c => {
     const btn = document.createElement("button");
-    btn.textContent = c.name || `Contact ${c.id}`;
+    btn.textContent = `${c.name} (${c.wallet || "No wallet"})`;
     btn.onclick = () => openChat(c);
     list.appendChild(btn);
   });
 }
 
-// LocalStorage simulating on-chain storage
-function getMessages(id) {
-  return JSON.parse(localStorage.getItem("chat_" + id) || "[]");
-}
-function saveMessages(id, msgs) {
-  localStorage.setItem("chat_" + id, JSON.stringify(msgs));
-}
-
-// Open chat
-function openChat(contact) {
+// --- Chat Logic ---
+async function openChat(contact) {
+  currentContact = contact;
   document.getElementById("contactsList").classList.add("hidden");
   document.getElementById("chatSection").classList.remove("hidden");
-  document.getElementById("chatWith").textContent = "Chat with " + contact.name;
-  loadMessages(contact);
-  document.getElementById("sendMessageBtn").onclick = () => sendMessage(contact);
+  document.getElementById("chatWith").textContent = `Chat with ${contact.name}`;
+  await loadMessages(contact);
 }
 
-// Load messages
-function loadMessages(contact) {
-  const msgs = getMessages(contact.id);
+async function loadMessages(contact) {
   const container = document.getElementById("messages");
+  container.innerHTML = "<p class='text-sm text-[#aaa]'>Loading messages...</p>";
+  if (!contact.wallet) {
+    container.innerHTML = "<p class='text-sm text-[#f39]'>No wallet found for this contact.</p>";
+    return;
+  }
+  const conv = await xmtpClient.conversations.newConversation(contact.wallet);
+  const messages = await conv.messages();
   container.innerHTML = "";
-  msgs.forEach(msg => {
+  messages.forEach(m => {
     const div = document.createElement("div");
-    div.className = "message " + msg.type;
-    div.textContent = msg.text;
+    div.className = "message " + (m.senderAddress === xmtpClient.address ? "sent" : "received");
+    div.textContent = m.content;
     container.appendChild(div);
   });
   container.scrollTop = container.scrollHeight;
+
+  // Listen for new messages in real time
+  for await (const msg of await conv.streamMessages()) {
+    const div = document.createElement("div");
+    div.className = "message received";
+    div.textContent = msg.content;
+    container.appendChild(div);
+    container.scrollTop = container.scrollHeight;
+  }
 }
 
-// Send message
-function sendMessage(contact) {
+document.getElementById("sendMessageBtn").onclick = async () => {
   const input = document.getElementById("messageInput");
   const text = input.value.trim();
-  if (!text) return;
-  const msgs = getMessages(contact.id);
-  msgs.push({ type: "sent", text });
-  saveMessages(contact.id, msgs);
+  if (!text || !currentContact?.wallet) return;
+  const conv = await xmtpClient.conversations.newConversation(currentContact.wallet);
+  await conv.send(text);
   input.value = "";
-  loadMessages(contact);
-}
+  await loadMessages(currentContact);
+};
 </script>
+
 </body>
 </html>
