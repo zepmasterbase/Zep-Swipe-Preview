@@ -1,4 +1,3 @@
-<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -92,14 +91,53 @@ body {
   backdrop-filter: blur(10px);
   background: linear-gradient(90deg, rgba(0,240,255,0.3), rgba(255,0,240,0.3));
   display: flex;
-  justify-content: flex-end;
+  justify-content: space-between;
+  align-items: center;
   z-index: 50;
   box-shadow: 0 0 20px rgba(255,0,240,0.3);
 }
 
-.header button {
+.header h1 {
+  font-family: 'Orbitron', sans-serif;
+  font-weight: 700;
+  font-size: 1.5rem;
+  background: linear-gradient(90deg, #00f0ff, #ff00f0);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  cursor: pointer;
+}
+
+.menu-button {
   font-size: 1.5rem;
   color: #fff;
+  cursor: pointer;
+}
+
+/* Dropdown Menu */
+.dropdown {
+  position: absolute;
+  top: 60px;
+  right: 20px;
+  background: rgba(27,15,58,0.95);
+  backdrop-filter: blur(10px);
+  border: 1px solid #7c63ff;
+  border-radius: 1rem;
+  overflow: hidden;
+  display: none;
+  flex-direction: column;
+  min-width: 160px;
+  z-index: 100;
+}
+
+.dropdown a {
+  padding: 0.75rem 1rem;
+  color: #fff;
+  text-decoration: none;
+  transition: background 0.3s;
+}
+
+.dropdown a:hover {
+  background: rgba(124,99,255,0.2);
 }
 
 /* Footer Navigation */
@@ -131,7 +169,15 @@ body {
 
 <!-- Header -->
 <header class="header">
-  <button><i class="fas fa-bars"></i></button>
+  <h1>Zep Swipe</h1>
+  <div class="menu-container">
+    <span class="menu-button"><i class="fas fa-bars"></i></span>
+    <div class="dropdown">
+      <a href="#">Roadmap</a>
+      <a href="#">Start Quiz</a>
+      <a href="#">Chat</a>
+    </div>
+  </div>
 </header>
 
 <h1 class="neon-text">Zep Swipe — Neon Campus Wallet</h1>
@@ -150,6 +196,23 @@ Earn <span style="color:#ff00f0;">$ZAC</span> for learning and engagement. Redee
   <a href="#"><i class="fas fa-store"></i></a>
   <a href="#"><i class="fas fa-comment-dots"></i></a>
 </footer>
+
+<script>
+// Dropdown toggle
+const menuButton = document.querySelector('.menu-button');
+const dropdown = document.querySelector('.dropdown');
+
+menuButton.addEventListener('click', () => {
+  dropdown.style.display = dropdown.style.display === 'flex' ? 'none' : 'flex';
+});
+
+// Close dropdown when clicking outside
+document.addEventListener('click', (e) => {
+  if (!e.target.closest('.menu-container')) {
+    dropdown.style.display = 'none';
+  }
+});
+</script>
 
 </body>
 </html>
