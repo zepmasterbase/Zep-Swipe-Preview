@@ -2,22 +2,206 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Chat Dashboard</title>
+<title>Zep Swipe — Chat Dashboard</title>
 <script src="https://cdn.tailwindcss.com"></script>
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700&family=Roboto:wght@400;500&display=swap" rel="stylesheet" />
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
 <style>
-body { font-family:'Roboto',sans-serif; background:#1b0f3a; color:#fff; margin:0; padding:0; }
-.header { font-family:'Orbitron',sans-serif; font-size:2rem; text-align:center; margin:2rem 0; background:linear-gradient(90deg,#00f0ff,#ff00f0); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
-.card { background: rgba(124,99,255,0.2); margin:1rem auto; padding:1rem 2rem; border-radius:1rem; max-width:400px; text-align:center; transition:0.3s; }
-.card:hover { transform:scale(1.05); }
+body {
+  font-family:'Roboto',sans-serif;
+  background:#1b0f3a;
+  color:#fff;
+  margin:0;
+  padding:0;
+  display:flex;
+  flex-direction:column;
+  height:100vh;
+}
+.header {
+  font-family:'Orbitron',sans-serif;
+  font-size:1.75rem;
+  text-align:center;
+  padding:1.5rem;
+  background:linear-gradient(90deg,#00f0ff,#ff00f0);
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+}
+#contactsList button {
+  background:rgba(124,99,255,0.2);
+  width:100%;
+  border-radius:0.75rem;
+  padding:0.75rem;
+  text-align:left;
+  margin-bottom:0.5rem;
+  transition:0.3s;
+}
+#contactsList button:hover { background:rgba(124,99,255,0.4); }
+.chat-container {
+  display:flex;
+  flex-direction:column;
+  flex:1;
+  background:rgba(255,255,255,0.05);
+  margin:1rem;
+  border-radius:1rem;
+  padding:1rem;
+  overflow:hidden;
+}
+#messages {
+  flex:1;
+  overflow-y:auto;
+  padding:0.5rem;
+}
+.message {
+  margin-bottom:0.75rem;
+  padding:0.5rem 0.75rem;
+  border-radius:0.75rem;
+  max-width:70%;
+}
+.sent {
+  background:linear-gradient(90deg,#00f0ff,#ff00f0);
+  color:#1b0f3a;
+  align-self:flex-end;
+}
+.received {
+  background:rgba(124,99,255,0.2);
+  align-self:flex-start;
+}
+.input-container {
+  display:flex;
+  gap:0.5rem;
+  margin-top:0.5rem;
+}
+input[type="text"] {
+  flex:1;
+  padding:0.75rem;
+  border-radius:0.75rem;
+  border:none;
+  outline:none;
+  color:#fff;
+  background:rgba(255,255,255,0.1);
+}
+button.send-btn {
+  background:linear-gradient(90deg,#00f0ff,#ff00f0);
+  border:none;
+  border-radius:0.75rem;
+  padding:0.75rem 1rem;
+  cursor:pointer;
+  color:#1b0f3a;
+  font-weight:600;
+}
+button.send-btn:hover { opacity:0.9; }
 </style>
 </head>
 <body>
-<h1 class="header">Chat Dashboard</h1>
-<div class="card">Start new conversation</div>
-<div class="card">Campus discussion groups</div>
-<div class="card">Support</div>
-<a href="index.html" style="display:block;text-align:center;margin:2rem;color:#ff00f0;">Back</a>
+
+<h1 class="header">Zep Swipe Chat</h1>
+
+<!-- Upload contacts -->
+<div class="px-4 mb-4 text-center">
+  <label class="block mb-2 text-sm text-[#c0bdf4]">Upload Contacts (.csv or .vcf)</label>
+  <input type="file" id="contactUpload" accept=".csv,.vcf"
+    class="text-sm text-white bg-[#2a1d50] border border-[#7c63ff] rounded-lg p-2 w-full max-w-xs"/>
+</div>
+
+<!-- Contact List -->
+<div id="contactsList" class="px-4"></div>
+
+<!-- Chat Interface -->
+<div id="chatSection" class="chat-container hidden">
+  <h2 id="chatWith" class="text-lg font-semibold mb-2 text-[#ff00f0]"></h2>
+  <div id="messages"></div>
+  <div class="input-container">
+    <input type="text" id="messageInput" placeholder="Type a message...">
+    <button class="send-btn" id="sendMessageBtn">Send</button>
+  </div>
+</div>
+
+<a href="index.html" style="display:block;text-align:center;margin:1rem;color:#ff00f0;">Back</a>
+
+<script>
+// Load contacts from uploaded file
+document.getElementById("contactUpload").addEventListener("change", function(e) {
+  const file = e.target.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = function(evt) {
+    const text = evt.target.result;
+    const contacts = parseContacts(text);
+    renderContacts(contacts);
+  };
+  reader.readAsText(file);
+});
+
+// Simple CSV/VCF parser
+function parseContacts(text) {
+  const contacts = [];
+  if (text.includes("BEGIN:VCARD")) {
+    const matches = text.match(/FN:(.+)/g);
+    matches?.forEach((line, i) => contacts.push({ name: line.replace("FN:", "").trim(), id: i }));
+  } else { // CSV
+    const lines = text.split("\n");
+    lines.forEach((line, i) => {
+      const [name, number] = line.split(",");
+      if (name && number) contacts.push({ name: name.trim(), number: number.trim(), id: i });
+    });
+  }
+  return contacts;
+}
+
+// Render contacts to UI
+function renderContacts(contacts) {
+  const list = document.getElementById("contactsList");
+  list.innerHTML = "";
+  contacts.forEach(c => {
+    const btn = document.createElement("button");
+    btn.textContent = c.name || `Contact ${c.id}`;
+    btn.onclick = () => openChat(c);
+    list.appendChild(btn);
+  });
+}
+
+// LocalStorage simulating on-chain storage
+function getMessages(id) {
+  return JSON.parse(localStorage.getItem("chat_" + id) || "[]");
+}
+function saveMessages(id, msgs) {
+  localStorage.setItem("chat_" + id, JSON.stringify(msgs));
+}
+
+// Open chat
+function openChat(contact) {
+  document.getElementById("contactsList").classList.add("hidden");
+  document.getElementById("chatSection").classList.remove("hidden");
+  document.getElementById("chatWith").textContent = "Chat with " + contact.name;
+  loadMessages(contact);
+  document.getElementById("sendMessageBtn").onclick = () => sendMessage(contact);
+}
+
+// Load messages
+function loadMessages(contact) {
+  const msgs = getMessages(contact.id);
+  const container = document.getElementById("messages");
+  container.innerHTML = "";
+  msgs.forEach(msg => {
+    const div = document.createElement("div");
+    div.className = "message " + msg.type;
+    div.textContent = msg.text;
+    container.appendChild(div);
+  });
+  container.scrollTop = container.scrollHeight;
+}
+
+// Send message
+function sendMessage(contact) {
+  const input = document.getElementById("messageInput");
+  const text = input.value.trim();
+  if (!text) return;
+  const msgs = getMessages(contact.id);
+  msgs.push({ type: "sent", text });
+  saveMessages(contact.id, msgs);
+  input.value = "";
+  loadMessages(contact);
+}
+</script>
 </body>
 </html>
