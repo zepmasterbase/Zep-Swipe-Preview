@@ -1,4 +1,3 @@
-<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8" />
@@ -13,48 +12,61 @@
 <style>
 body {
   font-family: 'Inter', sans-serif;
-  background: #01010f;
+  background: #0a0a1a;
   color: #fff;
   overflow-y: auto;
   scroll-behavior: smooth;
 }
 h1,h2,h3,h4 { font-family:'Orbitron',sans-serif; }
+
+/* Neon Gradient Text */
 .neon-text {
-  background: linear-gradient(90deg,#00f0ff,#ff00d4);
+  background: linear-gradient(90deg,#00ffea,#ff00ff,#ffcc00,#00ffea);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-  text-shadow: 0 0 10px #00f0ff, 0 0 20px #ff00d4;
+  text-shadow: 0 0 10px #00ffea, 0 0 20px #ff00ff, 0 0 30px #ffcc00;
   transition: all 0.5s ease-in-out;
 }
-.neon-text:hover { text-shadow: 0 0 20px #00f0ff,0 0 30px #ff00d4; }
+.neon-text:hover { text-shadow: 0 0 25px #00ffea, 0 0 35px #ff00ff, 0 0 45px #ffcc00; }
+
+/* Glass Panels */
 .glass {
   background: rgba(255,255,255,0.05);
-  backdrop-filter: blur(12px);
-  border:1px solid rgba(255,255,255,0.1);
+  backdrop-filter: blur(14px);
+  border:1px solid rgba(255,255,255,0.15);
   border-radius:1rem;
   transition: all 0.3s ease;
 }
-.glass:hover { box-shadow: 0 0 20px #00f0ff, 0 0 30px #ff00d4; }
+.glass:hover { box-shadow: 0 0 25px #00ffea, 0 0 35px #ff00ff, 0 0 45px #ffcc00; }
+
+/* Gradient Buttons */
 .gradient-btn {
-  background: linear-gradient(90deg,#00ffff,#ff00d4);
+  background: linear-gradient(135deg,#00ffea,#ff00ff,#ffcc00);
   color:#000;font-weight:600;
-  border-radius:.6rem;
+  border-radius:.8rem;
   transition:.4s;
 }
 .gradient-btn:hover{
   transform: translateY(-3px) scale(1.05);
-  box-shadow:0 0 30px #00ffff, 0 0 40px #ff00d4;
+  box-shadow:0 0 35px #00ffea, 0 0 45px #ff00ff, 0 0 55px #ffcc00;
 }
-.footer-icon { width:24px;height:24px; }
+
+/* Footer Icons */
+.footer-icon { width:28px;height:28px; }
+
+/* Chat Bubbles */
 .chat-bubble{
-  max-width:80%; padding:8px 12px; margin-bottom:8px; border-radius:12px;
-  font-size:0.9rem; animation:fadeIn 0.3s ease;
+  max-width:80%; padding:10px 14px; margin-bottom:10px; border-radius:14px;
+  font-size:0.95rem; animation:fadeIn 0.3s ease;
 }
-.chat-me{align-self:flex-end; background:rgba(0,255,255,0.1); border:1px solid rgba(0,255,255,0.3);}
-.chat-them{align-self:flex-start; background:rgba(255,0,212,0.1); border:1px solid rgba(255,0,212,0.3);}
+.chat-me{align-self:flex-end; background:rgba(0,255,234,0.15); border:1px solid rgba(0,255,234,0.4);}
+.chat-them{align-self:flex-start; background:rgba(255,0,255,0.15); border:1px solid rgba(255,0,255,0.4);}
+
 @keyframes fadeIn {from{opacity:0;transform:translateY(5px);}to{opacity:1;transform:translateY(0);}}
 .fade-up { opacity: 0; transform: translateY(20px); transition: all 0.8s ease; }
 .fade-up.show { opacity: 1; transform: translateY(0); }
+
+/* Animated Neon Background */
 @keyframes neonBG {
   0% { background-position:0% 50%; }
   50% { background-position:100% 50%; }
@@ -63,11 +75,11 @@ h1,h2,h3,h4 { font-family:'Orbitron',sans-serif; }
 body::before {
   content:'';
   position:fixed;top:0;left:0;width:100%;height:100%;
-  background: linear-gradient(45deg,#00ffff,#ff00d4,#ff00ff,#00ffff);
+  background: linear-gradient(45deg,#00ffea,#ff00ff,#ffcc00,#00ffea);
   background-size:400% 400%;
   z-index:-1;
   animation: neonBG 15s ease infinite;
-  opacity:0.15;
+  opacity:0.18;
 }
 </style>
 </head>
@@ -76,7 +88,7 @@ body::before {
 <!-- HEADER -->
 <header class="fixed top-0 left-0 w-full glass px-6 py-4 flex justify-between items-center z-40">
   <h1 class="text-2xl font-bold neon-text">Zep Swipe</h1>
-  <div class="flex items-center gap-2 text-sm text-gray-300">
+  <div class="flex items-center gap-2 text-sm text-gray-200">
     <i data-lucide="wallet" class="footer-icon text-cyan-400"></i>
     <span>Balance: <span id="wallet">120</span> ZAC</span>
   </div>
@@ -93,19 +105,19 @@ body::before {
 
   <!-- Quick Actions -->
   <div class="grid grid-cols-2 md:grid-cols-4 gap-6 max-w-3xl mx-auto mb-14">
-    <button onclick="nav('learn')" class="glass py-6 rounded-xl flex flex-col items-center hover:scale-105 transition">
-      <i data-lucide="graduation-cap" class="footer-icon text-cyan-400 mb-2"></i>
+    <button onclick="window.location.href='/dashboards/learn'" class="glass py-6 rounded-xl flex flex-col items-center hover:scale-105 transition">
+      <i data-lucide="graduation-cap" class="footer-icon text-teal-400 mb-2"></i>
       <span>Learn & Earn</span>
     </button>
-    <button onclick="nav('shop')" class="glass py-6 rounded-xl flex flex-col items-center hover:scale-105 transition">
-      <i data-lucide="shopping-bag" class="footer-icon text-pink-400 mb-2"></i>
+    <button onclick="window.location.href='/dashboards/marketplace'" class="glass py-6 rounded-xl flex flex-col items-center hover:scale-105 transition">
+      <i data-lucide="shopping-bag" class="footer-icon text-magenta-400 mb-2"></i>
       <span>Marketplace</span>
     </button>
-    <button onclick="nav('chat')" class="glass py-6 rounded-xl flex flex-col items-center hover:scale-105 transition">
+    <button onclick="window.location.href='/dashboards/chat'" class="glass py-6 rounded-xl flex flex-col items-center hover:scale-105 transition">
       <i data-lucide="message-circle" class="footer-icon text-purple-400 mb-2"></i>
       <span>Chat</span>
     </button>
-    <button onclick="nav('wallet')" class="glass py-6 rounded-xl flex flex-col items-center hover:scale-105 transition">
+    <button onclick="window.location.href='/dashboards/wallet'" class="glass py-6 rounded-xl flex flex-col items-center hover:scale-105 transition">
       <i data-lucide="credit-card" class="footer-icon text-yellow-400 mb-2"></i>
       <span>Wallet</span>
     </button>
@@ -117,8 +129,8 @@ body::before {
   <h2 class="text-4xl font-bold mb-6 neon-text">Learn & Earn XP</h2>
   <div class="glass p-6 max-w-xl mx-auto">
     <p class="text-gray-300 mb-4">Complete lessons → gain XP → earn ZAC tokens.</p>
-    <div class="bg-gray-800 rounded-full h-4 w-full mb-2">
-      <div id="bar" class="bg-cyan-400 h-4 rounded-full w-0"></div>
+    <div class="bg-gray-900 rounded-full h-4 w-full mb-2">
+      <div id="bar" class="bg-teal-400 h-4 rounded-full w-0"></div>
     </div>
     <p>Level: <span id="lvl">1</span> | XP: <span id="xp">0</span></p>
     <button id="next" class="gradient-btn px-4 py-2 mt-3">Complete Lesson</button>
@@ -131,14 +143,14 @@ body::before {
   <h2 class="text-4xl font-bold mb-6 neon-text">Marketplace</h2>
   <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-5xl mx-auto">
     <div class="glass p-4 flex flex-col">
-      <h4 class="font-semibold text-cyan-400 mb-2">Product 1</h4>
-      <p class="text-gray-400 mb-2">Awesome student-made item.</p>
-      <button class="gradient-btn py-2">Buy for 50 ZAC</button>
+      <h4 class="font-semibold text-teal-400 mb-2">Product 1</h4>
+      <p class="text-gray-200 mb-2">Awesome student-made item.</p>
+      <button onclick="window.location.href='/dashboards/product/1'" class="gradient-btn py-2">Buy for 50 ZAC</button>
     </div>
     <div class="glass p-4 flex flex-col">
-      <h4 class="font-semibold text-pink-400 mb-2">Service 1</h4>
-      <p class="text-gray-400 mb-2">Vendor service offering.</p>
-      <button class="gradient-btn py-2">Request Service</button>
+      <h4 class="font-semibold text-magenta-400 mb-2">Service 1</h4>
+      <p class="text-gray-200 mb-2">Vendor service offering.</p>
+      <button onclick="window.location.href='/dashboards/service/1'" class="gradient-btn py-2">Request Service</button>
     </div>
   </div>
 </section>
@@ -146,9 +158,7 @@ body::before {
 <!-- CHAT -->
 <section id="chat" class="px-6 hidden fade-up">
   <h2 class="text-4xl font-bold mb-6 neon-text">Chat</h2>
-  <div class="glass p-4 max-w-xl mx-auto flex flex-col h-96 overflow-y-auto" id="chat-box">
-    <!-- Chat bubbles will be appended here -->
-  </div>
+  <div class="glass p-4 max-w-xl mx-auto flex flex-col h-96 overflow-y-auto" id="chat-box"></div>
   <div class="flex max-w-xl mx-auto mt-3 gap-2">
     <input id="msg-input" type="text" placeholder="Type message..." class="flex-1 p-2 rounded-md text-black" />
     <button id="send-msg" class="gradient-btn px-4">Send</button>
@@ -160,8 +170,8 @@ body::before {
   <h2 class="text-4xl font-bold mb-6 neon-text">Wallet</h2>
   <div class="glass p-6 max-w-xl mx-auto flex flex-col gap-4">
     <p>Balance: <span id="wallet-balance">120</span> ZAC</p>
-    <button class="gradient-btn py-2">Request Money</button>
-    <button class="gradient-btn py-2">Withdraw Funds</button>
+    <button onclick="window.location.href='/dashboards/request-money'" class="gradient-btn py-2">Request Money</button>
+    <button onclick="window.location.href='/dashboards/withdraw'" class="gradient-btn py-2">Withdraw Funds</button>
   </div>
 </section>
 
@@ -169,11 +179,11 @@ body::before {
 
 <!-- FOOTER -->
 <footer class="fixed bottom-0 left-0 w-full glass flex justify-around py-3 text-sm z-40">
-  <button onclick="nav('home')" class="flex flex-col items-center"><i data-lucide="home" class="footer-icon text-cyan-400"></i><span>Home</span></button>
-  <button onclick="nav('learn')" class="flex flex-col items-center"><i data-lucide="graduation-cap" class="footer-icon text-cyan-400"></i><span>Learn</span></button>
-  <button onclick="nav('shop')" class="flex flex-col items-center"><i data-lucide="shopping-bag" class="footer-icon text-pink-400"></i><span>Shop</span></button>
-  <button onclick="nav('chat')" class="flex flex-col items-center"><i data-lucide="message-circle" class="footer-icon text-purple-400"></i><span>Chat</span></button>
-  <button onclick="nav('wallet')" class="flex flex-col items-center"><i data-lucide="credit-card" class="footer-icon text-yellow-400"></i><span>Wallet</span></button>
+  <button onclick="window.location.href='/dashboards/home'" class="flex flex-col items-center"><i data-lucide="home" class="footer-icon text-teal-400"></i><span>Home</span></button>
+  <button onclick="window.location.href='/dashboards/learn'" class="flex flex-col items-center"><i data-lucide="graduation-cap" class="footer-icon text-teal-400"></i><span>Learn</span></button>
+  <button onclick="window.location.href='/dashboards/marketplace'" class="flex flex-col items-center"><i data-lucide="shopping-bag" class="footer-icon text-magenta-400"></i><span>Shop</span></button>
+  <button onclick="window.location.href='/dashboards/chat'" class="flex flex-col items-center"><i data-lucide="message-circle" class="footer-icon text-purple-400"></i><span>Chat</span></button>
+  <button onclick="window.location.href='/dashboards/wallet'" class="flex flex-col items-center"><i data-lucide="credit-card" class="footer-icon text-yellow-400"></i><span>Wallet</span></button>
 </footer>
 
 <script>
@@ -187,7 +197,7 @@ window.addEventListener('scroll', () => {
   });
 });
 
-// Navigation
+// Navigation for internal sections
 let current="home";
 function nav(id){
   document.getElementById(current).classList.add("hidden");
@@ -196,7 +206,7 @@ function nav(id){
   window.scrollTo({top:0,behavior:"smooth"});
 }
 
-// Learn & Earn
+// Learn & Earn Logic
 let xp=0,lvl=1,zac=120;
 document.getElementById("next")?.addEventListener("click",()=>{
   xp+=25;
@@ -210,7 +220,7 @@ document.getElementById("next")?.addEventListener("click",()=>{
   document.getElementById("bar").style.width=`${xp}%`;
 });
 
-// Simple Chat Logic (for MVP)
+// Chat Logic
 const chatBox=document.getElementById("chat-box");
 document.getElementById("send-msg")?.addEventListener("click",()=>{
   const input=document.getElementById("msg-input");
