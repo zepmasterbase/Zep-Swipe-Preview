@@ -1,82 +1,58 @@
+<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Zep Swipe — Futuristic Web3 SuperApp</title>
 
-<!-- Tailwind CSS -->
 <script src="https://cdn.tailwindcss.com"></script>
-<!-- Lucide Icons -->
 <script src="https://unpkg.com/lucide@latest"></script>
-
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+
 <style>
 body {
   font-family: 'Inter', sans-serif;
-  background: radial-gradient(circle at 20% 30%, #0a0018, #01010f 80%);
+  background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
   color: #fff;
-  overflow: hidden;
+  overflow-y: auto;
+  scroll-behavior: smooth;
 }
-h1, h2, h3 { font-family: 'Orbitron', sans-serif; }
+h1,h2,h3 { font-family:'Orbitron',sans-serif; }
 .neon-text {
-  background: linear-gradient(90deg, #00f0ff, #ff00d4);
+  background: linear-gradient(90deg,#00f0ff,#ff00d4);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-  text-shadow: 0 0 12px rgba(0,255,255,0.5);
+  text-shadow: 0 0 8px rgba(0,255,255,0.5),0 0 12px rgba(255,0,212,0.4);
 }
 .glass {
-  background: rgba(255,255,255,0.04);
-  backdrop-filter: blur(10px);
+  background: rgba(255,255,255,0.05);
+  backdrop-filter: blur(12px);
   border: 1px solid rgba(255,255,255,0.1);
   border-radius: 1rem;
 }
 .gradient-btn {
-  background: linear-gradient(90deg, #00ffff, #ff00d4);
-  color: #000;
-  font-weight: 600;
-  border-radius: 0.6rem;
-  transition: 0.3s;
+  background: linear-gradient(90deg,#00ffff,#ff00d4);
+  color:#000;font-weight:600;
+  border-radius:.6rem;
+  transition:.3s;
 }
-.gradient-btn:hover {
+.gradient-btn:hover{
   transform: translateY(-2px);
-  box-shadow: 0 0 25px rgba(0,255,255,0.4);
+  box-shadow:0 0 25px rgba(0,255,255,0.5);
 }
-.footer-icon { width: 22px; height: 22px; }
-.hidden { display: none; }
-canvas#bg {
-  position: fixed;
-  top: 0; left: 0;
-  width: 100%; height: 100%;
-  z-index: -1;
+.footer-icon{width:24px;height:24px;}
+.hidden{display:none;}
+.chat-bubble{
+  max-width:80%; padding:8px 12px; margin-bottom:8px; border-radius:12px;
+  font-size:0.9rem; animation:fadeIn 0.3s ease;
 }
-.chat-bubble {
-  max-width: 80%;
-  padding: 8px 12px;
-  margin-bottom: 8px;
-  border-radius: 12px;
-  font-size: 0.9rem;
-  animation: fadeIn 0.3s ease;
-}
-.chat-me {
-  align-self: flex-end;
-  background: rgba(0,255,255,0.1);
-  border: 1px solid rgba(0,255,255,0.3);
-}
-.chat-them {
-  align-self: flex-start;
-  background: rgba(255,0,212,0.1);
-  border: 1px solid rgba(255,0,212,0.3);
-}
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(5px); }
-  to { opacity: 1; transform: translateY(0); }
-}
+.chat-me{align-self:flex-end; background:rgba(0,255,255,0.1); border:1px solid rgba(0,255,255,0.3);}
+.chat-them{align-self:flex-start; background:rgba(255,0,212,0.1); border:1px solid rgba(255,0,212,0.3);}
+@keyframes fadeIn {from{opacity:0;transform:translateY(5px);}to{opacity:1;transform:translateY(0);}}
 </style>
 </head>
 
 <body>
-<canvas id="bg"></canvas>
-
 <!-- HEADER -->
 <header class="fixed top-0 left-0 w-full glass px-6 py-4 flex justify-between items-center z-40">
   <h1 class="text-2xl font-bold neon-text">Zep Swipe</h1>
@@ -87,12 +63,11 @@ canvas#bg {
 </header>
 
 <main class="pt-24 pb-24">
+
 <!-- HOME -->
 <section id="home" class="px-6 text-center">
   <h2 class="text-4xl font-bold mb-4 neon-text">Welcome to Zep Swipe Light</h2>
-  <p class="text-gray-300 mb-8 max-w-lg mx-auto">
-    Explore Africa’s Web3 SuperApp — learn, earn, and connect before you transact.
-  </p>
+  <p class="text-gray-300 mb-8 max-w-lg mx-auto">Explore Africa’s Web3 SuperApp — learn, earn, and connect freely before you transact.</p>
 
   <!-- Shortcuts -->
   <div class="grid grid-cols-2 gap-4 max-w-md mx-auto mb-10">
@@ -106,7 +81,7 @@ canvas#bg {
       <i data-lucide="message-circle" class="footer-icon text-purple-400 mb-1"></i><span>Chat</span>
     </button>
     <button onclick="unlock()" class="glass py-4 rounded-xl hover:scale-105 transition flex flex-col items-center">
-      <i data-lucide="unlock" class="footer-icon text-yellow-400 mb-1"></i><span>Unlock Full</span>
+      <i data-lucide="unlock" class="footer-icon text-yellow-400 mb-1"></i><span>Unlock</span>
     </button>
   </div>
 
@@ -132,8 +107,7 @@ canvas#bg {
     <div class="glass p-4 text-left md:col-span-2 hover:shadow-cyan-400/30 transition">
       <h4 class="font-semibold text-cyan-400">🎓 How Students Earn</h4>
       <p class="text-gray-400 text-sm">
-        Join Learn & Earn → complete lessons → gain XP → earn ZAC rewards.
-        Top students get NFT badges and leaderboard glory.
+        Join Learn & Earn → complete lessons → gain XP → earn ZAC rewards. Top students get NFT badges and leaderboard glory.
       </p>
       <button onclick="nav('learn')" class="gradient-btn px-4 py-2 mt-3">Start Learning</button>
     </div>
@@ -183,25 +157,26 @@ canvas#bg {
     <button onclick="sendMsg()" class="gradient-btn px-4 py-2">Send</button>
   </div>
 </section>
+
 </main>
 
 <!-- FOOTER -->
 <footer class="fixed bottom-0 left-0 w-full glass flex justify-around py-3 text-sm z-40">
-  <button onclick="nav('home')" class="flex flex-col items-center"><i data-lucide="home" class="footer-icon"></i><span>Home</span></button>
-  <button onclick="nav('learn')" class="flex flex-col items-center"><i data-lucide="graduation-cap" class="footer-icon"></i><span>Learn</span></button>
-  <button onclick="nav('shop')" class="flex flex-col items-center"><i data-lucide="shopping-bag" class="footer-icon"></i><span>Shop</span></button>
-  <button onclick="nav('chat')" class="flex flex-col items-center"><i data-lucide="message-circle" class="footer-icon"></i><span>Chat</span></button>
+  <button onclick="nav('home')" class="flex flex-col items-center"><i data-lucide="home" class="footer-icon text-cyan-400"></i><span>Home</span></button>
+  <button onclick="nav('learn')" class="flex flex-col items-center"><i data-lucide="graduation-cap" class="footer-icon text-cyan-400"></i><span>Learn</span></button>
+  <button onclick="nav('shop')" class="flex flex-col items-center"><i data-lucide="shopping-bag" class="footer-icon text-pink-400"></i><span>Shop</span></button>
+  <button onclick="nav('chat')" class="flex flex-col items-center"><i data-lucide="message-circle" class="footer-icon text-purple-400"></i><span>Chat</span></button>
 </footer>
 
 <script>
 lucide.createIcons();
 
 // Navigation
-let current = "home";
+let current="home";
 function nav(id){
   document.getElementById(current).classList.add("hidden");
   document.getElementById(id).classList.remove("hidden");
-  current = id;
+  current=id;
   window.scrollTo({top:0,behavior:"smooth"});
 }
 
@@ -211,75 +186,43 @@ function unlock(){
 }
 
 // Learn & Earn
-let xp = 0, lvl = 1, zac = 120;
-document.getElementById("next").onclick = () => {
-  xp += 25;
-  if (xp >= 100 && lvl < 5) {
-    xp = 0; lvl++; zac += 15;
-    document.getElementById("msg").textContent = `🏅 Level ${lvl} unlocked +15 ZAC`;
-    document.getElementById("wallet").textContent = zac;
+let xp=0,lvl=1,zac=120;
+document.getElementById("next").onclick=()=>{
+  xp+=25;
+  if(xp>=100&&lvl<5){xp=0;lvl++;zac+=15;
+    document.getElementById("msg").textContent=`🏅 Level ${lvl} unlocked +15 ZAC`;
+    document.getElementById("wallet").textContent=zac;
   }
-  document.getElementById("xp").textContent = xp;
-  document.getElementById("lvl").textContent = lvl;
-  document.getElementById("bar").style.width = `${xp}%`;
+  document.getElementById("xp").textContent=xp;
+  document.getElementById("lvl").textContent=lvl;
+  document.getElementById("bar").style.width=`${xp}%`;
 };
 
-// Chat functionality
-let chats = {}, contactsSel = document.getElementById("contacts");
-function addContact() {
-  const n = document.getElementById("newContact").value.trim();
-  if (!n) return alert("Enter a name");
-  if (chats[n]) return alert("Already added");
-  chats[n] = [];
-  const o = document.createElement("option");
-  o.value = n; o.textContent = n;
+// Chat
+let chats={},contactsSel=document.getElementById("contacts");
+function addContact(){
+  const n=document.getElementById("newContact").value.trim();
+  if(!n)return alert("Enter a name");
+  if(chats[n])return alert("Already added");
+  chats[n]=[];
+  const o=document.createElement("option");o.value=n;o.textContent=n;
   contactsSel.appendChild(o);
-  document.getElementById("newContact").value = "";
+  document.getElementById("newContact").value="";
 }
-function sendMsg() {
-  const c = contactsSel.value;
-  if (!c) return alert("Select a contact first");
-  const t = document.getElementById("msgInput"), m = t.value.trim();
-  if (!m) return;
-  const box = document.getElementById("chatBox");
-  const msg = document.createElement("div");
-  msg.className = "chat-bubble chat-me";
-  msg.textContent = m;
-  box.appendChild(msg);
-  chats[c].push({from:"me", text:m});
-  // Simulate reply
-  setTimeout(() => {
-    const r = document.createElement("div");
-    r.className = "chat-bubble chat-them";
-    r.textContent = `${c}: Got your message! 🔥`;
-    box.appendChild(r);
-    box.scrollTop = box.scrollHeight;
-  }, 700);
-  t.value = "";
-  box.scrollTop = box.scrollHeight;
+function sendMsg(){
+  const c=contactsSel.value;if(!c)return alert("Select a contact first");
+  const t=document.getElementById("msgInput"),m=t.value.trim();if(!m)return;
+  const box=document.getElementById("chatBox");
+  const msg=document.createElement("div");
+  msg.className="chat-bubble chat-me"; msg.textContent=m; box.appendChild(msg);
+  chats[c].push({from:"me",text:m});
+  setTimeout(()=>{
+    const r=document.createElement("div");
+    r.className="chat-bubble chat-them"; r.textContent=`${c}: Got your message! 🔥`;
+    box.appendChild(r); box.scrollTop=box.scrollHeight;
+  },700);
+  t.value=""; box.scrollTop=box.scrollHeight;
 }
-
-// Floating orbs background
-const cv = document.getElementById("bg"), ctx = cv.getContext("2d"); let W,H;
-function resize(){W=cv.width=innerWidth;H=cv.height=innerHeight;}
-window.onresize=resize; resize();
-const orbs = Array.from({length:20},()=>({
-  x:Math.random()*W,y:Math.random()*H,r:1+Math.random()*2,
-  dx:(Math.random()-.5)*.6,dy:(Math.random()-.5)*.6,
-  c:`hsl(${Math.random()*360},100%,60%)`
-}));
-function loop(){
-  ctx.clearRect(0,0,W,H);
-  for(const o of orbs){
-    o.x+=o.dx; o.y+=o.dy;
-    if(o.x<0||o.x>W)o.dx*=-1; if(o.y<0||o.y>H)o.dy*=-1;
-    const g=ctx.createRadialGradient(o.x,o.y,0,o.x,o.y,o.r*6);
-    g.addColorStop(0,o.c); g.addColorStop(1,"transparent");
-    ctx.fillStyle=g; ctx.beginPath(); ctx.arc(o.x,o.y,o.r*6,0,2*Math.PI); ctx.fill();
-  }
-  requestAnimationFrame(loop);
-}
-loop();
 </script>
 </body>
 </html>
