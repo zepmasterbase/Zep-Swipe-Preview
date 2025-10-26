@@ -2,9 +2,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Zep Swipe — Web3 Chat</title>
+<title>Zep Swipe — Web3 Chat Dashboard</title>
 <script src="https://cdn.tailwindcss.com"></script>
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700&family=Roboto:wght@400;500&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700&family=Roboto:wght@400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
 <style>
 body {
@@ -32,7 +32,7 @@ button.gradient-btn {
   font-weight:600;
   border:none;
   border-radius:0.75rem;
-  padding:0.75rem 1rem;
+  padding:0.75rem 1.25rem;
   cursor:pointer;
   transition:0.3s;
 }
@@ -99,64 +99,108 @@ input[type="text"] {
 
 <h1 class="header">Zep Swipe Web3 Chat</h1>
 
-<div id="walletSection" class="text-center my-4">
-  <button id="connectWalletBtn" class="gradient-btn">Connect MetaMask / Base Wallet</button>
-  <p id="walletAddress" class="mt-2 text-sm text-[#c0bdf4]"></p>
-</div>
+<!-- LOGIN SCREEN -->
+<section id="loginScreen" class="flex flex-col items-center justify-center flex-1">
+  <p class="text-[#c0bdf4] mb-4 text-center max-w-xs">
+    Connect your in-app wallet to access Zep Swipe Chat Dashboard.
+  </p>
+  <button id="connectWalletBtn" class="gradient-btn">Connect Wallet</button>
+  <p id="walletStatus" class="mt-3 text-sm text-[#9f9fe0]"></p>
+</section>
 
-<!-- Upload contacts -->
-<div id="uploadSection" class="px-4 mb-4 text-center hidden">
-  <label class="block mb-2 text-sm text-[#c0bdf4]">Upload Contacts (.csv or .vcf)</label>
-  <input type="file" id="contactUpload" accept=".csv,.vcf"
-    class="text-sm text-white bg-[#2a1d50] border border-[#7c63ff] rounded-lg p-2 w-full max-w-xs"/>
-</div>
+<!-- DASHBOARD -->
+<section id="chatDashboard" class="hidden flex-col flex-1">
+  <div class="flex justify-between items-center px-4">
+    <p id="connectedUser" class="text-sm text-[#b8b8ff]"></p>
+    <button id="logoutBtn" class="text-[#ff00f0] text-sm">Logout</button>
+  </div>
 
-<!-- Contact List -->
-<div id="contactsList" class="px-4 hidden"></div>
+  <!-- Upload contacts -->
+  <div class="px-4 mb-4 text-center">
+    <label class="block mb-2 text-sm text-[#c0bdf4]">Upload Contacts (.csv or .vcf)</label>
+    <input type="file" id="contactUpload" accept=".csv,.vcf"
+      class="text-sm text-white bg-[#2a1d50] border border-[#7c63ff] rounded-lg p-2 w-full max-w-xs"/>
+  </div>
 
-<!-- Chat Interface -->
-<div id="chatSection" class="chat-container hidden">
-  <h2 id="chatWith" class="text-lg font-semibold mb-2 text-[#ff00f0]"></h2>
+  <!-- Contacts List -->
+  <div id="contactsList" class="px-4"></div>
+</section>
+
+<!-- CHAT SECTION -->
+<section id="chatSection" class="chat-container hidden">
+  <div class="flex justify-between items-center mb-2">
+    <h2 id="chatWith" class="text-lg font-semibold text-[#ff00f0]"></h2>
+    <button id="backBtn" class="text-[#00f0ff] text-sm"><i class="fa fa-arrow-left mr-1"></i>Back</button>
+  </div>
   <div id="messages"></div>
   <div class="input-container">
     <input type="text" id="messageInput" placeholder="Type a message...">
     <button class="gradient-btn" id="sendMessageBtn">Send</button>
   </div>
-</div>
+</section>
 
 <script type="module">
-// --- IMPORT XMTP + ETHERS ---
+// --- IMPORTS ---
 import { ethers } from "https://cdn.jsdelivr.net/npm/ethers@5.7.2/dist/ethers.esm.min.js";
 import * as XMTP from "https://esm.sh/@xmtp/xmtp-js@11.3.0";
 
-let signer, xmtpClient, currentContact;
+// --- GLOBALS ---
+let signer, xmtpClient, currentUser, currentContact;
 
-// --- Connect Wallet ---
+// --- ELEMENTS ---
+const loginScreen = document.getElementById("loginScreen");
+const chatDashboard = document.getElementById("chatDashboard");
+const chatSection = document.getElementById("chatSection");
 const connectWalletBtn = document.getElementById("connectWalletBtn");
+const walletStatus = document.getElementById("walletStatus");
+const connectedUser = document.getElementById("connectedUser");
+const logoutBtn = document.getElementById("logoutBtn");
+const backBtn = document.getElementById("backBtn");
+
+// --- AUTHENTICATION FLOW ---
 connectWalletBtn.onclick = async () => {
-  if (!window.ethereum) return alert("Please install MetaMask or use Base Wallet.");
+  if (!window.ethereum) return alert("Please install MetaMask or use Base/Coinbase Wallet.");
   try {
     const provider = new ethers.providers.Web3Provider(window.ethereum);
     await provider.send("eth_requestAccounts", []);
     signer = provider.getSigner();
-    const addr = await signer.getAddress();
-    document.getElementById("walletAddress").textContent = `Connected: ${addr}`;
-    connectWalletBtn.textContent = "Connected ✅";
+    const address = await signer.getAddress();
+
+    walletStatus.textContent = "Wallet connected: " + address.substring(0, 10) + "...";
+    connectWalletBtn.textContent = "Authenticating...";
+
+    // Wallet-based "login" via signing message
+    const nonce = "ZepSwipeLogin-" + Date.now();
+    const signature = await signer.signMessage(nonce);
+    if (!signature) throw new Error("Signature rejected.");
 
     // Initialize XMTP client
     xmtpClient = await XMTP.Client.create(signer);
-    console.log("XMTP client ready:", xmtpClient.address);
+    currentUser = address;
+    connectedUser.textContent = "Connected as: " + address;
 
-    // Show next steps
-    document.getElementById("uploadSection").classList.remove("hidden");
-    document.getElementById("contactsList").classList.remove("hidden");
+    // Switch screens
+    loginScreen.classList.add("hidden");
+    chatDashboard.classList.remove("hidden");
+
   } catch (err) {
     console.error(err);
-    alert("Failed to connect wallet.");
+    walletStatus.textContent = "Connection failed.";
   }
 };
 
-// --- Upload and parse contacts ---
+// Logout
+logoutBtn.onclick = () => {
+  signer = null;
+  xmtpClient = null;
+  loginScreen.classList.remove("hidden");
+  chatDashboard.classList.add("hidden");
+  chatSection.classList.add("hidden");
+  walletStatus.textContent = "";
+  connectWalletBtn.textContent = "Connect Wallet";
+};
+
+// --- CONTACTS ---
 document.getElementById("contactUpload").addEventListener("change", function(e) {
   const file = e.target.files[0];
   if (!file) return;
@@ -189,20 +233,25 @@ function renderContacts(contacts) {
   list.innerHTML = "";
   contacts.forEach(c => {
     const btn = document.createElement("button");
-    btn.textContent = `${c.name} (${c.wallet || "No wallet"})`;
+    btn.textContent = `${c.name} (${c.wallet || "no wallet"})`;
     btn.onclick = () => openChat(c);
     list.appendChild(btn);
   });
 }
 
-// --- Chat Logic ---
+// --- CHAT ---
 async function openChat(contact) {
   currentContact = contact;
-  document.getElementById("contactsList").classList.add("hidden");
-  document.getElementById("chatSection").classList.remove("hidden");
+  chatDashboard.classList.add("hidden");
+  chatSection.classList.remove("hidden");
   document.getElementById("chatWith").textContent = `Chat with ${contact.name}`;
   await loadMessages(contact);
 }
+
+backBtn.onclick = () => {
+  chatSection.classList.add("hidden");
+  chatDashboard.classList.remove("hidden");
+};
 
 async function loadMessages(contact) {
   const container = document.getElementById("messages");
@@ -222,7 +271,7 @@ async function loadMessages(contact) {
   });
   container.scrollTop = container.scrollHeight;
 
-  // Listen for new messages in real time
+  // Stream new messages
   for await (const msg of await conv.streamMessages()) {
     const div = document.createElement("div");
     div.className = "message received";
