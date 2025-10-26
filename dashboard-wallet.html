@@ -2,7 +2,7 @@
 <head>    
 <meta charset="UTF-8">    
 <meta name="viewport" content="width=device-width, initial-scale=1.0">    
-<title>ZAC Wallet Dashboard</title>    
+<title>Student Wallet Dashboard</title>    
 <script src="https://cdn.tailwindcss.com"></script>    
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700&family=Roboto:wght@400;500&display=swap" rel="stylesheet" />    
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>    
@@ -63,15 +63,33 @@ button {
   font-weight:500; 
 }    
 button:hover { opacity:0.9; }    
+
+.actions { 
+  display:flex; 
+  justify-content:space-around; 
+  margin-top:1rem; 
+}    
+.actions button { 
+  display:flex; 
+  flex-direction:column; 
+  align-items:center; 
+  padding:0.5rem 1rem; 
+  font-size:0.9rem; 
+}    
+.actions i { 
+  font-size:1.5rem; 
+  margin-bottom:0.3rem; 
+  color:#00f0ff; 
+}    
 </style>    
 </head>    
 <body>    
-<h1 class="header">ZAC Wallet Dashboard</h1>    
+<h1 class="header">Student Wallet Dashboard</h1>    
 
 <!-- Wallet Connection / Address -->
 <div class="card">
   <h2 class="token-label">In-App Wallet</h2>
-  <p>Each user gets a unique wallet address to receive ZAC tokens.</p>
+  <p>Each student gets a unique wallet address to receive ZAC tokens.</p>
   <div id="walletAddress" class="address-box">No wallet generated yet.</div>
   <button onclick="generateWallet()">Generate Wallet</button>
 </div>
@@ -90,26 +108,47 @@ button:hover { opacity:0.9; }
   <button onclick="refreshUSDTBalance()">Refresh</button>
 </div>
 
-<!-- Actions -->
-<div class="card">Stake $ZAC</div>    
+<!-- Wallet Actions: Top Up, Withdraw, Request Swap -->
+<div class="card">
+  <h2 class="token-label">Wallet Actions</h2>
+  <div class="actions">
+    <button onclick="topUp()"><i class="fas fa-plus-circle"></i>Top Up</button>
+    <button onclick="withdraw()"><i class="fas fa-arrow-up"></i>Withdraw</button>
+    <button onclick="requestSwap()"><i class="fas fa-exchange-alt"></i>Swap</button>
+  </div>
+</div>
 
 <a href="index.html" style="display:block;text-align:center;margin:2rem;color:#ff00f0;">Back</a>    
 
 <script>
 function generateWallet() {
-  // Example: simulate wallet address generation
   const newAddress = 'ZAC-' + Math.random().toString(36).substring(2, 15).toUpperCase();
   document.getElementById('walletAddress').innerText = newAddress;
   alert('New in-app wallet generated!');
 }
 
 function refreshZACBalance() {
-  // Placeholder logic for balance update
   document.getElementById('zacBalance').innerText = (Math.random() * 100).toFixed(2) + ' ZAC';
 }
 
 function refreshUSDTBalance() {
   document.getElementById('usdtBalance').innerText = (Math.random() * 50).toFixed(2) + ' USDT';
+}
+
+// Wallet action placeholders
+function topUp() {
+  const amount = prompt("Enter amount to top up:");
+  if(amount) alert(`Successfully topped up ${amount} ZAC!`);
+}
+
+function withdraw() {
+  const amount = prompt("Enter amount to withdraw:");
+  if(amount) alert(`Successfully withdrew ${amount} ZAC!`);
+}
+
+function requestSwap() {
+  const amount = prompt("Enter amount to swap:");
+  if(amount) alert(`Swap request for ${amount} ZAC submitted!`);
 }
 </script>
 
