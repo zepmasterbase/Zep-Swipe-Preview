@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -17,6 +18,7 @@ body {
   color: #fff;
   overflow-x: hidden;
   scroll-behavior: smooth;
+  perspective: 1000px;
   position: relative;
 }
 
@@ -62,10 +64,11 @@ body::before {
   border: 1px solid rgba(0,255,255,0.25);
   border-radius: 2rem;
   transition: all 0.4s ease;
+  transform-style: preserve-3d;
 }
 .glass:hover {
   box-shadow: 0 0 30px #0ff, 0 0 50px #ff0, 0 0 80px #ff00ff;
-  transform: scale(1.05);
+  transform: scale(1.05) translateZ(20px);
 }
 
 /* Buttons */
@@ -104,6 +107,7 @@ footer button span { font-size: 0.75rem; }
   pointer-events: none;
   mix-blend-mode: screen;
   animation: floatOrb ease-in-out infinite;
+  transform-style: preserve-3d;
 }
 @keyframes floatOrb {
   0% { transform: translateY(0) scale(1); opacity:0.3; }
@@ -187,6 +191,7 @@ window.addEventListener('scroll', () => {
 
 // Neon Orbs
 const orbsContainer = document.getElementById('orbs-container');
+const orbs = [];
 for(let i=0;i<15;i++){
   const orb = document.createElement('div');
   orb.classList.add('neon-orb');
@@ -204,7 +209,21 @@ for(let i=0;i<15;i++){
   orb.style.animationDuration = (Math.random()*10 + 5) + 's';
   orb.style.animationDirection = Math.random() > 0.5 ? 'normal' : 'reverse';
   orbsContainer.appendChild(orb);
+  orbs.push(orb);
 }
+
+// 3D Parallax Effect
+window.addEventListener('mousemove', e => {
+  const x = (e.clientX / window.innerWidth - 0.5) * 30; // rotation X
+  const y = (e.clientY / window.innerHeight - 0.5) * 30; // rotation Y
+  document.querySelectorAll('.glass').forEach(el => {
+    el.style.transform = `rotateY(${x}deg) rotateX(${-y}deg) scale(1.05)`;
+  });
+  orbs.forEach((orb, idx) => {
+    const speed = (idx+1)/30;
+    orb.style.transform = `translate3d(${x*speed}px, ${-y*speed}px, 0) scale(${1 + speed/2})`;
+  });
+});
 </script>
 
 </body>
