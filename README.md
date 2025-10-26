@@ -1,9 +1,8 @@
-<!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Zep Swipe — Futuristic SuperApp MVP</title>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Zep Swipe — Web3 SuperApp</title>
 
 <!-- TailwindCSS -->
 <script src="https://cdn.tailwindcss.com"></script>
@@ -12,14 +11,14 @@
 <script src="https://unpkg.com/lucide@latest"></script>
 
 <!-- Fonts -->
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
 
 <style>
   body {
     font-family: 'Inter', sans-serif;
-    background: radial-gradient(circle at 20% 20%, #0b0c1a, #08051b, #05021a);
+    background: radial-gradient(circle at 20% 20%, #070713, #0b0c1f, #00010f);
     color: white;
-    overflow-x: hidden;
+    overflow: hidden;
     scroll-behavior: smooth;
   }
 
@@ -29,7 +28,7 @@
     background: linear-gradient(90deg, #00f0ff, #ff00d4);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
-    text-shadow: 0 0 20px rgba(0,255,255,0.3);
+    text-shadow: 0 0 15px rgba(0,255,255,0.4);
   }
 
   .glass {
@@ -52,13 +51,22 @@
     box-shadow: 0 0 20px rgba(0,255,255,0.4);
   }
 
+  canvas#bg-orbs {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    z-index: -1;
+  }
+
   .hidden-section { display: none; }
   .active-section { display: block; }
 
   .footer-icon { width: 22px; height: 22px; }
 </style>
 </head>
-<body class="relative">
+
+<body>
+<canvas id="bg-orbs"></canvas>
 
 <!-- HEADER -->
 <header class="fixed top-0 left-0 w-full glass px-6 py-4 flex justify-between items-center z-40">
@@ -70,12 +78,10 @@
 </header>
 
 <main class="pt-24 pb-20">
-
   <!-- HOME -->
   <section id="dashboard" class="active-section px-6 text-center">
-    <h2 class="text-3xl md:text-4xl font-bold mb-4 neon-text">Welcome to Zep Swipe Light</h2>
-    <p class="text-gray-300 mb-8 max-w-lg mx-auto">Explore payments, chat, shop, and learn in the futuristic SuperApp for students — no login required.</p>
-
+    <h2 class="text-4xl font-bold mb-4 neon-text">Zep Swipe Light</h2>
+    <p class="text-gray-300 mb-6 max-w-lg mx-auto">Explore payments, chat, shop, and learn in Africa’s Web3 SuperApp — no login required.</p>
     <div class="grid grid-cols-2 gap-4 max-w-md mx-auto mb-10">
       <button onclick="showSection('learn')" class="glass py-4 rounded-xl hover:scale-105 transition flex flex-col items-center">
         <i data-lucide="graduation-cap" class="footer-icon text-cyan-400 mb-1"></i>
@@ -96,24 +102,24 @@
     </div>
 
     <!-- ROADMAP -->
-    <div class="max-w-3xl mx-auto">
+    <div class="max-w-3xl mx-auto fade-up">
       <h3 class="text-2xl font-bold neon-text mb-4">🚀 2025 Roadmap</h3>
       <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-        <div class="glass p-4 rounded-xl text-left">
-          <h4 class="font-semibold text-cyan-400 mb-2">Q1 — Beta Launch</h4>
-          <p class="text-gray-400 text-sm">Launch Zep Swipe Light, enable Learn & Earn and in-app chat prototype.</p>
+        <div class="glass p-4 rounded-xl text-left hover:shadow-cyan-400/30 transition">
+          <h4 class="font-semibold text-cyan-400 mb-1">Q1 — Beta Launch</h4>
+          <p class="text-gray-400 text-sm">Zep Swipe Light & Learn + Earn MVP.</p>
         </div>
-        <div class="glass p-4 rounded-xl text-left">
-          <h4 class="font-semibold text-pink-400 mb-2">Q2 — On-Chain Rewards</h4>
-          <p class="text-gray-400 text-sm">Integrate mock wallet and simulate tokenized rewards using $ZAC.</p>
+        <div class="glass p-4 rounded-xl text-left hover:shadow-pink-400/30 transition">
+          <h4 class="font-semibold text-pink-400 mb-1">Q2 — On-Chain Rewards</h4>
+          <p class="text-gray-400 text-sm">ZAC token integration & wallet XP sync.</p>
         </div>
-        <div class="glass p-4 rounded-xl text-left">
-          <h4 class="font-semibold text-purple-400 mb-2">Q3 — Marketplace Expansion</h4>
-          <p class="text-gray-400 text-sm">Enable student merchants and cross-campus transactions.</p>
+        <div class="glass p-4 rounded-xl text-left hover:shadow-purple-400/30 transition">
+          <h4 class="font-semibold text-purple-400 mb-1">Q3 — Marketplace</h4>
+          <p class="text-gray-400 text-sm">Student-run merchant hubs.</p>
         </div>
-        <div class="glass p-4 rounded-xl text-left">
-          <h4 class="font-semibold text-green-400 mb-2">Q4 — Full Zep Network</h4>
-          <p class="text-gray-400 text-sm">Launch wallet connection, live leaderboard, and token staking.</p>
+        <div class="glass p-4 rounded-xl text-left hover:shadow-green-400/30 transition">
+          <h4 class="font-semibold text-green-400 mb-1">Q4 — Global Rollout</h4>
+          <p class="text-gray-400 text-sm">Cross-campus network with smart payments.</p>
         </div>
       </div>
     </div>
@@ -122,65 +128,52 @@
   <!-- LEARN -->
   <section id="learn" class="hidden-section px-6 text-center">
     <h2 class="text-3xl font-bold mb-4 neon-text">Learn & Earn</h2>
-    <p class="text-gray-300 mb-6">Progress through lessons to earn rewards.</p>
     <div class="max-w-md mx-auto glass p-6 rounded-xl">
-      <div class="flex justify-between items-center mb-3">
+      <div class="flex justify-between mb-3 text-sm">
         <span>Level: <span id="level">1</span>/5</span>
         <span>XP: <span id="xp">0</span>/100</span>
       </div>
       <div class="w-full bg-gray-700 h-3 rounded-full mb-4">
-        <div id="progress-bar" class="h-3 bg-gradient-to-r from-cyan-400 to-pink-500 rounded-full" style="width: 0%;"></div>
+        <div id="progress-bar" class="h-3 bg-gradient-to-r from-cyan-400 to-pink-500 rounded-full" style="width:0%;"></div>
       </div>
-      <button id="complete-level" class="gradient-btn px-4 py-2 rounded-lg mt-2">Complete Lesson</button>
+      <button id="complete-level" class="gradient-btn px-4 py-2 mt-2">Complete Lesson</button>
       <p id="badge" class="mt-3 text-sm text-gray-400">Earn XP to unlock ZAC rewards</p>
-    </div>
-  </section>
-
-  <!-- SHOP -->
-  <section id="shop" class="hidden-section px-6 text-center">
-    <h2 class="text-3xl font-bold mb-4 neon-text">Shop</h2>
-    <p class="text-gray-300 mb-6">Discover digital-first student products.</p>
-    <div class="grid grid-cols-2 gap-4 max-w-lg mx-auto">
-      <div class="glass p-4 rounded-xl">
-        <h3>Crypto Hoodie</h3>
-        <p class="text-sm text-gray-400">50 ZAC</p>
-        <button onclick="promptUnlock()" class="gradient-btn text-black px-3 py-1 rounded-lg mt-2">Buy</button>
-      </div>
-      <div class="glass p-4 rounded-xl">
-        <h3>Wallet Keychain</h3>
-        <p class="text-sm text-gray-400">30 ZAC</p>
-        <button onclick="promptUnlock()" class="gradient-btn text-black px-3 py-1 rounded-lg mt-2">Buy</button>
-      </div>
     </div>
   </section>
 
   <!-- CHAT -->
   <section id="chat" class="hidden-section px-6 text-center">
     <h2 class="text-3xl font-bold mb-4 neon-text">Chat</h2>
-    <div id="chat-box" class="max-w-md mx-auto glass p-4 rounded-xl flex flex-col h-[400px] overflow-y-auto">
-      <div class="self-start glass p-2 rounded-lg mb-2 text-sm text-gray-200">👋 Welcome to Zep Chat!</div>
+
+    <div class="glass p-4 rounded-xl max-w-md mx-auto mb-4">
+      <select id="contact-select" class="w-full p-2 rounded-lg bg-[#0a0a0a] border border-gray-600 mb-2 text-sm text-white">
+        <option value="">Select Contact</option>
+      </select>
+      <div class="flex gap-2">
+        <input id="contact-name" type="text" placeholder="Add new contact" class="flex-1 p-2 rounded-lg bg-[#0a0a0a] border border-gray-600 text-white">
+        <button onclick="addContact()" class="gradient-btn px-3 py-1">Add</button>
+      </div>
     </div>
+
+    <div id="chat-box" class="max-w-md mx-auto glass p-4 rounded-xl flex flex-col h-[350px] overflow-y-auto"></div>
+
     <div class="flex gap-2 max-w-md mx-auto mt-3">
-      <input id="chat-input" type="text" placeholder="Type a message..." class="flex-1 p-2 rounded-lg bg-[#0a0a0a] border border-gray-600 focus:outline-none text-white">
-      <button onclick="sendChat()" class="gradient-btn px-4 py-2 rounded-lg">Send</button>
+      <input id="chat-input" type="text" placeholder="Type a message..." class="flex-1 p-2 rounded-lg bg-[#0a0a0a] border border-gray-600 text-white">
+      <button onclick="sendChat()" class="gradient-btn px-4 py-2">Send</button>
     </div>
-    <button onclick="addContact()" class="mt-3 text-sm text-cyan-400 underline">➕ Add Contact</button>
   </section>
 
 </main>
 
-<!-- FOOTER NAV -->
-<footer class="fixed bottom-0 left-0 w-full glass flex justify-around py-3 z-40 text-sm">
-  <button onclick="showSection('dashboard')" class="footer-btn flex flex-col items-center">
+<!-- FOOTER -->
+<footer class="fixed bottom-0 left-0 w-full glass flex justify-around py-3 text-sm z-40">
+  <button onclick="showSection('dashboard')" class="flex flex-col items-center">
     <i data-lucide="home" class="footer-icon"></i><span>Home</span>
   </button>
-  <button onclick="showSection('learn')" class="footer-btn flex flex-col items-center">
+  <button onclick="showSection('learn')" class="flex flex-col items-center">
     <i data-lucide="graduation-cap" class="footer-icon"></i><span>Learn</span>
   </button>
-  <button onclick="showSection('shop')" class="footer-btn flex flex-col items-center">
-    <i data-lucide="shopping-bag" class="footer-icon"></i><span>Shop</span>
-  </button>
-  <button onclick="showSection('chat')" class="footer-btn flex flex-col items-center">
+  <button onclick="showSection('chat')" class="flex flex-col items-center">
     <i data-lucide="message-circle" class="footer-icon"></i><span>Chat</span>
   </button>
 </footer>
@@ -189,22 +182,20 @@
 // Initialize icons
 lucide.createIcons();
 
-// Section navigation
-let currentSection = 'dashboard';
+// Section nav
+let current = 'dashboard';
 function showSection(id) {
-  document.getElementById(currentSection).classList.add('hidden-section');
+  document.getElementById(current).classList.add('hidden-section');
   document.getElementById(id).classList.remove('hidden-section');
-  currentSection = id;
+  current = id;
 }
 
-// Learn system
+// Learn module
 let xp = 0, level = 1, zac = 120;
 document.getElementById('complete-level').addEventListener('click', () => {
   xp += 25;
   if (xp >= 100 && level < 5) {
-    xp = 0;
-    level++;
-    zac += 10;
+    xp = 0; level++; zac += 10;
     document.getElementById('wallet-balance').textContent = zac;
     document.getElementById('badge').textContent = `🏅 Level ${level} unlocked! +10 ZAC`;
   }
@@ -213,8 +204,23 @@ document.getElementById('complete-level').addEventListener('click', () => {
   document.getElementById('progress-bar').style.width = `${xp}%`;
 });
 
-// Chat system
+// Chat + Contacts
+let contacts = {};
+function addContact() {
+  const name = document.getElementById('contact-name').value.trim();
+  if (!name) return alert('Enter a name');
+  if (contacts[name]) return alert('Contact already exists');
+  contacts[name] = [];
+  const option = document.createElement('option');
+  option.value = name; option.textContent = name;
+  document.getElementById('contact-select').appendChild(option);
+  document.getElementById('contact-name').value = '';
+  alert(`📱 ${name} added`);
+}
+
 function sendChat() {
+  const contact = document.getElementById('contact-select').value;
+  if (!contact) return alert('Select a contact first');
   const input = document.getElementById('chat-input');
   const msg = input.value.trim();
   if (!msg) return;
@@ -223,13 +229,57 @@ function sendChat() {
   div.className = 'self-end glass p-2 rounded-lg mb-2 text-sm text-white bg-opacity-30';
   div.textContent = msg;
   chatBox.appendChild(div);
+  contacts[contact].push(msg);
   input.value = '';
   chatBox.scrollTop = chatBox.scrollHeight;
 }
 
-function addContact() { alert('📱 Contact added (mock action).'); }
-function promptUnlock() { alert('🔓 Unlock full access to buy using your wallet.'); }
-function unlockFullAccess() { alert('🌐 Connect wallet or phone to unlock full access.'); }
+function unlockFullAccess() {
+  alert('🔓 Connect wallet or phone to unlock full access.');
+}
+
+// Floating orbs background
+const canvas = document.getElementById('bg-orbs');
+const ctx = canvas.getContext('2d');
+let orbs = [];
+let w, h;
+
+function resize() {
+  w = canvas.width = window.innerWidth;
+  h = canvas.height = window.innerHeight;
+}
+window.addEventListener('resize', resize);
+resize();
+
+for (let i=0; i<30; i++) {
+  orbs.push({
+    x: Math.random()*w,
+    y: Math.random()*h,
+    r: Math.random()*3+1,
+    dx: (Math.random()-0.5)*0.6,
+    dy: (Math.random()-0.5)*0.6,
+    color: `hsl(${Math.random()*360},100%,60%)`
+  });
+}
+
+function animate() {
+  ctx.clearRect(0,0,w,h);
+  for (let orb of orbs) {
+    orb.x += orb.dx;
+    orb.y += orb.dy;
+    if (orb.x < 0 || orb.x > w) orb.dx *= -1;
+    if (orb.y < 0 || orb.y > h) orb.dy *= -1;
+    ctx.beginPath();
+    const gradient = ctx.createRadialGradient(orb.x,orb.y,0,orb.x,orb.y,orb.r*3);
+    gradient.addColorStop(0, orb.color);
+    gradient.addColorStop(1, 'transparent');
+    ctx.fillStyle = gradient;
+    ctx.arc(orb.x, orb.y, orb.r*3, 0, Math.PI*2);
+    ctx.fill();
+  }
+  requestAnimationFrame(animate);
+}
+animate();
 </script>
 </body>
 </html>
