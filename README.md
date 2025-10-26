@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -13,37 +14,55 @@
 /* Base */
 body {
   font-family: 'Roboto', sans-serif;
-  background: radial-gradient(circle at top, #0a0a1a, #05050d);
+  background: #0a0a10;
   color: #fff;
   overflow-x: hidden;
   scroll-behavior: smooth;
   position: relative;
 }
 
-/* Neon Gradient Text */
+/* Animated background streak */
+body::before {
+  content: "";
+  position: fixed;
+  top:0; left:0;
+  width:100%; height:100%;
+  background: linear-gradient(135deg, #0ff 0%, #f0f 50%, #ff0 100%);
+  background-size: 400% 400%;
+  z-index: -1;
+  animation: gradientMove 20s linear infinite;
+  opacity: 0.15;
+}
+@keyframes gradientMove {
+  0%{background-position:0% 50%;}
+  50%{background-position:100% 50%;}
+  100%{background-position:0% 50%;}
+}
+
+/* Neon Text */
 .neon-text {
   font-family: 'Orbitron', sans-serif;
   background: linear-gradient(90deg, #0ff, #ff0, #f0f);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-  text-shadow: 0 0 5px #0ff, 0 0 15px #ff0, 0 0 25px #f0f, 0 0 50px #0ff;
-  transition: all 0.3s ease;
+  text-shadow: 0 0 8px #0ff, 0 0 20px #ff0, 0 0 35px #f0f;
+  transition: all 0.4s ease;
 }
 .neon-text:hover {
-  text-shadow: 0 0 10px #0ff, 0 0 25px #ff0, 0 0 40px #f0f, 0 0 80px #0ff;
+  text-shadow: 0 0 15px #0ff, 0 0 30px #ff0, 0 0 50px #f0f;
 }
 
-/* Glassmorphism Panels */
+/* Glass Panels */
 .glass {
-  background: rgba(255,255,255,0.05);
-  backdrop-filter: blur(20px);
-  border: 1px solid rgba(0,255,255,0.15);
-  border-radius: 1.5rem;
-  transition: all 0.3s ease;
+  background: rgba(255,255,255,0.04);
+  backdrop-filter: blur(25px);
+  border: 1px solid rgba(0,255,255,0.2);
+  border-radius: 2rem;
+  transition: all 0.4s ease;
 }
 .glass:hover {
-  box-shadow: 0 0 25px #0ff, 0 0 40px #ff0, 0 0 50px #f0f;
-  transform: scale(1.02);
+  box-shadow: 0 0 25px #0ff, 0 0 40px #ff0, 0 0 60px #f0f;
+  transform: scale(1.03);
 }
 
 /* Buttons */
@@ -51,26 +70,26 @@ body {
   background: linear-gradient(90deg, #0ff, #ff0, #f0f);
   color: #111124;
   font-weight: 600;
-  border-radius: 1rem;
-  padding: 0.75rem 1.75rem;
-  transition: all 0.3s ease;
+  border-radius: 1.5rem;
+  padding: 0.75rem 2rem;
+  transition: all 0.4s ease;
 }
 .neon-btn:hover {
-  transform: translateY(-2px) scale(1.08);
-  box-shadow: 0 0 15px #0ff, 0 0 25px #ff0, 0 0 35px #f0f;
+  transform: translateY(-3px) scale(1.1);
+  box-shadow: 0 0 20px #0ff, 0 0 35px #ff0, 0 0 50px #f0f;
 }
 
 /* Footer Icons */
 .footer-icon { width:28px;height:28px; }
 
 /* Fade-up Animations */
-.fade-up { opacity: 0; transform: translateY(30px); transition: all 0.7s ease; }
+.fade-up { opacity: 0; transform: translateY(30px); transition: all 0.8s cubic-bezier(0.68,-0.55,0.27,1.55); }
 .fade-up.show { opacity: 1; transform: translateY(0); }
 
 /* Sections */
 section { padding: 6rem 1rem; }
 section#home { text-align: center; }
-.grid-button i { font-size: 2.2rem; margin-bottom: 0.5rem; }
+.grid-button i { font-size: 2.5rem; margin-bottom: 0.5rem; }
 
 /* Footer */
 footer button span { font-size: 0.75rem; }
@@ -81,35 +100,35 @@ footer button span { font-size: 0.75rem; }
   border-radius: 50%;
   pointer-events: none;
   mix-blend-mode: screen;
-  animation: floatOrb linear infinite;
+  animation: floatOrb ease-in-out infinite;
 }
 @keyframes floatOrb {
-  0% { transform: translateY(0) scale(1); opacity: 0.5; }
-  50% { transform: translateY(-50px) scale(1.3); opacity: 1; }
-  100% { transform: translateY(0) scale(1); opacity: 0.5; }
+  0% { transform: translateY(0) scale(1); opacity:0.4; }
+  50% { transform: translateY(-60px) scale(1.2); opacity:1; }
+  100% { transform: translateY(0) scale(1); opacity:0.4; }
 }
 </style>
 </head>
 
 <body>
 
-<header class="fixed top-0 left-0 w-full glass px-6 py-4 flex justify-between items-center z-50">
+<header class="fixed top-0 left-0 w-full glass px-8 py-4 flex justify-between items-center z-50">
   <h1 class="text-3xl md:text-4xl font-bold neon-text">Zep Swipe</h1>
-  <div class="flex items-center gap-3 text-sm text-cyan-200">
+  <div class="flex items-center gap-4 text-sm text-cyan-200">
     <i data-lucide="wallet" class="footer-icon text-cyan-400"></i>
     <span>Balance: <span id="wallet">120</span> ZAC</span>
   </div>
 </header>
 
-<main class="pt-32 pb-28">
+<main class="pt-32 pb-32">
 
 <section id="home" class="fade-up">
   <h2 class="text-5xl md:text-6xl font-bold neon-text mb-6">Welcome to Zep Swipe</h2>
   <p class="text-cyan-300 mb-12 max-w-3xl mx-auto text-lg md:text-xl">
-    Africa’s Student & Vendor SuperApp — Learn, Chat, Shop & Transact seamlessly with a neon campus vibe.
+    Africa’s Student & Vendor SuperApp — Learn, Chat, Shop & Transact seamlessly with a futuristic neon campus vibe.
   </p>
 
-  <div class="grid grid-cols-2 md:grid-cols-4 gap-8 max-w-5xl mx-auto">
+  <div class="grid grid-cols-2 md:grid-cols-4 gap-10 max-w-6xl mx-auto">
     <button onclick="window.location.href='/dashboards/learn'" class="glass py-6 rounded-2xl flex flex-col items-center hover:scale-105 transition grid-button">
       <i data-lucide="graduation-cap" class="footer-icon text-cyan-400"></i>
       <span>Learn & Earn</span>
@@ -168,15 +187,18 @@ const orbsContainer = document.getElementById('orbs-container');
 for(let i=0;i<12;i++){
   const orb = document.createElement('div');
   orb.classList.add('neon-orb');
-  const size = Math.random()*35+25;
+  const size = Math.random()*40+30;
   orb.style.width = orb.style.height = size + 'px';
-  const r = Math.floor(Math.random()*255);
-  const g = Math.floor(Math.random()*255);
-  const b = 255;
-  orb.style.background = `radial-gradient(circle, rgba(${r},${g},${b},0.7), transparent)`;
+  const colors = [
+    "rgba(0,255,255,0.7)",
+    "rgba(255,0,255,0.7)",
+    "rgba(255,255,0,0.7)"
+  ];
+  orb.style.background = `radial-gradient(circle, ${colors[Math.floor(Math.random()*3)]}, transparent)`;
   orb.style.top = Math.random()*window.innerHeight + 'px';
   orb.style.left = Math.random()*window.innerWidth + 'px';
-  orb.style.animationDuration = (Math.random()*12 + 6) + 's';
+  orb.style.animationDuration = (Math.random()*10 + 5) + 's';
+  orb.style.animationDirection = Math.random() > 0.5 ? 'normal' : 'reverse';
   orbsContainer.appendChild(orb);
 }
 </script>
