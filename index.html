@@ -1,0 +1,212 @@
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Zep Swipe — Neon Campus Wallet</title>
+
+<!-- Tailwind + Fonts + Icons -->
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700&family=Roboto:wght@400;500&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+
+<style>
+body {
+  font-family: 'Roboto', sans-serif;
+  background: #1b0f3a;
+  color: #fff;
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  align-items: center;
+}
+
+.neon-text {
+  font-family: 'Orbitron', sans-serif;
+  font-weight: 700;
+  font-size: 2.5rem;
+  background: linear-gradient(90deg, #00f0ff, #ff00f0);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-align: center;
+  margin-top: 5rem;
+  margin-bottom: 1rem;
+  animation: neonPulse 2s infinite alternate;
+}
+
+@keyframes neonPulse {
+  from { text-shadow: 0 0 5px #00f0ff, 0 0 10px #ff00f0; }
+  to { text-shadow: 0 0 20px #00f0ff, 0 0 30px #ff00f0; }
+}
+
+.subtitle {
+  color: #c0bdf4;
+  text-align: center;
+  max-width: 360px;
+  margin-bottom: 2rem;
+  line-height: 1.5;
+}
+
+.btn {
+  display: block;
+  width: 260px;
+  text-align: center;
+  font-weight: 500;
+  padding: 0.75rem 1rem;
+  border-radius: 1rem;
+  margin: 0.5rem auto;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.btn-gradient {
+  background: linear-gradient(90deg, #00f0ff, #ff00f0);
+  color: #1b0f3a;
+}
+
+.btn-gradient:hover {
+  opacity: 0.9;
+  transform: scale(1.05);
+}
+
+.btn-outline {
+  border: 2px solid #7c63ff;
+  color: #c0bdf4;
+  background: transparent;
+}
+
+.btn-outline:hover {
+  background: rgba(124, 99, 255, 0.2);
+  transform: scale(1.03);
+}
+
+.header {
+  width: 100%;
+  padding: 1rem 2rem;
+  position: fixed;
+  top: 0;
+  left: 0;
+  backdrop-filter: blur(10px);
+  background: linear-gradient(90deg, rgba(0,240,255,0.3), rgba(255,0,240,0.3));
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 50;
+  box-shadow: 0 0 20px rgba(255,0,240,0.3);
+}
+
+.header h1 {
+  font-family: 'Orbitron', sans-serif;
+  font-weight: 700;
+  font-size: 1.5rem;
+  background: linear-gradient(90deg, #00f0ff, #ff00f0);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  cursor: pointer;
+}
+
+.menu-button {
+  font-size: 1.5rem;
+  color: #fff;
+  cursor: pointer;
+}
+
+.dropdown {
+  position: absolute;
+  top: 60px;
+  right: 20px;
+  background: rgba(27,15,58,0.95);
+  backdrop-filter: blur(10px);
+  border: 1px solid #7c63ff;
+  border-radius: 1rem;
+  overflow: hidden;
+  display: none;
+  flex-direction: column;
+  min-width: 160px;
+  z-index: 100;
+}
+
+.dropdown a {
+  padding: 0.75rem 1rem;
+  color: #fff;
+  text-decoration: none;
+  transition: background 0.3s;
+}
+
+.dropdown a:hover {
+  background: rgba(124,99,255,0.2);
+}
+
+.footer {
+  width: 100%;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  backdrop-filter: blur(10px);
+  background: linear-gradient(90deg, rgba(0,240,255,0.2), rgba(255,0,240,0.2));
+  display: flex;
+  justify-content: space-around;
+  padding: 0.75rem 0;
+  box-shadow: 0 -2px 20px rgba(255,0,240,0.2);
+}
+
+.footer a {
+  color: #fff;
+  font-size: 1.5rem;
+  transition: transform 0.2s ease;
+}
+
+.footer a:hover {
+  transform: scale(1.2);
+}
+</style>
+</head>
+<body>
+
+<header class="header">
+  <h1>Zep Swipe</h1>
+  <div class="menu-container relative">
+    <span class="menu-button"><i class="fas fa-bars"></i></span>
+    <div class="dropdown">
+      <a href="#">Roadmap</a>
+      <a href="#">Start Quiz</a>
+      <a href="#">Chat</a>
+    </div>
+  </div>
+</header>
+
+<h1 class="neon-text">Zep Swipe — Neon Campus Wallet</h1>
+<p class="subtitle">
+Earn <span style="color:#ff00f0;">$ZAC</span> for learning and engagement. Redeem, spend, or stake with friends — your Web3 wallet built for African students.
+</p>
+
+<button class="btn btn-gradient">Connect Wallet</button>
+<button class="btn btn-outline">Connect with Mobile Number</button>
+<button class="btn btn-outline">Start Quiz</button>
+
+<footer class="footer">
+  <a href="dashboard-home.html"><i class="fas fa-home"></i></a>
+  <a href="dashboard-wallet.html"><i class="fas fa-wallet"></i></a>
+  <a href="dashboard-store.html"><i class="fas fa-store"></i></a>
+  <a href="dashboard-chat.html"><i class="fas fa-comment-dots"></i></a>
+</footer>
+
+<script>
+const menuButton = document.querySelector('.menu-button');
+const dropdown = document.querySelector('.dropdown');
+
+menuButton.addEventListener('click', () => {
+  dropdown.style.display = dropdown.style.display === 'flex' ? 'none' : 'flex';
+});
+
+document.addEventListener('click', (e) => {
+  if (!e.target.closest('.menu-container')) {
+    dropdown.style.display = 'none';
+  }
+});
+</script>
+
+</body>
+</html>
