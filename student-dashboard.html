@@ -1,15 +1,165 @@
-<!-- student-dashboard.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<title>Student Dashboard - Zep Swipe</title>
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css">
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Zep Swipe — Student Dashboard</title>
+
+<!-- Tailwind + Fonts + Icons -->
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700&family=Poppins:wght@400;500;600&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+
+<style>
+body {
+  font-family: 'Poppins', sans-serif;
+  background: radial-gradient(circle at top, #120b2e 0%, #0b0520 100%);
+  color: #fff;
+  margin: 0;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+/* Header */
+.header {
+  width: 100%;
+  padding: 1rem 1.5rem;
+  position: fixed;
+  top: 0;
+  left: 0;
+  backdrop-filter: blur(10px);
+  background: rgba(15,5,32,0.8);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 50;
+  box-shadow: 0 0 20px rgba(0,240,255,0.3);
+}
+.header h1 {
+  font-family: 'Orbitron', sans-serif;
+  font-weight: 700;
+  font-size: 1.4rem;
+  background: linear-gradient(90deg, #00f0ff, #ff00f0);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.menu-button {
+  font-size: 1.5rem;
+  cursor: pointer;
+  color: #00f0ff;
+}
+
+/* Main Dashboard */
+.main {
+  margin-top: 6rem;
+  text-align: center;
+  padding: 2rem 1rem 6rem;
+}
+
+.balance-card {
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 1rem;
+  padding: 1.5rem;
+  width: 90%;
+  max-width: 400px;
+  margin: 0 auto 1.5rem;
+  box-shadow: 0 0 20px rgba(0,240,255,0.3);
+}
+.balance-card h2 {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 1.1rem;
+  color: #c0bdf4;
+  margin-bottom: 0.5rem;
+}
+.balance-amount {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #00f0ff;
+}
+
+/* Learn & Earn Banner */
+.learn-banner {
+  background: linear-gradient(90deg, #00f0ff, #ff00f0);
+  color: #0b0520;
+  padding: 1rem;
+  border-radius: 1rem;
+  width: 90%;
+  max-width: 400px;
+  margin: 0 auto;
+  box-shadow: 0 0 25px rgba(255,0,240,0.3);
+  font-weight: 600;
+  transition: 0.3s;
+}
+.learn-banner:hover {
+  transform: scale(1.05);
+  background: linear-gradient(90deg, #ff00f0, #00f0ff);
+}
+
+/* Footer Nav */
+.footer {
+  width: 100%;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  backdrop-filter: blur(8px);
+  background: rgba(15,5,32,0.7);
+  display: flex;
+  justify-content: space-around;
+  padding: 0.7rem 0;
+  box-shadow: 0 -2px 20px rgba(255,0,240,0.2);
+}
+.footer i {
+  font-size: 1.5rem;
+  color: #00f0ff;
+  transition: 0.3s;
+  cursor: pointer;
+}
+.footer i:hover, .footer i.active {
+  color: #ff00f0;
+  transform: scale(1.2);
+}
+</style>
 </head>
-<body class="bg-[#0b0520] text-white flex items-center justify-center h-screen">
-  <div class="text-center">
-    <h1 class="text-2xl font-bold text-cyan-400">Welcome to Student Dashboard 🎓</h1>
-    <p>Your ZAC wallet is connected.</p>
+
+<body>
+
+<!-- Header -->
+<header class="header">
+  <h1>Zep Swipe</h1>
+  <i class="fas fa-bars menu-button"></i>
+</header>
+
+<!-- Main Section -->
+<main class="main">
+  <!-- ZAC Balance -->
+  <div class="balance-card">
+    <h2>ZAC Balance</h2>
+    <p class="balance-amount">1,250.45 ZAC</p>
   </div>
+
+  <!-- USDT Placeholder -->
+  <div class="balance-card">
+    <h2>USDT Balance</h2>
+    <p class="balance-amount">Coming Soon...</p>
+  </div>
+
+  <!-- Learn & Earn Banner -->
+  <a href="https://www.google.com" target="_blank" class="learn-banner block text-center">
+    🎓 Learn & Earn ZAC — Click Here to Start
+  </a>
+</main>
+
+<!-- Footer Navigation -->
+<footer class="footer">
+  <i class="fas fa-comment-dots"></i>
+  <i class="fas fa-wallet"></i>
+  <i class="fas fa-store"></i>
+  <i class="fas fa-fire"></i>
+  <i class="fas fa-user"></i>
+</footer>
+
 </body>
 </html>
