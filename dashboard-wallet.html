@@ -114,6 +114,7 @@ main { padding: 6rem 1rem 12rem 1rem; }
 </style>
 </head>
 <body>
+
 <header class="header">
   <div class="logo">Zep Wallet</div>
   <div class="balance" id="walletBalance">$3,780.35</div>
@@ -169,61 +170,4 @@ main { padding: 6rem 1rem 12rem 1rem; }
     <h3>Zep POS</h3>
     <button onclick="window.location.href='dashboard-pos.html'">Go to POS</button>
   </div>
-</main>
-
-<!-- Modal -->
-<div id="modal" class="modal">
-  <div class="modal-content">
-    <h3 id="modalTitle">Action</h3>
-    <select id="modalOption" style="margin-bottom:0.5rem;">
-      <option value="wallet">Wallet Top-Up</option>
-      <option value="momo">Momo Top-Up</option
-<footer class="footer">
-  <a href="index.html"><i class="fas fa-home"></i> Home</a>
-  <a href="dashboard-chat.html"><i class="fas fa-comments"></i> Chat</a>
-  <a href="#"><i class="fas fa-wallet"></i> Wallet</a>
-  <a href="profile.html"><i class="fas fa-user"></i> Profile</a>
-</footer>
-
-<script>
-let currentAction = '';
-let currentCoin = '';
-
-function openModal(action, coin='') {
-  currentAction = action;
-  currentCoin = coin;
-  document.getElementById('modalTitle').innerText = 
-    action.charAt(0).toUpperCase() + action.slice(1) + ' ' + coin;
-  document.getElementById('modal').style.display = 'flex';
-
-  // Show wallet connect button only for wallet top-up
-  const option = document.getElementById('modalOption').value;
-  document.getElementById('walletConnectBtn').style.display =
-    (action === 'topup' && option === 'wallet') ? 'block' : 'none';
-}
-
-function closeModal() {
-  document.getElementById('modal').style.display = 'none';
-  document.getElementById('modalAmount').value = '';
-}
-
-function processModal() {
-  const amount = document.getElementById('modalAmount').value;
-  const option = document.getElementById('modalOption').value;
-  if (!amount || amount <= 0) { alert('Enter valid amount'); return; }
-  alert(`${currentAction.charAt(0).toUpperCase() + currentAction.slice(1)} ${amount} ${currentCoin} via ${option}`);
-  closeModal();
-}
-
-// Mock wallet connection
-function connectWallet() {
-  alert('Wallet connected for top-up!');
-}
-
-// Update wallet connect button display when top-up option changes
-document.getElementById('modalOption').addEventListener('change', () => {
-  const option = document.getElementById('modalOption').value;
-  document.getElementById('walletConnectBtn').style.display =
-    (option === 'wallet' && currentAction === 'topup') ? 'block' : 'none';
-});
-</script>
+</
