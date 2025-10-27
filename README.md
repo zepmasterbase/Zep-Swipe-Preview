@@ -1,103 +1,42 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Zep Swipe — Neon Campus Wallet</title>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Zep Swipe — Africa’s Student Super-App</title>
 
 <!-- Tailwind + Fonts + Icons -->
 <script src="https://cdn.tailwindcss.com"></script>
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700&family=Roboto:wght@400;500&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700&family=Poppins:wght@400;500;600&display=swap" rel="stylesheet" />
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
 
 <style>
 body {
-  font-family: 'Roboto', sans-serif;
-  background: #1b0f3a;
+  font-family: 'Poppins', sans-serif;
+  background: radial-gradient(circle at top, #120b2e 0%, #0b0520 100%);
   color: #fff;
   margin: 0;
   padding: 0;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-  justify-content: start;
-  align-items: center;
 }
 
-.neon-text {
-  font-family: 'Orbitron', sans-serif;
-  font-weight: 700;
-  font-size: 2.5rem;
-  background: linear-gradient(90deg, #00f0ff, #ff00f0);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  text-align: center;
-  margin-top: 5rem;
-  margin-bottom: 1rem;
-  animation: neonPulse 2s infinite alternate;
-}
-
-@keyframes neonPulse {
-  from { text-shadow: 0 0 5px #00f0ff, 0 0 10px #ff00f0; }
-  to { text-shadow: 0 0 20px #00f0ff, 0 0 30px #ff00f0; }
-}
-
-.subtitle {
-  color: #c0bdf4;
-  text-align: center;
-  max-width: 360px;
-  margin-bottom: 2rem;
-  line-height: 1.5;
-}
-
-.btn {
-  display: block;
-  width: 260px;
-  text-align: center;
-  font-weight: 500;
-  padding: 0.75rem 1rem;
-  border-radius: 1rem;
-  margin: 0.5rem auto;
-  cursor: pointer;
-  transition: all 0.3s ease;
-}
-
-.btn-gradient {
-  background: linear-gradient(90deg, #00f0ff, #ff00f0);
-  color: #1b0f3a;
-}
-
-.btn-gradient:hover {
-  opacity: 0.9;
-  transform: scale(1.05);
-}
-
-.btn-outline {
-  border: 2px solid #7c63ff;
-  color: #c0bdf4;
-  background: transparent;
-}
-
-.btn-outline:hover {
-  background: rgba(124, 99, 255, 0.2);
-  transform: scale(1.03);
-}
-
+/* Header */
 .header {
   width: 100%;
-  padding: 1rem 2rem;
+  padding: 1rem 1.5rem;
   position: fixed;
   top: 0;
   left: 0;
   backdrop-filter: blur(10px);
-  background: linear-gradient(90deg, rgba(0,240,255,0.3), rgba(255,0,240,0.3));
+  background: rgba(15,5,32,0.8);
   display: flex;
   justify-content: space-between;
   align-items: center;
   z-index: 50;
-  box-shadow: 0 0 20px rgba(255,0,240,0.3);
+  box-shadow: 0 0 20px rgba(0,240,255,0.3);
 }
-
 .header h1 {
   font-family: 'Orbitron', sans-serif;
   font-weight: 700;
@@ -105,108 +44,199 @@ body {
   background: linear-gradient(90deg, #00f0ff, #ff00f0);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-  cursor: pointer;
 }
-
 .menu-button {
   font-size: 1.5rem;
-  color: #fff;
   cursor: pointer;
 }
 
-.dropdown {
-  position: absolute;
-  top: 60px;
-  right: 20px;
-  background: rgba(27,15,58,0.95);
-  backdrop-filter: blur(10px);
-  border: 1px solid #7c63ff;
+/* Hero Section */
+.hero {
+  margin-top: 7rem;
+  text-align: center;
+  padding: 2rem 1rem;
+}
+.hero img {
+  width: 220px;
+  margin: 1rem auto;
+  filter: drop-shadow(0 0 15px #00f0ff);
+}
+.hero h2 {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 2rem;
+  background: linear-gradient(90deg, #00f0ff, #ff00f0);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin-bottom: 0.5rem;
+}
+.hero p {
+  color: #c0bdf4;
+  font-size: 1rem;
+  max-width: 340px;
+  margin: 0.5rem auto 2rem;
+  line-height: 1.6;
+}
+.btn {
+  display: block;
+  width: 280px;
+  margin: 0.5rem auto;
+  padding: 0.75rem;
   border-radius: 1rem;
-  overflow: hidden;
+  text-align: center;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+.btn-gradient {
+  background: linear-gradient(90deg, #00f0ff, #ff00f0);
+  color: #0b0520;
+}
+.btn-gradient:hover {
+  transform: scale(1.05);
+}
+.btn-outline {
+  border: 2px solid #7c63ff;
+  color: #c0bdf4;
+}
+.btn-outline:hover {
+  background: rgba(124,99,255,0.15);
+  transform: scale(1.03);
+}
+
+/* Modal Styles */
+.modal-bg {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: rgba(10,5,30,0.9);
+  backdrop-filter: blur(15px);
   display: none;
-  flex-direction: column;
-  min-width: 160px;
+  justify-content: center;
+  align-items: center;
   z-index: 100;
 }
-
-.dropdown a {
-  padding: 0.75rem 1rem;
+.modal {
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 1rem;
+  padding: 2rem;
+  width: 90%;
+  max-width: 400px;
+  text-align: center;
+  box-shadow: 0 0 25px rgba(0,240,255,0.3);
+}
+.modal h3 {
+  font-family: 'Orbitron', sans-serif;
+  margin-bottom: 1rem;
+  font-size: 1.3rem;
+  background: linear-gradient(90deg, #00f0ff, #ff00f0);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.input {
+  width: 100%;
+  padding: 0.75rem;
+  background: rgba(255,255,255,0.1);
+  border: none;
+  border-radius: 0.75rem;
   color: #fff;
-  text-decoration: none;
-  transition: background 0.3s;
+  margin-bottom: 1rem;
+}
+.modal button {
+  width: 100%;
 }
 
-.dropdown a:hover {
-  background: rgba(124,99,255,0.2);
-}
-
+/* Footer Nav */
 .footer {
   width: 100%;
   position: fixed;
   bottom: 0;
   left: 0;
-  backdrop-filter: blur(10px);
-  background: linear-gradient(90deg, rgba(0,240,255,0.2), rgba(255,0,240,0.2));
+  backdrop-filter: blur(8px);
+  background: rgba(15,5,32,0.7);
   display: flex;
   justify-content: space-around;
-  padding: 0.75rem 0;
+  padding: 0.7rem 0;
   box-shadow: 0 -2px 20px rgba(255,0,240,0.2);
 }
-
-.footer a {
-  color: #fff;
+.footer i {
   font-size: 1.5rem;
-  transition: transform 0.2s ease;
+  color: #00f0ff;
+  transition: 0.3s;
 }
-
-.footer a:hover {
+.footer i:hover, .footer i.active {
+  color: #ff00f0;
   transform: scale(1.2);
 }
 </style>
 </head>
+
 <body>
 
+<!-- Header -->
 <header class="header">
   <h1>Zep Swipe</h1>
-  <div class="menu-container relative">
-    <span class="menu-button"><i class="fas fa-bars"></i></span>
-    <div class="dropdown">
-      <a href="#">Roadmap</a>
-      <a href="#">Start Quiz</a>
-      <a href="#">Chat</a>
-    </div>
-  </div>
+  <i class="fas fa-bars menu-button"></i>
 </header>
 
-<h1 class="neon-text">Zep Swipe — Neon Campus Wallet</h1>
-<p class="subtitle">
-Earn <span style="color:#ff00f0;">$ZAC</span> for learning and engagement. Redeem, spend, or stake with friends — your Web3 wallet built for African students.
-</p>
+<!-- Hero Section -->
+<section class="hero">
+  <img src="https://cdn-icons-png.flaticon.com/512/706/706830.png" alt="Student Illustration" />
+  <h2>Learn. Earn. Trade.</h2>
+  <p>Your Digital Student Life Starts Here 🚀<br>
+  Choose your path to begin as a <span class="text-[#00f0ff]">Student</span> or <span class="text-[#ff00f0]">Vendor</span>.</p>
 
-<button class="btn btn-gradient">Connect Wallet</button>
-<button class="btn btn-outline">Connect with Mobile Number</button>
-<button class="btn btn-outline">Start Quiz</button>
+  <button class="btn btn-gradient" onclick="openModal('wallet')">
+    <i class="fas fa-wallet mr-2"></i> Connect Wallet
+  </button>
+  <button class="btn btn-outline" onclick="openModal('phone')">
+    <i class="fas fa-mobile-alt mr-2"></i> Continue with Phone
+  </button>
+</section>
 
+<!-- Login Modal -->
+<div id="loginModal" class="modal-bg">
+  <div class="modal">
+    <h3 id="modalTitle">Login / Signup</h3>
+    <div id="modalFields">
+      <input type="text" class="input" placeholder="Email or Phone" />
+      <input type="text" class="input" placeholder="Wallet Address (if any)" />
+    </div>
+    <button class="btn btn-gradient">Continue</button>
+    <p class="text-sm text-[#c0bdf4] mt-3">or sign in as</p>
+    <div class="flex justify-around mt-2">
+      <button class="btn-outline w-1/3 py-2 text-sm" onclick="switchRole('student')">🧑‍🎓 Student</button>
+      <button class="btn-outline w-1/3 py-2 text-sm" onclick="switchRole('vendor')">🛍️ Vendor</button>
+    </div>
+    <button class="btn-outline mt-4" onclick="closeModal()">Close</button>
+  </div>
+</div>
+
+<!-- Footer -->
 <footer class="footer">
-  <a href="dashboard-home.html"><i class="fas fa-home"></i></a>
-  <a href="dashboard-wallet.html"><i class="fas fa-wallet"></i></a>
-  <a href="dashboard-store.html"><i class="fas fa-store"></i></a>
-  <a href="dashboard-chat.html"><i class="fas fa-comment-dots"></i></a>
+  <i class="fas fa-home active"></i>
+  <i class="fas fa-comment-dots"></i>
+  <i class="fas fa-store"></i>
+  <i class="fas fa-user"></i>
+  <i class="fas fa-wallet"></i>
 </footer>
 
 <script>
-const menuButton = document.querySelector('.menu-button');
-const dropdown = document.querySelector('.dropdown');
+const modal = document.getElementById('loginModal');
+const title = document.getElementById('modalTitle');
 
-menuButton.addEventListener('click', () => {
-  dropdown.style.display = dropdown.style.display === 'flex' ? 'none' : 'flex';
-});
+function openModal(type) {
+  modal.style.display = 'flex';
+  title.textContent = type === 'wallet' ? 'Connect Wallet' : 'Continue with Phone';
+}
 
-document.addEventListener('click', (e) => {
-  if (!e.target.closest('.menu-container')) {
-    dropdown.style.display = 'none';
-  }
-});
+function closeModal() {
+  modal.style.display = 'none';
+}
+
+function switchRole(role) {
+  alert(`You selected ${role === 'student' ? 'Student Dashboard' : 'Vendor Dashboard'}. Coming soon!`);
+}
 </script>
 
 </body>
