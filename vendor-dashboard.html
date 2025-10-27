@@ -15,7 +15,7 @@
   --accent-a: #00f0ff;
   --accent-b: #ff00f0;
   --gradient: linear-gradient(90deg,var(--accent-a),var(--accent-b));
-  --glass: rgba(255,255,255,0.05);
+  --glass: rgba(255,255,255,0.1);
 }
 
 body {
@@ -34,19 +34,19 @@ body {
   top: 0;
   left: 0;
   width: 100%;
-  backdrop-filter: blur(10px);
+  backdrop-filter: blur(12px);
   background: rgba(15,5,32,0.85);
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 1rem;
+  padding: 1rem 1.5rem;
   z-index: 50;
-  box-shadow: 0 0 20px rgba(0,240,255,0.3);
+  box-shadow: 0 0 25px rgba(0,255,255,0.3);
 }
 .header h1 {
   font-family: 'Orbitron', sans-serif;
   font-weight: 700;
-  font-size: 1.5rem;
+  font-size: 1.6rem;
   background: linear-gradient(90deg,#00f0ff,#ff00f0);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -55,12 +55,13 @@ body {
 /* Stats Cards */
 .stats-cards {
   display: flex;
-  flex-wrap: wrap;
   gap: 1rem;
   margin-top: 5rem;
+  overflow-x: auto;
+  padding-bottom: 1rem;
 }
 .card {
-  flex: 1 1 200px;
+  flex: 0 0 220px;
   background: var(--glass);
   backdrop-filter: blur(15px);
   border-radius: 1rem;
@@ -75,7 +76,7 @@ body {
 .card h3 {
   font-family: 'Orbitron', sans-serif;
   font-size: 1rem;
-  color: #c0bdf4;
+  color: #e0e0ff;
   margin-bottom: 0.3rem;
 }
 .card p {
@@ -114,7 +115,8 @@ body {
 .quick-actions {
   display: flex;
   gap: 1rem;
-  flex-wrap: wrap;
+  overflow-x: auto;
+  padding-bottom: 1rem;
   margin-top: 1rem;
 }
 .quick-action-btn {
@@ -140,6 +142,10 @@ body {
   padding: 1rem;
   height: 180px;
   margin-top: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #c0bdf4;
 }
 
 /* AI Side Panel */
@@ -167,17 +173,24 @@ body {
   position: fixed;
   bottom: 0;
   left: 0;
-  backdrop-filter: blur(8px);
-  background: rgba(15,5,32,0.8);
+  backdrop-filter: blur(12px);
+  background: rgba(15,5,32,0.85);
   display: flex;
   justify-content: space-around;
-  padding: 0.7rem 0;
-  box-shadow: 0 -2px 20px rgba(255,0,240,0.2);
+  padding: 0.8rem 0;
+  box-shadow: 0 -2px 20px rgba(0,255,255,0.2);
+  z-index: 60;
 }
 .footer a {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-size: 0.8rem;
   color: #00f0ff;
-  font-size: 1.5rem;
   transition: 0.3s;
+}
+.footer a i {
+  font-size: 1.5rem;
 }
 .footer a:hover, .footer a.active {
   color: #ff00f0;
@@ -185,12 +198,31 @@ body {
 }
 
 /* Scrollbars */
-.cards-3d::-webkit-scrollbar {
+.cards-3d::-webkit-scrollbar,
+.stats-cards::-webkit-scrollbar,
+.quick-actions::-webkit-scrollbar {
   height: 8px;
 }
-.cards-3d::-webkit-scrollbar-thumb {
+.cards-3d::-webkit-scrollbar-thumb,
+.stats-cards::-webkit-scrollbar-thumb,
+.quick-actions::-webkit-scrollbar-thumb {
   background: #00f0ff33;
   border-radius: 4px;
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 768px) {
+  .ai-panel {
+    position: relative;
+    width: 100%;
+    height: auto;
+    margin-top: 1rem;
+    box-shadow: none;
+  }
+  .stats-cards, .cards-3d, .quick-actions {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+  }
 }
 </style>
 </head>
@@ -198,7 +230,7 @@ body {
 
 <!-- Header -->
 <header class="header">
-  <h1>Vendor Dashboard</h1>
+  <h1>Zep Swipe</h1>
 </header>
 
 <main class="px-4 pt-24 pb-24">
@@ -249,8 +281,8 @@ body {
 
   <!-- Charts Section -->
   <h2 class="mt-6 mb-2 font-semibold">Sales Overview</h2>
-  <div class="chart-box" id="chart1">
-    <p class="text-gray-400 text-center mt-16">Holographic chart placeholder</p>
+  <div class="chart-box">
+    Holographic chart placeholder
   </div>
 
 </main>
@@ -266,10 +298,10 @@ body {
 
 <!-- Footer -->
 <footer class="footer sm:hidden">
-  <a href="send.html"><i class="fas fa-paper-plane"></i></a>
-  <a href="request.html"><i class="fas fa-hand-holding-dollar"></i></a>
-  <a href="withdraw.html"><i class="fas fa-wallet"></i></a>
-  <a href="profile.html"><i class="fas fa-user"></i></a>
+  <a href="send.html"><i class="fas fa-paper-plane"></i><span>Send</span></a>
+  <a href="request.html"><i class="fas fa-hand-holding-dollar"></i><span>Request</span></a>
+  <a href="withdraw.html"><i class="fas fa-wallet"></i><span>Withdraw</span></a>
+  <a href="profile.html"><i class="fas fa-user"></i><span>Profile</span></a>
 </footer>
 
 <script>
