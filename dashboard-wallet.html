@@ -3,21 +3,16 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Futuristic Crypto Wallet</title>
-
-<!-- Tailwind CSS + Fonts + Icons -->
+<title>Zep POS Wallet</title>
 <script src="https://cdn.tailwindcss.com"></script>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Orbitron:wght@600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-
 <style>
 :root {
   --glass: rgba(255,255,255,0.05);
   --neon-blue: #00f0ff;
   --neon-pink: #ff00f0;
 }
-
-/* Global */
 body {
   font-family: 'Poppins', sans-serif;
   margin: 0;
@@ -25,217 +20,106 @@ body {
   color: #fff;
   min-height: 100vh;
 }
-
-/* Header */
 .header {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
+  position: fixed; top: 0; left: 0; width: 100%;
   backdrop-filter: blur(12px);
   background: rgba(15,5,32,0.85);
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+  display: flex; justify-content: space-between; align-items: center;
   padding: 1rem 1.5rem;
   box-shadow: 0 0 25px rgba(0,255,255,0.2);
   z-index: 50;
 }
 .header .logo {
-  font-family: 'Orbitron', sans-serif;
-  font-weight: 700;
-  font-size: 1.5rem;
+  font-family: 'Orbitron', sans-serif; font-weight: 700; font-size: 1.5rem;
   background: linear-gradient(90deg,#00f0ff,#ff00f0);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
   text-shadow: 0 0 8px #00f0ff, 0 0 12px #ff00f0;
 }
 .header .balance {
-  font-family: 'Orbitron', sans-serif;
-  font-size: 1.2rem;
+  font-family: 'Orbitron', sans-serif; font-size: 1.2rem;
   background: linear-gradient(90deg,#00f0ff,#ff00f0);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
   text-shadow: 0 0 6px #00f0ff,0 0 8px #ff00f0;
 }
 .header .icons i {
-  font-size: 1.3rem;
-  margin-left: 1rem;
-  color: #00f0ff;
-  cursor: pointer;
-  transition: all 0.3s;
+  font-size: 1.3rem; margin-left: 1rem; color: #00f0ff; cursor: pointer; transition: all 0.3s;
 }
 .header .icons i:hover {
-  color: #ff00f0;
-  transform: scale(1.2);
-  text-shadow: 0 0 6px #ff00f0;
+  color: #ff00f0; transform: scale(1.2); text-shadow: 0 0 6px #ff00f0;
 }
-
-/* Main Wallet Section */
-main {
-  padding: 6rem 1rem 12rem 1rem;
-}
+main { padding: 6rem 1rem 12rem 1rem; }
 .wallet-title {
-  font-family: 'Orbitron', sans-serif;
-  font-size: 1.6rem;
-  margin-bottom: 1rem;
+  font-family: 'Orbitron', sans-serif; font-size: 1.6rem; margin-bottom: 1rem;
   background: linear-gradient(90deg,#00f0ff,#ff00f0);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
   text-shadow: 0 0 6px #00f0ff,0 0 8px #ff00f0;
 }
-
-/* Crypto Cards */
-.crypto-cards {
-  display: flex;
-  gap: 1rem;
-  overflow-x: auto;
-  padding-bottom: 1rem;
-}
+.crypto-cards { display: flex; gap: 1rem; overflow-x: auto; padding-bottom: 1rem; }
 .crypto-card {
-  flex: 0 0 220px;
-  background: var(--glass);
-  backdrop-filter: blur(15px);
-  border-radius: 1rem;
-  padding: 1rem;
-  position: relative;
+  flex: 0 0 220px; background: var(--glass); backdrop-filter: blur(15px);
+  border-radius: 1rem; padding: 1rem; position: relative;
   box-shadow: 0 0 15px rgba(0,255,255,0.2);
   transition: transform 0.3s, box-shadow 0.3s;
 }
-.crypto-card:hover {
-  transform: scale(1.05);
-  box-shadow: 0 0 20px #00f0ff;
-}
-.crypto-card h3 {
-  font-family: 'Orbitron', sans-serif;
-  font-size: 1rem;
-  margin-bottom: 0.5rem;
-}
-.crypto-card .amount {
-  font-weight: 700;
-  font-size: 1.3rem;
-  margin-bottom: 0.3rem;
-}
-.crypto-card .change {
-  font-size: 0.9rem;
-  margin-bottom: 0.5rem;
-}
+.crypto-card:hover { transform: scale(1.05); box-shadow: 0 0 20px #00f0ff; }
+.crypto-card h3 { font-family: 'Orbitron', sans-serif; font-size: 1rem; margin-bottom: 0.5rem; }
+.crypto-card .amount { font-weight: 700; font-size: 1.3rem; margin-bottom: 0.3rem; }
+.crypto-card .change { font-size: 0.9rem; margin-bottom: 0.5rem; }
 .crypto-card .actions {
-  display: flex;
-  justify-content: space-between;
-  font-size: 0.9rem;
+  display: flex; justify-content: space-between; font-size: 0.9rem;
 }
 .crypto-card .actions button {
-  background: none;
-  border: 1px solid rgba(255,255,255,0.3);
-  border-radius: 0.5rem;
-  padding: 0.3rem 0.6rem;
-  cursor: pointer;
-  color: #fff;
-  display: flex;
-  align-items: center;
-  gap: 0.3rem;
-  transition: all 0.3s;
+  background: none; border: 1px solid rgba(255,255,255,0.3);
+  border-radius: 0.5rem; padding: 0.3rem 0.6rem; cursor: pointer;
+  color: #fff; display: flex; align-items: center; gap: 0.3rem; transition: all 0.3s;
 }
-.crypto-card .actions button:hover {
-  border-color: #00f0ff;
-  box-shadow: 0 0 5px #00f0ff;
-}
-
-/* Color gradients per crypto */
+.crypto-card .actions button:hover { border-color: #00f0ff; box-shadow: 0 0 5px #00f0ff; }
 .crypto-card.zac { border-left: 5px solid #00f0ff; }
 .crypto-card.usdt { border-left: 5px solid #2ecc71; }
 .crypto-card.eth { border-left: 5px solid #9b59b6; }
 .crypto-card.btc { border-left: 5px solid #f39c12; }
 
-/* Modals */
+/* Modal */
 .modal {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  backdrop-filter: blur(8px);
-  background: rgba(0,0,0,0.7);
-  display: none;
-  justify-content: center;
-  align-items: center;
-  z-index: 100;
+  position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+  backdrop-filter: blur(8px); background: rgba(0,0,0,0.7);
+  display: none; justify-content: center; align-items: center; z-index: 100;
 }
 .modal-content {
-  background: var(--glass);
-  backdrop-filter: blur(15px);
-  padding: 2rem;
-  border-radius: 1rem;
-  width: 90%;
-  max-width: 400px;
-  text-align: center;
+  background: var(--glass); backdrop-filter: blur(15px);
+  padding: 2rem; border-radius: 1rem; width: 90%; max-width: 400px; text-align: center;
 }
-.modal-content h3 {
-  font-family: 'Orbitron', sans-serif;
-  margin-bottom: 1rem;
-  font-size: 1.3rem;
-}
-.modal-content input,
-.modal-content select {
-  width: 100%;
-  padding: 0.6rem;
-  margin-bottom: 1rem;
-  border-radius: 0.5rem;
-  border: none;
-  outline: none;
+.modal-content h3 { font-family: 'Orbitron', sans-serif; margin-bottom: 1rem; font-size: 1.3rem; }
+.modal-content input, .modal-content select {
+  width: 100%; padding: 0.6rem; margin-bottom: 1rem; border-radius: 0.5rem; border: none; outline: none;
 }
 .modal-content button {
-  padding: 0.6rem 1.2rem;
-  border: none;
-  border-radius: 0.5rem;
-  background: #00f0ff;
-  color: #000;
-  font-weight: 700;
-  cursor: pointer;
-  transition: all 0.3s;
+  padding: 0.6rem 1.2rem; border: none; border-radius: 0.5rem; background: #00f0ff; color: #000;
+  font-weight: 700; cursor: pointer; transition: all 0.3s;
 }
-.modal-content button:hover {
-  background: #ff00f0;
+.modal-content button:hover { background: #ff00f0; }
+
+.qr-placeholder {
+  background: rgba(255,255,255,0.1); border-radius: 1rem; height: 180px; display:flex; justify-content:center; align-items:center;
+  font-weight:700; color:#00f0ff; margin-bottom:1rem;
 }
 
-/* Footer */
 .footer {
-  width: 100%;
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  backdrop-filter: blur(12px);
-  background: rgba(15,5,32,0.85);
-  display: flex;
-  justify-content: space-around;
-  padding: 0.8rem 0;
+  width: 100%; position: fixed; bottom: 0; left: 0;
+  backdrop-filter: blur(12px); background: rgba(15,5,32,0.85);
+  display: flex; justify-content: space-around; padding: 0.8rem 0;
   box-shadow: 0 -2px 20px rgba(0,255,255,0.2);
 }
-.footer a {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  font-size: 0.8rem;
-  color: #00f0ff;
-  transition: all 0.3s;
-}
-.footer a i {
-  font-size: 1.5rem;
-}
-.footer a:hover, .footer a.active {
-  color: #ff00f0;
-  transform: scale(1.3);
-  text-shadow: 0 0 6px #ff00f0;
-}
+.footer a { display: flex; flex-direction: column; align-items: center; font-size: 0.8rem; color: #00f0ff; transition: all 0.3s; }
+.footer a i { font-size: 1.5rem; }
+.footer a:hover, .footer a.active { color: #ff00f0; transform: scale(1.3); text-shadow: 0 0 6px #ff00f0; }
 </style>
 </head>
 <body>
 
-<!-- Header -->
 <header class="header">
   <div class="logo">Zep Wallet</div>
-  <div class="balance">$3,780.35</div>
+  <div class="balance" id="walletBalance">$3,780.35</div>
   <div class="icons">
     <i class="fas fa-bell"></i>
     <i class="fas fa-cog"></i>
@@ -245,6 +129,13 @@ main {
 <main>
   <div class="wallet-title">Your Wallet</div>
 
+  <!-- QR Scan / Pay Feature -->
+  <div class="crypto-card">
+    <h3>Scan to Pay</h3>
+    <div class="qr-placeholder">QR Scan Placeholder</div>
+    <button onclick="alert('QR Pay Feature Coming Soon!')">Pay</button>
+  </div>
+
   <!-- Crypto Cards -->
   <div class="crypto-cards">
     <div class="crypto-card zac">
@@ -252,8 +143,8 @@ main {
       <div class="amount">1,250</div>
       <div class="change text-green-400">+1.2%</div>
       <div class="actions">
-        <button onclick="openModal('withdraw','ZAC')"><i class="fas fa-wallet neon-icon"></i> Withdraw</button>
-        <button onclick="openModal('send','ZAC')"><i class="fas fa-paper-plane neon-icon"></i> Send</button>
+        <button onclick="openModal('withdraw','ZAC')"><i class="fas fa-wallet"></i> Withdraw</button>
+        <button onclick="openModal('send','ZAC')"><i class="fas fa-paper-plane"></i> Send</button>
       </div>
     </div>
     <div class="crypto-card usdt">
@@ -261,8 +152,8 @@ main {
       <div class="amount">500</div>
       <div class="change text-gray-300">±0.0%</div>
       <div class="actions">
-        <button onclick="openModal('withdraw','USDT')"><i class="fas fa-wallet neon-icon"></i> Withdraw</button>
-        <button onclick="openModal('send','USDT')"><i class="fas fa-paper-plane neon-icon"></i> Send</button>
+        <button onclick="openModal('withdraw','USDT')"><i class="fas fa-wallet"></i> Withdraw</button>
+        <button onclick="openModal('send','USDT')"><i class="fas fa-paper-plane"></i> Send</button>
       </div>
     </div>
     <div class="crypto-card eth">
@@ -270,87 +161,66 @@ main {
       <div class="amount">2.3</div>
       <div class="change text-purple-400">+2.1%</div>
       <div class="actions">
-        <button onclick="openModal('withdraw','ETH')"><i class="fas fa-wallet neon-icon"></i> Withdraw</button>
-        <button onclick="openModal('send','ETH')"><i class="fas fa-paper-plane neon-icon"></i> Send</button>
-      </div>
-    </div>
-    <div class="crypto-card btc">
-      <h3>BTC</h3>
-      <div class="amount">0.05</div>
-      <div class="change text-orange-400">+0.5%</div>
-      <div class="actions">
-        <button onclick="openModal('withdraw','BTC')"><i class="fas fa-wallet neon-icon"></i> Withdraw</button>
-        <button onclick="openModal('send','BTC')"><i class="fas fa-paper-plane neon-icon"></i> Send</button>
+        <button onclick="openModal('withdraw','ETH')"><i class="fas fa-wallet"></i> Withdraw</button>
+        <button onclick="openModal('send','ETH')"><i class="fas fa-paper-plane"></i> Send</button>
       </div>
     </div>
   </div>
+
+  <!-- Zep POS Button -->
+  <div class="crypto-card">
+    <h3>Zep POS</h3>
+    <button onclick="window.location.href='dashboard-pos.html'">Go to POS</button>
+  </div>
+
 </main>
 
-<!-- Generic Modal for Withdraw/Send/Request -->
-<div class="modal" id="cryptoModal">
-  <div class="modal-content">
-    <h3 id="modalTitle"></h3>
-    <select id="cryptoMethod">
-      <option value="">Select Method</option>
-      <option value="mtn">MTN Momo</option>
-      <option value="fnb">FNB eWallet</option>
+<!-- Modal -->
+<div id="modal" class="modal">
+  <div class="modal-content" id="modalContent">
+    <h3 id="modalTitle">Modal</h3>
+    <select id="topType">
+      <option value="wallet">Wallet Top-Up</option>
+      <option value="momo">Momo Top-Up</option>
+      <option value="bank">Bank Top-Up</option>
     </select>
-    <input type="text" id="modalPhone" placeholder="Phone Number (required for eWallet)" style="display:none;">
-    <input type="number" id="modalAmount" placeholder="Amount">
-    <button onclick="submitModalAction()"><i class="fas fa-paper-plane neon-icon"></i> Confirm</button>
+    <input type="text" id="modalAmount" placeholder="Amount">
+    <button onclick="processModal()">Confirm</button>
+    <button onclick="closeModal()" style="margin-top:1rem;background:#ff00f0;color:#fff;">Cancel</button>
   </div>
 </div>
 
-<!-- Footer -->
-<footer class="footer sm:hidden">
-  <a href="#" onclick="openModal('send')"><i class="fas fa-paper-plane"></i><span>Send</span></a>
-  <a href="#" onclick="openModal('request')"><i class="fas fa-hand-holding-dollar"></i><span>Request</span></a>
-  <a href="dashboard-store.html"><i class="fas fa-store"></i><span>Store</span></a>
-  <a href="#"><i class="fas fa-user"></i><span>Profile</span></a>
+<footer class="footer">
+  <a href="#"><i class="fas fa-home"></i> Home</a>
+  <a href="#"><i class="fas fa-qrcode"></i> Pay</a>
+  <a href="#"><i class="fas fa-wallet"></i> Wallet</a>
+  <a href="#"><i class="fas fa-user"></i> Profile</a>
 </footer>
 
 <script>
 let currentAction = '';
-let currentCrypto = '';
+let currentCoin = '';
 
-function openModal(action, crypto='') {
+function openModal(action, coin='') {
   currentAction = action;
-  currentCrypto = crypto;
-  const modal = document.getElementById('cryptoModal');
-  const title = document.getElementById('modalTitle');
-  const method = document.getElementById('cryptoMethod');
-  const phone = document.getElementById('modalPhone');
-  const amount = document.getElementById('modalAmount');
-
-  method.value = '';
-  phone.style.display = 'none';
-  amount.value = '';
-
-  if(action === 'withdraw') {
-    title.textContent = `Withdraw ${crypto}`;
-  } else if(action === 'send') {
-    title.textContent = `Send ${crypto || ''}`;
-  } else if(action === 'request') {
-    title.textContent = `Request ${crypto || ''}`;
-  }
-  modal.style.display = 'flex';
+  currentCoin = coin;
+  document.getElementById('modalTitle').innerText = action.charAt(0).toUpperCase() + action.slice(1) + (coin ? ' ' + coin : '');
+  document.getElementById('modal').style.display = 'flex';
 }
 
-document.getElementById('cryptoMethod').addEventListener('change', function() {
-  const phone = document.getElementById('modalPhone');
-  phone.style.display = this.value === 'fnb' ? 'block' : 'none';
-});
+function closeModal() {
+  document.getElementById('modal').style.display = 'none';
+  document.getElementById('modalAmount').value = '';
+}
 
-function submitModalAction() {
-  const method = document.getElementById('cryptoMethod').value;
-  const phone = document.getElementById('modalPhone').value;
+function processModal() {
   const amount = document.getElementById('modalAmount').value;
-  if(!amount) {
-    alert('Please enter amount.');
-    return;
-  }
-  if((currentAction === 'withdraw' || currentAction==='send') && !method){
-    alert('Please select a method.');
-    return;
-  }
-  if
+  const topType = document.getElementById('topType').value;
+  if(!amount || amount <= 0){ alert('Enter valid amount'); return; }
+  alert(`${currentAction.toUpperCase()} ${amount} ${currentCoin} via ${topType}`);
+  closeModal();
+}
+</script>
+
+</body>
+</html>
