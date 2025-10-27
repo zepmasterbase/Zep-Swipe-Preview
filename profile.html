@@ -1,0 +1,257 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Zep Swipe — Profile Verification</title>
+
+<!-- Tailwind CDN -->
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@600;700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+<style>
+  :root{
+    --bg:#0b0520;
+    --panel: rgba(255,255,255,0.04);
+    --glass: rgba(255,255,255,0.06);
+    --neon-a: #00f0ff;
+    --neon-b: #ff00f0;
+  }
+  body{
+    font-family: 'Poppins', sans-serif;
+    background: radial-gradient(circle at 10% 10%, #15102a 0%, var(--bg) 60%);
+    color: #e6e6ff;
+    margin:0;
+    min-height:100vh;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    padding:1rem;
+  }
+
+  .container{
+    width:100%;
+    max-width:920px;
+    margin-top:2.5rem;
+    margin-bottom:3.5rem;
+  }
+
+  header.appbar{
+    width:100%;
+    max-width:920px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:0.75rem 1rem;
+    backdrop-filter: blur(6px);
+    background: linear-gradient(90deg, rgba(0,240,255,0.06), rgba(255,0,240,0.03));
+    border-radius:12px;
+    box-shadow:0 6px 30px rgba(0,0,0,0.6), 0 0 30px rgba(0,240,255,0.06);
+  }
+  header .brand{
+    font-family:'Exo 2',sans-serif;
+    font-weight:700;
+    font-size:1.25rem;
+    background: linear-gradient(90deg, var(--neon-a), var(--neon-b));
+    -webkit-background-clip:text;
+    -webkit-text-fill-color:transparent;
+  }
+  header .help{
+    color: #bfc8ff;
+    font-size:0.9rem;
+  }
+
+  .panel{
+    background:var(--panel);
+    border-radius:14px;
+    padding:1rem;
+    margin-top:1rem;
+    box-shadow: 0 8px 30px rgba(0,0,0,0.5), 0 0 20px rgba(0,240,255,0.02);
+    border: 1px solid rgba(124,99,255,0.06);
+  }
+
+  .grid{
+    display:grid;
+    grid-template-columns: 1fr;
+    gap:1rem;
+  }
+  @media(min-width:900px){
+    .grid{ grid-template-columns: 1fr 340px; align-items:start; gap:1.25rem; }
+  }
+
+  label{ display:block; font-size:0.9rem; color:#cfd6ff; margin-bottom:0.35rem; }
+  input[type="text"], select, input[type="file"]{
+    width:100%;
+    padding:0.7rem;
+    border-radius:10px;
+    border:none;
+    background:var(--glass);
+    color:#eaf2ff;
+    outline:none;
+  }
+  .role-toggle{
+    display:flex; gap:0.5rem;
+    background: linear-gradient(90deg, rgba(124,99,255,0.03), rgba(124,99,255,0.02));
+    padding:0.5rem; border-radius:10px;
+  }
+  .role-btn{
+    flex:1;
+    padding:0.5rem;
+    border-radius:8px;
+    background:transparent;
+    border:1px solid rgba(255,255,255,0.04);
+    color:#dfe7ff;
+    cursor:pointer;
+    font-weight:600;
+  }
+  .role-btn.active{
+    background: linear-gradient(90deg,var(--neon-a),var(--neon-b));
+    color: #0b0520;
+    box-shadow:0 8px 24px rgba(0,240,255,0.08), 0 0 8px rgba(255,0,240,0.06);
+  }
+
+  .file-preview{
+    width:100%;
+    height:160px;
+    border-radius:10px;
+    background: linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.02));
+    display:flex; align-items:center; justify-content:center;
+    color:#bfc8ff; font-size:0.95rem;
+    border:1px dashed rgba(255,255,255,0.04);
+  }
+
+  .verify-btn{
+    display:inline-flex;
+    align-items:center;
+    gap:0.5rem;
+    padding:0.75rem 1rem;
+    border-radius:12px;
+    font-weight:700;
+    cursor:pointer;
+    color:#08102a;
+    background: linear-gradient(90deg,var(--neon-a),var(--neon-b));
+    border:none;
+    box-shadow: 0 8px 30px rgba(0,0,0,0.6), 0 0 18px rgba(0,240,255,0.08);
+  }
+
+  .meta{
+    font-size:0.9rem; color:#aeb9ff;
+  }
+
+  .badge{
+    display:inline-flex;
+    gap:0.5rem;
+    align-items:center;
+    padding:0.4rem 0.6rem;
+    border-radius:999px;
+    background: linear-gradient(90deg, rgba(0,240,255,0.06), rgba(255,0,240,0.04));
+    color:#dff8ff;
+    font-weight:700;
+  }
+
+  /* right column card */
+  .profile-card{
+    padding:1rem;
+    border-radius:12px;
+    background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+    text-align:center;
+    border:1px solid rgba(255,255,255,0.03);
+  }
+  .avatar{
+    width:92px; height:92px; border-radius:18px; background: linear-gradient(90deg,#0b0520,#0b0520);
+    display:inline-flex; align-items:center; justify-content:center; font-weight:700; color:#00f0ff;
+    box-shadow:0 8px 24px rgba(0,240,255,0.04);
+  }
+
+  .small{
+    font-size:0.85rem; color:#bfc8ff;
+  }
+
+  .notice{
+    margin-top:0.6rem; padding:0.6rem; border-radius:10px; background:linear-gradient(90deg, rgba(0,240,255,0.03), rgba(255,0,240,0.03));
+    color:#cfefff; font-size:0.9rem;
+  }
+
+  .hint{ font-size:0.85rem; color:#aeb9ff; margin-top:0.35rem; }
+
+  .actions-row{ display:flex; gap:0.6rem; margin-top:0.75rem; justify-content:center; flex-wrap:wrap; }
+  .muted-btn{
+    padding:0.55rem 0.8rem; border-radius:10px; background:transparent; color:#c7d3ff; border:1px solid rgba(255,255,255,0.035);
+  }
+
+  /* success toast */
+  .toast{
+    position:fixed; left:50%; transform:translateX(-50%); bottom:92px;
+    background:linear-gradient(90deg,var(--neon-a),var(--neon-b)); color:#08102a; padding:0.8rem 1rem; border-radius:999px;
+    box-shadow:0 10px 30px rgba(0,0,0,0.6); display:none; font-weight:700;
+  }
+</style>
+</head>
+<body>
+
+<div class="container">
+  <header class="appbar">
+    <div class="brand">Zep Swipe</div>
+    <div class="help">Profile · Verify Account</div>
+  </header>
+
+  <section class="panel" aria-labelledby="profile-heading">
+    <div class="grid">
+      <!-- LEFT: form -->
+      <div>
+        <h2 id="profile-heading" class="text-2xl font-semibold" style="color:#cfe3ff">Your Profile</h2>
+        <p class="meta">Update your details and verify your account to unlock features.</p>
+
+        <form id="profileForm" class="mt-4 space-y-4" autocomplete="off" novalidate>
+          <!-- Name -->
+          <div>
+            <label for="fullname">Full name</label>
+            <input id="fullname" name="fullname" type="text" placeholder="Jane Doe" required />
+          </div>
+
+          <!-- Role toggle -->
+          <div>
+            <label class="mb-2">Account type</label>
+            <div class="role-toggle" role="tablist" aria-label="Select role">
+              <button type="button" id="roleStudent" class="role-btn active" aria-pressed="true">🧑‍🎓 Student</button>
+              <button type="button" id="roleVendor" class="role-btn" aria-pressed="false">🏬 Vendor</button>
+            </div>
+            <div class="hint">Choose Student to verify with Student ID, or Vendor to verify with business registration.</div>
+          </div>
+
+          <!-- Student fields -->
+          <div id="studentFields">
+            <label for="university">University</label>
+            <input id="university" name="university" type="text" placeholder="University of Lagos" />
+
+            <label class="mt-2">Student ID (photo or PDF)</label>
+            <input id="studentIdFile" type="file" accept="image/*,.pdf" />
+            <div id="studentPreview" class="file-preview mt-2">No file selected.</div>
+          </div>
+
+          <!-- Vendor fields -->
+          <div id="vendorFields" style="display:none;">
+            <label for="businessName">Business / Shop name</label>
+            <input id="businessName" name="businessName" type="text" placeholder="Acme Snacks Ltd" />
+
+            <label class="mt-2">Business registration (photo or PDF)</label>
+            <input id="businessFile" type="file" accept="image/*,.pdf" />
+            <div id="businessPreview" class="file-preview mt-2">No file selected.</div>
+          </div>
+
+          <!-- Location -->
+          <div class="grid" style="grid-template-columns:1fr 1fr; gap:0.6rem;">
+            <div>
+              <label for="country">Country</label>
+              <input id="country" name="country" type="text" placeholder="Nigeria" />
+            </div>
+            <div>
+              <label for="city">City</label>
+              <input id="city" name="city" type="text" placeholder="Lagos" />
+            </div>
+          </div>
+
+          <!-- Buttons -->
+          <div class="flex items-center gap-3">
+            <button type="button" id="verifyBtn" class="verify-btn">Verify Account</button>
+            <button type="button" id="saveBtn" class="muted-btn">Save Draft</button>
