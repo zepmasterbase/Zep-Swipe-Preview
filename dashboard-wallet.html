@@ -3,171 +3,320 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Zep POS Wallet</title>
+<title>Payout Wallet</title>
 <script src="https://cdn.tailwindcss.com"></script>
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Orbitron:wght@600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 <style>
 :root {
-  --glass: rgba(255,255,255,0.05);
-  --neon-blue: #00f0ff;
-  --neon-pink: #ff00f0;
+  --bg-dark: #0A0A0A;
+  --neon-blue: #00FFFF;
+  --neon-green: #39FF14;
+  --neon-purple: #9D00FF;
+  --neon-pink: #FF00FF;
 }
 body {
-  font-family: 'Poppins', sans-serif;
   margin: 0;
-  background: radial-gradient(circle at top, #0b0520 0%, #120b2e 100%);
+  font-family: 'Orbitron', sans-serif;
+  background: var(--bg-dark);
   color: #fff;
   min-height: 100vh;
 }
-.header {
-  position: fixed; top: 0; left: 0; width: 100%;
-  backdrop-filter: blur(12px); background: rgba(15,5,32,0.85);
-  display: flex; justify-content: space-between; align-items: center;
-  padding: 1rem 1.5rem;
-  box-shadow: 0 0 25px rgba(0,255,255,0.2);
-  z-index: 50;
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 2rem;
+  border-bottom: 1px solid rgba(0,255,255,0.2);
 }
-.header .logo {
-  font-family: 'Orbitron', sans-serif; font-weight: 700; font-size: 1.5rem;
-  background: linear-gradient(90deg,#00f0ff,#ff00f0);
-  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-  text-shadow: 0 0 8px #00f0ff, 0 0 12px #ff00f0;
+header h1 {
+  font-size: 1.8rem;
+  color: var(--neon-blue);
+  text-shadow: 0 0 10px var(--neon-blue);
 }
-.header .balance {
-  font-family: 'Orbitron', sans-serif; font-size: 1.2rem;
-  background: linear-gradient(90deg,#00f0ff,#ff00f0);
-  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-  text-shadow: 0 0 6px #00f0ff,0 0 8px #ff00f0;
+header .avatar {
+  width: 40px; height: 40px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.1);
+  border: 2px solid var(--neon-blue);
+  box-shadow: 0 0 8px var(--neon-blue);
 }
-.header .icons i {
-  font-size: 1.3rem; margin-left: 1rem; color: #00f0ff; cursor: pointer; transition: all 0.3s;
+.main { padding: 2rem; }
+.currency-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 3rem;
 }
-.header .icons i:hover {
-  color: #ff00f0; transform: scale(1.2); text-shadow: 0 0 6px #ff00f0;
-}
-main { padding: 6rem 1rem 12rem 1rem; }
-.wallet-title {
-  font-family: 'Orbitron', sans-serif; font-size: 1.6rem; margin-bottom: 1rem;
-  background: linear-gradient(90deg,#00f0ff,#ff00f0);
-  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-  text-shadow: 0 0 6px #00f0ff,0 0 8px #ff00f0;
-}
-.crypto-cards { display: flex; gap: 1rem; overflow-x: auto; padding-bottom: 1rem; }
-.crypto-card {
-  flex: 0 0 220px; background: var(--glass); backdrop-filter: blur(15px);
-  border-radius: 1rem; padding: 1rem; position: relative;
+.currency-card {
+  background: rgba(255,255,255,0.05);
+  border: 2px solid transparent;
+  border-image: linear-gradient(135deg, var(--neon-blue), var(--neon-pink)) 1;
+  border-radius: 1rem;
+  padding: 1.5rem;
+  text-align: center;
   box-shadow: 0 0 15px rgba(0,255,255,0.2);
   transition: transform 0.3s, box-shadow 0.3s;
+  cursor: pointer;
 }
-.crypto-card:hover { transform: scale(1.05); box-shadow: 0 0 20px #00f0ff; }
-.crypto-card h3 { font-family: 'Orbitron', sans-serif; font-size: 1rem; margin-bottom: 0.5rem; }
-.crypto-card .amount { font-weight: 700; font-size: 1.3rem; margin-bottom: 0.3rem; }
-.crypto-card .change { font-size: 0.9rem; margin-bottom: 0.5rem; }
-.crypto-card .actions {
-  display: flex; justify-content: space-between; font-size: 0.9rem;
+.currency-card:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 25px var(--neon-blue);
 }
-.crypto-card .actions button {
-  background: none; border: 1px solid rgba(255,255,255,0.3);
-  border-radius: 0.5rem; padding: 0.3rem 0.6rem; cursor: pointer;
-  color: #fff; display: flex; align-items: center; gap: 0.3rem; transition: all 0.3s;
+.currency-card h2 {
+  font-size: 1.2rem;
+  margin-bottom: 0.5rem;
+  color: var(--neon-pink);
+  text-shadow: 0 0 8px var(--neon-pink);
 }
-.crypto-card .actions button:hover { border-color: #00f0ff; box-shadow: 0 0 5px #00f0ff; }
-.crypto-card.zac { border-left: 5px solid #00f0ff; }
-.crypto-card.usdt { border-left: 5px solid #2ecc71; }
-.crypto-card.eth { border-left: 5px solid #9b59b6; }
-.crypto-card.btc { border-left: 5px solid #f39c12; }
+.currency-card .balance {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+  color: var(--neon-green);
+  text-shadow: 0 0 10px var(--neon-green);
+}
+.currency-card .icon {
+  font-size: 1.2rem;
+  color: var(--neon-purple);
+  text-shadow: 0 0 6px var(--neon-purple);
+}
+.transactions {
+  border-top: 1px solid rgba(255,255,255,0.1);
+  padding-top: 2rem;
+}
+.transactions h3 {
+  font-size: 1.4rem;
+  color: var(--neon-blue);
+  text-shadow: 0 0 8px var(--neon-blue);
+  margin-bottom: 1rem;
+}
+.transaction-item {
+  display: flex;
+  justify-content: space-between;
+  padding: 0.8rem 0;
+  border-bottom: 1px solid rgba(255,255,255,0.05);
+  align-items: center;
+}
+.transaction-item:last-child { border-bottom: none; }
+.transaction-item .amount {
+  font-weight: 700;
+  color: var(--neon-green);
+  text-shadow: 0 0 6px var(--neon-green);
+}
+.transaction-item .status {
+  font-size: 1rem;
+  color: var(--neon-purple);
+  text-shadow: 0 0 6px var(--neon-purple);
+}
+.transaction-item .time {
+  font-size: 0.85rem;
+  color: rgba(255,255,255,0.5);
+}
+footer {
+  position: fixed;
+  bottom: 0; left: 0;
+  width: 100%;
+  background: rgba(10,10,10,0.95);
+  border-top: 1px solid rgba(0,255,255,0.2);
+  display: flex;
+  justify-content: space-around;
+  padding: 0.8rem 0;
+}
+footer a {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-size: 0.9rem;
+  color: rgba(0,255,255,0.7);
+  text-decoration: none;
+  transition: all 0.3s;
+}
+footer a i {
+  font-size: 1.5rem;
+  margin-bottom: 0.2rem;
+}
+footer a.active, footer a:hover {
+  color: var(--neon-pink);
+  text-shadow: 0 0 6px var(--neon-pink);
+  transform: scale(1.2);
+}
 
+/* Modal Styles */
 .modal {
-  position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-  backdrop-filter: blur(8px); background: rgba(0,0,0,0.7);
-  display: none; justify-content: center; align-items: center; z-index: 100;
+  position: fixed; top:0; left:0; width:100%; height:100%;
+  backdrop-filter: blur(8px);
+  background: rgba(0,0,0,0.8);
+  display: none; justify-content:center; align-items:center;
+  z-index: 100;
 }
 .modal-content {
-  background: var(--glass); backdrop-filter: blur(15px);
-  padding: 2rem; border-radius: 1rem; width: 90%; max-width: 400px; text-align: center;
+  background: rgba(255,255,255,0.05);
+  backdrop-filter: blur(15px);
+  padding: 2rem;
+  border-radius: 1rem;
+  width: 90%; max-width: 400px;
+  text-align: center;
+  border: 2px solid transparent;
+  border-image: linear-gradient(135deg, var(--neon-blue), var(--neon-pink)) 1;
 }
-.modal-content h3 { font-family: 'Orbitron', sans-serif; margin-bottom: 1rem; font-size: 1.3rem; }
-.modal-content input, .modal-content select {
-  width: 100%; padding: 0.6rem; margin-bottom: 1rem; border-radius: 0.5rem; border: none; outline: none;
+.modal-content h3 {
+  color: var(--neon-blue);
+  text-shadow: 0 0 10px var(--neon-blue);
+  margin-bottom: 1rem;
+  font-size: 1.3rem;
+}
+.modal-content select, .modal-content input {
+  width: 100%;
+  padding: 0.6rem;
+  margin-bottom: 1rem;
+  border-radius: 0.5rem;
+  border: none;
+  outline: none;
 }
 .modal-content button {
-  padding: 0.6rem 1.2rem; border: none; border-radius: 0.5rem; background: #00f0ff; color: #000;
-  font-weight: 700; cursor: pointer; transition: all 0.3s;
+  padding: 0.6rem 1.2rem;
+  margin: 0.3rem;
+  border: none;
+  border-radius: 0.5rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.3s;
 }
-.modal-content button:hover { background: #ff00f0; }
-
-.qr-placeholder {
-  background: rgba(255,255,255,0.1); border-radius: 1rem; height: 180px; display:flex; justify-content:center; align-items:center;
-  font-weight:700; color:#00f0ff; margin-bottom:1rem;
+.modal-content .confirm {
+  background: var(--neon-green);
+  color: #000;
 }
-
-.footer {
-  width: 100%; position: fixed; bottom: 0; left: 0;
-  backdrop-filter: blur(12px); background: rgba(15,5,32,0.85);
-  display: flex; justify-content: space-around; padding: 0.8rem 0;
-  box-shadow: 0 -2px 20px rgba(0,255,255,0.2);
+.modal-content .confirm:hover {
+  background: var(--neon-blue);
+  color:#fff;
 }
-.footer a { display: flex; flex-direction: column; align-items: center; font-size: 0.8rem; color: #00f0ff; transition: all 0.3s; }
-.footer a i { font-size: 1.5rem; }
-.footer a:hover, .footer a.active { color: #ff00f0; transform: scale(1.3); text-shadow: 0 0 6px #ff00f0; }
+.modal-content .cancel {
+  background: var(--neon-pink);
+  color: #000;
+}
+.modal-content .cancel:hover {
+  background: var(--neon-purple);
+  color:#fff;
+}
 </style>
 </head>
 <body>
 
-<header class="header">
-  <div class="logo">Zep Wallet</div>
-  <div class="balance" id="walletBalance">$3,780.35</div>
-  <div class="icons">
-    <i class="fas fa-bell"></i>
-    <i class="fas fa-cog"></i>
-  </div>
+<header>
+  <h1>Payout Wallet</h1>
+  <div class="avatar"></div>
 </header>
 
-<main>
-  <div class="wallet-title">Your Wallet</div>
-
-  <!-- QR Scan / Pay -->
-  <div class="crypto-card">
-    <h3>Scan to Pay</h3>
-    <div class="qr-placeholder">QR Scan Placeholder</div>
-    <button onclick="alert('QR Pay Coming Soon!')">Pay</button>
-  </div>
-
-  <!-- Crypto Cards -->
-  <div class="crypto-cards">
-    <div class="crypto-card zac">
-      <h3>ZAC</h3>
-      <div class="amount">1,250</div>
-      <div class="change text-green-400">+1.2%</div>
-      <div class="actions">
-        <button onclick="openModal('withdraw','ZAC')"><i class="fas fa-wallet"></i> Withdraw</button>
-        <button onclick="openModal('topup','ZAC')"><i class="fas fa-plus-circle"></i> Top-Up</button>
-      </div>
+<div class="main">
+  <div class="currency-grid">
+    <div class="currency-card" onclick="openModal('topup','ZAC')">
+      <h2>ZAC</h2>
+      <div class="balance">1,250</div>
+      <div class="icon"><i class="fas fa-wallet"></i></div>
     </div>
-    <div class="crypto-card usdt">
-      <h3>USDT</h3>
-      <div class="amount">500</div>
-      <div class="change text-gray-300">±0.0%</div>
-      <div class="actions">
-        <button onclick="openModal('withdraw','USDT')"><i class="fas fa-wallet"></i> Withdraw</button>
-        <button onclick="openModal('topup','USDT')"><i class="fas fa-plus-circle"></i> Top-Up</button>
-      </div>
+    <div class="currency-card" onclick="openModal('withdraw','USDT')">
+      <h2>USDT</h2>
+      <div class="balance">500</div>
+      <div class="icon"><i class="fas fa-wallet"></i></div>
     </div>
-    <div class="crypto-card eth">
-      <h3>ETH</h3>
-      <div class="amount">2.3</div>
-      <div class="change text-purple-400">+2.1%</div>
-      <div class="actions">
-        <button onclick="openModal('withdraw','ETH')"><i class="fas fa-wallet"></i> Withdraw</button>
-        <button onclick="openModal('topup','ETH')"><i class="fas fa-plus-circle"></i> Top-Up</button>
-      </div>
+    <div class="currency-card" onclick="openModal('withdraw','ETH')">
+      <h2>ETH</h2>
+      <div class="balance">2.3</div>
+      <div class="icon"><i class="fas fa-wallet"></i></div>
+    </div>
+    <div class="currency-card" onclick="openModal('withdraw','BTC')">
+      <h2>BTC</h2>
+      <div class="balance">0.45</div>
+      <div class="icon"><i class="fas fa-wallet"></i></div>
     </div>
   </div>
 
-  <!-- Zep POS -->
-  <div class="crypto-card">
-    <h3>Zep POS</h3>
-    <button onclick="window.location.href='dashboard-pos.html'">Go to POS</button>
+  <div class="transactions">
+    <h3>Recent Transactions</h3>
+    <div class="transaction-item">
+      <span class="amount">+100 ZAC</span>
+      <span class="status"><i class="fas fa-check-circle"></i> Success</span>
+      <span class="time">10:32 AM</span>
+    </div>
+    <div class="transaction-item">
+      <span class="amount">-50 USDT</span>
+      <span class="status"><i class="fas fa-times-circle"></i> Failed</span>
+      <span class="time">09:45 AM</span>
+    </div>
+    <div class="transaction-item">
+      <span class="amount">+0.5 ETH</span>
+      <span class="status"><i class="fas fa-clock"></i> Pending</span>
+      <span class="time">Yesterday</span>
+    </div>
   </div>
-</
+</div>
+
+<!-- Modal -->
+<div id="modal" class="modal">
+  <div class="modal-content">
+    <h3 id="modalTitle">Action</h3>
+    <div id="modalBody">
+      <select id="modalOption"></select>
+      <input type="text" id="modalAmount" placeholder="Amount">
+      <div id="walletConnectBtn" style="margin-bottom:1rem; display:none;">
+        <button class="confirm" onclick="connectWallet()">Connect Wallet</button>
+      </div>
+    </div>
+    <button class="confirm" onclick="processModal()">Confirm</button>
+    <button class="cancel" onclick="closeModal()">Cancel</button>
+  </div>
+</div>
+
+<footer>
+  <a href="index.html" class="active"><i class="fas fa-home"></i> Home</a>
+  <a href="dashboard-chat.html"><i class="fas fa-comment"></i> Chat</a>
+  <a href="#"><i class="fas fa-wallet"></i> Wallet</a>
+  <a href="profile.html"><i class="fas fa-user"></i> Profile</a>
+</footer>
+
+<script>
+let currentAction = '';
+let currentCoin = '';
+
+function openModal(action, coin) {
+  currentAction = action;
+  currentCoin = coin;
+  document.getElementById('modalTitle').innerText = `${action.toUpperCase()} ${coin}`;
+  const modalOption = document.getElementById('modalOption');
+  const walletBtn = document.getElementById('walletConnectBtn');
+  
+  // Top-Up: only wallet
+  if(action==='topup'){
+    modalOption.style.display='none';
+    walletBtn.style.display='block';
+  }
+  // Withdraw: Momo or Bank
+  else if(action==='withdraw'){
+    modalOption.style.display='block';
+    walletBtn.style.display='none';
+    modalOption.innerHTML = '<option value="momo">Momo</option><option value="bank">Bank</option>';
+  }
+  document.getElementById('modalAmount').value='';
+  document.getElementById('modal').style.display='flex';
+}
+
+function closeModal(){
+  document.getElementById('modal').style.display='none';
+}
+
+function processModal(){
+  const amount = document.getElementById('modalAmount').value;
+  const option = document.getElementById('modalOption').value || 'Wallet';
+  if(!amount || amount <=0){ alert('Enter valid amount'); return; }
+  alert(`${currentAction.toUpperCase()} ${amount} ${currentCoin} via ${option}`);
+  closeModal();
+}
+
+function connectWallet(){
+  alert(`Wallet connected for ${currentCoin} top-up!`);
+}
+</script>
+
+</body>
+</html>
