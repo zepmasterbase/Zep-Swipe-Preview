@@ -7,7 +7,7 @@
 
 <!-- Tailwind CSS + Fonts + Icons -->
 <script src="https://cdn.tailwindcss.com"></script>
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700&family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@700&family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
 <style>
@@ -37,7 +37,7 @@ body {
   box-shadow: 0 0 20px rgba(0,240,255,0.3);
 }
 .header h1 {
-  font-family: 'Orbitron', sans-serif;
+  font-family: 'Exo 2', sans-serif;
   font-weight: 700;
   font-size: 1.5rem;
   background: linear-gradient(90deg, #00f0ff, #ff00f0);
@@ -63,13 +63,14 @@ body {
   box-shadow: 0 0 20px rgba(0,240,255,0.3);
   scroll-snap-align: start;
   transform: perspective(800px) rotateY(-5deg);
-  transition: transform 0.3s;
+  transition: transform 0.3s, box-shadow 0.3s;
 }
 .card:hover {
   transform: perspective(800px) rotateY(0deg) scale(1.05);
+  box-shadow: 0 0 25px #00f0ff;
 }
 .card h3 {
-  font-family: 'Orbitron', sans-serif;
+  font-family: 'Exo 2', sans-serif;
   font-size: 1rem;
   color: #c0bdf4;
   margin-bottom: 0.3rem;
@@ -189,23 +190,30 @@ body {
   background: #ff00f0;
 }
 
-/* Footer */
+/* Footer: Send / Request / Withdraw / Profile */
 .footer {
   width: 100%;
   position: fixed;
   bottom: 0;
   left: 0;
   backdrop-filter: blur(8px);
-  background: rgba(15,5,32,0.7);
+  background: rgba(15,5,32,0.8);
   display: flex;
   justify-content: space-around;
-  padding: 0.7rem 0;
+  padding: 0.8rem 0;
   box-shadow: 0 -2px 20px rgba(255,0,240,0.2);
 }
 .footer a {
   color: #00f0ff;
   font-size: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-size: 0.8rem;
   transition: 0.3s;
+}
+.footer a i {
+  font-size: 1.5rem;
 }
 .footer a:hover, .footer a.active {
   color: #ff00f0;
@@ -225,7 +233,7 @@ body {
   <h1>Zep Swipe Wallet</h1>
 </header>
 
-<main class="main pt-24 pb-24 px-4">
+<main class="main pt-24 pb-28 px-4">
   <!-- Dashboard / Home -->
   <h2 class="text-c0bdf4 mb-2 font-bold">Your Wallet</h2>
   <div class="wallet-cards">
@@ -293,10 +301,10 @@ body {
 
 <!-- Footer -->
 <footer class="footer sm:hidden">
-  <a href="#"><i class="fas fa-home active"></i></a>
-  <a href="dashboard-wallet.html"><i class="fas fa-wallet"></i></a>
-  <a href="#"><i class="fas fa-chart-line"></i></a>
-  <a href="#"><i class="fas fa-user"></i></a>
+  <a href="#"><i class="fas fa-paper-plane"></i><span>Send</span></a>
+  <a href="#"><i class="fas fa-hand-holding-dollar"></i><span>Request</span></a>
+  <a href="#"><i class="fas fa-arrow-down"></i><span>Withdraw</span></a>
+  <a href="#"><i class="fas fa-user"></i><span>Profile</span></a>
 </footer>
 
 <script>
