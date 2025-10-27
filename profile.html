@@ -255,3 +255,209 @@
           <div class="flex items-center gap-3">
             <button type="button" id="verifyBtn" class="verify-btn">Verify Account</button>
             <button type="button" id="saveBtn" class="muted-btn">Save Draft</button>
+          </div>
+
+          <div class="hint">Once verified, your account will show a verification badge.</div>
+        </form>
+      </div>
+
+      <!-- RIGHT: profile card / status -->
+      <aside class="profile-card">
+        <div class="avatar" id="avatar">Z</div>
+        <div style="height:8px"></div>
+        <div id="displayName" style="font-weight:700; font-size:1.05rem; color:#eaf6ff">— Not set —</div>
+        <div class="small" id="displayRole">Role: Student</div>
+
+        <div class="notice mt-3" id="verificationStatus">
+          <div style="display:flex; justify-content:center; gap:0.5rem; align-items:center;">
+            <span class="badge" id="badge">Unverified</span>
+          </div>
+          <div class="hint mt-2">Complete verification to access payouts, marketplace listing, and more.</div>
+        </div>
+
+        <div class="actions-row">
+          <button class="muted-btn" id="editBtn">Edit</button>
+          <button class="muted-btn" id="logoutBtn">Sign out</button>
+        </div>
+      </aside>
+    </div>
+  </section>
+</div>
+
+<div class="toast" id="toast">Profile saved</div>
+
+<script>
+  // Elements
+  const roleStudent = document.getElementById('roleStudent');
+  const roleVendor  = document.getElementById('roleVendor');
+  const studentFields = document.getElementById('studentFields');
+  const vendorFields = document.getElementById('vendorFields');
+  const studentFile = document.getElementById('studentIdFile');
+  const studentPreview = document.getElementById('studentPreview');
+  const businessFile = document.getElementById('businessFile');
+  const businessPreview = document.getElementById('businessPreview');
+  const verifyBtn = document.getElementById('verifyBtn');
+  const saveBtn = document.getElementById('saveBtn');
+  const displayName = document.getElementById('displayName');
+  const displayRole = document.getElementById('displayRole');
+  const avatar = document.getElementById('avatar');
+  const badge = document.getElementById('badge');
+  const toast = document.getElementById('toast');
+  const fullnameInput = document.getElementById('fullname');
+
+  let selectedRole = 'student'; // default
+
+  // Role toggle handlers
+  roleStudent.addEventListener('click', () => setRole('student'));
+  roleVendor.addEventListener('click', () => setRole('vendor'));
+
+  function setRole(role){
+    selectedRole = role;
+    if(role === 'student'){
+      roleStudent.classList.add('active');
+      roleVendor.classList.remove('active');
+      studentFields.style.display = '';
+      vendorFields.style.display = 'none';
+      displayRole.textContent = 'Role: Student';
+    } else {
+      roleVendor.classList.add('active');
+      roleStudent.classList.remove('active');
+      studentFields.style.display = 'none';
+      vendorFields.style.display = '';
+      displayRole.textContent = 'Role: Vendor';
+    }
+  }
+
+  // File preview helpers
+  function previewFile(inputEl, previewEl){
+    const file = inputEl.files && inputEl.files[0];
+    if(!file){ previewEl.textContent = 'No file selected.'; return; }
+    if(file.type.startsWith('image/')){
+      const url = URL.createObjectURL(file);
+      previewEl.innerHTML = `<img src="${url}" style="max-width:100%; max-height:140px; border-radius:8px;" />`;
+    } else {
+      // PDF or other
+      previewEl.innerHTML = `<div style="display:flex;gap:8px;align-items:center;"><i class="fas fa-file-pdf" style="color:#ffb3c6"></i><span style="color:#dfe9ff">${file.name}</span></div>`;
+    }
+  }
+
+  studentFile.addEventListener('change', ()=> previewFile(studentFile, studentPreview));
+  businessFile.addEventListener('change', ()=> previewFile(businessFile, businessPreview));
+
+  // Save draft (to localStorage)
+  saveBtn.addEventListener('click', ()=>{
+    const profile = gatherProfile(false);
+    if(!profile) return;
+    localStorage.setItem('zep_profile', JSON.stringify(profile));
+    showToast('Draft saved locally');
+    populateUI(profile);
+  });
+
+  // Verify simulation
+  verifyBtn.addEventListener('click', ()=>{
+    const profile = gatherProfile(true);
+    if(!profile) return;
+    // basic checks
+    if(selectedRole === 'student' && !profile.studentFileName){
+      alert('Please attach a Student ID to verify.');
+      return;
+    }
+    if(selectedRole === 'vendor' && !profile.businessFileName){
+      alert('Please attach a Business registration to verify.');
+      return;
+    }
+
+    // Simulate verification delay
+    verifyBtn.disabled = true;
+    verifyBtn.textContent = 'Verifying...';
+    setTimeout(()=>{
+      profile.verified = true;
+      localStorage.setItem('zep_profile', JSON.stringify(profile));
+      showToast('Account verified ✅');
+      populateUI(profile);
+      verifyBtn.disabled = false;
+      verifyBtn.textContent = 'Verify Account';
+    }, 1400);
+  });
+
+  function gatherProfile(requireName = false){
+    const fullName = fullnameInput.value.trim();
+    if(requireName && !fullName){
+      alert('Please enter your full name.');
+      return null;
+    }
+    if(!fullName) {
+      // still allow save draft
+    }
+
+    const profile = {
+      fullname: fullName || '',
+      role: selectedRole,
+      university: document.getElementById('university').value.trim() || '',
+      businessName: document.getElementById('businessName') ? document.getElementById('businessName').value.trim() : '',
+      country: document.getElementById('country').value.trim() || '',
+      city: document.getElementById('city').value.trim() || '',
+      studentFileName: studentFile.files[0] ? studentFile.files[0].name : '',
+      businessFileName: businessFile.files[0] ? businessFile.files[0].name : '',
+      verified: false,
+      updatedAt: Date.now()
+    };
+    return profile;
+  }
+
+  // Populate UI from saved data
+  function populateUI(profile){
+    if(!profile) return;
+    displayName.textContent = profile.fullname || '— Not set —';
+    avatar.textContent = profile.fullname ? profile.fullname.split(' ').map(s=>s[0]).slice(0,2).join('') : 'Z';
+    displayRole.textContent = 'Role: ' + (profile.role === 'student' ? 'Student' : 'Vendor');
+    if(profile.verified){
+      badge.innerHTML = '<i class="fas fa-check-circle" style="color:#08102a"></i><span style="background:transparent;color:#08102a;padding-left:0;"> Verified</span>';
+      badge.style.background = 'linear-gradient(90deg,#00f0ff,#ff00f0)';
+      badge.style.color = '#08102a';
+    } else {
+      badge.innerHTML = 'Unverified';
+      badge.style.background = 'linear-gradient(90deg, rgba(0,240,255,0.06), rgba(255,0,240,0.03))';
+      badge.style.color = '#dff8ff';
+    }
+    // fill form inputs
+    fullnameInput.value = profile.fullname || '';
+    if(profile.role === 'vendor') setRole('vendor'); else setRole('student');
+    document.getElementById('university').value = profile.university || '';
+    if(document.getElementById('businessName')) document.getElementById('businessName').value = profile.businessName || '';
+    document.getElementById('country').value = profile.country || '';
+    document.getElementById('city').value = profile.city || '';
+    // show filenames if present
+    studentPreview.textContent = profile.studentFileName || 'No file selected.';
+    businessPreview.textContent = profile.businessFileName || 'No file selected.';
+  }
+
+  // Toast helper
+  function showToast(text='Saved'){
+    toast.textContent = text;
+    toast.style.display = 'block';
+    setTimeout(()=> toast.style.display = 'none', 1800);
+  }
+
+  // load saved profile on startup
+  (function init(){
+    const saved = localStorage.getItem('zep_profile');
+    if(saved){
+      try{ populateUI(JSON.parse(saved)); }catch(e){}
+    }
+  })();
+
+  // small UX: edit/show focus
+  document.getElementById('editBtn').addEventListener('click', ()=> {
+    window.scrollTo({ top: 120, behavior: 'smooth' });
+  });
+  document.getElementById('logoutBtn').addEventListener('click', ()=> {
+    if(confirm('Sign out? This will clear local draft.')){
+      localStorage.removeItem('zep_profile');
+      location.reload();
+    }
+  });
+
+</script>
+</body>
+</html>
