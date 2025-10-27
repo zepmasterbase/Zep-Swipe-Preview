@@ -1,321 +1,190 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Zep Swipe — Vendor Dashboard</title>
-<!-- Tailwind CSS + Fonts + Icons -->
-<script src="https://cdn.tailwindcss.com"></script>
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Orbitron:wght@600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-<style>
-:root {
-  --accent-a: #00f0ff;
-  --accent-b: #ff00f0;
-  --gradient: linear-gradient(90deg,var(--accent-a),var(--accent-b));
-  --glass: rgba(255,255,255,0.1);
-}
-
-body {
-  font-family: 'Poppins', sans-serif;
-  margin: 0;
-  background: radial-gradient(circle at top, #120b2e 0%, #0b0520 100%);
-  color: #fff;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-}
-
-/* Header */
-.header {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  backdrop-filter: blur(12px);
-  background: rgba(15,5,32,0.85);
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 1rem 1.5rem;
-  z-index: 50;
-  box-shadow: 0 0 25px rgba(0,255,255,0.3);
-}
-.header h1 {
-  font-family: 'Orbitron', sans-serif;
-  font-weight: 700;
-  font-size: 1.6rem;
-  background: linear-gradient(90deg,#00f0ff,#ff00f0);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-
-/* Stats Cards */
-.stats-cards {
-  display: flex;
-  gap: 1rem;
-  margin-top: 5rem;
-  overflow-x: auto;
-  padding-bottom: 1rem;
-}
-.card {
-  flex: 0 0 220px;
-  background: var(--glass);
-  backdrop-filter: blur(15px);
-  border-radius: 1rem;
-  padding: 1rem;
-  box-shadow: 0 0 20px rgba(0,240,255,0.3);
-  transform: perspective(800px) rotateY(-3deg);
-  transition: transform 0.3s;
-}
-.card:hover {
-  transform: perspective(800px) rotateY(0deg) scale(1.05);
-}
-.card h3 {
-  font-family: 'Orbitron', sans-serif;
-  font-size: 1rem;
-  color: #e0e0ff;
-  margin-bottom: 0.3rem;
-}
-.card p {
-  font-size: 1.2rem;
-  font-weight: 700;
-  color: #00f0ff;
-}
-
-/* Circular Progress */
-.circular-progress {
-  width: 80px;
-  height: 80px;
-  border-radius: 50%;
-  border: 6px solid rgba(0,240,255,0.2);
-  border-top: 6px solid #00f0ff;
-  animation: spin 2s linear infinite;
-  margin-top: 0.5rem;
-}
-@keyframes spin {
-  0% {transform: rotate(0deg);}
-  100% {transform: rotate(360deg);}
-}
-
-/* 3D Product Cards */
-.cards-3d {
-  display: flex;
-  gap: 1rem;
-  overflow-x: auto;
-  padding: 1rem 0;
-}
-.cards-3d .card {
-  min-width: 200px;
-}
-
-/* Quick Action Buttons */
-.quick-actions {
-  display: flex;
-  gap: 1rem;
-  overflow-x: auto;
-  padding-bottom: 1rem;
-  margin-top: 1rem;
-}
-.quick-action-btn {
-  background: var(--glass);
-  border-radius: 50%;
-  width: 60px;
-  height: 60px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  transition: all 0.3s;
-}
-.quick-action-btn:hover {
-  box-shadow: 0 0 15px #00f0ff;
-  transform: scale(1.1);
-}
-
-/* Charts Placeholder */
-.chart-box {
-  background: var(--glass);
-  border-radius: 1rem;
-  padding: 1rem;
-  height: 180px;
-  margin-top: 1rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: #c0bdf4;
-}
-
-/* AI Side Panel */
-.ai-panel {
-  position: fixed;
-  right: 0;
-  top: 5rem;
-  width: 280px;
-  height: calc(100vh - 5rem);
-  background: var(--glass);
-  backdrop-filter: blur(20px);
-  padding: 1rem;
-  overflow-y: auto;
-  box-shadow: -2px 0 20px rgba(0,240,255,0.3);
-}
-.ai-panel h3 {
-  font-family: 'Orbitron', sans-serif;
-  font-weight: 600;
-  margin-bottom: 1rem;
-}
-
-/* Footer */
-.footer {
-  width: 100%;
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  backdrop-filter: blur(12px);
-  background: rgba(15,5,32,0.85);
-  display: flex;
-  justify-content: space-around;
-  padding: 0.8rem 0;
-  box-shadow: 0 -2px 20px rgba(0,255,255,0.2);
-  z-index: 60;
-}
-.footer a {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  font-size: 0.8rem;
-  color: #00f0ff;
-  transition: 0.3s;
-}
-.footer a i {
-  font-size: 1.5rem;
-}
-.footer a:hover, .footer a.active {
-  color: #ff00f0;
-  transform: scale(1.3);
-}
-
-/* Scrollbars */
-.cards-3d::-webkit-scrollbar,
-.stats-cards::-webkit-scrollbar,
-.quick-actions::-webkit-scrollbar {
-  height: 8px;
-}
-.cards-3d::-webkit-scrollbar-thumb,
-.stats-cards::-webkit-scrollbar-thumb,
-.quick-actions::-webkit-scrollbar-thumb {
-  background: #00f0ff33;
-  border-radius: 4px;
-}
-
-/* Mobile Responsiveness */
-@media (max-width: 768px) {
-  .ai-panel {
-    position: relative;
-    width: 100%;
-    height: auto;
-    margin-top: 1rem;
-    box-shadow: none;
-  }
-  .stats-cards, .cards-3d, .quick-actions {
-    flex-wrap: nowrap;
-    overflow-x: auto;
-  }
-}
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zep Swipe — Vendor Dashboard</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+        header {
+            background-color: #1a73e8;
+            color: white;
+            padding: 1rem;
+            text-align: center;
+        }
+        nav {
+            display: flex;
+            justify-content: space-around;
+            background: #fff;
+            padding: 0.5rem 0;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+        }
+        nav button {
+            background: none;
+            border: none;
+            font-size: 1rem;
+            cursor: pointer;
+        }
+        .container {
+            max-width: 1200px;
+            margin: auto;
+            padding: 2rem;
+        }
+        .cards {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+        .card {
+            background: white;
+            padding: 1rem;
+            border-radius: 10px;
+            flex: 1;
+            min-width: 200px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        h3 {
+            margin-top: 0;
+        }
+        ul {
+            padding-left: 1rem;
+        }
+        .chart-placeholder {
+            height: 200px;
+            background: linear-gradient(90deg, #1a73e8, #8ab4f8);
+            border-radius: 10px;
+            margin-top: 1rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            font-weight: bold;
+        }
+        #walletAddress {
+            font-weight: bold;
+        }
+        .quick-actions button {
+            margin: 0.5rem 0.5rem 0 0;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            border: none;
+            cursor: pointer;
+            background-color: #1a73e8;
+            color: white;
+        }
+    </style>
 </head>
 <body>
-<!-- Header -->
-<header class="header">
-  <h1>Zep Swipe</h1>
+
+<header>
+    <h1>Zep Swipe — Vendor Dashboard</h1>
 </header>
 
-<main class="px-4 pt-24 pb-24">
-  <!-- Revenue Stats -->
-  <div class="stats-cards">
-    <div class="card">
-      <h3>Total Revenue</h3>
-      <p id="revenue">$12,540</p>
-      <div class="circular-progress"></div>
-    </div>
-    <div class="card">
-      <h3>Pending Orders</h3>
-      <p id="orders">24</p>
-      <div class="circular-progress"></div>
-    </div>
-    <div class="card">
-      <h3>Low Stock Items</h3>
-      <p id="inventory">7</p>
-      <div class="circular-progress"></div>
-    </div>
-  </div>
+<nav>
+    <button id="storeBtn">Store</button>
+    <button id="chatBtn">Chat</button>
+    <button id="walletBtn">Wallet</button>
+    <button id="profileBtn">Profile</button>
+</nav>
 
-  <!-- 3D Top Products Cards -->
-  <h2 class="mt-6 mb-2 font-semibold">Top Products</h2>
-  <div class="cards-3d">
-    <div class="card">
-      <h3>Product A</h3>
-      <p>150 Sold</p>
-    </div>
-    <div class="card">
-      <h3>Product B</h3>
-      <p>120 Sold</p>
-    </div>
-    <div class="card">
-      <h3>Product C</h3>
-      <p>95 Sold</p>
-    </div>
-  </div>
+<div class="container">
 
-  <!-- Quick Action Buttons -->
-  <h2 class="mt-6 mb-2 font-semibold">Quick Actions</h2>
-  <div class="quick-actions">
-    <div class="quick-action-btn" onclick="location.href='add-product.html'"><i class="fas fa-plus"></i></div>
-    <div class="quick-action-btn" onclick="location.href='process-order.html'"><i class="fas fa-box-open"></i></div>
-    <div class="quick-action-btn" onclick="location.href='report.html'"><i class="fas fa-chart-line"></i></div>
-  </div>
+    <!-- Wallet Section -->
+    <div class="card" id="walletSection">
+        <h3>Wallet</h3>
+        <p>Status: <span id="walletStatus">Not connected</span></p>
+        <p>Wallet Address: <span id="walletAddress">N/A</span></p>
+        <button onclick="connectWallet()">Connect Wallet</button>
+    </div>
 
-  <!-- Charts Section -->
-  <h2 class="mt-6 mb-2 font-semibold">Sales Overview</h2>
-  <div class="chart-box">
-    Holographic chart placeholder
-  </div>
-</main>
+    <!-- Marketplace / Overview -->
+    <div class="cards">
+        <div class="card">
+            <h3>Total Revenue</h3>
+            <p>$12,540</p>
+        </div>
+        <div class="card">
+            <h3>Pending Orders</h3>
+            <p>24</p>
+        </div>
+        <div class="card">
+            <h3>Low Stock Items</h3>
+            <p>7</p>
+        </div>
+    </div>
 
-<!-- AI Side Panel -->
-<div class="ai-panel">
-  <h3>AI Insights</h3>
-  <p>• Trending product: Product A</p>
-  <p>• Orders expected to rise by 12%</p>
-  <p>• Low stock alert for Product C</p>
-  <p>• Recommended: Boost marketing for Product B</p>
+    <!-- Top Products -->
+    <div class="card">
+        <h2>Top Products</h2>
+        <ul>
+            <li>Product A — 150 Sold</li>
+            <li>Product B — 120 Sold</li>
+            <li>Product C — 95 Sold</li>
+        </ul>
+    </div>
+
+    <!-- Quick Actions -->
+    <div class="card quick-actions">
+        <h2>Quick Actions</h2>
+        <button>New Product</button>
+        <button>Manage Orders</button>
+        <button>Marketing</button>
+    </div>
+
+    <!-- Sales Overview -->
+    <div class="card">
+        <h2>Sales Overview</h2>
+        <div class="chart-placeholder">Holographic Chart Placeholder</div>
+    </div>
+
+    <!-- AI Insights -->
+    <div class="card">
+        <h2>AI Insights</h2>
+        <ul>
+            <li>Trending product: Product A</li>
+            <li>Orders expected to rise by 12%</li>
+            <li>Low stock alert for Product C</li>
+            <li>Recommended: Boost marketing for Product B</li>
+        </ul>
+    </div>
+
 </div>
 
-<!-- Footer -->
-<footer class="footer sm:hidden">
-  <a href="store.html"><i class="fas fa-store"></i><span>Store</span></a>
-  <a href="chat.html"><i class="fas fa-comments"></i><span>Chat</span></a>
-  <a href="wallet.html"><i class="fas fa-wallet"></i><span>Wallet</span></a>
-  <a href="profile.html"><i class="fas fa-user"></i><span>Profile</span></a>
-</footer>
-
 <script>
-// Animate counters
-function animateValue(id, start, end, duration) {
-  let obj = document.getElementById(id);
-  let range = end - start;
-  let current = start;
-  let increment = end > start ? 1 : -1;
-  let stepTime = Math.abs(Math.floor(duration / range));
-  let timer = setInterval(function() {
-      current += increment;
-      obj.textContent = current.toLocaleString();
-      if (current == end) clearInterval(timer);
-  }, stepTime);
-}
-animateValue('revenue', 0, 12540, 2000);
-animateValue('orders', 0, 24, 1500);
-animateValue('inventory', 0, 7, 1500);
+    // Mock Wallet Connection (replace with real Web3 integration)
+    async function connectWallet() {
+        if (typeof window.ethereum !== 'undefined') {
+            try {
+                const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
+                const walletAddress = accounts[0];
+                document.getElementById('walletStatus').innerText = 'Connected';
+                document.getElementById('walletAddress').innerText = walletAddress;
+                localStorage.setItem('vendorWallet', walletAddress); // store in "marketplace"
+            } catch (err) {
+                console.error(err);
+                alert('Wallet connection failed.');
+            }
+        } else {
+            alert('MetaMask or compatible wallet not found.');
+        }
+    }
+
+    // Load saved wallet
+    window.onload = () => {
+        const savedWallet = localStorage.getItem('vendorWallet');
+        if (savedWallet) {
+            document.getElementById('walletStatus').innerText = 'Connected';
+            document.getElementById('walletAddress').innerText = savedWallet;
+        }
+    };
 </script>
+
 </body>
 </html>
