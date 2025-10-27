@@ -73,7 +73,7 @@ body {
 
 /* Main Wallet Section */
 main {
-  padding: 6rem 1rem 8rem 1rem;
+  padding: 6rem 1rem 10rem 1rem;
 }
 .wallet-title {
   font-family: 'Orbitron', sans-serif;
@@ -132,6 +132,9 @@ main {
   padding: 0.3rem 0.6rem;
   cursor: pointer;
   color: #fff;
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
   transition: all 0.3s;
 }
 .crypto-card .actions button:hover {
@@ -173,14 +176,7 @@ main {
   margin-bottom: 1rem;
   font-size: 1.3rem;
 }
-.withdrawal-content input {
-  width: 100%;
-  padding: 0.6rem;
-  margin-bottom: 1rem;
-  border-radius: 0.5rem;
-  border: none;
-  outline: none;
-}
+.withdrawal-content input,
 .withdrawal-content select {
   width: 100%;
   padding: 0.6rem;
@@ -256,8 +252,8 @@ main {
       <div class="amount">1,250</div>
       <div class="change text-green-400">+1.2%</div>
       <div class="actions">
-        <button onclick="openWithdrawal('ZAC')">⬇️ Withdraw</button>
-        <button>⬆️ Send</button>
+        <button onclick="openWithdrawal('ZAC')"><i class="fas fa-wallet neon-icon"></i> Withdraw</button>
+        <button><i class="fas fa-paper-plane neon-icon"></i> Send</button>
       </div>
     </div>
     <div class="crypto-card usdt">
@@ -265,8 +261,8 @@ main {
       <div class="amount">500</div>
       <div class="change text-gray-300">±0.0%</div>
       <div class="actions">
-        <button onclick="openWithdrawal('USDT')">⬇️ Withdraw</button>
-        <button>⬆️ Send</button>
+        <button onclick="openWithdrawal('USDT')"><i class="fas fa-wallet neon-icon"></i> Withdraw</button>
+        <button><i class="fas fa-paper-plane neon-icon"></i> Send</button>
       </div>
     </div>
     <div class="crypto-card eth">
@@ -274,8 +270,8 @@ main {
       <div class="amount">2.3</div>
       <div class="change text-purple-400">+2.1%</div>
       <div class="actions">
-        <button onclick="openWithdrawal('ETH')">⬇️ Withdraw</button>
-        <button>⬆️ Send</button>
+        <button onclick="openWithdrawal('ETH')"><i class="fas fa-wallet neon-icon"></i> Withdraw</button>
+        <button><i class="fas fa-paper-plane neon-icon"></i> Send</button>
       </div>
     </div>
     <div class="crypto-card btc">
@@ -283,8 +279,8 @@ main {
       <div class="amount">0.05</div>
       <div class="change text-orange-400">+0.5%</div>
       <div class="actions">
-        <button onclick="openWithdrawal('BTC')">⬇️ Withdraw</button>
-        <button>⬆️ Send</button>
+        <button onclick="openWithdrawal('BTC')"><i class="fas fa-wallet neon-icon"></i> Withdraw</button>
+        <button><i class="fas fa-paper-plane neon-icon"></i> Send</button>
       </div>
     </div>
   </div>
@@ -301,16 +297,16 @@ main {
     </select>
     <input type="text" id="phoneNumber" placeholder="Phone Number (required for eWallet)" style="display:none;">
     <input type="number" id="amount" placeholder="Amount">
-    <button onclick="submitWithdrawal()">Withdraw</button>
+    <button onclick="submitWithdrawal()"><i class="fas fa-paper-plane neon-icon"></i> Withdraw</button>
   </div>
 </div>
 
 <!-- Footer -->
 <footer class="footer sm:hidden">
-  <a href="send.html"><i class="fas fa-paper-plane"></i><span>Send</span></a>
-  <a href="request.html"><i class="fas fa-hand-holding-dollar"></i><span>Request</span></a>
-  <a href="dashboard-store.html"><i class="fas fa-store"></i><span>Store</span></a>
-  <a href="profile.html"><i class="fas fa-user"></i><span>Profile</span></a>
+  <a href="#"><i class="fas fa-paper-plane"></i><span>Send</span></a>
+  <a href="#"><i class="fas fa-hand-holding-dollar"></i><span>Request</span></a>
+  <a href="#"><i class="fas fa-wallet"></i><span>Withdraw</span></a>
+  <a href="#"><i class="fas fa-user"></i><span>Profile</span></a>
 </footer>
 
 <script>
