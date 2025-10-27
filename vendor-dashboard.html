@@ -21,15 +21,15 @@ body {
   flex-direction: column;
 }
 
-/* Header */
+/* Header / Top Nav */
 .header {
   width: 100%;
-  padding: 1rem 1.5rem;
+  padding: 1rem 2rem;
   position: fixed;
   top: 0;
   left: 0;
   backdrop-filter: blur(10px);
-  background: rgba(15,5,32,0.8);
+  background: rgba(15,5,32,0.85);
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -39,58 +39,160 @@ body {
 .header h1 {
   font-family: 'Orbitron', sans-serif;
   font-weight: 700;
-  font-size: 1.4rem;
+  font-size: 1.5rem;
   background: linear-gradient(90deg, #00f0ff, #ff00f0);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
-.menu-button {
-  font-size: 1.5rem;
-  cursor: pointer;
+.top-nav {
+  display: flex;
+  gap: 1.5rem;
+}
+.top-nav a {
   color: #00f0ff;
+  font-weight: 500;
+  padding: 0.5rem 1rem;
+  border-radius: 0.75rem;
+  transition: all 0.3s ease;
+}
+.top-nav a:hover, .top-nav a.active {
+  background: rgba(0,240,255,0.15);
+  color: #ff00f0;
+  transform: scale(1.05);
 }
 
-/* Main Dashboard */
+/* Main Layout */
 .main {
-  margin-top: 6rem;
-  text-align: center;
-  padding: 2rem 1rem 4rem;
+  display: flex;
+  margin-top: 5.5rem;
+  padding: 1rem 2rem;
+  gap: 1.5rem;
 }
 
-/* Sales Cards */
-.sales-card {
+/* Sidebar */
+.sidebar {
+  width: 220px;
   background: rgba(255,255,255,0.05);
-  border: 1px solid rgba(255,255,255,0.1);
+  backdrop-filter: blur(10px);
   border-radius: 1rem;
-  padding: 1.5rem;
-  width: 90%;
-  max-width: 400px;
-  margin: 0 auto 1rem;
-  box-shadow: 0 0 20px rgba(0,240,255,0.3);
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
 }
-.sales-card h2 {
+.sidebar h3 {
   font-family: 'Orbitron', sans-serif;
-  font-size: 1.1rem;
+  font-size: 1rem;
   color: #c0bdf4;
   margin-bottom: 0.5rem;
 }
-.sales-amount {
-  font-size: 1.5rem;
+.sidebar button {
+  background: linear-gradient(90deg, #00f0ff, #ff00f0);
+  padding: 0.5rem;
+  border-radius: 0.75rem;
+  color: #0b0520;
+  font-weight: 500;
+  cursor: pointer;
+  transition: 0.3s;
+}
+.sidebar button:hover {
+  transform: scale(1.05);
+}
+
+/* Dashboard Content */
+.dashboard {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+/* KPI / Stats Widgets */
+.kpi-container {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+.kpi-card {
+  background: rgba(255,255,255,0.05);
+  border-radius: 1rem;
+  padding: 1rem;
+  width: 180px;
+  text-align: center;
+  box-shadow: 0 0 15px rgba(0,240,255,0.2);
+  transition: transform 0.3s;
+}
+.kpi-card:hover {
+  transform: scale(1.05);
+}
+.kpi-card h4 {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 1rem;
+  color: #c0bdf4;
+}
+.kpi-value {
+  font-size: 1.4rem;
   font-weight: 700;
+  color: #00f0ff;
+  margin-top: 0.5rem;
+}
+
+/* Order Feed */
+.order-feed {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+}
+.order-card {
+  background: rgba(255,255,255,0.05);
+  padding: 1rem;
+  border-radius: 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+.order-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 0 15px rgba(0,240,255,0.3);
+}
+.order-info {
+  display: flex;
+  flex-direction: column;
+}
+.order-info span {
+  font-size: 0.9rem;
+  color: #c0bdf4;
+}
+.order-status {
+  font-weight: 600;
   color: #00f0ff;
 }
 
-/* Withdraw Button */
+/* Map Placeholder */
+.map-placeholder {
+  height: 220px;
+  background: rgba(255,255,255,0.05);
+  border-radius: 1rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: 600;
+  font-size: 1.1rem;
+  color: #00f0ff;
+  margin-bottom: 1rem;
+}
+
+/* Withdraw & Learn Banner */
 .btn {
   display: block;
-  width: 90%;
-  max-width: 400px;
-  margin: 1rem auto;
-  padding: 0.75rem;
+  width: 200px;
+  margin: 0.5rem 0;
+  padding: 0.7rem;
   border-radius: 1rem;
   text-align: center;
   font-weight: 500;
-  transition: all 0.3s ease;
+  transition: 0.3s;
   cursor: pointer;
 }
 .btn-gradient {
@@ -100,63 +202,103 @@ body {
 .btn-gradient:hover {
   transform: scale(1.05);
 }
-
-/* Learn & Earn Banner */
 .learn-banner {
+  display: block;
   background: linear-gradient(90deg, #00f0ff, #ff00f0);
   color: #0b0520;
   padding: 1rem;
   border-radius: 1rem;
-  width: 90%;
-  max-width: 400px;
-  margin: 1rem auto;
-  box-shadow: 0 0 25px rgba(255,0,240,0.3);
-  font-weight: 600;
-  transition: 0.3s;
   text-decoration: none;
+  font-weight: 600;
+  text-align: center;
+  transition: transform 0.3s;
 }
 .learn-banner:hover {
   transform: scale(1.05);
-  background: linear-gradient(90deg, #ff00f0, #00f0ff);
 }
 </style>
 </head>
-
 <body>
 
 <!-- Header -->
 <header class="header">
   <h1>Zep Swipe</h1>
-  <i class="fas fa-bars menu-button"></i>
+  <div class="top-nav">
+    <a href="#" class="active">Orders</a>
+    <a href="#">Analytics</a>
+    <a href="#">Deliveries</a>
+    <a href="#">Settings</a>
+  </div>
 </header>
 
-<!-- Main Section -->
 <main class="main">
-  <!-- Sales Summary Cards -->
-  <div class="sales-card">
-    <h2>Pending Orders</h2>
-    <p class="sales-amount">12</p>
-  </div>
-  <div class="sales-card">
-    <h2>Completed Orders</h2>
-    <p class="sales-amount">58</p>
-  </div>
-  <div class="sales-card">
-    <h2>Cancelled Orders</h2>
-    <p class="sales-amount">3</p>
-  </div>
+  <!-- Optional Sidebar -->
+  <aside class="sidebar">
+    <h3>Quick Actions</h3>
+    <button>Filter Orders</button>
+    <button>Switch View</button>
+    <button>Active Deliveries</button>
+  </aside>
 
-  <!-- Withdraw Button -->
-  <button class="btn btn-gradient" onclick="withdrawFunds()">💰 Withdraw Funds</button>
+  <!-- Dashboard Content -->
+  <section class="dashboard">
+    <!-- Map View -->
+    <div class="map-placeholder">
+      🌍 Live Delivery Map (Placeholder)
+    </div>
 
-  <!-- Learn & Earn Banner -->
-  <a href="https://www.google.com" target="_blank" class="learn-banner">
-    🎓 Learn & Earn Tips for Vendors
-  </a>
+    <!-- KPI / Stats Widgets -->
+    <div class="kpi-container">
+      <div class="kpi-card">
+        <h4>Total Orders</h4>
+        <p class="kpi-value">120</p>
+      </div>
+      <div class="kpi-card">
+        <h4>Delivery Speed</h4>
+        <p class="kpi-value">92%</p>
+      </div>
+      <div class="kpi-card">
+        <h4>Customer Rating</h4>
+        <p class="kpi-value">4.8 ⭐</p>
+      </div>
+    </div>
+
+    <!-- Order Feed -->
+    <div class="order-feed">
+      <div class="order-card">
+        <div class="order-info">
+          <span>Order #1023</span>
+          <span>ETA: 15 min</span>
+          <span>Customer: John Doe</span>
+        </div>
+        <span class="order-status">Pending</span>
+      </div>
+      <div class="order-card">
+        <div class="order-info">
+          <span>Order #1022</span>
+          <span>ETA: 5 min</span>
+          <span>Customer: Mary Jane</span>
+        </div>
+        <span class="order-status">Delivered</span>
+      </div>
+      <div class="order-card">
+        <div class="order-info">
+          <span>Order #1021</span>
+          <span>ETA: 30 min</span>
+          <span>Customer: Alex Smith</span>
+        </div>
+        <span class="order-status">Delayed</span>
+      </div>
+    </div>
+
+    <!-- Withdraw & Learn Banner -->
+    <button class="btn btn-gradient" onclick="withdrawFunds()">💰 Withdraw Funds</button>
+    <a href="https://www.google.com" target="_blank" class="learn-banner">🎓 Learn & Earn Tips for Vendors</a>
+
+  </section>
 </main>
 
 <script>
-// Placeholder withdraw function
 function withdrawFunds() {
   const amount = prompt("Enter amount to withdraw:");
   if(amount) alert(`Withdrawal request for ${amount} ZAC submitted!`);
