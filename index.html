@@ -114,6 +114,11 @@ body {
   justify-content: center;
   align-items: center;
   z-index: 100;
+  animation: fadeIn 0.3s ease;
+}
+@keyframes fadeIn {
+  from {opacity: 0;}
+  to {opacity: 1;}
 }
 .modal {
   background: rgba(255,255,255,0.05);
@@ -199,16 +204,17 @@ body {
   <div class="modal">
     <h3 id="modalTitle">Login / Signup</h3>
     <div id="modalFields">
-      <input type="text" class="input" placeholder="Email or Phone" />
-      <input type="text" class="input" placeholder="Wallet Address (if any)" />
+      <input type="text" id="userInput" class="input" placeholder="Email or Phone" />
+      <input type="text" id="walletInput" class="input" placeholder="Wallet Address (optional)" />
     </div>
-    <button class="btn btn-gradient">Continue</button>
-    <p class="text-sm text-[#c0bdf4] mt-3">or sign in as</p>
-    <div class="flex justify-around mt-2">
-      <button class="btn-outline w-1/3 py-2 text-sm" onclick="switchRole('student')">🧑‍🎓 Student</button>
-      <button class="btn-outline w-1/3 py-2 text-sm" onclick="switchRole('vendor')">🛍️ Vendor</button>
+
+    <div class="flex justify-around mt-4 mb-2">
+      <button class="btn-outline w-1/3 py-2 text-sm" id="studentBtn" onclick="switchRole('student')">🧑‍🎓 Student</button>
+      <button class="btn-outline w-1/3 py-2 text-sm" id="vendorBtn" onclick="switchRole('vendor')">🛍️ Vendor</button>
     </div>
-    <button class="btn-outline mt-4" onclick="closeModal()">Close</button>
+
+    <button class="btn btn-gradient mt-3" onclick="continueLogin()">Continue</button>
+    <button class="btn-outline mt-3" onclick="closeModal()">Close</button>
   </div>
 </div>
 
@@ -222,20 +228,44 @@ body {
 </footer>
 
 <script>
-const modal = document.getElementById('loginModal');
-const title = document.getElementById('modalTitle');
+let selectedRole = null;
 
+// Open modal
 function openModal(type) {
+  const modal = document.getElementById('loginModal');
+  const title = document.getElementById('modalTitle');
   modal.style.display = 'flex';
   title.textContent = type === 'wallet' ? 'Connect Wallet' : 'Continue with Phone';
 }
 
+// Close modal
 function closeModal() {
-  modal.style.display = 'none';
+  document.getElementById('loginModal').style.display = 'none';
 }
 
+// Switch role
 function switchRole(role) {
-  alert(`You selected ${role === 'student' ? 'Student Dashboard' : 'Vendor Dashboard'}. Coming soon!`);
+  selectedRole = role;
+  document.getElementById('studentBtn').classList.toggle('btn-gradient', role === 'student');
+  document.getElementById('vendorBtn').classList.toggle('btn-gradient', role === 'vendor');
+}
+
+// Continue button logic
+function continueLogin() {
+  if (!selectedRole) {
+    alert("Please select Student or Vendor before continuing.");
+    return;
+  }
+
+  // Simulate login success
+  alert(`Logging in as ${selectedRole.toUpperCase()}...`);
+  setTimeout(() => {
+    if (selectedRole === 'student') {
+      window.location.href = "student-dashboard.html";
+    } else {
+      window.location.href = "vendor-dashboard.html";
+    }
+  }, 1000);
 }
 </script>
 
