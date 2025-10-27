@@ -78,36 +78,35 @@ main { padding: 6rem 1rem 12rem 1rem; }
 .crypto-card.eth { border-left: 5px solid #9b59b6; }
 .crypto-card.btc { border-left: 5px solid #f39c12; }
 
-/* Modal */
 .modal {
-  position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-  backdrop-filter: blur(8px); background: rgba(0,0,0,0.7);
-  display: none; justify-content: center; align-items: center; z-index: 100;
+position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+backdrop-filter: blur(8px); background: rgba(0,0,0,0.7);
+display: none; justify-content: center; align-items: center; z-index: 100;
 }
 .modal-content {
-  background: var(--glass); backdrop-filter: blur(15px);
-  padding: 2rem; border-radius: 1rem; width: 90%; max-width: 400px; text-align: center;
+background: var(--glass); backdrop-filter: blur(15px);
+padding: 2rem; border-radius: 1rem; width: 90%; max-width: 400px; text-align: center;
 }
 .modal-content h3 { font-family: 'Orbitron', sans-serif; margin-bottom: 1rem; font-size: 1.3rem; }
 .modal-content input, .modal-content select {
-  width: 100%; padding: 0.6rem; margin-bottom: 1rem; border-radius: 0.5rem; border: none; outline: none;
+width: 100%; padding: 0.6rem; margin-bottom: 1rem; border-radius: 0.5rem; border: none; outline: none;
 }
 .modal-content button {
-  padding: 0.6rem 1.2rem; border: none; border-radius: 0.5rem; background: #00f0ff; color: #000;
-  font-weight: 700; cursor: pointer; transition: all 0.3s;
+padding: 0.6rem 1.2rem; border: none; border-radius: 0.5rem; background: #00f0ff; color: #000;
+font-weight: 700; cursor: pointer; transition: all 0.3s;
 }
 .modal-content button:hover { background: #ff00f0; }
 
 .qr-placeholder {
-  background: rgba(255,255,255,0.1); border-radius: 1rem; height: 180px; display:flex; justify-content:center; align-items:center;
-  font-weight:700; color:#00f0ff; margin-bottom:1rem;
+background: rgba(255,255,255,0.1); border-radius: 1rem; height: 180px; display:flex; justify-content:center; align-items:center;
+font-weight:700; color:#00f0ff; margin-bottom:1rem;
 }
 
 .footer {
-  width: 100%; position: fixed; bottom: 0; left: 0;
-  backdrop-filter: blur(12px); background: rgba(15,5,32,0.85);
-  display: flex; justify-content: space-around; padding: 0.8rem 0;
-  box-shadow: 0 -2px 20px rgba(0,255,255,0.2);
+width: 100%; position: fixed; bottom: 0; left: 0;
+backdrop-filter: blur(12px); background: rgba(15,5,32,0.85);
+display: flex; justify-content: space-around; padding: 0.8rem 0;
+box-shadow: 0 -2px 20px rgba(0,255,255,0.2);
 }
 .footer a { display: flex; flex-direction: column; align-items: center; font-size: 0.8rem; color: #00f0ff; transition: all 0.3s; }
 .footer a i { font-size: 1.5rem; }
@@ -115,7 +114,6 @@ main { padding: 6rem 1rem 12rem 1rem; }
 </style>
 </head>
 <body>
-
 <header class="header">
   <div class="logo">Zep Wallet</div>
   <div class="balance" id="walletBalance">$3,780.35</div>
@@ -128,6 +126,13 @@ main { padding: 6rem 1rem 12rem 1rem; }
 <main>
   <div class="wallet-title">Your Wallet</div>
 
+  <!-- QR Scan / Pay -->
+  <div class="crypto-card">
+    <h3>Scan to Pay</h3>
+    <div class="qr-placeholder">QR Scan Placeholder</div>
+    <button onclick="alert('QR Pay Coming Soon!')">Pay</button>
+  </div>
+
   <!-- Crypto Cards -->
   <div class="crypto-cards">
     <div class="crypto-card zac">
@@ -136,7 +141,7 @@ main { padding: 6rem 1rem 12rem 1rem; }
       <div class="change text-green-400">+1.2%</div>
       <div class="actions">
         <button onclick="openModal('withdraw','ZAC')"><i class="fas fa-wallet"></i> Withdraw</button>
-        <button onclick="openModal('request','ZAC')"><i class="fas fa-paper-plane"></i> Request</button>
+        <button onclick="openModal('topup','ZAC')"><i class="fas fa-plus-circle"></i> Top-Up</button>
       </div>
     </div>
     <div class="crypto-card usdt">
@@ -145,7 +150,7 @@ main { padding: 6rem 1rem 12rem 1rem; }
       <div class="change text-gray-300">±0.0%</div>
       <div class="actions">
         <button onclick="openModal('withdraw','USDT')"><i class="fas fa-wallet"></i> Withdraw</button>
-        <button onclick="openModal('request','USDT')"><i class="fas fa-paper-plane"></i> Request</button>
+        <button onclick="openModal('topup','USDT')"><i class="fas fa-plus-circle"></i> Top-Up</button>
       </div>
     </div>
     <div class="crypto-card eth">
@@ -154,29 +159,31 @@ main { padding: 6rem 1rem 12rem 1rem; }
       <div class="change text-purple-400">+2.1%</div>
       <div class="actions">
         <button onclick="openModal('withdraw','ETH')"><i class="fas fa-wallet"></i> Withdraw</button>
-        <button onclick="openModal('request','ETH')"><i class="fas fa-paper-plane"></i> Request</button>
+        <button onclick="openModal('topup','ETH')"><i class="fas fa-plus-circle"></i> Top-Up</button>
       </div>
     </div>
   </div>
 
-  <!-- Zep POS Request -->
+  <!-- Zep POS -->
   <div class="crypto-card">
     <h3>Zep POS</h3>
-    <button onclick="openModal('request','Zep POS')">Request Payment</button>
+    <button onclick="window.location.href='dashboard-pos.html'">Go to POS</button>
   </div>
 </main>
 
 <!-- Modal -->
 <div id="modal" class="modal">
-  <div class="modal-content" id="modalContent">
+  <div class="modal-content">
     <h3 id="modalTitle">Action</h3>
-    <select id="modalOption">
+    <select id="modalOption" style="margin-bottom:0.5rem;">
       <option value="wallet">Wallet Top-Up</option>
       <option value="momo">Momo Top-Up</option>
       <option value="bank">Bank Top-Up</option>
     </select>
     <input type="text" id="modalAmount" placeholder="Amount">
-    <input type="text" id="modalRecipient" placeholder="Recipient (for Request)" style="display:none;">
+    <div id="walletConnectBtn" style="margin-bottom:0.5rem; display:none;">
+      <button onclick="connectWallet()">Connect Wallet</button>
+    </div>
     <button onclick="processModal()">Confirm</button>
     <button onclick="closeModal()" style="margin-top:1rem;background:#ff00f0;color:#fff;">Cancel</button>
   </div>
@@ -196,32 +203,37 @@ let currentCoin = '';
 function openModal(action, coin='') {
   currentAction = action;
   currentCoin = coin;
-  document.getElementById('modalTitle').innerText = action.charAt(0).toUpperCase() + action.slice(1) + (coin ? ' ' + coin : '');
+  document.getElementById('modalTitle').innerText = action.charAt(0).toUpperCase()+action.slice(1)+' '+coin;
   document.getElementById('modal').style.display = 'flex';
-  // Show recipient only for request payments
-  document.getElementById('modalRecipient').style.display = (action==='request') ? 'block' : 'none';
+
+  // Show wallet connect button only for wallet top-up
+  const option = document.getElementById('modalOption').value;
+  document.getElementById('walletConnectBtn').style.display = (action==='topup' && option==='wallet') ? 'block' : 'none';
 }
 
 function closeModal() {
-  document.getElementById('modal').style.display = 'none';
-  document.getElementById('modalAmount').value = '';
-  document.getElementById('modalRecipient').value = '';
+  document.getElementById('modal').style.display='none';
+  document.getElementById('modalAmount').value='';
 }
 
 function processModal() {
   const amount = document.getElementById('modalAmount').value;
   const option = document.getElementById('modalOption').value;
-  const recipient = document.getElementById('modalRecipient').value;
-  if(!amount || amount <=0){ alert('Enter valid amount'); return; }
-  if(currentAction==='request' && !recipient){ alert('Enter recipient'); return; }
-  if(currentAction==='request'){
-    alert(`Requested ${amount} ${currentCoin} from ${recipient}`);
-  } else {
-    alert(`${currentAction.charAt(0).toUpperCase()+currentAction.slice(1)} ${amount} ${currentCoin} via ${option}`);
-  }
+  if(!amount || amount<=0){ alert('Enter valid amount'); return; }
+  alert(`${currentAction.charAt(0).toUpperCase()+currentAction.slice(1)} ${amount} ${currentCoin} via ${option}`);
   closeModal();
 }
-</script>
 
+// Mock wallet connection
+function connectWallet() {
+  alert('Wallet connected for top-up!');
+}
+
+// Update wallet connect button display when top-up option changes
+document.getElementById('modalOption').addEventListener('change', ()=>{
+  const option = document.getElementById('modalOption').value;
+  document.getElementById('walletConnectBtn').style.display = (option==='wallet' && currentAction==='topup') ? 'block' : 'none';
+});
+</script>
 </body>
 </html>
