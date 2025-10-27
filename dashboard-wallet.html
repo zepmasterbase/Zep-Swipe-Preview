@@ -73,7 +73,7 @@ body {
 
 /* Main Wallet Section */
 main {
-  padding: 6rem 1rem 6rem 1rem;
+  padding: 6rem 1rem 8rem 1rem;
 }
 .wallet-title {
   font-family: 'Orbitron', sans-serif;
@@ -145,6 +145,64 @@ main {
 .crypto-card.eth { border-left: 5px solid #9b59b6; }
 .crypto-card.btc { border-left: 5px solid #f39c12; }
 
+/* Withdrawal Modal */
+.withdrawal-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  backdrop-filter: blur(8px);
+  background: rgba(0,0,0,0.7);
+  display: none;
+  justify-content: center;
+  align-items: center;
+  z-index: 100;
+}
+.withdrawal-content {
+  background: var(--glass);
+  backdrop-filter: blur(15px);
+  padding: 2rem;
+  border-radius: 1rem;
+  width: 90%;
+  max-width: 400px;
+  text-align: center;
+}
+.withdrawal-content h3 {
+  font-family: 'Orbitron', sans-serif;
+  margin-bottom: 1rem;
+  font-size: 1.3rem;
+}
+.withdrawal-content input {
+  width: 100%;
+  padding: 0.6rem;
+  margin-bottom: 1rem;
+  border-radius: 0.5rem;
+  border: none;
+  outline: none;
+}
+.withdrawal-content select {
+  width: 100%;
+  padding: 0.6rem;
+  margin-bottom: 1rem;
+  border-radius: 0.5rem;
+  border: none;
+  outline: none;
+}
+.withdrawal-content button {
+  padding: 0.6rem 1.2rem;
+  border: none;
+  border-radius: 0.5rem;
+  background: #00f0ff;
+  color: #000;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+.withdrawal-content button:hover {
+  background: #ff00f0;
+}
+
 /* Footer */
 .footer {
   width: 100%;
@@ -174,15 +232,6 @@ main {
   transform: scale(1.3);
   text-shadow: 0 0 6px #ff00f0;
 }
-
-/* Scrollbars */
-.crypto-cards::-webkit-scrollbar {
-  height: 8px;
-}
-.crypto-cards::-webkit-scrollbar-thumb {
-  background: #00f0ff33;
-  border-radius: 4px;
-}
 </style>
 </head>
 <body>
@@ -207,8 +256,8 @@ main {
       <div class="amount">1,250</div>
       <div class="change text-green-400">+1.2%</div>
       <div class="actions">
+        <button onclick="openWithdrawal('ZAC')">⬇️ Withdraw</button>
         <button>⬆️ Send</button>
-        <button>⬇️ Receive</button>
       </div>
     </div>
     <div class="crypto-card usdt">
@@ -216,8 +265,8 @@ main {
       <div class="amount">500</div>
       <div class="change text-gray-300">±0.0%</div>
       <div class="actions">
+        <button onclick="openWithdrawal('USDT')">⬇️ Withdraw</button>
         <button>⬆️ Send</button>
-        <button>⬇️ Receive</button>
       </div>
     </div>
     <div class="crypto-card eth">
@@ -225,8 +274,8 @@ main {
       <div class="amount">2.3</div>
       <div class="change text-purple-400">+2.1%</div>
       <div class="actions">
+        <button onclick="openWithdrawal('ETH')">⬇️ Withdraw</button>
         <button>⬆️ Send</button>
-        <button>⬇️ Receive</button>
       </div>
     </div>
     <div class="crypto-card btc">
@@ -234,20 +283,69 @@ main {
       <div class="amount">0.05</div>
       <div class="change text-orange-400">+0.5%</div>
       <div class="actions">
+        <button onclick="openWithdrawal('BTC')">⬇️ Withdraw</button>
         <button>⬆️ Send</button>
-        <button>⬇️ Receive</button>
       </div>
     </div>
   </div>
 </main>
 
+<!-- Withdrawal Modal -->
+<div class="withdrawal-modal" id="withdrawalModal">
+  <div class="withdrawal-content">
+    <h3>Withdraw <span id="withdrawCrypto"></span></h3>
+    <select id="withdrawMethod">
+      <option value="">Select Method</option>
+      <option value="mtn">MTN Momo</option>
+      <option value="fnb">FNB eWallet</option>
+    </select>
+    <input type="text" id="phoneNumber" placeholder="Phone Number (required for eWallet)" style="display:none;">
+    <input type="number" id="amount" placeholder="Amount">
+    <button onclick="submitWithdrawal()">Withdraw</button>
+  </div>
+</div>
+
 <!-- Footer -->
 <footer class="footer sm:hidden">
   <a href="send.html"><i class="fas fa-paper-plane"></i><span>Send</span></a>
   <a href="request.html"><i class="fas fa-hand-holding-dollar"></i><span>Request</span></a>
-  <a href="wallet.html"><i class="fas fa-wallet"></i><span>Wallet</span></a>
+  <a href="dashboard-store.html"><i class="fas fa-store"></i><span>Store</span></a>
   <a href="profile.html"><i class="fas fa-user"></i><span>Profile</span></a>
 </footer>
+
+<script>
+function openWithdrawal(crypto) {
+  document.getElementById('withdrawCrypto').textContent = crypto;
+  document.getElementById('withdrawalModal').style.display = 'flex';
+  document.getElementById('withdrawMethod').value = '';
+  document.getElementById('phoneNumber').style.display = 'none';
+}
+
+document.getElementById('withdrawMethod').addEventListener('change', function() {
+  if (this.value === 'fnb') {
+    document.getElementById('phoneNumber').style.display = 'block';
+  } else {
+    document.getElementById('phoneNumber').style.display = 'none';
+  }
+});
+
+function submitWithdrawal() {
+  const crypto = document.getElementById('withdrawCrypto').textContent;
+  const method = document.getElementById('withdrawMethod').value;
+  const phone = document.getElementById('phoneNumber').value;
+  const amount = document.getElementById('amount').value;
+  if (!method || !amount) {
+    alert('Please select a method and enter an amount.');
+    return;
+  }
+  if (method === 'fnb' && !phone) {
+    alert('Please enter phone number for eWallet withdrawal.');
+    return;
+  }
+  alert(`Withdrawal of ${amount} ${crypto} via ${method.toUpperCase()} submitted!`);
+  document.getElementById('withdrawalModal').style.display = 'none';
+}
+</script>
 
 </body>
 </html>
