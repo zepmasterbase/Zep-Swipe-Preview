@@ -73,7 +73,7 @@ body {
 
 /* Main Wallet Section */
 main {
-  padding: 6rem 1rem 10rem 1rem;
+  padding: 6rem 1rem 12rem 1rem;
 }
 .wallet-title {
   font-family: 'Orbitron', sans-serif;
@@ -148,8 +148,8 @@ main {
 .crypto-card.eth { border-left: 5px solid #9b59b6; }
 .crypto-card.btc { border-left: 5px solid #f39c12; }
 
-/* Withdrawal Modal */
-.withdrawal-modal {
+/* Modals */
+.modal {
   position: fixed;
   top: 0;
   left: 0;
@@ -162,7 +162,7 @@ main {
   align-items: center;
   z-index: 100;
 }
-.withdrawal-content {
+.modal-content {
   background: var(--glass);
   backdrop-filter: blur(15px);
   padding: 2rem;
@@ -171,13 +171,13 @@ main {
   max-width: 400px;
   text-align: center;
 }
-.withdrawal-content h3 {
+.modal-content h3 {
   font-family: 'Orbitron', sans-serif;
   margin-bottom: 1rem;
   font-size: 1.3rem;
 }
-.withdrawal-content input,
-.withdrawal-content select {
+.modal-content input,
+.modal-content select {
   width: 100%;
   padding: 0.6rem;
   margin-bottom: 1rem;
@@ -185,7 +185,7 @@ main {
   border: none;
   outline: none;
 }
-.withdrawal-content button {
+.modal-content button {
   padding: 0.6rem 1.2rem;
   border: none;
   border-radius: 0.5rem;
@@ -195,7 +195,7 @@ main {
   cursor: pointer;
   transition: all 0.3s;
 }
-.withdrawal-content button:hover {
+.modal-content button:hover {
   background: #ff00f0;
 }
 
@@ -252,8 +252,8 @@ main {
       <div class="amount">1,250</div>
       <div class="change text-green-400">+1.2%</div>
       <div class="actions">
-        <button onclick="openWithdrawal('ZAC')"><i class="fas fa-wallet neon-icon"></i> Withdraw</button>
-        <button><i class="fas fa-paper-plane neon-icon"></i> Send</button>
+        <button onclick="openModal('withdraw','ZAC')"><i class="fas fa-wallet neon-icon"></i> Withdraw</button>
+        <button onclick="openModal('send','ZAC')"><i class="fas fa-paper-plane neon-icon"></i> Send</button>
       </div>
     </div>
     <div class="crypto-card usdt">
@@ -261,8 +261,8 @@ main {
       <div class="amount">500</div>
       <div class="change text-gray-300">±0.0%</div>
       <div class="actions">
-        <button onclick="openWithdrawal('USDT')"><i class="fas fa-wallet neon-icon"></i> Withdraw</button>
-        <button><i class="fas fa-paper-plane neon-icon"></i> Send</button>
+        <button onclick="openModal('withdraw','USDT')"><i class="fas fa-wallet neon-icon"></i> Withdraw</button>
+        <button onclick="openModal('send','USDT')"><i class="fas fa-paper-plane neon-icon"></i> Send</button>
       </div>
     </div>
     <div class="crypto-card eth">
@@ -270,8 +270,8 @@ main {
       <div class="amount">2.3</div>
       <div class="change text-purple-400">+2.1%</div>
       <div class="actions">
-        <button onclick="openWithdrawal('ETH')"><i class="fas fa-wallet neon-icon"></i> Withdraw</button>
-        <button><i class="fas fa-paper-plane neon-icon"></i> Send</button>
+        <button onclick="openModal('withdraw','ETH')"><i class="fas fa-wallet neon-icon"></i> Withdraw</button>
+        <button onclick="openModal('send','ETH')"><i class="fas fa-paper-plane neon-icon"></i> Send</button>
       </div>
     </div>
     <div class="crypto-card btc">
@@ -279,69 +279,78 @@ main {
       <div class="amount">0.05</div>
       <div class="change text-orange-400">+0.5%</div>
       <div class="actions">
-        <button onclick="openWithdrawal('BTC')"><i class="fas fa-wallet neon-icon"></i> Withdraw</button>
-        <button><i class="fas fa-paper-plane neon-icon"></i> Send</button>
+        <button onclick="openModal('withdraw','BTC')"><i class="fas fa-wallet neon-icon"></i> Withdraw</button>
+        <button onclick="openModal('send','BTC')"><i class="fas fa-paper-plane neon-icon"></i> Send</button>
       </div>
     </div>
   </div>
 </main>
 
-<!-- Withdrawal Modal -->
-<div class="withdrawal-modal" id="withdrawalModal">
-  <div class="withdrawal-content">
-    <h3>Withdraw <span id="withdrawCrypto"></span></h3>
-    <select id="withdrawMethod">
+<!-- Generic Modal for Withdraw/Send/Request -->
+<div class="modal" id="cryptoModal">
+  <div class="modal-content">
+    <h3 id="modalTitle"></h3>
+    <select id="cryptoMethod">
       <option value="">Select Method</option>
       <option value="mtn">MTN Momo</option>
       <option value="fnb">FNB eWallet</option>
     </select>
-    <input type="text" id="phoneNumber" placeholder="Phone Number (required for eWallet)" style="display:none;">
-    <input type="number" id="amount" placeholder="Amount">
-    <button onclick="submitWithdrawal()"><i class="fas fa-paper-plane neon-icon"></i> Withdraw</button>
+    <input type="text" id="modalPhone" placeholder="Phone Number (required for eWallet)" style="display:none;">
+    <input type="number" id="modalAmount" placeholder="Amount">
+    <button onclick="submitModalAction()"><i class="fas fa-paper-plane neon-icon"></i> Confirm</button>
   </div>
 </div>
 
 <!-- Footer -->
 <footer class="footer sm:hidden">
-  <a href="#"><i class="fas fa-paper-plane"></i><span>Send</span></a>
-  <a href="#"><i class="fas fa-hand-holding-dollar"></i><span>Request</span></a>
-  <a href="#"><i class="fas fa-wallet"></i><span>Withdraw</span></a>
+  <a href="#" onclick="openModal('send')"><i class="fas fa-paper-plane"></i><span>Send</span></a>
+  <a href="#" onclick="openModal('request')"><i class="fas fa-hand-holding-dollar"></i><span>Request</span></a>
+  <a href="dashboard-store.html"><i class="fas fa-store"></i><span>Store</span></a>
   <a href="#"><i class="fas fa-user"></i><span>Profile</span></a>
 </footer>
 
 <script>
-function openWithdrawal(crypto) {
-  document.getElementById('withdrawCrypto').textContent = crypto;
-  document.getElementById('withdrawalModal').style.display = 'flex';
-  document.getElementById('withdrawMethod').value = '';
-  document.getElementById('phoneNumber').style.display = 'none';
+let currentAction = '';
+let currentCrypto = '';
+
+function openModal(action, crypto='') {
+  currentAction = action;
+  currentCrypto = crypto;
+  const modal = document.getElementById('cryptoModal');
+  const title = document.getElementById('modalTitle');
+  const method = document.getElementById('cryptoMethod');
+  const phone = document.getElementById('modalPhone');
+  const amount = document.getElementById('modalAmount');
+
+  method.value = '';
+  phone.style.display = 'none';
+  amount.value = '';
+
+  if(action === 'withdraw') {
+    title.textContent = `Withdraw ${crypto}`;
+  } else if(action === 'send') {
+    title.textContent = `Send ${crypto || ''}`;
+  } else if(action === 'request') {
+    title.textContent = `Request ${crypto || ''}`;
+  }
+  modal.style.display = 'flex';
 }
 
-document.getElementById('withdrawMethod').addEventListener('change', function() {
-  if (this.value === 'fnb') {
-    document.getElementById('phoneNumber').style.display = 'block';
-  } else {
-    document.getElementById('phoneNumber').style.display = 'none';
-  }
+document.getElementById('cryptoMethod').addEventListener('change', function() {
+  const phone = document.getElementById('modalPhone');
+  phone.style.display = this.value === 'fnb' ? 'block' : 'none';
 });
 
-function submitWithdrawal() {
-  const crypto = document.getElementById('withdrawCrypto').textContent;
-  const method = document.getElementById('withdrawMethod').value;
-  const phone = document.getElementById('phoneNumber').value;
-  const amount = document.getElementById('amount').value;
-  if (!method || !amount) {
-    alert('Please select a method and enter an amount.');
+function submitModalAction() {
+  const method = document.getElementById('cryptoMethod').value;
+  const phone = document.getElementById('modalPhone').value;
+  const amount = document.getElementById('modalAmount').value;
+  if(!amount) {
+    alert('Please enter amount.');
     return;
   }
-  if (method === 'fnb' && !phone) {
-    alert('Please enter phone number for eWallet withdrawal.');
+  if((currentAction === 'withdraw' || currentAction==='send') && !method){
+    alert('Please select a method.');
     return;
   }
-  alert(`Withdrawal of ${amount} ${crypto} via ${method.toUpperCase()} submitted!`);
-  document.getElementById('withdrawalModal').style.display = 'none';
-}
-</script>
-
-</body>
-</html>
+  if
