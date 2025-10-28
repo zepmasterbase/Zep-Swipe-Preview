@@ -199,6 +199,7 @@ body {
   color: var(--neon-blue);
   font-size: 0.8rem;
   transition: 0.3s;
+  text-decoration: none;
 }
 .footer a i {
   font-size: 1.4rem;
@@ -279,15 +280,15 @@ body {
   <!-- Balance -->
   <div class="balance-card">
     <h2>Total Balance</h2>
-    <div class="amount">$3,780.35</div>
+    <div class="amount" id="totalBalance">$0.00</div>
     <div class="sub-balance">
       <div>
         <h4>ZAC</h4>
-        <p>1,250.00</p>
+        <p id="zacBalance">1,250.00</p>
       </div>
       <div>
         <h4>USDT</h4>
-        <p>500.00</p>
+        <p id="usdtBalance">500.00</p>
       </div>
     </div>
   </div>
@@ -321,115 +322,4 @@ body {
       <div class="left">
         <i class="fas fa-arrow-up"></i>
         <div>
-          <div class="name">Sent to Alex</div>
-          <div class="date">Oct 25, 2025</div>
-        </div>
-      </div>
-      <div class="amount negative">- $120.00</div>
-    </div>
-
-    <div class="tx-item">
-      <div class="left">
-        <i class="fas fa-arrow-down"></i>
-        <div>
-          <div class="name">Received from Mia</div>
-          <div class="date">Oct 23, 2025</div>
-        </div>
-      </div>
-      <div class="amount positive">+ $250.00</div>
-    </div>
-
-    <div class="tx-item">
-      <div class="left">
-        <i class="fas fa-store"></i>
-        <div>
-          <div class="name">Store Purchase</div>
-          <div class="date">Oct 20, 2025</div>
-        </div>
-      </div>
-      <div class="amount negative">- $75.50</div>
-    </div>
-  </div>
-</main>
-
-<!-- Footer -->
-<footer class="footer sm:hidden">
-  <a href="#" class="active"><i class="fas fa-home"></i><span>Home</span></a>
-  <a href="#"><i class="fas fa-paper-plane"></i><span>Send</span></a>
-  <a href="#"><i class="fas fa-hand-holding-dollar"></i><span>Request</span></a>
-  <a href="#"><i class="fas fa-wallet"></i><span>Withdraw</span></a>
-  <a href="#"><i class="fas fa-user"></i><span>Profile</span></a>
-</footer>
-
-<!-- ===== MODALS ===== -->
-<div id="sendModal" class="modal">
-  <div class="modal-content relative">
-    <span class="close-btn" onclick="closeModal('sendModal')">&times;</span>
-    <h3>Send Funds</h3>
-    <input type="text" placeholder="Recipient Address or Username">
-    <input type="number" placeholder="Amount">
-    <button>Send</button>
-  </div>
-</div>
-
-<div id="requestModal" class="modal">
-  <div class="modal-content relative">
-    <span class="close-btn" onclick="closeModal('requestModal')">&times;</span>
-    <h3>Request Funds</h3>
-    <input type="text" placeholder="From (Username)">
-    <input type="number" placeholder="Amount">
-    <button>Request</button>
-  </div>
-</div>
-
-<div id="storeModal" class="modal">
-  <div class="modal-content relative">
-    <span class="close-btn" onclick="closeModal('storeModal')">&times;</span>
-    <h3>Store Access</h3>
-    <p class="mb-3 text-gray-300 text-sm">Store feature coming soon. Browse or manage your merchant profile here.</p>
-    <button>Explore Store</button>
-  </div>
-</div>
-
-<div id="swapModal" class="modal">
-  <div class="modal-content relative">
-    <span class="close-btn" onclick="closeModal('swapModal')">&times;</span>
-    <h3>Swap Crypto</h3>
-    <input type="text" placeholder="From Currency (e.g. ZAC)">
-    <input type="text" placeholder="To Currency (e.g. USDT)">
-    <input type="number" placeholder="Amount">
-    <button>Swap</button>
-  </div>
-</div>
-
-<div id="topupModal" class="modal">
-  <div class="modal-content relative">
-    <span class="close-btn" onclick="closeModal('topupModal')">&times;</span>
-    <h3>Top Up Wallet</h3>
-    <input type="number" placeholder="Amount">
-    <button>Top Up</button>
-  </div>
-</div>
-
-<div id="withdrawModal" class="modal">
-  <div class="modal-content relative">
-    <span class="close-btn" onclick="closeModal('withdrawModal')">&times;</span>
-    <h3>Withdraw Funds</h3>
-    <input type="number" placeholder="Amount">
-    <input type="text" placeholder="Withdrawal Method (e.g. Momo, Crypto Wallet)">
-    <button>Withdraw</button>
-  </div>
-</div>
-
-<!-- SCRIPT -->
-<script>
-function openModal(id) {
-  document.getElementById(id).style.display = 'flex';
-}
-function closeModal(id) {
-  document.getElementById(id).style.display = 'none';
-}
-</script>
-
-</body>
-</html>
+          <div class="name">
