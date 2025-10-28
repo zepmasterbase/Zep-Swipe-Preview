@@ -3,8 +3,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ZepStudent Dashboard Neon</title>
+<title>ZepStudent Dashboard</title>
 
+<!-- Tailwind + Fonts + Icons -->
 <script src="https://cdn.tailwindcss.com"></script>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Orbitron:wght@600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -13,10 +14,10 @@
 :root {
   --neon-blue: #00f0ff;
   --neon-pink: #ff00f0;
-  --neon-purple: #8e2de2;
   --glass: rgba(255,255,255,0.05);
 }
 
+/* Body */
 body {
   font-family: 'Poppins', sans-serif;
   margin: 0;
@@ -31,272 +32,260 @@ body {
   position: fixed;
   top: 0;
   width: 100%;
-  padding: 0.8rem 1rem;
+  padding: 1rem 1.5rem;
   display: flex;
+  align-items: center;
   justify-content: space-between;
-  align-items: center;
-  backdrop-filter: blur(16px);
-  background: rgba(15,5,32,0.75);
+  backdrop-filter: blur(15px);
+  background: rgba(15,5,32,0.85);
+  box-shadow: 0 0 25px rgba(0,240,255,0.3);
   z-index: 50;
-  border-bottom: 1px solid rgba(0,255,255,0.1);
+  border-radius: 0 0 1.5rem 1.5rem;
 }
-.header-left, .header-center, .header-right {
+
+/* Left Header */
+.header-left {
   display: flex;
   align-items: center;
-}
-.header-left {
-  gap: 0.6rem;
+  gap: 0.8rem;
 }
 .header-left i {
+  font-size: 1.3rem;
   color: var(--neon-blue);
-  font-size: 1.4rem;
   cursor: pointer;
-  text-shadow: 0 0 6px var(--neon-blue);
   transition: 0.3s;
 }
-.header-left i:hover { color: var(--neon-pink); transform: scale(1.2);}
+.header-left i:hover {
+  color: var(--neon-pink);
+  transform: scale(1.2);
+}
 .header-left img {
-  width: 44px;
-  height: 44px;
+  width: 40px;
+  height: 40px;
   border-radius: 50%;
   border: 2px solid var(--neon-blue);
   object-fit: cover;
-  box-shadow: 0 0 8px var(--neon-blue);
 }
-.header-center h1 {
+.header-left .greeting {
   font-family: 'Orbitron', sans-serif;
-  font-size: 1.4rem;
-  background: linear-gradient(90deg, var(--neon-pink), var(--neon-blue));
+  font-size: 1.1rem;
+  font-weight: 600;
+  background: linear-gradient(90deg, var(--neon-blue), var(--neon-pink));
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-  text-shadow: 0 0 10px var(--neon-pink);
 }
-.header-right {
-  gap: 0.6rem;
-}
-.claim-btn {
-  background: linear-gradient(90deg,var(--neon-pink),var(--neon-blue));
-  padding:0.5rem 0.8rem;
-  border-radius:0.8rem;
-  font-weight:600;
-  color:#fff;
-  font-size:0.85rem;
-  cursor:pointer;
-  text-decoration:none;
-  box-shadow: 0 0 8px var(--neon-pink);
-  transition:0.3s;
-}
-.claim-btn:hover { transform: scale(1.05); box-shadow: 0 0 20px var(--neon-pink);}
 
-/* BALANCE CARD */
+/* Right Header */
+.header-right i {
+  font-size: 1.3rem;
+  color: var(--neon-blue);
+  cursor: pointer;
+  transition: 0.3s;
+}
+.header-right i:hover {
+  color: var(--neon-pink);
+  transform: scale(1.2);
+}
+
+/* Balance Card */
 .balance-card {
-  margin-top:5rem;
-  margin:1rem;
+  margin-top: 6rem;
   background: var(--glass);
-  backdrop-filter: blur(24px);
-  border-radius: 1rem;
+  backdrop-filter: blur(20px);
+  border-radius: 1.2rem;
   padding: 1.5rem;
-  box-shadow: 0 0 25px var(--neon-blue);
-  text-align:center;
-  animation: float 6s ease-in-out infinite;
+  text-align: center;
+  box-shadow: 0 0 25px rgba(0,240,255,0.3);
 }
 .balance-card h3 {
+  font-family: 'Orbitron', sans-serif;
+  font-weight: 600;
   color: var(--neon-blue);
-  font-weight:600;
-  margin-bottom:0.3rem;
-  text-shadow: 0 0 6px var(--neon-blue);
 }
-.balance-total {
-  font-weight:700;
-  font-size:2rem;
-  background: linear-gradient(90deg,var(--neon-blue),var(--neon-pink));
+.balance-card .total-balance {
+  font-size: 2rem;
+  font-weight: 700;
+  margin: 0.5rem 0 1rem 0;
+  background: linear-gradient(90deg, var(--neon-blue), var(--neon-pink));
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-  margin-bottom:0.5rem;
-  text-shadow: 0 0 12px var(--neon-pink);
+  animation: pulse 2s infinite;
 }
-.sub-balances {
-  display:flex;
-  justify-content:space-around;
-  gap:0.5rem;
+.balance-card .sub-balances {
+  display: flex;
+  justify-content: space-around;
 }
 .sub-balances div {
   background: rgba(255,255,255,0.08);
-  padding:0.8rem;
-  border-radius:1rem;
-  text-align:center;
-  flex:1;
-  box-shadow: 0 0 10px var(--neon-purple);
-  transition:0.3s;
+  padding: 0.7rem 1rem;
+  border-radius: 0.8rem;
+  flex: 1;
+  margin: 0 0.3rem;
+  box-shadow: inset 0 0 8px rgba(0,240,255,0.2);
 }
-.sub-balances div:hover { transform:scale(1.05); box-shadow: 0 0 18px var(--neon-blue);}
-.sub-balances h4 {color: var(--neon-blue); font-size:0.85rem; margin-bottom:0.2rem;}
-.sub-balances p {font-weight:700; font-size:0.95rem;}
+.sub-balances h4 { color: var(--neon-blue); font-size: 0.85rem; }
+.sub-balances p { font-weight: 600; font-size: 1rem; }
 
-/* NEWS */
+/* News Section */
 .news-section {
-  margin:1rem;
-}
-.news-section h3 {
-  font-family: 'Orbitron', sans-serif;
-  font-size:1rem;
-  color: var(--neon-blue);
-  margin-bottom:0.5rem;
-  text-shadow: 0 0 6px var(--neon-blue);
-}
-.news-grid {
-  display:grid;
-  grid-template-columns:repeat(2,1fr);
-  gap:0.6rem;
+  margin-top: 1.5rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 1rem;
 }
 .news-card {
   background: var(--glass);
-  border-radius:1rem;
-  padding:0.8rem;
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  gap:0.3rem;
-  transition:0.3s;
-  box-shadow: 0 0 6px var(--neon-blue);
+  border-radius: 1rem;
+  overflow: hidden;
+  box-shadow: 0 0 15px rgba(0,240,255,0.2);
+  transition: transform 0.3s;
 }
+.news-card:hover { transform: scale(1.03); }
 .news-card img {
-  width:100%;
-  height:110px;
-  object-fit:cover;
-  border-radius:0.6rem;
-  filter: brightness(1.2) contrast(1.1);
+  width: 100%;
+  height: 100px;
+  object-fit: cover;
+  filter: brightness(1.2); /* lighter image */
 }
-.news-card:hover {
-  transform:scale(1.05);
-  box-shadow:0 0 18px var(--neon-pink);
+.news-card .news-content {
+  padding: 0.5rem;
+}
+.news-card .news-content h4 {
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+.news-card .news-content p {
+  font-size: 0.75rem;
+  opacity: 0.8;
+  margin: 0.2rem 0 0 0;
 }
 
-/* FOOTER */
+/* Footer */
 .footer {
-  position:fixed;
-  bottom:0;
-  left:0;
-  width:100%;
-  display:flex;
-  justify-content:space-around;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+  padding: 0.8rem 0;
   background: rgba(15,5,32,0.85);
-  backdrop-filter: blur(16px);
-  padding:0.8rem 0;
-  z-index:100;
+  backdrop-filter: blur(12px);
+  box-shadow: 0 -2px 20px rgba(0,255,255,0.2);
+  z-index: 50;
 }
 .footer a {
-  display:flex;
-  flex-direction:column;
-  align-items:center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   color: var(--neon-blue);
-  font-size:0.8rem;
-  text-decoration:none;
-  transition:0.3s;
-  text-shadow: 0 0 4px var(--neon-blue);
+  font-size: 0.8rem;
+  text-decoration: none;
+  transition: 0.3s;
 }
-.footer a i {font-size:1.5rem;}
-.footer a:hover, .footer a.active {
-  color: var(--neon-pink);
-  transform:scale(1.2);
-  text-shadow:0 0 8px var(--neon-pink);
-}
+.footer a i { font-size: 1.4rem; }
+.footer a:hover, .footer a.active { color: var(--neon-pink); transform: scale(1.2); }
 
-/* FLOATING ANIMATION */
-@keyframes float{
-  0%,100%{transform:translateY(0);}
-  50%{transform:translateY(-5px);}
-}
-
-@media(max-width:600px){
-  .news-grid{grid-template-columns:1fr;}
-  .sub-balances{flex-direction:column; gap:0.3rem;}
+/* Neon Pulse Animation */
+@keyframes pulse {
+  0% { text-shadow: 0 0 10px #00f0ff; }
+  50% { text-shadow: 0 0 20px #ff00f0; }
+  100% { text-shadow: 0 0 10px #00f0ff; }
 }
 </style>
 </head>
 <body>
 
+<!-- Header -->
 <header class="header">
   <div class="header-left">
-    <a href="student-social.html"><i class="fas fa-users"></i></a>
-    <img src="https://via.placeholder.com/44" alt="Profile">
-  </div>
-  <div class="header-center">
-    <h1>Hello Student</h1>
+    <i class="fab fa-facebook-messenger"></i> <!-- Social mini icon -->
+    <img src="https://via.placeholder.com/40" alt="Profile Picture">
+    <span class="greeting">Hello Student</span>
   </div>
   <div class="header-right">
     <i class="fas fa-bell"></i>
-    <a href="learn-earn.html" class="claim-btn">Claim Reward</a>
   </div>
 </header>
 
-<!-- BALANCES -->
-<div class="balance-card">
-  <h3>Total Balance</h3>
-  <div class="balance-total" id="totalBalance">0.00</div>
-  <div class="sub-balances">
-    <div><h4>ZAC</h4><p id="zacBalance">0.00</p></div>
-    <div><h4>USDT</h4><p id="usdtBalance">0.00</p></div>
-    <div><h4>ETH</h4><p id="ethBalance">0.00</p></div>
-  </div>
-</div>
-
-<!-- NEWS -->
-<div class="news-section">
-  <h3>Blockchain & On-Chain Tools News</h3>
-  <div class="news-grid">
-    <div class="news-card">
-      <img src="https://via.placeholder.com/150x100?text=Blockchain1">
-      <p>New NFT minting platform launched</p>
-    </div>
-    <div class="news-card">
-      <img src="https://via.placeholder.com/150x100?text=Blockchain2">
-      <p>ETH scaling solution update</p>
-    </div>
-    <div class="news-card">
-      <img src="https://via.placeholder.com/150x100?text=Blockchain3">
-      <p>ZAC rewards for students</p>
-    </div>
-    <div class="news-card">
-      <img src="https://via.placeholder.com/150x100?text=Blockchain4">
-      <p>On-chain tools & dApps news</p>
+<main class="px-4 pb-32">
+  <!-- Total Balance Card -->
+  <div class="balance-card">
+    <h3>Total Balance</h3>
+    <div class="total-balance" id="totalBalance">$0.00</div>
+    <div class="sub-balances">
+      <div>
+        <h4>ZAC</h4>
+        <p id="zacBalance">0.00</p>
+      </div>
+      <div>
+        <h4>USDT</h4>
+        <p id="usdtBalance">0.00</p>
+      </div>
+      <div>
+        <h4>ETH</h4>
+        <p id="ethBalance">0.00</p>
+      </div>
     </div>
   </div>
-</div>
 
-<!-- FOOTER -->
+  <!-- Learn & Earn Button -->
+  <div class="mt-4 text-center">
+    <a href="learn-earn.html" class="bg-gradient-to-r from-blue-400 to-pink-500 px-6 py-2 rounded-full font-semibold hover:scale-105 inline-block transition transform text-white">Claim Reward Now</a>
+  </div>
+
+  <!-- News Section -->
+  <div class="news-section mt-6">
+    <div class="news-card">
+      <img src="https://via.placeholder.com/160x100/00f0ff/000000?text=Blockchain+News+1" alt="News 1">
+      <div class="news-content">
+        <h4>Onchain Analytics Tool</h4>
+        <p>Explore new blockchain dashboards for students</p>
+      </div>
+    </div>
+    <div class="news-card">
+      <img src="https://via.placeholder.com/160x100/ff00f0/000000?text=Blockchain+News+2" alt="News 2">
+      <div class="news-content">
+        <h4>DeFi Education</h4>
+        <p>Learn DeFi and earn ZAC rewards</p>
+      </div>
+    </div>
+    <div class="news-card">
+      <img src="https://via.placeholder.com/160x100/00f0ff/000000?text=Blockchain+News+3" alt="News 3">
+      <div class="news-content">
+        <h4>Crypto Tools</h4>
+        <p>On-chain tools for student projects</p>
+      </div>
+    </div>
+    <div class="news-card">
+      <img src="https://via.placeholder.com/160x100/ff00f0/000000?text=Blockchain+News+4" alt="News 4">
+      <div class="news-content">
+        <h4>Blockchain News</h4>
+        <p>Latest blockchain updates for students</p>
+      </div>
+    </div>
+  </div>
+</main>
+
+<!-- Footer -->
 <footer class="footer">
   <a href="dashboard-store.html"><i class="fas fa-store"></i><span>Store</span></a>
   <a href="dashboard-wallet.html"><i class="fas fa-wallet"></i><span>Wallet</span></a>
-  <a href="learn-earn.html"><i class="fas fa-gift"></i><span>Rewards</span></a>
+  <a href="learn-earn.html"><i class="fas fa-gift"></i><span>Reward</span></a>
   <a href="profile.html"><i class="fas fa-user"></i><span>Profile</span></a>
+  <a href="student-social.html"><i class="fas fa-users"></i><span>Social</span></a>
 </footer>
 
 <script>
-// Animate total balance smoothly
-function animateValue(id, start, end, duration) {
-  let range = end - start;
-  let current = start;
-  let increment = end > start ? 0.1 : -0.1;
-  let stepTime = Math.abs(Math.floor(duration / range * 10));
-  let obj = document.getElementById(id);
-  let timer = setInterval(function() {
-    current += increment;
-    obj.innerText = current.toFixed(2);
-    if ((increment > 0 && current >= end) || (increment < 0 && current <= end)) {
-      obj.innerText = end.toFixed(2);
-      clearInterval(timer);
-    }
-  }, stepTime);
-}
+// Simulated dynamic balances (replace with your API/WebSocket)
+const zac = 1250.00;
+const usdt = 500.00;
+const eth = 0.75;
 
-// Dummy balances for demo
-let zacBal=1200, usdtBal=500, ethBal=1.25;
-animateValue('zacBalance',0,zacBal,1000);
-animateValue('usdtBalance',0,usdtBal,1000);
-animateValue('ethBalance',0,ethBal,1000);
-animateValue('totalBalance',0,zacBal+usdtBal+ethBal,1000);
+document.getElementById('zacBalance').innerText = zac.toLocaleString();
+document.getElementById('usdtBalance').innerText = usdt.toLocaleString();
+document.getElementById('ethBalance').innerText = eth.toLocaleString();
+document.getElementById('totalBalance').innerText = `$${(zac + usdt + eth).toLocaleString()}`;
 </script>
-
 </body>
 </html>
