@@ -106,10 +106,10 @@ body {
   color: #ccc;
 }
 
-/* MARKETPLACE GRID */
+/* MARKETPLACE GRID 2 ITEMS/ROW */
 .marketplace {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
   gap: 1rem;
   padding: 1rem;
 }
@@ -128,6 +128,8 @@ body {
 .product-card img {
   border-radius: 0.8rem;
   margin-bottom: 0.8rem;
+  border: 2px solid var(--neon-blue);
+  box-shadow: 0 0 10px var(--neon-blue);
 }
 .product-card h3 {
   font-family: 'Orbitron', sans-serif;
@@ -293,19 +295,6 @@ body {
 
 <div class="search-filter">
   <input type="text" id="searchInput" placeholder="Search products...">
-  <select id="filterZac">
-    <option value="">All ZAC Prices</option>
-    <option value="100">≤ 100 ZAC</option>
-    <option value="300">≤ 300 ZAC</option>
-    <option value="500">≤ 500 ZAC</option>
-    <option value="1000">≤ 1000 ZAC</option>
-  </select>
-  <select id="filterUsdt">
-    <option value="">All Vendor USDT</option>
-    <option value="20">≤ 20 USDT</option>
-    <option value="40">≤ 40 USDT</option>
-    <option value="60">≤ 60 USDT</option>
-  </select>
 </div>
 
 <div class="marketplace" id="marketplace"></div>
@@ -332,27 +321,28 @@ body {
 <footer class="footer">
   <a href="wallet-pos.html" class="active"><i class="fas fa-cash-register"></i><span>POS</span></a>
   <a href="chat.html"><i class="fas fa-comments"></i><span>Chat</span></a>
-  <a href="dashboard-store.html"><i class="fas fa-store"></i><span>Store</span></a>
+  <a href="dashboard-store.html"><i class="fas fa-layer-group"></i><span>Products</span></a>
   <a href="profile.html"><i class="fas fa-user"></i><span>Profile</span></a>
 </footer>
 
 <script>
-// Sample products
+// User wallet balances
+let wallet = { ZAC: 1000, USDT: 200, ETH: 1 };
+
+// Sample products with neon-style placeholder images
 const products = [
-  {title:'Digital Art NFT', desc:'High quality collectible NFT art', image:'https://via.placeholder.com/180x120.png?text=Digital+Art+NFT', zac:500, usdt:50},
-  {title:'Ebook on AI', desc:'Comprehensive guide on AI', image:'https://via.placeholder.com/180x120.png?text=Ebook+on+AI', zac:300, usdt:30},
-  {title:'Stock Music', desc:'Royalty-free music track', image:'https://via.placeholder.com/180x120.png?text=Stock+Music', zac:200, usdt:20},
-  {title:'Video Template', desc:'Editable video template', image:'https://via.placeholder.com/180x120.png?text=Video+Template', zac:400, usdt:40},
+  {title:'Neon NFT Art', desc:'Futuristic neon NFT', image:'https://via.placeholder.com/180x120/00f0ff/120b2e?text=Neon+NFT', zac:500, usdt:50},
+  {title:'Neon AI Ebook', desc:'AI guide with neon cover', image:'https://via.placeholder.com/180x120/ff00f0/120b2e?text=Neon+Ebook', zac:300, usdt:30},
+  {title:'Neon Stock Music', desc:'Royalty-free neon music', image:'https://via.placeholder.com/180x120/39ff14/120b2e?text=Neon+Music', zac:200, usdt:20},
+  {title:'Neon Video Template', desc:'Editable neon video', image:'https://via.placeholder.com/180x120/00f0ff/120b2e?text=Neon+Video', zac:400, usdt:40},
 ];
 
-// Render products
-function renderProducts(filterText='', zacFilter='', usdtFilter='') {
+// Render products 2 per row
+function renderProducts(filterText='') {
   const container = document.getElementById('marketplace');
   container.innerHTML = '';
   products.forEach(p => {
-    if ((filterText && !p.title.toLowerCase().includes(filterText.toLowerCase()))) return;
-    if (zacFilter && p.zac > parseInt(zacFilter)) return;
-    if (usdtFilter && p.usdt > parseInt(usdtFilter)) return;
+    if(filterText && !p.title.toLowerCase().includes(filterText.toLowerCase())) return;
 
     const card = document.createElement('div');
     card.className = 'product-card';
@@ -367,7 +357,7 @@ function renderProducts(filterText='', zacFilter='', usdtFilter='') {
   });
 }
 
-// Product modal
+// Modal logic
 function openModal(product) {
   document.getElementById('modalTitle').innerText = product.title;
   document.getElementById('modalDescription').innerText = product.desc;
@@ -382,8 +372,18 @@ function openModal(product) {
 
   buyBtn.onclick = () => {
     const token = paymentToken.value;
-    const amount = token === 'ZAC' ? product.zac : token === 'USDT' ? product.usdt : (product.zac * 0.002).toFixed(2);
-    
+    let amount = 0;
+    if(token==='ZAC') amount = product.zac;
+    if(token==='USDT') amount = product.usdt;
+    if(token==='ETH') amount = (product.zac*0.002).toFixed(4);
+
+    if(wallet[token] < amount){
+      alert(`Insufficient ${token} balance!`);
+      return;
+    }
+
+    wallet[token] -= parseFloat(amount);
+
     const qr = new QRious({
       element: document.getElementById('qrCode'),
       value: `PAY:${product.title}:${amount}${token}`,
@@ -399,15 +399,12 @@ function openModal(product) {
     setTimeout(() => {
       document.getElementById('paymentConfirm').innerText = 'Payment Received!';
       addTransaction(product.title, amount, token);
-    }, 3000);
+    }, 2000);
   };
 }
 
-function closeModal() {
-  document.getElementById('productModal').style.display = 'none';
-}
+function closeModal() { document.getElementById('productModal').style.display = 'none'; }
 
-// Add transaction
 function addTransaction(title, amount, token) {
   const txList = document.getElementById('txList');
   const txItem = document.createElement('div');
@@ -417,16 +414,8 @@ function addTransaction(title, amount, token) {
   txList.prepend(txItem);
 }
 
-// Filters
-document.getElementById('searchInput').addEventListener('input', e => {
-  renderProducts(e.target.value, document.getElementById('filterZac').value, document.getElementById('filterUsdt').value);
-});
-document.getElementById('filterZac').addEventListener('change', e => {
-  renderProducts(document.getElementById('searchInput').value, e.target.value, document.getElementById('filterUsdt').value);
-});
-document.getElementById('filterUsdt').addEventListener('change', e => {
-  renderProducts(document.getElementById('searchInput').value, document.getElementById('filterZac').value, e.target.value);
-});
+// Search input
+document.getElementById('searchInput').addEventListener('input', e => renderProducts(e.target.value));
 
 // Initial render
 renderProducts();
