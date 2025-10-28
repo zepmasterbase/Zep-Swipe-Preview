@@ -3,9 +3,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Student Dashboard — Earn to Learn</title>
+<title>ZepStudent Dashboard</title>
 
-<!-- Tailwind CSS + Fonts + Icons -->
+<!-- Tailwind + Fonts + Icons -->
 <script src="https://cdn.tailwindcss.com"></script>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Orbitron:wght@600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -23,7 +23,7 @@ body {
   background: radial-gradient(circle at top, #0b0520 0%, #120b2e 100%);
   color: #fff;
   min-height: 100vh;
-  padding-bottom: 90px; /* footer space */
+  padding-bottom: 100px;
 }
 
 /* HEADER */
@@ -31,169 +31,212 @@ body {
   position: fixed;
   top: 0;
   width: 100%;
-  padding: 1rem 1.5rem;
-  background: rgba(15,5,32,0.7);
-  backdrop-filter: blur(12px);
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  z-index: 50;
-  box-shadow: 0 0 15px rgba(0,255,255,0.2);
-}
-.header h1 {
-  font-family: 'Orbitron', sans-serif;
-  font-size: 1.3rem;
-  background: linear-gradient(90deg, var(--neon-blue), var(--neon-pink));
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-.header i {
-  color: var(--neon-blue);
-  font-size: 1.3rem;
-  cursor: pointer;
-}
-.header i:hover {
-  color: var(--neon-pink);
-  transform: scale(1.2);
-}
-
-/* BANNER */
-.banner {
-  margin-top: 5rem;
-  padding: 1rem;
-  text-align: center;
-  background: linear-gradient(90deg, rgba(0,240,255,0.2), rgba(255,0,240,0.2));
-  border-radius: 1rem;
-  font-weight: 600;
-  font-size: 0.95rem;
-  color: var(--neon-blue);
-}
-
-/* BALANCES */
-.balance-card {
-  margin: 1rem;
-  background: var(--glass);
-  backdrop-filter: blur(20px);
-  border-radius: 1rem;
-  padding: 1.2rem;
-  display: flex;
-  justify-content: space-around;
-  box-shadow: 0 0 15px rgba(0,240,255,0.2);
-}
-.balance-card div {
-  text-align: center;
-}
-.balance-card h4 {
-  color: var(--neon-blue);
-  font-size: 0.9rem;
-  margin-bottom: 0.2rem;
-}
-.balance-card p {
-  font-weight: 600;
-  font-size: 1rem;
-}
-
-/* TRANSACTION HISTORY */
-.history {
-  margin: 1rem;
-}
-.history h3 {
-  font-family: 'Orbitron', sans-serif;
-  font-size: 1rem;
-  margin-bottom: 0.5rem;
-  color: var(--neon-blue);
-}
-.tx-item {
-  background: var(--glass);
   padding: 0.8rem 1rem;
-  border-radius: 0.8rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 0.5rem;
-  transition: 0.3s;
+  backdrop-filter: blur(12px);
+  background: rgba(15,5,32,0.75);
+  z-index: 50;
+  border-bottom: 1px solid rgba(0,255,255,0.1);
 }
-.tx-item:hover {
-  box-shadow: 0 0 10px rgba(0,255,255,0.3);
-}
-.tx-item .left {
+.header-left {
   display: flex;
   align-items: center;
   gap: 0.8rem;
 }
-.tx-item i {
+.header-left i {
   color: var(--neon-blue);
   font-size: 1.3rem;
+  cursor: pointer;
 }
-.tx-item .name { font-weight: 600; }
-.tx-item .date { font-size: 0.75rem; opacity: 0.7; }
-.tx-item .amount { font-weight: 600; }
-.tx-item .amount.positive { color: #00f0ff; }
-.tx-item .amount.negative { color: #ff00f0; }
+.header-left img {
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+  border: 2px solid var(--neon-blue);
+  object-fit: cover;
+}
+.header h1 {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 1.2rem;
+  background: linear-gradient(90deg, var(--neon-blue), var(--neon-pink));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.header-right i {
+  color: var(--neon-blue);
+  font-size: 1.3rem;
+  cursor: pointer;
+}
+.header-right i:hover {
+  color: var(--neon-pink);
+}
+
+/* BALANCES */
+.balance-card {
+  margin-top: 5rem;
+  margin-left:1rem;
+  margin-right:1rem;
+  background: var(--glass);
+  backdrop-filter: blur(20px);
+  border-radius: 1rem;
+  padding: 1rem;
+  box-shadow: 0 0 15px rgba(0,240,255,0.2);
+}
+.balance-card h3 {
+  color: var(--neon-blue);
+  margin-bottom: 0.5rem;
+}
+.balance-main {
+  font-weight: 700;
+  font-size: 1.5rem;
+  background: linear-gradient(90deg,var(--neon-blue),var(--neon-pink));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-align: center;
+  margin-bottom: 0.5rem;
+}
+.sub-balances {
+  display: flex;
+  justify-content: space-around;
+  gap: 0.5rem;
+}
+.sub-balances div {
+  background: rgba(255,255,255,0.08);
+  padding: 0.6rem;
+  border-radius: 0.8rem;
+  text-align: center;
+  flex:1;
+}
+.sub-balances h4 {color: var(--neon-blue); font-size:0.8rem; margin-bottom:0.2rem;}
+.sub-balances p {font-weight:600; font-size:0.9rem;}
+
+/* NEWS SECTION */
+.news-section {
+  margin:1rem;
+}
+.news-section h3 {
+  font-family: 'Orbitron', sans-serif;
+  font-size:1rem;
+  color: var(--neon-blue);
+  margin-bottom:0.5rem;
+}
+.news-grid {
+  display: grid;
+  grid-template-columns: repeat(2,1fr);
+  gap:0.5rem;
+}
+.news-card {
+  background: var(--glass);
+  padding:0.8rem;
+  border-radius:0.8rem;
+  box-shadow:0 0 10px rgba(0,255,255,0.2);
+  text-align:center;
+  transition:0.3s;
+}
+.news-card:hover {
+  box-shadow:0 0 15px rgba(255,0,240,0.3);
+}
+
+/* SOCIAL FEED */
+.social-feed {
+  margin:1rem;
+}
+.social-feed h3 {
+  font-family: 'Orbitron', sans-serif;
+  font-size:1rem;
+  color: var(--neon-blue);
+  margin-bottom:0.5rem;
+}
+.feed-item {
+  background: var(--glass);
+  padding:0.6rem;
+  border-radius:0.8rem;
+  margin-bottom:0.5rem;
+  display:flex;
+  align-items:center;
+  gap:0.5rem;
+}
+.feed-item img {
+  width:30px;
+  height:30px;
+  border-radius:50%;
+  border:1px solid var(--neon-blue);
+  object-fit:cover;
+}
 
 /* FOOTER */
 .footer {
   position: fixed;
-  bottom: 0;
-  left: 0;
-  width: 100%;
+  bottom:0;
+  left:0;
+  width:100%;
+  display:flex;
+  justify-content:space-around;
   background: rgba(15,5,32,0.85);
   backdrop-filter: blur(12px);
-  display: flex;
-  justify-content: space-around;
-  padding: 0.8rem 0;
-  z-index: 100;
+  padding:0.8rem 0;
+  z-index:100;
 }
 .footer a {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
   color: var(--neon-blue);
-  font-size: 0.8rem;
-  text-decoration: none;
-  transition: 0.3s;
+  font-size:0.8rem;
+  text-decoration:none;
+  transition:0.3s;
 }
-.footer a i { font-size: 1.4rem; }
-.footer a:hover, .footer a.active { color: var(--neon-pink); transform: scale(1.2); }
+.footer a i {font-size:1.4rem;}
+.footer a:hover, .footer a.active {color: var(--neon-pink); transform:scale(1.2);}
 
-@media (max-width: 600px){
-  .balance-card { flex-direction: column; gap:0.5rem; }
+@media (max-width:600px){
+  .news-grid {grid-template-columns: 1fr;}
+  .sub-balances {flex-direction:column; gap:0.3rem;}
 }
 </style>
 </head>
 <body>
 
 <header class="header">
-  <h1>Earn to Learn — Win Giveaways & Earn $ZAC!</h1>
-  <i class="fas fa-bell"></i>
+  <div class="header-left">
+    <a href="student-social.html"><i class="fas fa-users"></i></a>
+    <img src="https://via.placeholder.com/35" alt="Profile">
+  </div>
+  <h1>ZepStudent Dashboard</h1>
+  <div class="header-right">
+    <i class="fas fa-bell"></i>
+  </div>
 </header>
 
-<div class="banner">
-  Join Learn & Earn to get rewards in real-time!  
-</div>
-
-<!-- Balances -->
+<!-- BALANCES -->
 <div class="balance-card">
-  <div>
-    <h4>ZAC</h4>
-    <p id="zacBalance">0.00</p>
-  </div>
-  <div>
-    <h4>USDT</h4>
-    <p id="usdtBalance">0.00</p>
-  </div>
-  <div>
-    <h4>ETH</h4>
-    <p id="ethBalance">0.00</p>
+  <h3>Total Balance</h3>
+  <div class="balance-main" id="totalBalance">0.00</div>
+  <div class="sub-balances">
+    <div><h4>ZAC</h4><p id="zacBalance">0.00</p></div>
+    <div><h4>USDT</h4><p id="usdtBalance">0.00</p></div>
+    <div><h4>ETH</h4><p id="ethBalance">0.00</p></div>
   </div>
 </div>
 
-<!-- Transactions -->
-<div class="history">
-  <h3>Recent Transactions</h3>
-  <div id="txContainer">
-    <!-- Transactions will appear here -->
+<!-- NEWS -->
+<div class="news-section">
+  <h3>Student News</h3>
+  <div class="news-grid">
+    <div class="news-card">News Item 1</div>
+    <div class="news-card">News Item 2</div>
+    <div class="news-card">News Item 3</div>
+    <div class="news-card">News Item 4</div>
   </div>
+</div>
+
+<!-- SOCIAL FEED -->
+<div class="social-feed">
+  <h3>Social Feed</h3>
+  <div class="feed-item"><img src="https://via.placeholder.com/30"><div>Student1 posted an achievement!</div></div>
+  <div class="feed-item"><img src="https://via.placeholder.com/30"><div>Student2 joined Learn & Earn!</div></div>
 </div>
 
 <!-- FOOTER -->
@@ -205,22 +248,20 @@ body {
 </footer>
 
 <script>
-// Replace with your actual ZAC, USDT, ETH API endpoints
-const ZAC_API_KEY = 'UBVVRSAYSA4Q5Y2IRVIFNFVC745REW1M4P';
+// Student unique wallets
 const STUDENT_WALLET = {
   zac: 'STUDENT_ZAC_ADDRESS',
   usdt: 'STUDENT_USDT_ADDRESS',
   eth: 'STUDENT_ETH_ADDRESS'
 };
+const ZAC_API_KEY = 'UBVVRSAYSA4Q5Y2IRVIFNFVC745REW1M4P';
 
 async function fetchBalance() {
   try {
-    // ZAC Balance fetch
     const zacRes = await fetch(`https://api.zac.network/balance/${STUDENT_WALLET.zac}?apikey=${ZAC_API_KEY}`);
     const zacData = await zacRes.json();
     document.getElementById('zacBalance').innerText = parseFloat(zacData.balance).toFixed(2);
 
-    // USDT & ETH using placeholder APIs or your backend
     const usdtRes = await fetch(`/api/usdt-balance?address=${STUDENT_WALLET.usdt}`);
     const usdtData = await usdtRes.json();
     document.getElementById('usdtBalance').innerText = parseFloat(usdtData.balance).toFixed(2);
@@ -228,43 +269,26 @@ async function fetchBalance() {
     const ethRes = await fetch(`/api/eth-balance?address=${STUDENT_WALLET.eth}`);
     const ethData = await ethRes.json();
     document.getElementById('ethBalance').innerText = parseFloat(ethData.balance).toFixed(6);
-  } catch(err) {
-    console.error(err);
-  }
+
+    const total = parseFloat(zacData.balance)+parseFloat(usdtData.balance)+parseFloat(ethData.balance);
+    document.getElementById('totalBalance').innerText = total.toFixed(2);
+  } catch(err) { console.error(err); }
 }
 
-// Simulated websocket for live notifications
+// Simulated WebSocket for live transactions
 function setupWebSocket() {
   const ws = new WebSocket('wss://your-backend-websocket-endpoint');
-  ws.onmessage = function(event) {
+  ws.onmessage = function(event){
     const data = JSON.parse(event.data);
     if(data.type === 'transaction') {
-      const txContainer = document.getElementById('txContainer');
-      const div = document.createElement('div');
-      div.classList.add('tx-item');
-      div.innerHTML = `
-        <div class="left">
-          <i class="fas fa-coins"></i>
-          <div>
-            <div class="name">${data.asset} Received</div>
-            <div class="date">${new Date().toLocaleString()}</div>
-          </div>
-        </div>
-        <div class="amount positive">+ ${data.amount}</div>
-      `;
-      txContainer.prepend(div);
-      fetchBalance(); // Update balances automatically
+      fetchBalance(); // update balances live
     }
   };
 }
 
-// Initial fetch and websocket setup
 fetchBalance();
 setupWebSocket();
-
-// Optional: poll every 10s if websocket not available
 setInterval(fetchBalance, 10000);
 </script>
-
 </body>
 </html>
