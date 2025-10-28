@@ -1,259 +1,153 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Learn & Earn — Zep Students</title>
-
-<!-- Tailwind CSS + Fonts + FontAwesome -->
-<script src="https://cdn.tailwindcss.com"></script>
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Orbitron:wght@600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-
-<style>
-:root {
-  --neon-blue: #00f0ff;
-  --neon-pink: #ff00f0;
-  --glass: rgba(255,255,255,0.05);
-}
-
-body {
-  font-family: 'Poppins', sans-serif;
-  margin: 0;
-  background: radial-gradient(circle at top, #0b0520 0%, #120b2e 100%);
-  color: #fff;
-  min-height: 100vh;
-  padding-bottom: 100px;
-}
-
-/* HEADER */
-.header {
-  position: fixed;
-  top: 0;
-  width: 100%;
-  padding: 1rem 1.5rem;
-  background: rgba(15,5,32,0.85);
-  backdrop-filter: blur(12px);
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  z-index: 50;
-  box-shadow: 0 0 20px rgba(0,255,255,0.2);
-}
-.header h1 {
-  font-family: 'Orbitron', sans-serif;
-  font-size: 1.4rem;
-  background: linear-gradient(90deg, var(--neon-blue), var(--neon-pink));
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-.header i {
-  color: var(--neon-blue);
-  font-size: 1.3rem;
-  cursor: pointer;
-  transition: 0.3s;
-}
-.header i:hover { color: var(--neon-pink); transform: scale(1.2); }
-
-/* QUIZ CONTAINER */
-.quiz-container {
-  margin-top: 6rem;
-  padding: 1rem;
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-}
-
-/* QUIZ CARD */
-.quiz-card {
-  background: var(--glass);
-  backdrop-filter: blur(20px);
-  border-radius: 1rem;
-  padding: 1rem;
-  box-shadow: 0 0 20px rgba(0,240,255,0.3);
-}
-.quiz-card h3 {
-  font-family: 'Orbitron', sans-serif;
-  color: var(--neon-blue);
-  margin-bottom: 0.5rem;
-}
-.quiz-card .option {
-  background: rgba(255,255,255,0.08);
-  padding: 0.6rem;
-  border-radius: 0.5rem;
-  margin: 0.3rem 0;
-  cursor: pointer;
-  transition: 0.3s;
-}
-.quiz-card .option:hover {
-  background: rgba(255,0,255,0.2);
-  transform: scale(1.02);
-}
-
-/* SUBMIT BUTTON */
-#submitBtn {
-  margin-top: 1rem;
-  padding: 0.8rem;
-  background: linear-gradient(90deg,var(--neon-blue),var(--neon-pink));
-  border: none;
-  border-radius: 0.6rem;
-  font-weight: 600;
-  color: #fff;
-  cursor: pointer;
-  transition: 0.3s;
-}
-#submitBtn:hover { transform: scale(1.05); box-shadow: 0 0 15px var(--neon-blue); }
-
-/* FOOTER */
-.footer {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  background: rgba(15,5,32,0.85);
-  backdrop-filter: blur(12px);
-  display: flex;
-  justify-content: space-around;
-  padding: 0.8rem 0;
-  box-shadow: 0 -2px 20px rgba(0,255,255,0.2);
-  z-index: 100;
-}
-.footer a {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  color: var(--neon-blue);
-  font-size: 0.8rem;
-  text-decoration: none;
-  transition: 0.3s;
-}
-.footer a i { font-size: 1.4rem; }
-.footer a:hover, .footer a.active { color: var(--neon-pink); transform: scale(1.2); }
-
-/* REWARD MODAL */
-.modal {
-  position: fixed;
-  top: 0; left: 0;
-  width: 100%; height: 100%;
-  background: rgba(0,0,0,0.9);
-  backdrop-filter: blur(8px);
-  display: none;
-  align-items: center;
-  justify-content: center;
-  z-index: 200;
-}
-.modal-content {
-  background: var(--glass);
-  padding: 1.5rem;
-  border-radius: 1rem;
-  text-align: center;
-  box-shadow: 0 0 20px var(--neon-blue);
-}
-.modal-content h3 {
-  font-family: 'Orbitron', sans-serif;
-  color: var(--neon-blue);
-  margin-bottom: 1rem;
-}
-.modal-content button {
-  padding: 0.6rem 1rem;
-  border-radius: 0.5rem;
-  border: none;
-  background: linear-gradient(90deg,var(--neon-blue),var(--neon-pink));
-  color: #fff;
-  cursor: pointer;
-  font-weight: 600;
-}
-.close-btn {
-  position: absolute;
-  top: 1rem; right: 1rem;
-  font-size: 1.2rem;
-  cursor: pointer;
-  color: var(--neon-pink);
-}
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Learn & Earn — Zep Students</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Orbitron:wght@600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    /* Add your custom styles here */
+  </style>
 </head>
-<body>
+<body class="bg-gradient-to-t from-[#0b0520] to-[#120b2e] text-white font-poppins min-h-screen pb-24">
+  <header class="fixed top-0 w-full p-4 bg-[#0f0520] bg-opacity-85 backdrop-blur-lg flex justify-between items-center z-50">
+    <h1 class="text-2xl font-orbitron text-transparent bg-clip-text bg-gradient-to-r from-[#00f0ff] to-[#ff00f0]">Level 3: The Trader — Learn & Earn</h1>
+    <i class="fas fa-bell text-[#00f0ff] text-xl cursor-pointer hover:text-[#ff00f0] transform hover:scale-110 transition duration-300"></i>
+  </header>
 
-<header class="header">
-  <h1>Level 3: The Trader — Learn & Earn</h1>
-  <i class="fas fa-bell"></i>
-</header>
+  <main id="quizContainer" class="mt-24 p-4 space-y-4"></main>
 
-<main class="quiz-container" id="quizContainer">
-  <!-- Questions dynamically generated -->
-</main>
+  <button id="submitBtn" class="w-full py-3 mt-4 bg-gradient-to-r from-[#00f0ff] to-[#ff00f0] text-white font-semibold rounded-lg shadow-lg transform hover:scale-105 transition duration-300">Submit & Claim Reward</button>
 
-<button id="submitBtn" onclick="submitQuiz()">Submit & Claim Reward</button>
-
-<!-- Reward Modal -->
-<div class="modal" id="rewardModal">
-  <div class="modal-content">
-    <span class="close-btn" onclick="closeModal()">&times;</span>
-    <h3>🎉 Congratulations!</h3>
-    <p id="rewardText"></p>
+  <div id="rewardModal" class="fixed inset-0 bg-black bg-opacity-70 backdrop-blur-lg flex items-center justify-center z-200 hidden">
+    <div class="bg-[#0f0520] p-6 rounded-lg shadow-lg text-center">
+      <span class="absolute top-2 right-2 text-[#ff00f0] cursor-pointer text-xl" onclick="closeModal()">&times;</span>
+      <h3 class="text-2xl font-orbitron text-[#00f0ff] mb-4">🎉 Congratulations!</h3>
+      <p id="rewardText">50 ZAC sent to your wallet!</p>
+    </div>
   </div>
-</div>
 
-<!-- Footer -->
-<footer class="footer">
-  <a href="dashboard-store.html"><i class="fas fa-store"></i><span>Store</span></a>
-  <a href="dashboard-wallet.html"><i class="fas fa-wallet"></i><span>Wallet</span></a>
-  <a href="learn-earn.html"><i class="fas fa-gift"></i><span>Rewards</span></a>
-  <a href="profile.html"><i class="fas fa-user"></i><span>Profile</span></a>
-</footer>
+  <footer class="fixed bottom-0 w-full p-4 bg-[#0f0520] bg-opacity-85 backdrop-blur-lg flex justify-around items-center z-100">
+    <a href="dashboard-store.html" class="text-[#00f0ff] text-sm text-center hover:text-[#ff00f0] transform hover:scale-110 transition duration-300">
+      <i class="fas fa-store text-xl"></i>
+      <span>Store</span>
+    </a>
+    <a href="dashboard-wallet.html" class="text-[#00f0ff] text-sm text-center hover:text-[#ff00f0] transform hover:scale-110 transition duration-300">
+      <i class="fas fa-wallet text-xl"></i>
+      <span>Wallet</span>
+    </a>
+    <a href="learn-earn.html" class="text-[#00f0ff] text-sm text-center hover:text-[#ff00f0] transform hover:scale-110 transition duration-300">
+      <i class="fas fa-gift text-xl"></i>
+      <span>Rewards</span>
+    </a>
+    <a href="profile.html" class="text-[#00f0ff] text-sm text-center hover:text-[#ff00f0] transform hover:scale-110 transition duration-300">
+      <i class="fas fa-user text-xl"></i>
+      <span>Profile</span>
+    </a>
+  </footer>
 
-<script>
-const treasuryWallet = "0x1054a0EeAe6C4Bf07A17658267C6a67ce3599888";
+  <script>
+    document.addEventListener("DOMContentLoaded", function() {
+      const quizData = [
+        { q: "What is a “wallet” in Web3?", a: "B", options: ["A) A place to store your email", "B) A digital tool to store cryptocurrencies and NFTs", "C) A type of decentralized exchange", "D) A smart contract"] },
+        { q: "Which of the following is a decentralized exchange (DEX)?", a: "B", options: ["A) Coinbase", "B) Uniswap", "C) PayPal", "D) Robinhood"] },
+        { q: "In crypto trading, what does “liquidity” mean?", a: "A", options: ["A) Ease of converting asset to cash", "B) Total tokens in circulation", "C) Wallet sending speed", "D) Gas fee"] },
+        { q: "Primary function of token on blockchain?", a: "A", options: ["A) Represent ownership/access/currency", "B) Store passwords", "C) Secure email", "D) Increase internet speed"] },
+        { q: "Centralized (CEX) vs Decentralized (DEX)?", a: "A", options: ["A) CEX requires ID, DEX does not", "B) CEX faster", "C) CEX only Bitcoin, DEX only ETH", "D) CEX website, DEX app"] },
+        { q: "What is “slippage” in trading?", a: "B", options: ["A) Fee for swap", "B) Difference between expected and executed price", "C) Wallet type", "D) Blockchain bug"] },
+        { q: "Which is smart contract platform?", a: "A", options: ["A) Ethereum", "B) Bitcoin", "C) Dogecoin", "D) PayPal"] },
+        { q: "Purpose of gas fee in Ethereum?", a: "A", options: ["A) Pay for transaction processing", "B) Buy NFTs", "C) Increase token supply", "D) Stake tokens"] },
+        { q: "What is staking?", a: "A", options: ["A) Hold crypto to earn rewards", "B) Send crypto", "C) Buy NFTs", "D) Convert to fiat"] },
+        { q: "Why diversify crypto portfolio?", a: "A", options: ["A) Reduce risk by spreading investments", "B) Pay more fees", "C) Faster transactions", "D) Avoid wallets"] }
+      ];
 
-const quizData = [
-  {q:"What is a “wallet” in Web3?", a:"B", options:["A) A place to store your email","B) A digital tool to store cryptocurrencies and NFTs","C) A type of decentralized exchange","D) A smart contract"]},
-  {q:"Which of the following is a decentralized exchange (DEX)?", a:"B", options:["A) Coinbase","B) Uniswap","C) PayPal","D) Robinhood"]},
-  {q:"In crypto trading, what does “liquidity” mean?", a:"A", options:["A) Ease of converting asset to cash","B) Total tokens in circulation","C) Wallet sending speed","D) Gas fee"]},
-  {q:"Primary function of token on blockchain?", a:"A", options:["A) Represent ownership/access/currency","B) Store passwords","C) Secure email","D) Increase internet speed"]},
-  {q:"Centralized (CEX) vs Decentralized (DEX)?", a:"A", options:["A) CEX requires ID, DEX does not","B) CEX faster","C) CEX only Bitcoin, DEX only ETH","D) CEX website, DEX app"]},
-  {q:"What is “slippage” in trading?", a:"B", options:["A) Fee for swap","B) Difference between expected and executed price","C) Wallet type","D) Blockchain bug"]},
-  {q:"Which is smart contract platform?", a:"A", options:["A) Ethereum","B) Bitcoin","C) Dogecoin","D) PayPal"]},
-  {q:"Purpose of gas fee in Ethereum?", a:"A", options:["A) Pay for transaction processing","B) Buy NFTs","C) Increase token supply","D) Stake tokens"]},
-  {q:"What is staking?", a:"A", options:["A) Hold crypto to earn rewards","B) Send crypto","C) Buy NFTs","D) Convert to fiat"]},
-  {q:"Why diversify crypto portfolio?", a:"A", options:["A) Reduce risk by spreading investments","B) Pay more fees","C) Faster transactions","D) Avoid wallets"]}
-];
+      const quizContainer = document.getElementById("quizContainer");
+      const submitBtn = document.getElementById("submitBtn");
+      const rewardModal = document.getElementById("rewardModal");
+      const rewardText = document.getElementById("rewardText");
 
-let userAnswers = {};
-let rewardedCount = 0;
+      let userAnswers = {};
+      let rewardedCount = 0;
 
-// Render quiz
-const quizContainer = document.getElementById("quizContainer");
-quizData.forEach((q, idx) => {
-  const card = document.createElement("div");
-  card.classList.add("quiz-card");
-  const question = document.createElement("h3");
-  question.textContent = `Q${idx+1}: ${q.q}`;
-  card.appendChild(question);
+      quizData.forEach((q, idx) => {
+        const card = document.createElement("div");
+        card.classList.add("quiz-card", "bg-[#1a1a1a]", "p-4", "rounded-lg", "shadow-lg");
+        const question = document.createElement("h3");
+        question.classList.add("text-lg", "font-semibold", "text-[#00f0ff]", "mb-2");
+        question.textContent = `Q${idx + 1}: ${q.q}`;
+        card.appendChild(question);
 
-  q.options.forEach(opt => {
-    const optDiv = document.createElement("div");
-    optDiv.classList.add("option");
-    optDiv.textContent = opt;
-    optDiv.onclick = () => {
-      userAnswers[idx] = opt[0]; // letter
-      Array.from(card.querySelectorAll(".option")).forEach(o => o.style.border="none");
-      optDiv.style.border = "2px solid var(--neon-pink)";
-    };
-    card.appendChild(optDiv);
-  });
+        q.options.forEach(opt => {
+          const optDiv = document.createElement("div");
+          optDiv.classList.add("option", "bg-[#2a2a2a]", "p-2", "rounded-md", "mb-2", "cursor-pointer", "hover:bg-[#ff00f0]", "hover:text-[#120b2e]", "transition", "duration-300");
+          optDiv.textContent = opt;
+          optDiv.onclick = () => {
+            userAnswers[idx] = opt[0];
+            Array.from(card.querySelectorAll(".option")).forEach(o => o.classList.remove("border", "border-[#ff00f0]"));
+            optDiv.classList.add("border", "border-[#ff00f0]");
+          };
+          card.appendChild(optDiv);
+        });
 
-  quizContainer.appendChild(card);
-});
+        quizContainer.appendChild(card);
+      });
 
-// Submit quiz and send reward using ZAC API
-async function submitQuiz() {
-  let score = 0;
-  quizData.forEach((q, idx) => { if(userAnswers[idx] === q.a) score++; });
+      submitBtn.addEventListener("click", function() {
+        let score = 0;
+        quizData.forEach((q, idx) => {
+          if (userAnswers[idx] === q.a) score++;
+        });
 
-  if(score < 7) {
-    alert(`You scored ${score}/${quizData.length}. Need 7+ correct to earn ZAC.`);
-    return;
-  }
+        if (score < 7) {
+          alert(`You scored ${score}/${quizData.length}. Need 7+ correct to earn ZAC.`);
+          return;
+        }
 
-  if(rewardedCount >= 1000) {
-    alert("Reward limit reached
+        if (rewardedCount >= 1000) {
+          alert("Reward limit reached for first 1000 students.");
+          return;
+        }
+
+        rewardedCount++;
+
+        const studentWallet = prompt("Enter your ZAC wallet address to receive reward:");
+        if (studentWallet) {
+          fetch("https://www.zacwallet.com/api/send", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+              from: "0x1054a0EeAe6C4Bf07A17658267C6a67ce3599888",
+              to: studentWallet,
+              amount: 50
+            })
+          })
+          .then(response => response.json())
+          .then(data => {
+            console.log("Reward sent:", data);
+            rewardText.textContent = `50 ZAC sent to ${studentWallet}`;
+            showModal();
+          })
+          .catch(error => {
+            console.error("Error sending reward:", error);
+            alert("Error sending reward. Please try again.");
+          });
+        } else {
+          alert("Reward not sent: wallet address required.");
+        }
+      });
+
+      function showModal() {
+        rewardModal.classList.remove("hidden");
+      }
+
+      function closeModal() {
+        rewardModal.classList.add("hidden");
+      }
+    });
+  </script>
+</body>
+</html>
