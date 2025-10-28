@@ -5,7 +5,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>ZepStudent Dashboard Neon</title>
 
-<!-- Tailwind + Fonts + Icons -->
 <script src="https://cdn.tailwindcss.com"></script>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Orbitron:wght@600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -41,22 +40,24 @@ body {
   z-index: 50;
   border-bottom: 1px solid rgba(0,255,255,0.1);
 }
-.header-left {
+.header-left, .header-center, .header-right {
   display: flex;
   align-items: center;
-  gap: 0.8rem;
+}
+.header-left {
+  gap: 0.6rem;
 }
 .header-left i {
   color: var(--neon-blue);
-  font-size: 1.3rem;
+  font-size: 1.4rem;
   cursor: pointer;
   text-shadow: 0 0 6px var(--neon-blue);
   transition: 0.3s;
 }
 .header-left i:hover { color: var(--neon-pink); transform: scale(1.2);}
 .header-left img {
-  width: 42px;
-  height: 42px;
+  width: 44px;
+  height: 44px;
   border-radius: 50%;
   border: 2px solid var(--neon-blue);
   object-fit: cover;
@@ -64,12 +65,14 @@ body {
 }
 .header-center h1 {
   font-family: 'Orbitron', sans-serif;
-  font-size: 1.3rem;
+  font-size: 1.4rem;
   background: linear-gradient(90deg, var(--neon-pink), var(--neon-blue));
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-  text-align:center;
   text-shadow: 0 0 10px var(--neon-pink);
+}
+.header-right {
+  gap: 0.6rem;
 }
 .claim-btn {
   background: linear-gradient(90deg,var(--neon-pink),var(--neon-blue));
@@ -83,10 +86,7 @@ body {
   box-shadow: 0 0 8px var(--neon-pink);
   transition:0.3s;
 }
-.claim-btn:hover {
-  transform: scale(1.05);
-  box-shadow: 0 0 20px var(--neon-pink);
-}
+.claim-btn:hover { transform: scale(1.05); box-shadow: 0 0 20px var(--neon-pink);}
 
 /* BALANCE CARD */
 .balance-card {
@@ -103,12 +103,12 @@ body {
 .balance-card h3 {
   color: var(--neon-blue);
   font-weight:600;
-  margin-bottom:0.5rem;
+  margin-bottom:0.3rem;
   text-shadow: 0 0 6px var(--neon-blue);
 }
 .balance-total {
   font-weight:700;
-  font-size:1.7rem;
+  font-size:2rem;
   background: linear-gradient(90deg,var(--neon-blue),var(--neon-pink));
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -165,6 +165,7 @@ body {
   height:110px;
   object-fit:cover;
   border-radius:0.6rem;
+  filter: brightness(1.2) contrast(1.1);
 }
 .news-card:hover {
   transform:scale(1.05);
@@ -218,14 +219,14 @@ body {
 <header class="header">
   <div class="header-left">
     <a href="student-social.html"><i class="fas fa-users"></i></a>
-    <img src="https://via.placeholder.com/42" alt="Profile">
+    <img src="https://via.placeholder.com/44" alt="Profile">
   </div>
   <div class="header-center">
     <h1>Hello Student</h1>
   </div>
   <div class="header-right">
     <i class="fas fa-bell"></i>
-    <a href="learn-earn.html" class="claim-btn">Claim Reward (Learn & Earn)</a>
+    <a href="learn-earn.html" class="claim-btn">Claim Reward</a>
   </div>
 </header>
 
@@ -272,45 +273,29 @@ body {
 </footer>
 
 <script>
-// Unique student wallets
-const STUDENT_WALLET = {
-  zac: 'STUDENT_ZAC_ADDRESS',
-  usdt: 'STUDENT_USDT_ADDRESS',
-  eth: 'STUDENT_ETH_ADDRESS'
-};
-const ZAC_API_KEY = 'UBVVRSAYSA4Q5Y2IRVIFNFVC745REW1M4P';
-
-async function fetchBalance() {
-  try {
-    const zacRes = await fetch(`https://api.zac.network/balance/${STUDENT_WALLET.zac}?apikey=${ZAC_API_KEY}`);
-    const zacData = await zacRes.json();
-    document.getElementById('zacBalance').innerText = parseFloat(zacData.balance).toFixed(2);
-
-    const usdtRes = await fetch(`/api/usdt-balance?address=${STUDENT_WALLET.usdt}`);
-    const usdtData = await usdtRes.json();
-    document.getElementById('usdtBalance').innerText = parseFloat(usdtData.balance).toFixed(2);
-
-    const ethRes = await fetch(`/api/eth-balance?address=${STUDENT_WALLET.eth}`);
-    const ethData = await ethRes.json();
-    document.getElementById('ethBalance').innerText = parseFloat(ethData.balance).toFixed(6);
-
-    const total = parseFloat(zacData.balance)+parseFloat(usdtData.balance)+parseFloat(ethData.balance);
-    document.getElementById('totalBalance').innerText = total.toFixed(2);
-  } catch(err){ console.error(err);}
+// Animate total balance smoothly
+function animateValue(id, start, end, duration) {
+  let range = end - start;
+  let current = start;
+  let increment = end > start ? 0.1 : -0.1;
+  let stepTime = Math.abs(Math.floor(duration / range * 10));
+  let obj = document.getElementById(id);
+  let timer = setInterval(function() {
+    current += increment;
+    obj.innerText = current.toFixed(2);
+    if ((increment > 0 && current >= end) || (increment < 0 && current <= end)) {
+      obj.innerText = end.toFixed(2);
+      clearInterval(timer);
+    }
+  }, stepTime);
 }
 
-// Live update via WebSocket
-function setupWebSocket(){
-  const ws = new WebSocket('wss://your-backend-websocket-endpoint');
-  ws.onmessage = function(event){
-    const data = JSON.parse(event.data);
-    if(data.type === 'transaction'){ fetchBalance(); }
-  };
-}
-
-fetchBalance();
-setupWebSocket();
-setInterval(fetchBalance, 10000);
+// Dummy balances for demo
+let zacBal=1200, usdtBal=500, ethBal=1.25;
+animateValue('zacBalance',0,zacBal,1000);
+animateValue('usdtBalance',0,usdtBal,1000);
+animateValue('ethBalance',0,ethBal,1000);
+animateValue('totalBalance',0,zacBal+usdtBal+ethBal,1000);
 </script>
 
 </body>
