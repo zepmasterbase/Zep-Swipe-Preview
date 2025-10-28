@@ -3,134 +3,263 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Zep Marketplace</title>
+<title>Zep Digital Marketplace POS</title>
 
-<!-- Tailwind CSS + Fonts + Icons -->
+<!-- Tailwind CSS + Fonts + Icons + QR Code -->
 <script src="https://cdn.tailwindcss.com"></script>
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Orbitron:wght@600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrious/4.0.2/qrious.min.js"></script>
 
 <style>
 :root {
   --neon-blue: #00f0ff;
   --neon-pink: #ff00f0;
+  --neon-green: #39ff14;
   --glass: rgba(255,255,255,0.05);
-  --bg-dark: #0b0520;
+  --dark-bg: #0b0520;
+  --card-bg: rgba(15,5,32,0.7);
 }
 
-/* Global */
 body {
   font-family: 'Poppins', sans-serif;
-  background: radial-gradient(circle at top, #0b0520 0%, #120b2e 100%);
-  color: #fff;
   margin: 0;
+  background: radial-gradient(circle at top, var(--dark-bg) 0%, #120b2e 100%);
+  color: #fff;
   min-height: 100vh;
+  padding-bottom: 100px;
 }
 
-/* Header */
+/* HEADER */
 .header {
   position: fixed;
   top: 0;
   width: 100%;
-  padding: 1rem 2rem;
-  background: rgba(15,5,32,0.85);
+  padding: 1rem 1.5rem;
   backdrop-filter: blur(12px);
+  background: rgba(15,5,32,0.85);
   display: flex;
   justify-content: space-between;
   align-items: center;
   z-index: 50;
-  box-shadow: 0 0 25px rgba(0,255,255,0.2);
 }
 .header h1 {
   font-family: 'Orbitron', sans-serif;
-  font-size: 1.5rem;
+  font-size: 1.8rem;
   background: linear-gradient(90deg, var(--neon-blue), var(--neon-pink));
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 .header i {
-  font-size: 1.3rem;
+  font-size: 1.5rem;
   color: var(--neon-blue);
-  transition: 0.3s;
   cursor: pointer;
+  transition: 0.3s;
 }
 .header i:hover {
   color: var(--neon-pink);
   transform: scale(1.2);
 }
 
-/* Marketplace Grid */
-.marketplace {
-  padding: 6rem 1.5rem 6rem 1.5rem;
-}
-.section-title {
-  font-family: 'Orbitron', sans-serif;
-  font-size: 1.3rem;
-  margin-bottom: 1rem;
-  color: var(--neon-blue);
-}
-
-/* Product Cards */
-.product-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill,minmax(220px,1fr));
-  gap: 1rem;
-}
-.product-card {
-  background: var(--glass);
+/* LEARN & EARN */
+.learn-earn {
+  margin-top: 6rem;
+  background: var(--card-bg);
   backdrop-filter: blur(15px);
   border-radius: 1rem;
+  padding: 1rem 1.5rem;
+  margin: 1rem;
+  text-align: center;
+  box-shadow: 0 0 15px rgba(0,240,255,0.2);
+}
+.learn-earn h2 {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 1.2rem;
+  background: linear-gradient(90deg,var(--neon-blue),var(--neon-pink));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.learn-earn p {
+  margin-top: 0.5rem;
+  color: #ccc;
+  font-size: 0.9rem;
+}
+
+/* SEARCH & FILTERS */
+.search-filter {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin: 1rem;
+  justify-content: center;
+}
+.search-filter input, .search-filter select {
+  padding: 0.6rem;
+  border-radius: 0.5rem;
+  border: none;
+  background: rgba(255,255,255,0.08);
+  color: #fff;
+  font-size: 0.9rem;
+  outline: none;
+}
+.search-filter input::placeholder {
+  color: #ccc;
+}
+
+/* MARKETPLACE GRID */
+.marketplace {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 1rem;
   padding: 1rem;
+}
+.product-card {
+  background: var(--card-bg);
+  border-radius: 1rem;
+  padding: 1rem;
+  text-align: center;
   transition: transform 0.3s, box-shadow 0.3s;
   cursor: pointer;
 }
 .product-card:hover {
-  transform: scale(1.05);
+  transform: translateY(-4px);
   box-shadow: 0 0 20px var(--neon-blue);
 }
 .product-card img {
-  width: 100%;
   border-radius: 0.8rem;
   margin-bottom: 0.8rem;
 }
 .product-card h3 {
-  font-size: 1rem;
-  font-weight: 600;
-  margin-bottom: 0.4rem;
-}
-.product-card .price {
-  font-weight: 700;
+  font-family: 'Orbitron', sans-serif;
   font-size: 1rem;
   margin-bottom: 0.5rem;
 }
-.product-card .currency-zac { color: var(--neon-blue); }
-.product-card .currency-usdt { color: #2ecc71; }
-.product-card button {
-  background: linear-gradient(90deg,var(--neon-blue),var(--neon-pink));
-  border: none;
-  padding: 0.5rem 0.8rem;
-  border-radius: 0.6rem;
-  color: #fff;
-  cursor: pointer;
-  width: 100%;
-  transition: 0.3s;
+.product-card p {
+  font-size: 0.85rem;
+  margin-bottom: 0.5rem;
+  color: #ccc;
 }
-.product-card button:hover {
-  transform: scale(1.05);
-  box-shadow: 0 0 10px var(--neon-pink);
+.price-zac {
+  font-weight: 600;
+  color: var(--neon-green);
+}
+.vendor-usdt {
+  font-size: 0.75rem;
+  color: var(--neon-pink);
 }
 
-/* Footer */
+/* PRODUCT MODAL */
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 200;
+  left: 0; top: 0;
+  width: 100%; height: 100%;
+  background: rgba(10,5,25,0.95);
+  backdrop-filter: blur(10px);
+  align-items: center;
+  justify-content: center;
+}
+.modal-content {
+  background: var(--card-bg);
+  border-radius: 1rem;
+  padding: 1.5rem;
+  width: 90%;
+  max-width: 400px;
+  text-align: center;
+  box-shadow: 0 0 25px var(--neon-blue);
+  position: relative;
+}
+.modal-content h3 {
+  font-family: 'Orbitron', sans-serif;
+  color: var(--neon-blue);
+  margin-bottom: 0.5rem;
+}
+.modal-content p {
+  color: #ccc;
+  margin-bottom: 1rem;
+}
+.modal-content select {
+  padding: 0.5rem;
+  border-radius: 0.5rem;
+  border: none;
+  background: rgba(255,255,255,0.08);
+  color: #fff;
+  margin-bottom: 1rem;
+  outline: none;
+}
+.modal-content button {
+  background: linear-gradient(90deg,var(--neon-blue),var(--neon-pink));
+  color: #fff;
+  border: none;
+  border-radius: 0.5rem;
+  padding: 0.6rem 1rem;
+  cursor: pointer;
+  transition: 0.3s;
+}
+.modal-content button:hover {
+  transform: scale(1.05);
+}
+.close-btn {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  font-size: 1.2rem;
+  color: var(--neon-pink);
+  cursor: pointer;
+}
+
+/* PAYMENT CONFIRMATION */
+.payment-confirm {
+  margin-top: 1rem;
+  font-weight: 600;
+  color: var(--neon-green);
+  animation: neonGlow 1s ease-in-out infinite alternate;
+}
+@keyframes neonGlow {
+  0% { text-shadow: 0 0 5px var(--neon-green); }
+  100% { text-shadow: 0 0 15px var(--neon-green); }
+}
+
+/* TRANSACTION LIST */
+.tx-list {
+  margin-top: 1rem;
+  text-align: left;
+  max-height: 150px;
+  overflow-y: auto;
+}
+.tx-item {
+  background: rgba(255,255,255,0.08);
+  border-radius: 0.5rem;
+  padding: 0.5rem;
+  margin-bottom: 0.3rem;
+  font-size: 0.85rem;
+  display: flex;
+  justify-content: space-between;
+  color: #fff;
+  box-shadow: inset 0 0 5px rgba(0,240,255,0.2);
+}
+
+/* QR CODE */
+.qr-code {
+  margin: 1rem auto;
+  width: 200px;
+  height: 200px;
+}
+
+/* FOOTER */
 .footer {
   position: fixed;
   bottom: 0;
+  left: 0;
   width: 100%;
   background: rgba(15,5,32,0.85);
   backdrop-filter: blur(12px);
   display: flex;
   justify-content: space-around;
   padding: 0.8rem 0;
-  box-shadow: 0 -2px 20px rgba(0,255,255,0.2);
+  box-shadow: 0 -2px 20px rgba(0,240,255,0.2);
+  z-index: 100;
 }
 .footer a {
   display: flex;
@@ -138,10 +267,11 @@ body {
   align-items: center;
   color: var(--neon-blue);
   font-size: 0.8rem;
+  text-decoration: none;
   transition: 0.3s;
 }
 .footer a i {
-  font-size: 1.4rem;
+  font-size: 1.5rem;
 }
 .footer a:hover, .footer a.active {
   color: var(--neon-pink);
@@ -149,74 +279,158 @@ body {
 }
 </style>
 </head>
-
 <body>
 
-<!-- Header -->
 <header class="header">
-  <h1>Zep Marketplace</h1>
+  <h1>Zep Marketplace POS</h1>
   <i class="fas fa-bell"></i>
 </header>
 
-<main class="marketplace">
-  <!-- Digital Products -->
-  <div class="section">
-    <div class="section-title">Digital Products (ZAC)</div>
-    <div class="product-grid">
-      <div class="product-card">
-        <img src="https://via.placeholder.com/220x120.png?text=Ebook" alt="Ebook">
-        <h3>Advanced AI Guide</h3>
-        <div class="price currency-zac">1250 ZAC</div>
-        <button>Buy</button>
-      </div>
-      <div class="product-card">
-        <img src="https://via.placeholder.com/220x120.png?text=Course" alt="Course">
-        <h3>Web3 Masterclass</h3>
-        <div class="price currency-zac">980 ZAC</div>
-        <button>Buy</button>
-      </div>
-      <div class="product-card">
-        <img src="https://via.placeholder.com/220x120.png?text=Template" alt="Template">
-        <h3>UI/UX Kit</h3>
-        <div class="price currency-zac">450 ZAC</div>
-        <button>Buy</button>
-      </div>
-    </div>
-  </div>
+<div class="learn-earn">
+  <h2>Learn & Earn</h2>
+  <p>Complete courses and earn ZAC tokens while enhancing your skills!</p>
+</div>
 
-  <!-- Vendor Products -->
-  <div class="section mt-6">
-    <div class="section-title">Vendor Products (USDT)</div>
-    <div class="product-grid">
-      <div class="product-card">
-        <img src="https://via.placeholder.com/220x120.png?text=Gadget" alt="Gadget">
-        <h3>Neon Headphones</h3>
-        <div class="price currency-usdt">120 USDT</div>
-        <button>Buy</button>
-      </div>
-      <div class="product-card">
-        <img src="https://via.placeholder.com/220x120.png?text=Accessory" alt="Accessory">
-        <h3>Smartwatch</h3>
-        <div class="price currency-usdt">85 USDT</div>
-        <button>Buy</button>
-      </div>
-      <div class="product-card">
-        <img src="https://via.placeholder.com/220x120.png?text=Software" alt="Software">
-        <h3>Pro Editing Suite</h3>
-        <div class="price currency-usdt">300 USDT</div>
-        <button>Buy</button>
-      </div>
-    </div>
-  </div>
-</main>
+<div class="search-filter">
+  <input type="text" id="searchInput" placeholder="Search products...">
+  <select id="filterZac">
+    <option value="">All ZAC Prices</option>
+    <option value="100">≤ 100 ZAC</option>
+    <option value="300">≤ 300 ZAC</option>
+    <option value="500">≤ 500 ZAC</option>
+    <option value="1000">≤ 1000 ZAC</option>
+  </select>
+  <select id="filterUsdt">
+    <option value="">All Vendor USDT</option>
+    <option value="20">≤ 20 USDT</option>
+    <option value="40">≤ 40 USDT</option>
+    <option value="60">≤ 60 USDT</option>
+  </select>
+</div>
 
-<!-- Footer -->
-<footer class="footer sm:hidden">
-  <a href="index.html" class="active"><i class="fas fa-home"></i><span>Home</span></a>
-  <a href="wallet.html"><i class="fas fa-wallet"></i><span>Wallet</span></a>
+<div class="marketplace" id="marketplace"></div>
+
+<div class="modal" id="productModal">
+  <div class="modal-content">
+    <span class="close-btn" onclick="closeModal()">&times;</span>
+    <h3 id="modalTitle"></h3>
+    <p id="modalDescription"></p>
+    <p id="modalPrice" class="price-zac"></p>
+    <p id="modalVendor" class="vendor-usdt"></p>
+    <select id="paymentToken">
+      <option value="ZAC">ZAC</option>
+      <option value="USDT">USDT</option>
+      <option value="ETH">ETH</option>
+    </select>
+    <button id="buyBtn">Buy Now</button>
+    <canvas class="qr-code" id="qrCode" style="display:none;"></canvas>
+    <p class="payment-confirm" id="paymentConfirm" style="display:none;">Payment Received!</p>
+    <div class="tx-list" id="txList"></div>
+  </div>
+</div>
+
+<footer class="footer">
+  <a href="wallet-pos.html" class="active"><i class="fas fa-cash-register"></i><span>POS</span></a>
   <a href="chat.html"><i class="fas fa-comments"></i><span>Chat</span></a>
+  <a href="dashboard-store.html"><i class="fas fa-store"></i><span>Store</span></a>
   <a href="profile.html"><i class="fas fa-user"></i><span>Profile</span></a>
 </footer>
+
+<script>
+// Sample products
+const products = [
+  {title:'Digital Art NFT', desc:'High quality collectible NFT art', image:'https://via.placeholder.com/180x120.png?text=Digital+Art+NFT', zac:500, usdt:50},
+  {title:'Ebook on AI', desc:'Comprehensive guide on AI', image:'https://via.placeholder.com/180x120.png?text=Ebook+on+AI', zac:300, usdt:30},
+  {title:'Stock Music', desc:'Royalty-free music track', image:'https://via.placeholder.com/180x120.png?text=Stock+Music', zac:200, usdt:20},
+  {title:'Video Template', desc:'Editable video template', image:'https://via.placeholder.com/180x120.png?text=Video+Template', zac:400, usdt:40},
+];
+
+// Render products
+function renderProducts(filterText='', zacFilter='', usdtFilter='') {
+  const container = document.getElementById('marketplace');
+  container.innerHTML = '';
+  products.forEach(p => {
+    if ((filterText && !p.title.toLowerCase().includes(filterText.toLowerCase()))) return;
+    if (zacFilter && p.zac > parseInt(zacFilter)) return;
+    if (usdtFilter && p.usdt > parseInt(usdtFilter)) return;
+
+    const card = document.createElement('div');
+    card.className = 'product-card';
+    card.innerHTML = `
+      <img src="${p.image}" alt="${p.title}">
+      <h3>${p.title}</h3>
+      <p class="price-zac">Price: ${p.zac} ZAC</p>
+      <p class="vendor-usdt">Vendor: ${p.usdt} USDT</p>
+    `;
+    card.addEventListener('click', () => openModal(p));
+    container.appendChild(card);
+  });
+}
+
+// Product modal
+function openModal(product) {
+  document.getElementById('modalTitle').innerText = product.title;
+  document.getElementById('modalDescription').innerText = product.desc;
+  document.getElementById('modalPrice').innerText = `Price: ${product.zac} ZAC`;
+  document.getElementById('modalVendor').innerText = `Vendor: ${product.usdt} USDT`;
+  document.getElementById('productModal').style.display = 'flex';
+  document.getElementById('paymentConfirm').style.display = 'none';
+  document.getElementById('qrCode').style.display = 'none';
+
+  const buyBtn = document.getElementById('buyBtn');
+  const paymentToken = document.getElementById('paymentToken');
+
+  buyBtn.onclick = () => {
+    const token = paymentToken.value;
+    const amount = token === 'ZAC' ? product.zac : token === 'USDT' ? product.usdt : (product.zac * 0.002).toFixed(2);
+    
+    const qr = new QRious({
+      element: document.getElementById('qrCode'),
+      value: `PAY:${product.title}:${amount}${token}`,
+      size: 200,
+      background: 'white',
+      foreground: '#00f0ff',
+      level: 'H'
+    });
+    document.getElementById('qrCode').style.display = 'block';
+    document.getElementById('paymentConfirm').innerText = 'Waiting for Payment...';
+    document.getElementById('paymentConfirm').style.display = 'block';
+
+    setTimeout(() => {
+      document.getElementById('paymentConfirm').innerText = 'Payment Received!';
+      addTransaction(product.title, amount, token);
+    }, 3000);
+  };
+}
+
+function closeModal() {
+  document.getElementById('productModal').style.display = 'none';
+}
+
+// Add transaction
+function addTransaction(title, amount, token) {
+  const txList = document.getElementById('txList');
+  const txItem = document.createElement('div');
+  txItem.className = 'tx-item';
+  const date = new Date().toLocaleDateString();
+  txItem.innerHTML = `<span>${title}</span><span>${amount} ${token}</span><span>${date}</span>`;
+  txList.prepend(txItem);
+}
+
+// Filters
+document.getElementById('searchInput').addEventListener('input', e => {
+  renderProducts(e.target.value, document.getElementById('filterZac').value, document.getElementById('filterUsdt').value);
+});
+document.getElementById('filterZac').addEventListener('change', e => {
+  renderProducts(document.getElementById('searchInput').value, e.target.value, document.getElementById('filterUsdt').value);
+});
+document.getElementById('filterUsdt').addEventListener('change', e => {
+  renderProducts(document.getElementById('searchInput').value, document.getElementById('filterZac').value, e.target.value);
+});
+
+// Initial render
+renderProducts();
+</script>
 
 </body>
 </html>
