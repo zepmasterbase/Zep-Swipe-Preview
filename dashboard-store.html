@@ -1,23 +1,222 @@
+<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Store Dashboard</title>
+<title>Zep Marketplace</title>
+
+<!-- Tailwind CSS + Fonts + Icons -->
 <script src="https://cdn.tailwindcss.com"></script>
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700&family=Roboto:wght@400;500&display=swap" rel="stylesheet" />
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Orbitron:wght@600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
 <style>
-body { font-family:'Roboto',sans-serif; background:#1b0f3a; color:#fff; margin:0; padding:0; }
-.header { font-family:'Orbitron',sans-serif; font-size:2rem; text-align:center; margin:2rem 0; background:linear-gradient(90deg,#00f0ff,#ff00f0); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
-.card { background: rgba(124,99,255,0.2); margin:1rem auto; padding:1rem 2rem; border-radius:1rem; max-width:400px; text-align:center; transition:0.3s; }
-.card:hover { transform:scale(1.05); }
+:root {
+  --neon-blue: #00f0ff;
+  --neon-pink: #ff00f0;
+  --glass: rgba(255,255,255,0.05);
+  --bg-dark: #0b0520;
+}
+
+/* Global */
+body {
+  font-family: 'Poppins', sans-serif;
+  background: radial-gradient(circle at top, #0b0520 0%, #120b2e 100%);
+  color: #fff;
+  margin: 0;
+  min-height: 100vh;
+}
+
+/* Header */
+.header {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  padding: 1rem 2rem;
+  background: rgba(15,5,32,0.85);
+  backdrop-filter: blur(12px);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 50;
+  box-shadow: 0 0 25px rgba(0,255,255,0.2);
+}
+.header h1 {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 1.5rem;
+  background: linear-gradient(90deg, var(--neon-blue), var(--neon-pink));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.header i {
+  font-size: 1.3rem;
+  color: var(--neon-blue);
+  transition: 0.3s;
+  cursor: pointer;
+}
+.header i:hover {
+  color: var(--neon-pink);
+  transform: scale(1.2);
+}
+
+/* Marketplace Grid */
+.marketplace {
+  padding: 6rem 1.5rem 6rem 1.5rem;
+}
+.section-title {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 1.3rem;
+  margin-bottom: 1rem;
+  color: var(--neon-blue);
+}
+
+/* Product Cards */
+.product-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill,minmax(220px,1fr));
+  gap: 1rem;
+}
+.product-card {
+  background: var(--glass);
+  backdrop-filter: blur(15px);
+  border-radius: 1rem;
+  padding: 1rem;
+  transition: transform 0.3s, box-shadow 0.3s;
+  cursor: pointer;
+}
+.product-card:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 20px var(--neon-blue);
+}
+.product-card img {
+  width: 100%;
+  border-radius: 0.8rem;
+  margin-bottom: 0.8rem;
+}
+.product-card h3 {
+  font-size: 1rem;
+  font-weight: 600;
+  margin-bottom: 0.4rem;
+}
+.product-card .price {
+  font-weight: 700;
+  font-size: 1rem;
+  margin-bottom: 0.5rem;
+}
+.product-card .currency-zac { color: var(--neon-blue); }
+.product-card .currency-usdt { color: #2ecc71; }
+.product-card button {
+  background: linear-gradient(90deg,var(--neon-blue),var(--neon-pink));
+  border: none;
+  padding: 0.5rem 0.8rem;
+  border-radius: 0.6rem;
+  color: #fff;
+  cursor: pointer;
+  width: 100%;
+  transition: 0.3s;
+}
+.product-card button:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 10px var(--neon-pink);
+}
+
+/* Footer */
+.footer {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  background: rgba(15,5,32,0.85);
+  backdrop-filter: blur(12px);
+  display: flex;
+  justify-content: space-around;
+  padding: 0.8rem 0;
+  box-shadow: 0 -2px 20px rgba(0,255,255,0.2);
+}
+.footer a {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: var(--neon-blue);
+  font-size: 0.8rem;
+  transition: 0.3s;
+}
+.footer a i {
+  font-size: 1.4rem;
+}
+.footer a:hover, .footer a.active {
+  color: var(--neon-pink);
+  transform: scale(1.2);
+}
 </style>
 </head>
+
 <body>
-<h1 class="header">Store Dashboard</h1>
-<div class="card">Redeem $ZAC</div>
-<div class="card">Browse Campus Store</div>
-<div class="card">Special Offers</div>
-<a href="index.html" style="display:block;text-align:center;margin:2rem;color:#ff00f0;">Back</a>
+
+<!-- Header -->
+<header class="header">
+  <h1>Zep Marketplace</h1>
+  <i class="fas fa-bell"></i>
+</header>
+
+<main class="marketplace">
+  <!-- Digital Products -->
+  <div class="section">
+    <div class="section-title">Digital Products (ZAC)</div>
+    <div class="product-grid">
+      <div class="product-card">
+        <img src="https://via.placeholder.com/220x120.png?text=Ebook" alt="Ebook">
+        <h3>Advanced AI Guide</h3>
+        <div class="price currency-zac">1250 ZAC</div>
+        <button>Buy</button>
+      </div>
+      <div class="product-card">
+        <img src="https://via.placeholder.com/220x120.png?text=Course" alt="Course">
+        <h3>Web3 Masterclass</h3>
+        <div class="price currency-zac">980 ZAC</div>
+        <button>Buy</button>
+      </div>
+      <div class="product-card">
+        <img src="https://via.placeholder.com/220x120.png?text=Template" alt="Template">
+        <h3>UI/UX Kit</h3>
+        <div class="price currency-zac">450 ZAC</div>
+        <button>Buy</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Vendor Products -->
+  <div class="section mt-6">
+    <div class="section-title">Vendor Products (USDT)</div>
+    <div class="product-grid">
+      <div class="product-card">
+        <img src="https://via.placeholder.com/220x120.png?text=Gadget" alt="Gadget">
+        <h3>Neon Headphones</h3>
+        <div class="price currency-usdt">120 USDT</div>
+        <button>Buy</button>
+      </div>
+      <div class="product-card">
+        <img src="https://via.placeholder.com/220x120.png?text=Accessory" alt="Accessory">
+        <h3>Smartwatch</h3>
+        <div class="price currency-usdt">85 USDT</div>
+        <button>Buy</button>
+      </div>
+      <div class="product-card">
+        <img src="https://via.placeholder.com/220x120.png?text=Software" alt="Software">
+        <h3>Pro Editing Suite</h3>
+        <div class="price currency-usdt">300 USDT</div>
+        <button>Buy</button>
+      </div>
+    </div>
+  </div>
+</main>
+
+<!-- Footer -->
+<footer class="footer sm:hidden">
+  <a href="index.html" class="active"><i class="fas fa-home"></i><span>Home</span></a>
+  <a href="wallet.html"><i class="fas fa-wallet"></i><span>Wallet</span></a>
+  <a href="chat.html"><i class="fas fa-comments"></i><span>Chat</span></a>
+  <a href="profile.html"><i class="fas fa-user"></i><span>Profile</span></a>
+</footer>
+
 </body>
 </html>
