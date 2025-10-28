@@ -1,137 +1,248 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>ZepShop Digital Marketplace</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrious/4.0.2/qrious.min.js"></script>
-  <style>
-    /* Custom styles here */
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ZepShop Marketplace</title>
+
+<!-- Tailwind + Fonts + Icons -->
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+<style>
+:root {
+  --neon-blue: #00f0ff;
+  --neon-pink: #ff00f0;
+  --glass: rgba(255,255,255,0.05);
+}
+
+body {
+  font-family: 'Poppins', sans-serif;
+  margin: 0;
+  background: radial-gradient(circle at top, #0b0520 0%, #120b2e 100%);
+  color: #fff;
+  min-height: 100vh;
+  padding-bottom: 80px;
+}
+
+/* GLASS-GLOW HEADER */
+.header {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  padding: 1rem 1.5rem;
+  background: rgba(15,5,32,0.6);
+  backdrop-filter: blur(15px);
+  box-shadow: 0 0 30px rgba(0,240,255,0.3);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 50;
+  border-bottom: 1px solid rgba(255,255,255,0.1);
+}
+.header h1 {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 1.8rem;
+  background: linear-gradient(90deg, var(--neon-blue), var(--neon-pink));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.header i {
+  color: var(--neon-blue);
+  font-size: 1.5rem;
+  cursor: pointer;
+  transition: 0.3s;
+}
+.header i:hover { color: var(--neon-pink); transform: scale(1.2); }
+
+/* WALLET BALANCE DISPLAY */
+.wallet-balance {
+  margin-top: 6rem;
+  text-align:center;
+  padding:0.8rem;
+  background: rgba(255,255,255,0.05);
+  border-radius:0.8rem;
+  box-shadow: 0 0 15px rgba(0,240,255,0.2);
+  margin-left: 1rem;
+  margin-right: 1rem;
+  font-weight:600;
+}
+
+/* MARKETPLACE GRID */
+.marketplace {
+  margin-top: 1rem;
+  padding: 1rem;
+  display: grid;
+  grid-template-columns: repeat(2,1fr);
+  gap: 1rem;
+}
+
+/* PRODUCT CARD */
+.product-card {
+  background: rgba(255,255,255,0.05);
+  backdrop-filter: blur(12px);
+  border-radius: 1rem;
+  overflow: hidden;
+  box-shadow: 0 0 20px rgba(0,240,255,0.2);
+  transition: transform 0.3s, box-shadow 0.3s;
+  cursor: pointer;
+}
+.product-card:hover { transform: scale(1.03); box-shadow: 0 0 25px rgba(0,255,255,0.3); }
+.product-card img {
+  width: 100%;
+  height: 140px;
+  object-fit: cover;
+  filter: brightness(1.1);
+}
+.product-card h3 { color: var(--neon-blue); font-family: 'Orbitron', sans-serif; margin: 0.5rem 0 0; font-size: 1rem; }
+.product-card p { font-size: 0.8rem; color: #ccc; margin: 0 0 0.5rem; }
+.product-card .price { font-weight: 600; color: #39ff14; margin-bottom: 0.5rem; }
+
+/* FOOTER NEON */
+.footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background: rgba(15,5,32,0.6);
+  backdrop-filter: blur(12px);
+  display: flex;
+  justify-content: space-around;
+  padding: 0.8rem 0;
+  box-shadow: 0 -2px 20px rgba(0,255,255,0.2);
+  z-index: 50;
+}
+.footer a {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: var(--neon-blue);
+  font-size: 0.8rem;
+  text-decoration: none;
+  transition: 0.3s;
+}
+.footer a i { font-size: 1.4rem; }
+.footer a:hover, .footer a.active { color: var(--neon-pink); transform: scale(1.2); }
+
+/* MODAL */
+.modal {
+  position: fixed;
+  inset:0;
+  display: flex;
+  justify-content:center;
+  align-items:center;
+  background: rgba(10,5,25,0.9);
+  backdrop-filter: blur(10px);
+  z-index: 100;
+  display:none;
+}
+.modal-content {
+  background: var(--glass);
+  border-radius:1rem;
+  padding:1rem;
+  width:90%;
+  max-width:350px;
+  text-align:center;
+  box-shadow:0 0 20px var(--neon-blue);
+}
+.modal-content h3 { font-family:'Orbitron', sans-serif; color: var(--neon-blue); margin-bottom:0.5rem; }
+.modal-content p { color:#ccc; font-size:0.85rem; margin-bottom:0.5rem; }
+.modal-content button { background: linear-gradient(90deg,var(--neon-blue),var(--neon-pink)); color:white; padding:0.6rem 1rem; border:none; border-radius:0.5rem; cursor:pointer; transition:0.3s; }
+.modal-content button:hover { transform: scale(1.05); }
+.close-btn { position:absolute; top:0.5rem; right:1rem; color:var(--neon-pink); font-size:1.2rem; cursor:pointer; }
+</style>
 </head>
-<body class="bg-gradient-to-t from-[#120b2e] to-[#0b0520] text-white font-poppins">
-  <header class="fixed top-0 w-full p-4 backdrop-blur-md bg-[#0f0520cc] z-50 flex justify-between items-center">
-    <h1 class="text-2xl font-orbitron text-transparent bg-clip-text bg-gradient-to-r from-[#00f0ff] to-[#ff00f0]">ZepShop</h1>
-    <i class="fas fa-bell text-[#00f0ff] cursor-pointer hover:text-[#ff00f0] transition-transform transform hover:scale-110"></i>
-  </header>
+<body>
 
-  <div class="mt-24 p-4">
-    <div class="grid grid-cols-2 gap-4" id="marketplace"></div>
+<header class="header">
+  <h1>ZepShop</h1>
+  <i class="fas fa-bell"></i>
+</header>
+
+<div class="wallet-balance" id="walletBalance">
+  Wallet Balance: <span id="zacBalance">1250 ZAC</span> | <span id="usdtBalance">500 USDT</span>
+</div>
+
+<div class="marketplace" id="marketplace"></div>
+
+<!-- Product Modal -->
+<div id="productModal" class="modal">
+  <div class="modal-content">
+    <span class="close-btn" onclick="closeModal()">&times;</span>
+    <h3 id="modalTitle"></h3>
+    <p id="modalDescription"></p>
+    <p id="modalPrice"></p>
+    <button onclick="buyProduct()">Buy Now</button>
   </div>
+</div>
 
-  <div id="productModal" class="fixed inset-0 bg-[#0a0519cc] backdrop-blur-md z-100 hidden justify-center items-center">
-    <div class="bg-[#0f0520] p-6 rounded-lg w-80">
-      <span class="text-[#ff00f0] cursor-pointer absolute top-2 right-2 text-xl" onclick="closeModal()">&times;</span>
-      <h3 id="modalTitle" class="text-[#00f0ff] text-xl"></h3>
-      <p id="modalDescription" class="text-gray-400 mt-2"></p>
-      <p id="modalPrice" class="text-[#39ff14] mt-2"></p>
-      <p id="modalVendor" class="text-[#ff00f0] mt-2"></p>
-      <select id="paymentToken" class="w-full mt-4 p-2 bg-[#120b2e] text-white border border-[#00f0ff] rounded">
-        <option value="ZAC">ZAC</option>
-        <option value="USDT">USDT</option>
-        <option value="ETH">ETH</option>
-      </select>
-      <button id="buyBtn" class="w-full mt-4 p-2 bg-gradient-to-r from-[#00f0ff] to-[#ff00f0] text-white rounded">Buy Now</button>
-      <canvas id="qrCode" class="w-full mt-4 hidden"></canvas>
-      <p id="paymentConfirm" class="text-[#39ff14] mt-4 hidden">Payment Received!</p>
-      <div id="txList" class="mt-4 max-h-32 overflow-y-auto"></div>
-    </div>
-  </div>
+<footer class="footer">
+  <a href="wallet-pos.html"><i class="fas fa-cash-register"></i><span>POS</span></a>
+  <a href="chat.html"><i class="fas fa-comments"></i><span>Chat</span></a>
+  <a href="digital-products.html"><i class="fas fa-layer-group"></i><span>Products</span></a>
+  <a href="profile.html"><i class="fas fa-user"></i><span>Profile</span></a>
+</footer>
 
-  <footer class="fixed bottom-0 w-full p-4 bg-[#0f0520cc] backdrop-blur-md z-50 flex justify-around">
-    <a href="#" class="text-[#00f0ff] hover:text-[#ff00f0] transition-transform transform hover:scale-110">
-      <i class="fas fa-cash-register text-2xl"></i>
-      <span class="block text-xs">POS</span>
-    </a>
-    <a href="#" class="text-[#00f0ff] hover:text-[#ff00f0] transition-transform transform hover:scale-110">
-      <i class="fas fa-comments text-2xl"></i>
-      <span class="block text-xs">Chat</span>
-    </a>
-    <a href="#" class="text-[#00f0ff] hover:text-[#ff00f0] transition-transform transform hover:scale-110">
-      <i class="fas fa-layer-group text-2xl"></i>
-      <span class="block text-xs">Products</span>
-    </a>
-    <a href="#" class="text-[#00f0ff] hover:text-[#ff00f0] transition-transform transform hover:scale-110">
-      <i class="fas fa-user text-2xl"></i>
-      <span class="block text-xs">Profile</span>
-    </a>
-  </footer>
+<script>
+// Simulated wallet
+let wallet = { ZAC: 1250, USDT: 500, ETH: 2 };
 
-  <script>
-    // Sample products with neon-style placeholder images
-    const products = [
-      { title: 'Neon NFT Art', desc: 'Futuristic neon NFT', image: 'https://via.placeholder.com/180x120/00f0ff/120b2e?text=Neon+NFT', zac: 500, usdt: 50 },
-      { title: 'Neon AI Ebook', desc: 'AI guide with neon cover', image: 'https://via.placeholder.com/180x120/ff00f0/120b2e?text=Neon+Ebook', zac: 300, usdt: 30 },
-      { title: 'Neon Stock Music', desc: 'Royalty-free neon music', image: 'https://via.placeholder.com/180x120/39ff14/120b2e?text=Neon+Music', zac: 200, usdt: 20 },
-      { title: 'Neon Video Template', desc: 'Editable neon video', image: 'https://via.placeholder.com/180x120/00f0ff/120b2e?text=Neon+Video', zac: 400, usdt: 40 },
-    ];
+// Products: digital products (ZAC), other (USDT)
+const products = [
+  { title:'Neon NFT', desc:'Futuristic NFT', image:'https://via.placeholder.com/180x140/ffffff/0b0520?text=Neon+NFT', price:500, currency:'ZAC', link:'digital-products.html' },
+  { title:'Neon Ebook', desc:'AI learning guide', image:'https://via.placeholder.com/180x140/eeeeee/0b0520?text=Neon+Ebook', price:300, currency:'ZAC', link:'digital-products.html' },
+  { title:'Cafe Latte', desc:'Fresh coffee', image:'https://via.placeholder.com/180x140/ffdddd/0b0520?text=Cafe+Latte', price:5, currency:'USDT', link:'vendor-listing.html' },
+  { title:'Mystery Book', desc:'Engaging novel', image:'https://via.placeholder.com/180x140/ddffdd/0b0520?text=Mystery+Book', price:12, currency:'USDT', link:'vendor-listing.html' }
+];
 
-    // User wallet balances
-    let wallet = { ZAC: 1000, USDT: 200, ETH: 1 };
+// Render products
+const marketplace = document.getElementById('marketplace');
+products.forEach(product=>{
+  const div=document.createElement('div');
+  div.className='product-card';
+  div.innerHTML=`
+    <img src="${product.image}" alt="${product.title}">
+    <h3>${product.title}</h3>
+    <p>${product.desc}</p>
+    <p class="price">${product.price} ${product.currency}</p>
+  `;
+  div.onclick=()=>openModal(product);
+  marketplace.appendChild(div);
+});
 
-    // Fetch live ETH and USDT prices
-    async function fetchPrices() {
-      try {
-        const ethResponse = await fetch('https://api.coingecko.com/api/v3/simple/price?ids=ethereum&vs_currencies=usd');
-        const ethData = await ethResponse.json();
-        const ethPrice = ethData.ethereum.usd;
+// Modal
+let selectedProduct = null;
+function openModal(product){
+  selectedProduct=product;
+  document.getElementById('modalTitle').textContent=product.title;
+  document.getElementById('modalDescription').textContent=product.desc;
+  document.getElementById('modalPrice').textContent=`Price: ${product.price} ${product.currency}`;
+  document.getElementById('productModal').style.display='flex';
+}
+function closeModal(){ document.getElementById('productModal').style.display='none'; }
 
-        const usdtResponse = await fetch('https://api.coingecko.com/api/v3/simple/price?ids=tether&vs_currencies=usd');
-        const usdtData = await usdtResponse.json();
-        const usdtPrice = usdtData.tether.usd;
+// Buy now with wallet deduction
+function buyProduct(){
+  if(!selectedProduct) return;
+  let cur=selectedProduct.currency;
+  if(wallet[cur]>=selectedProduct.price){
+    wallet[cur]-=selectedProduct.price;
+    alert(`Payment successful! You spent ${selectedProduct.price} ${cur}`);
+    updateWalletDisplay();
+    closeModal();
+  } else {
+    alert(`Insufficient ${cur} balance!`);
+  }
+}
 
-        return { ethPrice, usdtPrice };
-      } catch (error) {
-        console.error('Error fetching prices:', error);
-        return { ethPrice: 0, usdtPrice: 0 };
-      }
-    }
+// Update wallet balance display
+function updateWalletDisplay(){
+  document.getElementById('zacBalance').textContent = wallet.ZAC + ' ZAC';
+  document.getElementById('usdtBalance').textContent = wallet.USDT + ' USDT';
+}
+updateWalletDisplay();
+</script>
 
-    // Render products in the marketplace
-    function renderProducts() {
-      const marketplace = document.getElementById('marketplace');
-      marketplace.innerHTML = '';
-      products.forEach(product => {
-        const productElement = document.createElement('div');
-        productElement.className = 'bg-[#0f0520] p-4 rounded-lg shadow-lg hover:scale-105 transition-transform';
-        productElement.innerHTML = `
-          <img src="${product.image}" alt="${product.title}" class="w-full h-32 object-cover rounded-lg mb-4">
-          <h3 class="text-[#00f0ff] text-lg">${product.title}</h3>
-          <p class="text-gray-400 text-sm">${product.desc}</p>
-          <p class="text-[#39ff14] text-sm mt-2">Price: ${product.zac} ZAC</p>
-          <p class="text-[#ff00f0] text-sm mt-1">Vendor: ${product.usdt} USDT</p>
-        `;
-        productElement.onclick = () => openModal(product);
-        marketplace.appendChild(productElement);
-      });
-    }
-
-    // Open product modal
-    function openModal(product) {
-      document.getElementById('modalTitle').textContent = product.title;
-      document.getElementById('modalDescription').textContent = product.desc;
-      document.getElementById('modalPrice').textContent = `Price: ${product.zac} ZAC`;
-      document.getElementById('modalVendor').textContent = `Vendor: ${product.usdt} USDT`;
-      document.getElementById('productModal').classList.remove('hidden');
-    }
-
-    // Close product modal
-    function closeModal() {
-      document.getElementById('productModal').classList.add('hidden');
-    }
-
-    // Initialize the app
-    async function init() {
-      const prices = await fetchPrices();
-      console.log('ETH Price:', prices.ethPrice);
-      console.log('USDT Price:', prices.usdtPrice);
-      renderProducts();
-    }
-
-    init();
-  </script>
 </body>
 </html>
