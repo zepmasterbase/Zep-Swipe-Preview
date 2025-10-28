@@ -1,165 +1,188 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Zep Swipe — Student Dashboard</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Student Dashboard — Zep Learn</title>
 
 <!-- Tailwind + Fonts + Icons -->
 <script src="https://cdn.tailwindcss.com"></script>
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700&family=Poppins:wght@400;500;600&display=swap" rel="stylesheet" />
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Orbitron:wght@600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
 <style>
-body {
-  font-family: 'Poppins', sans-serif;
-  background: radial-gradient(circle at top, #120b2e 0%, #0b0520 100%);
-  color: #fff;
-  margin: 0;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
+:root {
+  --neon-blue: #00f0ff;
+  --neon-pink: #ff00f0;
+  --glass: rgba(255,255,255,0.05);
 }
+body { font-family: 'Poppins', sans-serif; margin:0; background: radial-gradient(circle at top,#0b0520 0%,#120b2e 100%); color:#fff; min-height:100vh; padding-bottom:80px;}
+.header { position:fixed; top:0;width:100%; padding:1rem 1.5rem; background:rgba(15,5,32,0.6); backdrop-filter:blur(12px); display:flex; justify-content:space-between; align-items:center; z-index:50; box-shadow:0 0 15px rgba(0,240,255,0.3);}
+.header h1 { font-family:'Orbitron',sans-serif; font-size:1.4rem; background: linear-gradient(90deg,var(--neon-blue),var(--neon-pink)); -webkit-background-clip:text; -webkit-text-fill-color:transparent;}
+.header i { color: var(--neon-blue); font-size:1.3rem; cursor:pointer; transition:0.3s;}
+.header i:hover { color: var(--neon-pink); transform: scale(1.2);}
 
-/* Header */
-.header {
-  width: 100%;
-  padding: 1rem 1.5rem;
-  position: fixed;
-  top: 0;
-  left: 0;
-  backdrop-filter: blur(10px);
-  background: rgba(15,5,32,0.8);
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  z-index: 50;
-  box-shadow: 0 0 20px rgba(0,240,255,0.3);
-}
-.header h1 {
-  font-family: 'Orbitron', sans-serif;
-  font-weight: 700;
-  font-size: 1.4rem;
-  background: linear-gradient(90deg, #00f0ff, #ff00f0);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-.menu-button {
-  font-size: 1.5rem;
-  cursor: pointer;
-  color: #00f0ff;
-}
+.learn-earn { margin-top:5rem; padding:1rem; text-align:center; background: linear-gradient(90deg, rgba(0,240,255,0.2), rgba(255,0,240,0.2)); border-radius:1rem; box-shadow:0 0 15px rgba(0,240,255,0.2); font-weight:600;}
 
-/* Main Dashboard */
-.main {
-  margin-top: 6rem;
-  text-align: center;
-  padding: 2rem 1rem 6rem;
-}
+.dashboard-cards { display:flex; flex-direction:column; gap:1rem; padding:1rem;}
+.card { background:var(--glass); backdrop-filter:blur(20px); border-radius:1rem; padding:1rem; box-shadow:0 0 15px rgba(0,240,255,0.2);}
+.card h3 { font-family:'Orbitron',sans-serif; color:var(--neon-blue); margin-bottom:0.5rem;}
+.card p { font-size:1.2rem; font-weight:600;}
 
-.balance-card {
-  background: rgba(255,255,255,0.05);
-  border: 1px solid rgba(255,255,255,0.1);
-  border-radius: 1rem;
-  padding: 1.5rem;
-  width: 90%;
-  max-width: 400px;
-  margin: 0 auto 1.5rem;
-  box-shadow: 0 0 20px rgba(0,240,255,0.3);
-}
-.balance-card h2 {
-  font-family: 'Orbitron', sans-serif;
-  font-size: 1.1rem;
-  color: #c0bdf4;
-  margin-bottom: 0.5rem;
-}
-.balance-amount {
-  font-size: 2rem;
-  font-weight: 700;
-  color: #00f0ff;
-}
+.history { margin-top:1rem; padding:1rem;}
+.tx-item { background:var(--glass); padding:0.8rem; border-radius:0.8rem; display:flex; justify-content:space-between; align-items:center; margin-bottom:0.5rem; transition:0.3s;}
+.tx-item:hover { box-shadow:0 0 10px rgba(0,255,255,0.3);}
+.tx-item .left { display:flex; align-items:center; gap:0.8rem;}
+.tx-item i { color:var(--neon-blue); font-size:1.3rem;}
+.tx-item .name { font-weight:600; }
+.tx-item .date { font-size:0.75rem; opacity:0.7; }
+.tx-item .amount { font-weight:600; }
+.tx-item .amount.positive { color:#00f0ff; }
+.tx-item .amount.negative { color:#ff00f0; }
 
-/* Learn & Earn Banner */
-.learn-banner {
-  background: linear-gradient(90deg, #00f0ff, #ff00f0);
-  color: #0b0520;
-  padding: 1rem;
-  border-radius: 1rem;
-  width: 90%;
-  max-width: 400px;
-  margin: 0 auto;
-  box-shadow: 0 0 25px rgba(255,0,240,0.3);
-  font-weight: 600;
-  transition: 0.3s;
-}
-.learn-banner:hover {
-  transform: scale(1.05);
-  background: linear-gradient(90deg, #ff00f0, #00f0ff);
-}
+.footer { position: fixed; bottom:0; left:0; width:100%; background: rgba(15,5,32,0.85); backdrop-filter:blur(12px); display:flex; justify-content:space-around; padding:0.8rem 0; box-shadow:0 -2px 20px rgba(0,255,255,0.2); z-index:100;}
+.footer a { display:flex; flex-direction:column; align-items:center; color:var(--neon-blue); font-size:0.8rem; text-decoration:none; transition:0.3s;}
+.footer a i { font-size:1.4rem; }
+.footer a:hover, .footer a.active { color:var(--neon-pink); transform:scale(1.2); }
 
-/* Footer Nav */
-.footer {
-  width: 100%;
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  backdrop-filter: blur(8px);
-  background: rgba(15,5,32,0.7);
-  display: flex;
-  justify-content: space-around;
-  padding: 0.7rem 0;
-  box-shadow: 0 -2px 20px rgba(255,0,240,0.2);
-}
-.footer i {
-  font-size: 1.5rem;
-  color: #00f0ff;
-  transition: 0.3s;
-  cursor: pointer;
-}
-.footer i:hover, .footer i.active {
-  color: #ff00f0;
-  transform: scale(1.2);
-}
+.modal { position: fixed; top:0; left:0; width:100%; height:100%; background: rgba(10,5,25,0.9); backdrop-filter: blur(10px); display:none; align-items:center; justify-content:center; z-index:200;}
+.modal-content { background:var(--glass); border-radius:1rem; padding:1.5rem; width:90%; max-width:380px; text-align:center; box-shadow:0 0 20px var(--neon-blue);}
+.modal-content h3 { font-family:'Orbitron',sans-serif; margin-bottom:1rem; color:var(--neon-blue);}
+.modal-content button { background: linear-gradient(90deg,var(--neon-blue),var(--neon-pink)); color:#fff; border:none; border-radius:0.5rem; padding:0.6rem 1rem; cursor:pointer; transition:0.3s;}
+.modal-content button:hover { transform:scale(1.05);}
+.close-btn { position:absolute; top:1rem; right:1rem; color:var(--neon-pink); font-size:1.2rem; cursor:pointer;}
 </style>
 </head>
-
 <body>
 
-<!-- Header -->
 <header class="header">
-  <h1>Zep Swipe</h1>
-  <i class="fas fa-bars menu-button"></i>
+  <h1>Earn to Learn — Win Giveaways & Earn $ZAC!</h1>
+  <i class="fas fa-bell"></i>
 </header>
 
-<!-- Main Section -->
-<main class="main">
-  <!-- ZAC Balance -->
-  <div class="balance-card">
-    <h2>ZAC Balance</h2>
-    <p class="balance-amount">1,250.45 ZAC</p>
-  </div>
+<div class="learn-earn">Learn & Earn: Complete lessons to earn ZAC tokens!</div>
 
-  <!-- USDT Placeholder -->
-  <div class="balance-card">
-    <h2>USDT Balance</h2>
-    <p class="balance-amount">Coming Soon...</p>
+<main class="dashboard-cards">
+  <div class="card">
+    <h3>Total ZAC Balance</h3>
+    <p id="zacBalance">0</p>
   </div>
-
-  <!-- Learn & Earn Banner -->
-  <a href="https://www.google.com" target="_blank" class="learn-banner block text-center">
-    🎓 Learn & Earn ZAC — Click Here to Start
-  </a>
+  <div class="card">
+    <h3>Pending Rewards</h3>
+    <p id="pendingReward">0</p>
+  </div>
 </main>
 
-<!-- Footer Navigation -->
+<div class="history">
+  <h3>Recent Transactions</h3>
+  <div id="txList"></div>
+</div>
+
+<!-- CLAIM REWARD MODAL -->
+<div id="claimModal" class="modal">
+  <div class="modal-content relative">
+    <span class="close-btn" onclick="closeModal('claimModal')">&times;</span>
+    <h3>Claim Reward</h3>
+    <p>Claim your earned ZAC from Learn & Earn</p>
+    <button onclick="claimReward()">Claim Now</button>
+  </div>
+</div>
+
 <footer class="footer">
-  <i class="fas fa-comment-dots"></i>
-  <i class="fas fa-wallet"></i>
-  <i class="fas fa-store"></i>
-  <i class="fas fa-fire"></i>
-  <i class="fas fa-user"></i>
+  <a href="dashboard.html" class="active"><i class="fas fa-home"></i><span>Home</span></a>
+  <a href="wallet.html"><i class="fas fa-wallet"></i><span>Wallet</span></a>
+  <a href="learn-earn.html"><i class="fas fa-gift"></i><span>Rewards</span></a>
+  <a href="profile.html"><i class="fas fa-user"></i><span>Profile</span></a>
 </footer>
 
+<script>
+// --- CONFIG ---
+const ZAC_API = 'https://api.zacblockchain.com/address/';
+const STUDENT_ZAC_ADDRESS = 'UBVVRSAYSA4Q5Y2IRVIFNFVC745REW1M4P';
+let transactions = [];
+let pendingReward = 0;
+
+// Fetch real ZAC balance from blockchain API
+async function fetchZACBalance() {
+  try {
+    const res = await fetch(`${ZAC_API}${STUDENT_ZAC_ADDRESS}`);
+    const data = await res.json();
+    const balance = data.balance || 0;
+    document.getElementById('zacBalance').innerText = balance;
+  } catch(err){
+    console.error(err);
+    document.getElementById('zacBalance').innerText = '0';
+  }
+}
+
+// WebSocket for live reward notifications
+const ws = new WebSocket('wss://yourserver.com/rewards'); // Replace with your WS backend
+ws.onopen = () => console.log('Connected to rewards WebSocket');
+ws.onmessage = (msg) => {
+  try {
+    const data = JSON.parse(msg.data);
+    if(data.type === 'reward' && data.address === STUDENT_ZAC_ADDRESS){
+      pendingReward += data.amount;
+      transactions.unshift({
+        name: data.message || 'Reward Received',
+        date: new Date().toLocaleDateString(),
+        amount: data.amount,
+        type: 'positive'
+      });
+      updateDashboard();
+    }
+  } catch(err){ console.error(err); }
+};
+
+// Modal control
+function closeModal(id){ document.getElementById(id).style.display='none'; }
+function openModal(id){ document.getElementById(id).style.display='flex'; }
+
+// Claim reward
+function claimReward(){
+  const zacElement = document.getElementById('zacBalance');
+  let currentBalance = parseFloat(zacElement.innerText) || 0;
+  if(pendingReward > 0){
+    currentBalance += pendingReward;
+    transactions.unshift({
+      name:'Reward Claimed',
+      date: new Date().toLocaleDateString(),
+      amount: pendingReward,
+      type:'negative'
+    });
+    pendingReward=0;
+    zacElement.innerText = currentBalance;
+    updateDashboard();
+    closeModal('claimModal');
+    alert('Reward claimed!');
+  } else { alert('No pending rewards to claim.'); }
+}
+
+// Update dashboard
+function updateDashboard(){
+  document.getElementById('pendingReward').innerText = pendingReward;
+  const txList = document.getElementById('txList');
+  txList.innerHTML='';
+  transactions.forEach(tx=>{
+    const div = document.createElement('div');
+    div.className='tx-item';
+    div.innerHTML = `
+      <div class="left">
+        <i class="fas ${tx.type==='positive'?'fa-arrow-down':'fa-arrow-up'}"></i>
+        <div>
+          <div class="name">${tx.name}</div>
+          <div class="date">${tx.date}</div>
+        </div>
+      </div>
+      <div class="amount ${tx.type}">${tx.type==='positive'?'+':'-'} ${tx.amount} ZAC</div>
+    `;
+    txList.appendChild(div);
+  });
+}
+
+// INIT
+fetchZACBalance();
+updateDashboard();
+</script>
 </body>
 </html>
