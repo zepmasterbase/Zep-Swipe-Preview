@@ -8,11 +8,11 @@
 <script src="https://cdn.tailwindcss.com"></script>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Orbitron:wght@600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
 <style>
 :root {
   --accent-a: #00f0ff;
   --accent-b: #ff00f0;
-  --gradient: linear-gradient(90deg,var(--accent-a),var(--accent-b));
   --glass: rgba(255,255,255,0.1);
 }
 
@@ -225,6 +225,7 @@ body {
 </style>
 </head>
 <body>
+
 <!-- Header -->
 <header class="header">
   <h1>Zep Swipe</h1>
@@ -253,15 +254,15 @@ body {
   <!-- 3D Top Products Cards -->
   <h2 class="mt-6 mb-2 font-semibold">Top Products</h2>
   <div class="cards-3d">
-    <div class="card">
+    <div class="card" onclick="location.href='product-a.html'">
       <h3>Product A</h3>
       <p>150 Sold</p>
     </div>
-    <div class="card">
+    <div class="card" onclick="location.href='product-b.html'">
       <h3>Product B</h3>
       <p>120 Sold</p>
     </div>
-    <div class="card">
+    <div class="card" onclick="location.href='product-c.html'">
       <h3>Product C</h3>
       <p>95 Sold</p>
     </div>
@@ -317,5 +318,6 @@ animateValue('revenue', 0, 12540, 2000);
 animateValue('orders', 0, 24, 1500);
 animateValue('inventory', 0, 7, 1500);
 </script>
+
 </body>
 </html>
