@@ -58,11 +58,11 @@ body {
 
 /* BALANCE CARD */
 .balance-card {
-  margin-top: 6rem;
+  margin-top: 7rem;
   background: var(--glass);
   backdrop-filter: blur(20px);
   border-radius: 1.2rem;
-  padding: 2rem 1.5rem;
+  padding: 1.8rem 1.2rem;
   text-align: center;
   box-shadow: 0 0 25px rgba(0,240,255,0.3);
 }
@@ -72,30 +72,53 @@ body {
   font-size: 1rem;
 }
 .balance-card .amount {
-  font-size: 2rem;
+  font-size: 2.2rem;
   font-weight: 700;
   background: linear-gradient(90deg,var(--neon-blue),var(--neon-pink));
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   text-shadow: 0 0 10px #00f0ff;
+  margin-bottom: 1rem;
+}
+.sub-balance {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 1rem;
+}
+.sub-balance div {
+  background: rgba(255,255,255,0.08);
+  border-radius: 0.8rem;
+  padding: 0.7rem 1rem;
+  flex: 1;
+  margin: 0 0.3rem;
+  box-shadow: inset 0 0 8px rgba(0,240,255,0.2);
+}
+.sub-balance h4 {
+  font-size: 0.9rem;
+  color: var(--neon-blue);
+}
+.sub-balance p {
+  font-weight: 600;
+  font-size: 1rem;
 }
 
 /* QUICK ACTIONS */
 .quick-actions {
   display: flex;
   justify-content: space-between;
-  margin: 1.5rem 0;
+  margin: 1.8rem 0;
   flex-wrap: wrap;
 }
 .action-btn {
   background: var(--glass);
   backdrop-filter: blur(10px);
-  width: 18%;
+  width: 30%;
   border-radius: 1rem;
   padding: 1rem 0;
   text-align: center;
   cursor: pointer;
   transition: all 0.3s;
+  margin-bottom: 0.8rem;
 }
 .action-btn:hover {
   background: rgba(255,255,255,0.15);
@@ -254,9 +277,19 @@ body {
 
 <main class="px-4 pb-24">
   <!-- Balance -->
-  <div class="balance-card mt-6">
+  <div class="balance-card">
     <h2>Total Balance</h2>
     <div class="amount">$3,780.35</div>
+    <div class="sub-balance">
+      <div>
+        <h4>ZAC</h4>
+        <p>1,250.00</p>
+      </div>
+      <div>
+        <h4>USDT</h4>
+        <p>500.00</p>
+      </div>
+    </div>
   </div>
 
   <!-- Quick Actions -->
@@ -275,6 +308,9 @@ body {
     </div>
     <div class="action-btn" onclick="openModal('topupModal')">
       <i class="fas fa-plus-circle"></i><span>Top Up</span>
+    </div>
+    <div class="action-btn" onclick="openModal('withdrawModal')">
+      <i class="fas fa-wallet"></i><span>Withdraw</span>
     </div>
   </div>
 
@@ -319,8 +355,9 @@ body {
 <!-- Footer -->
 <footer class="footer sm:hidden">
   <a href="#" class="active"><i class="fas fa-home"></i><span>Home</span></a>
-  <a href="#"><i class="fas fa-exchange-alt"></i><span>Swap</span></a>
-  <a href="#"><i class="fas fa-wallet"></i><span>Wallet</span></a>
+  <a href="#"><i class="fas fa-paper-plane"></i><span>Send</span></a>
+  <a href="#"><i class="fas fa-hand-holding-dollar"></i><span>Request</span></a>
+  <a href="#"><i class="fas fa-wallet"></i><span>Withdraw</span></a>
   <a href="#"><i class="fas fa-user"></i><span>Profile</span></a>
 </footer>
 
@@ -371,6 +408,16 @@ body {
     <h3>Top Up Wallet</h3>
     <input type="number" placeholder="Amount">
     <button>Top Up</button>
+  </div>
+</div>
+
+<div id="withdrawModal" class="modal">
+  <div class="modal-content relative">
+    <span class="close-btn" onclick="closeModal('withdrawModal')">&times;</span>
+    <h3>Withdraw Funds</h3>
+    <input type="number" placeholder="Amount">
+    <input type="text" placeholder="Withdrawal Method (e.g. Momo, Crypto Wallet)">
+    <button>Withdraw</button>
   </div>
 </div>
 
