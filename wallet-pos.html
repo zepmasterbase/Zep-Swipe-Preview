@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Zep POS Dashboard</title>
+
+<!-- Tailwind CSS + Fonts + Icons + QR Code -->
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Orbitron:wght@600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrious/4.0.2/qrious.min.js"></script>
+
+<style>
+:root {
+  --neon-blue: #00f0ff;
+  --neon-pink: #ff00f0;
+  --glass: rgba(255,255,255,0.05);
+}
+
+body {
+  font-family: 'Poppins', sans-serif;
+  margin: 0;
+  background: radial-gradient(circle at top, #0b0520 0%, #120b2e 100%);
+  color: #fff;
+  min-height: 100vh;
+  padding-bottom: 80px;
+}
+
+/* HEADER */
+.header {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  padding: 1rem 1.5rem;
+  background: rgba(15,5,32,0.85);
+  backdrop-filter: blur(12px);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 50;
+}
+.header h1 {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 1.5rem;
+  background: linear-gradient(90deg, var(--neon-blue), var(--neon-pink));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.header i {
+  color: var(--neon-blue);
+  font-size: 1.3rem;
+  cursor: pointer;
+  transition: 0.3s;
+}
+.header i:hover {
+  color: var(--neon-pink);
+  transform: scale(1.2);
+}
+
+/* POS Container */
+.pos-container {
+  margin-top: 6rem;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+/* Input Card */
+.input-card {
+  background: var(--glass);
+  backdrop-filter: blur(20px);
+  border-radius: 1rem;
+  padding: 1.5rem;
+  box-shadow: 0 0 20px rgba(0,240,255,0.3);
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+.input-card label {
+  font-weight: 600;
+  color: var(--neon-blue);
+}
+.input-card input, .input-card select {
+  padding: 0.8rem;
+  border-radius: 0.5rem;
+  border: none;
+  background: rgba(255,255,255,0.08);
+  color: #fff;
+  font-size: 1rem;
+  outline: none;
+}
+.input-card button {
+  margin-top: 0.5rem;
+  background: linear-gradient(90deg,var(--neon-blue),var(--neon-pink));
+  color: #fff;
+  border: none;
+  padding: 0.8rem;
+  border-radius: 0.6rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.3s;
+}
+.input-card button:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 15px var(--neon-blue);
+}
+
+/* QR CODE */
+.qr-container {
+  background: var(--glass);
+  padding: 1rem;
+  border-radius: 1rem;
+  text-align: center;
+  box-shadow: 0 0 20px rgba(0,240,255,0.3);
+}
+.qr-container h3 {
+  font-family: 'Orbitron', sans-serif;
+  margin-bottom: 1rem;
+  color: var(--neon-blue);
+}
+.qr-container canvas {
+  margin: auto;
+  display: block;
+}
+</style>
+</head>
+<body>
+
+<header class="header">
+  <h1>Zep POS</h1>
+  <i class="fas fa-store"></i>
+</header>
+
+<main class="pos-container">
+  <!-- Input Amount & Payment Type -->
+  <div class="input-card">
+    <label for="amount">Enter Amount</label>
+    <input type="number" id="amount" placeholder="0.00" min="0">
+
+    <label for="currency">Select Payment Method</label>
+    <select id="currency">
+      <option value="ZAC">ZAC</option>
+      <option value="USDT">USDT</option>
+      <option value="ETH">ETH</option>
+    </select>
+
+    <button onclick="generateQR()">Generate QR Code</button>
+  </div>
+
+  <!-- QR Code Display -->
+  <div class="qr-container" id="qrContainer" style="display:none;">
+    <h3>Scan to Pay</h3>
+    <canvas id="qrCode"></canvas>
+  </div>
+</main>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <a href="wallet-pos.html" class="active"><i class="fas fa-cash-register"></i><span>POS</span></a>
+  <a href="chat.html"><i class="fas fa-comments"></i><span>Chat</span></a>
+  <a href="dashboard-store.html"><i class="fas fa-store"></i><span>Store</span></a>
+  <a href="profile.html"><i class="fas fa-user"></i><span>Profile</span></a>
+</footer>
+
+<script>
+// Generate QR code for payer
+function generateQR() {
+  const amount = document.getElementById('amount').value;
+  const currency = document.getElementById('currency').value;
+  
+  if(amount <= 0 || !amount) {
+    alert("Enter a valid amount!");
+    return;
+  }
+
+  const paymentData = `${currency}:${amount}`;
+  
+  const qr = new QRious({
+    element: document.getElementById('qrCode'),
+    value: paymentData,
+    size: 250,
+    background: 'white',
+    foreground: '#00f0ff',
+    level: 'H'
+  });
+
+  document.getElementById('qrContainer').style.display = 'block';
+}
+</script>
+
+</body>
+</html>
