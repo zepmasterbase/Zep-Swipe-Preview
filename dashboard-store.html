@@ -23,7 +23,7 @@ body {
   background: radial-gradient(circle at top, #0b0520 0%, #120b2e 100%);
   color: #fff;
   min-height: 100vh;
-  padding-bottom: 100px; /* footer space */
+  padding-bottom: 100px;
 }
 
 /* HEADER */
@@ -58,7 +58,7 @@ body {
   transform: scale(1.2);
 }
 
-/* Learn & Earn Banner */
+/* BANNER */
 .learn-earn {
   margin: 5.5rem 1rem 1rem 1rem;
   padding: 1rem;
@@ -72,7 +72,7 @@ body {
   text-shadow: 0 0 10px #00f0ff;
 }
 
-/* Live Rates */
+/* LIVE RATES */
 .live-rates {
   flex-wrap: wrap;
   display: flex;
@@ -141,7 +141,7 @@ body {
 }
 @media (max-width: 640px) {
   .marketplace {
-    grid-template-columns: 1fr; /* 1 per row on mobile */
+    grid-template-columns: 1fr;
   }
 }
 
@@ -168,10 +168,6 @@ body {
   font-family: 'Orbitron', sans-serif;
   font-size: 1rem;
   margin: 0.3rem 0;
-}
-.product-card p {
-  font-size: 0.85rem;
-  margin: 0.2rem 0;
 }
 .product-card .price {
   font-weight: 700;
@@ -213,13 +209,6 @@ body {
   box-shadow: 0 0 25px var(--neon-blue);
   position: relative;
 }
-.modal-content h3 {
-  font-family: 'Orbitron', sans-serif;
-  color: var(--neon-blue);
-}
-.modal-content p {
-  margin: 0.5rem 0;
-}
 .close-btn {
   position: absolute;
   top: 0.5rem;
@@ -228,9 +217,37 @@ body {
   color: var(--neon-pink);
   cursor: pointer;
 }
-.modal-content button {
-  margin-top: 0.5rem;
-  width: 100%;
+
+/* TRANSACTION FEED */
+.transactions {
+  margin: 1rem;
+  background: rgba(255,255,255,0.05);
+  border-radius: 1rem;
+  padding: 0.8rem;
+}
+.transactions h3 {
+  font-family: 'Orbitron', sans-serif;
+  color: var(--neon-blue);
+  margin-bottom: 0.5rem;
+}
+.tx-item {
+  background: var(--glass);
+  padding: 0.6rem 0.8rem;
+  border-radius: 0.6rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.4rem;
+  font-size: 0.85rem;
+  box-shadow: 0 0 10px rgba(0,240,255,0.2);
+  animation: fadeIn 0.4s ease-in-out;
+}
+.tx-item.positive {
+  border-left: 3px solid var(--neon-blue);
+}
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
 /* FOOTER */
@@ -244,7 +261,6 @@ body {
   background: rgba(15,5,32,0.85);
   backdrop-filter: blur(12px);
   box-shadow: 0 -2px 20px rgba(0,240,255,0.2);
-  z-index: 50;
 }
 .footer a {
   display: flex; flex-direction: column; align-items: center;
@@ -252,9 +268,7 @@ body {
   font-size: 0.8rem; text-decoration: none;
   transition: 0.3s;
 }
-.footer a i { font-size: 1.4rem; }
 .footer a:hover, .footer a.active { color: var(--neon-pink); transform: scale(1.2); }
-
 </style>
 </head>
 <body>
@@ -290,7 +304,12 @@ body {
 
 <div class="marketplace" id="marketplace"></div>
 
-<!-- Buy Modal -->
+<div class="transactions" id="transactions">
+  <h3>Recent Transactions</h3>
+  <div id="txList"></div>
+</div>
+
+<!-- Modal -->
 <div class="modal" id="productModal">
   <div class="modal-content">
     <span class="close-btn" onclick="closeModal()">&times;</span>
@@ -303,55 +322,57 @@ body {
 </div>
 
 <footer class="footer">
-  <a href="wallet-pos.html" class="active"><i class="fas fa-cash-register"></i><span>POS</span></a>
+  <a href="wallet-pos.html"><i class="fas fa-cash-register"></i><span>POS</span></a>
   <a href="chat.html"><i class="fas fa-comments"></i><span>Chat</span></a>
-  <a href="digital-products.html"><i class="fas fa-layer-group"></i><span>Products</span></a>
+  <a href="digital-products.html" class="active"><i class="fas fa-layer-group"></i><span>Products</span></a>
   <a href="profile.html"><i class="fas fa-user"></i><span>Profile</span></a>
 </footer>
 
 <script>
-// Sample Products
+// Products
 const products = [
-  { title: 'Neon NFT', desc: 'Futuristic NFT Digital Art', image: 'https://i.ibb.co/fHBKXx1/neon-nft.png', price: 500, currency: 'ZAC', category: 'digital', link: 'digital-products.html' },
+  { title: 'Neon NFT', desc: 'Futuristic NFT Art', image: 'https://i.ibb.co/fHBKXx1/neon-nft.png', price: 500, currency: 'ZAC', category: 'digital', link: 'digital-products.html' },
   { title: 'AI Ebook', desc: 'Learn AI & Blockchain', image: 'https://i.ibb.co/QY2Zx8V/ebook.png', price: 300, currency: 'ZAC', category: 'digital', link: 'digital-products.html' },
-  { title: 'Cafe Latte', desc: 'Fresh Coffee', image: 'https://i.ibb.co/2d4t1Lb/cafe.png', price: 5, currency: 'USDT', category: 'cafe', link: 'vendor-listing.html' },
+  { title: 'Cafe Latte', desc: 'Fresh Brew Coffee', image: 'https://i.ibb.co/2d4t1Lb/cafe.png', price: 5, currency: 'USDT', category: 'cafe', link: 'vendor-listing.html' },
   { title: 'Mystery Book', desc: 'Engaging Novel', image: 'https://i.ibb.co/G7Q9PfZ/book.png', price: 12, currency: 'USDT', category: 'books', link: 'vendor-listing.html' },
 ];
 
-// Wallet
+// Wallet + Transactions
 let wallet = { ZAC: 1250, USDT: 500, ETH: 2 };
+let transactions = [];
 
-// Render Products
+function updateWallet() {
+  document.getElementById('zacBalance').innerText = `ZAC: ${wallet.ZAC}`;
+  document.getElementById('usdtBalance').innerText = `USDT: ${wallet.USDT}`;
+  document.getElementById('ethBalance').innerText = `ETH: ${wallet.ETH}`;
+}
+
 function renderProducts(filter='all', search='') {
-  const marketplace = document.getElementById('marketplace');
-  marketplace.innerHTML = '';
-  const filtered = products.filter(p => 
-    (filter==='all' || p.category===filter) && 
+  const grid = document.getElementById('marketplace');
+  grid.innerHTML = '';
+  products.filter(p => 
+    (filter==='all' || p.category===filter) &&
     p.title.toLowerCase().includes(search.toLowerCase())
-  );
-  filtered.forEach(p => {
-    const div = document.createElement('div');
-    div.className = 'product-card';
-    div.innerHTML = `
-      <img src="${p.image}" alt="${p.title}">
-      <h3>${p.title}</h3>
-      <p>${p.desc}</p>
-      <p class="price">${p.price} ${p.currency}</p>
-      <button onclick="openModal('${p.title}')">Buy Now</button>
-    `;
-    marketplace.appendChild(div);
+  ).forEach(p => {
+    grid.innerHTML += `
+      <div class="product-card">
+        <img src="${p.image}" alt="${p.title}">
+        <h3>${p.title}</h3>
+        <p>${p.desc}</p>
+        <p class="price">${p.price} ${p.currency}</p>
+        <button onclick="openModal('${p.title}')">Buy Now</button>
+      </div>`;
   });
 }
 
-// Filter/Search
 function filterProducts() {
   const search = document.getElementById('searchInput').value;
-  const filter = document.getElementById('categoryFilter').value;
-  renderProducts(filter, search);
+  const cat = document.getElementById('categoryFilter').value;
+  renderProducts(cat, search);
 }
 
 // Modal
-let selectedProduct;
+let selectedProduct = null;
 function openModal(title) {
   selectedProduct = products.find(p => p.title === title);
   document.getElementById('modalTitle').innerText = selectedProduct.title;
@@ -364,14 +385,14 @@ function closeModal() {
   document.getElementById('productModal').style.display = 'none';
 }
 
-// Animated Buy
+// Purchase
 function buyProduct() {
-  const cur = selectedProduct.currency;
-  const price = selectedProduct.price;
-  if(wallet[cur] >= price) {
-    animateWalletDeduction(cur, wallet[cur], price);
+  const c = selectedProduct.currency, price = selectedProduct.price;
+  if(wallet[c] >= price) {
+    animateWalletDeduction(c, wallet[c], price);
+    addTransaction(selectedProduct.title, price, c);
   } else {
-    document.getElementById('buyFeedback').innerText = `Insufficient ${cur} balance!`;
+    document.getElementById('buyFeedback').innerText = `Insufficient ${c} balance!`;
     document.getElementById('buyFeedback').style.color = '#ff00f0';
   }
 }
@@ -392,32 +413,30 @@ function animateWalletDeduction(currency, current, deduction) {
   }, 25);
 }
 
-// Update Wallet Display
-function updateWallet() {
-  document.getElementById('zacBalance').innerText = `ZAC: ${wallet.ZAC}`;
-  document.getElementById('usdtBalance').innerText = `USDT: ${wallet.USDT}`;
-  document.getElementById('ethBalance').innerText = `ETH: ${wallet.ETH}`;
+function addTransaction(title, amount, currency) {
+  const time = new Date().toLocaleTimeString();
+  const tx = `<div class="tx-item positive"><span>${title}</span><span>- ${amount} ${currency}</span><span>${time}</span></div>`;
+  const list = document.getElementById('txList');
+  list.insertAdjacentHTML('afterbegin', tx);
 }
 
-// Fetch Live Rates
+// Live Rates
 async function fetchRates() {
   try {
     const res = await fetch('https://api.coingecko.com/api/v3/simple/price?ids=ethereum,tether&vs_currencies=usd');
-    const data = await res.json();
-    document.getElementById('ethRate').innerText = `ETH: $${data.ethereum.usd}`;
-    document.getElementById('usdtRate').innerText = `USDT: $${data.tether.usd}`;
-  } catch(err) {
-    console.error(err);
+    const d = await res.json();
+    document.getElementById('ethRate').innerText = `ETH: $${d.ethereum.usd}`;
+    document.getElementById('usdtRate').innerText = `USDT: $${d.tether.usd}`;
+  } catch {
     document.getElementById('ethRate').innerText = 'ETH: Error';
     document.getElementById('usdtRate').innerText = 'USDT: Error';
   }
 }
 
-// Initial Render
+// Init
 renderProducts();
 updateWallet();
 fetchRates();
 </script>
-
 </body>
 </html>
