@@ -23,7 +23,7 @@ body {
   background: radial-gradient(circle at top, #0b0520 0%, #120b2e 100%);
   color: #fff;
   min-height: 100vh;
-  padding-bottom: 80px; /* footer space */
+  padding-bottom: 100px; /* footer space */
 }
 
 /* HEADER */
@@ -31,7 +31,7 @@ body {
   position: fixed;
   top: 0;
   width: 100%;
-  padding: 1rem 1.5rem;
+  padding: 1rem;
   background: rgba(15,5,32,0.6);
   backdrop-filter: blur(12px);
   display: flex;
@@ -42,7 +42,7 @@ body {
 }
 .header h1 {
   font-family: 'Orbitron', sans-serif;
-  font-size: 1.6rem;
+  font-size: 1.4rem;
   background: linear-gradient(90deg, var(--neon-blue), var(--neon-pink));
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -60,7 +60,7 @@ body {
 
 /* Learn & Earn Banner */
 .learn-earn {
-  margin: 6rem 1rem 1rem 1rem;
+  margin: 5.5rem 1rem 1rem 1rem;
   padding: 1rem;
   background: rgba(255,255,255,0.05);
   border: 1px solid var(--neon-blue);
@@ -74,6 +74,7 @@ body {
 
 /* Live Rates */
 .live-rates {
+  flex-wrap: wrap;
   display: flex;
   justify-content: space-around;
   margin: 0.5rem 1rem;
@@ -85,16 +86,18 @@ body {
 .live-rates span {
   font-weight: 600;
   color: var(--neon-pink);
+  margin: 0.2rem 0;
 }
 
 /* SEARCH & FILTER */
 .search-bar {
-  margin: 1rem;
+  margin: 0.5rem 1rem;
   display: flex;
   gap: 0.5rem;
+  flex-wrap: wrap;
 }
 .search-bar input {
-  flex: 1;
+  flex: 1 1 60%;
   padding: 0.6rem 1rem;
   border-radius: 0.5rem;
   border: none;
@@ -103,6 +106,7 @@ body {
   color: #fff;
 }
 .search-bar select {
+  flex: 1 1 35%;
   padding: 0.6rem;
   border-radius: 0.5rem;
   border: none;
@@ -113,25 +117,32 @@ body {
 
 /* WALLET BALANCE */
 .wallet-balance {
-  margin: 1rem;
-  padding: 1rem;
+  margin: 0.5rem 1rem;
+  padding: 0.8rem;
   background: var(--glass);
   border-radius: 1rem;
   backdrop-filter: blur(20px);
   box-shadow: 0 0 20px rgba(0,240,255,0.3);
   display: flex;
   justify-content: space-around;
+  flex-wrap: wrap;
 }
 .wallet-balance span {
   font-weight: 600;
+  margin: 0.2rem 0;
 }
 
 /* PRODUCTS GRID */
 .marketplace {
   display: grid;
-  grid-template-columns: repeat(2, 1fr); /* 2 items per row */
-  gap: 1rem;
-  margin: 1rem;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.8rem;
+  margin: 0.5rem 1rem 1rem 1rem;
+}
+@media (max-width: 640px) {
+  .marketplace {
+    grid-template-columns: 1fr; /* 1 per row on mobile */
+  }
 }
 
 /* PRODUCT CARD */
@@ -185,20 +196,22 @@ body {
   position: fixed;
   top: 0; left: 0;
   width: 100%; height: 100%;
-  background: rgba(10,5,25,0.9);
+  background: rgba(10,5,25,0.95);
   display: none;
   align-items: center;
   justify-content: center;
   z-index: 100;
+  padding: 1rem;
 }
 .modal-content {
   background: var(--glass);
   border-radius: 1rem;
-  padding: 1.5rem;
-  width: 90%;
+  padding: 1rem;
+  width: 100%;
   max-width: 400px;
   text-align: center;
   box-shadow: 0 0 25px var(--neon-blue);
+  position: relative;
 }
 .modal-content h3 {
   font-family: 'Orbitron', sans-serif;
@@ -209,11 +222,15 @@ body {
 }
 .close-btn {
   position: absolute;
-  top: 1rem;
-  right: 1rem;
-  font-size: 1.2rem;
+  top: 0.5rem;
+  right: 0.8rem;
+  font-size: 1.5rem;
   color: var(--neon-pink);
   cursor: pointer;
+}
+.modal-content button {
+  margin-top: 0.5rem;
+  width: 100%;
 }
 
 /* FOOTER */
@@ -247,16 +264,13 @@ body {
   <i class="fas fa-bell"></i>
 </header>
 
-<!-- Learn & Earn Banner -->
 <div class="learn-earn">Earn ZAC by Joining the Learn & Earn Programs!</div>
 
-<!-- Live Rates -->
 <div class="live-rates">
   <span id="ethRate">ETH: Loading...</span>
   <span id="usdtRate">USDT: Loading...</span>
 </div>
 
-<!-- Search & Filter -->
 <div class="search-bar">
   <input type="text" id="searchInput" placeholder="Search products..." onkeyup="filterProducts()">
   <select id="categoryFilter" onchange="filterProducts()">
@@ -268,14 +282,12 @@ body {
   </select>
 </div>
 
-<!-- Wallet Balance -->
 <div class="wallet-balance" id="walletBalance">
   <span id="zacBalance">ZAC: 1250</span>
   <span id="usdtBalance">USDT: 500</span>
   <span id="ethBalance">ETH: 2</span>
 </div>
 
-<!-- Products -->
 <div class="marketplace" id="marketplace"></div>
 
 <!-- Buy Modal -->
@@ -286,10 +298,10 @@ body {
     <p id="modalDesc"></p>
     <p id="modalPrice"></p>
     <button onclick="buyProduct()">Buy Now</button>
+    <p id="buyFeedback" style="margin-top:0.5rem;font-weight:600;"></p>
   </div>
 </div>
 
-<!-- Footer -->
 <footer class="footer">
   <a href="wallet-pos.html" class="active"><i class="fas fa-cash-register"></i><span>POS</span></a>
   <a href="chat.html"><i class="fas fa-comments"></i><span>Chat</span></a>
@@ -345,32 +357,49 @@ function openModal(title) {
   document.getElementById('modalTitle').innerText = selectedProduct.title;
   document.getElementById('modalDesc').innerText = selectedProduct.desc;
   document.getElementById('modalPrice').innerText = `Price: ${selectedProduct.price} ${selectedProduct.currency}`;
+  document.getElementById('buyFeedback').innerText = '';
   document.getElementById('productModal').style.display = 'flex';
 }
 function closeModal() {
   document.getElementById('productModal').style.display = 'none';
 }
 
-// Buy Product
+// Animated Buy
 function buyProduct() {
   const cur = selectedProduct.currency;
-  if(wallet[cur] >= selectedProduct.price) {
-    wallet[cur] -= selectedProduct.price;
-    alert('Payment Successful!');
+  const price = selectedProduct.price;
+  if(wallet[cur] >= price) {
+    animateWalletDeduction(cur, wallet[cur], price);
   } else {
-    alert(`Insufficient ${cur} balance!`);
+    document.getElementById('buyFeedback').innerText = `Insufficient ${cur} balance!`;
+    document.getElementById('buyFeedback').style.color = '#ff00f0';
   }
-  updateWallet();
-  closeModal();
 }
 
+function animateWalletDeduction(currency, current, deduction) {
+  const steps = 20;
+  let count = 0;
+  const interval = setInterval(() => {
+    count++;
+    const newVal = current - (deduction * count / steps);
+    wallet[currency] = parseFloat(newVal.toFixed(2));
+    updateWallet();
+    if(count >= steps) {
+      clearInterval(interval);
+      document.getElementById('buyFeedback').innerText = 'Payment Successful!';
+      document.getElementById('buyFeedback').style.color = '#00f0ff';
+    }
+  }, 25);
+}
+
+// Update Wallet Display
 function updateWallet() {
   document.getElementById('zacBalance').innerText = `ZAC: ${wallet.ZAC}`;
   document.getElementById('usdtBalance').innerText = `USDT: ${wallet.USDT}`;
   document.getElementById('ethBalance').innerText = `ETH: ${wallet.ETH}`;
 }
 
-// Fetch Live Rates (CoinGecko API)
+// Fetch Live Rates
 async function fetchRates() {
   try {
     const res = await fetch('https://api.coingecko.com/api/v3/simple/price?ids=ethereum,tether&vs_currencies=usd');
@@ -378,7 +407,7 @@ async function fetchRates() {
     document.getElementById('ethRate').innerText = `ETH: $${data.ethereum.usd}`;
     document.getElementById('usdtRate').innerText = `USDT: $${data.tether.usd}`;
   } catch(err) {
-    console.error('Error fetching rates:', err);
+    console.error(err);
     document.getElementById('ethRate').innerText = 'ETH: Error';
     document.getElementById('usdtRate').innerText = 'USDT: Error';
   }
