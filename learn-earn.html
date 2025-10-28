@@ -3,9 +3,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Learn & Earn — ZepStudent</title>
+<title>Learn & Earn — Zep Students</title>
 
-<!-- Tailwind + Fonts + Icons -->
+<!-- Tailwind CSS + Google Fonts + FontAwesome -->
 <script src="https://cdn.tailwindcss.com"></script>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Orbitron:wght@600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -15,7 +15,6 @@
   --neon-blue: #00f0ff;
   --neon-pink: #ff00f0;
   --glass: rgba(255,255,255,0.05);
-  --glass-hover: rgba(255,255,255,0.1);
 }
 
 body {
@@ -24,27 +23,26 @@ body {
   background: radial-gradient(circle at top, #0b0520 0%, #120b2e 100%);
   color: #fff;
   min-height: 100vh;
-  padding-bottom: 100px;
+  padding-bottom: 80px;
 }
 
-/* Header */
+/* HEADER */
 .header {
   position: fixed;
   top: 0;
   width: 100%;
   padding: 1rem 1.5rem;
+  background: rgba(15,5,32,0.85);
+  backdrop-filter: blur(12px);
   display: flex;
   justify-content: space-between;
   align-items: center;
-  backdrop-filter: blur(15px);
-  background: rgba(15,5,32,0.85);
-  box-shadow: 0 0 25px rgba(0,240,255,0.3);
   z-index: 50;
-  border-radius: 0 0 1.5rem 1.5rem;
+  box-shadow: 0 0 20px rgba(0,255,255,0.2);
 }
 .header h1 {
   font-family: 'Orbitron', sans-serif;
-  font-size: 1.4rem;
+  font-size: 1.5rem;
   background: linear-gradient(90deg, var(--neon-blue), var(--neon-pink));
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -55,70 +53,56 @@ body {
   cursor: pointer;
   transition: 0.3s;
 }
-.header i:hover {
-  color: var(--neon-pink);
-  transform: scale(1.2);
-}
+.header i:hover { color: var(--neon-pink); transform: scale(1.2); }
 
-/* Quiz Container */
+/* QUIZ CONTAINER */
 .quiz-container {
   margin-top: 6rem;
   padding: 1rem;
   display: flex;
   flex-direction: column;
-  gap: 1.5rem;
+  gap: 1rem;
 }
 
-/* Quiz Card */
+/* QUIZ CARD */
 .quiz-card {
   background: var(--glass);
   backdrop-filter: blur(20px);
   border-radius: 1rem;
-  padding: 1.5rem;
+  padding: 1rem;
   box-shadow: 0 0 20px rgba(0,240,255,0.3);
-  transition: transform 0.3s;
 }
-.quiz-card:hover { transform: scale(1.02); }
-
 .quiz-card h3 {
   font-family: 'Orbitron', sans-serif;
-  font-size: 1.1rem;
   color: var(--neon-blue);
-  margin-bottom: 1rem;
+  margin-bottom: 0.5rem;
 }
-
-.options {
-  display: flex;
-  flex-direction: column;
-  gap: 0.6rem;
-}
-.option-btn {
-  padding: 0.8rem;
-  border-radius: 0.7rem;
+.quiz-card .option {
   background: rgba(255,255,255,0.08);
-  border: none;
-  color: #fff;
+  padding: 0.6rem;
+  border-radius: 0.5rem;
+  margin: 0.3rem 0;
   cursor: pointer;
-  text-align: left;
   transition: 0.3s;
 }
-.option-btn:hover { background: var(--glass-hover); }
-.option-btn.correct { background: #00f0ff; }
-.option-btn.wrong { background: #ff00f0; }
+.quiz-card .option:hover {
+  background: rgba(255,0,255,0.2);
+  transform: scale(1.02);
+}
 
-/* Footer */
+/* FOOTER */
 .footer {
   position: fixed;
   bottom: 0;
   left: 0;
   width: 100%;
+  background: rgba(15,5,32,0.85);
+  backdrop-filter: blur(12px);
   display: flex;
   justify-content: space-around;
   padding: 0.8rem 0;
-  background: rgba(15,5,32,0.85);
-  backdrop-filter: blur(12px);
   box-shadow: 0 -2px 20px rgba(0,255,255,0.2);
-  z-index: 50;
+  z-index: 100;
 }
 .footer a {
   display: flex;
@@ -132,66 +116,69 @@ body {
 .footer a i { font-size: 1.4rem; }
 .footer a:hover, .footer a.active { color: var(--neon-pink); transform: scale(1.2); }
 
-/* Submit Button */
-.submit-btn {
-  margin-top: 0.8rem;
+/* REWARD MODAL */
+.modal {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: rgba(0,0,0,0.9);
+  backdrop-filter: blur(8px);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 200;
+}
+.modal-content {
+  background: var(--glass);
+  padding: 1.5rem;
+  border-radius: 1rem;
+  text-align: center;
+  box-shadow: 0 0 20px var(--neon-blue);
+}
+.modal-content h3 {
+  font-family: 'Orbitron', sans-serif;
+  color: var(--neon-blue);
+  margin-bottom: 1rem;
+}
+.modal-content button {
+  padding: 0.6rem 1rem;
+  border-radius: 0.5rem;
+  border: none;
   background: linear-gradient(90deg,var(--neon-blue),var(--neon-pink));
   color: #fff;
-  border: none;
-  padding: 0.8rem;
-  border-radius: 0.6rem;
-  font-weight: 600;
   cursor: pointer;
-  transition: 0.3s;
+  font-weight: 600;
 }
-.submit-btn:hover {
-  transform: scale(1.05);
-  box-shadow: 0 0 15px var(--neon-blue);
+.close-btn {
+  position: absolute;
+  top: 1rem; right: 1rem;
+  font-size: 1.2rem;
+  cursor: pointer;
+  color: var(--neon-pink);
 }
 </style>
 </head>
 <body>
 
 <header class="header">
-  <h1>Learn & Earn</h1>
+  <h1>Learn & Earn — Level 3</h1>
   <i class="fas fa-bell"></i>
 </header>
 
-<main class="quiz-container px-4 pb-32">
-  <!-- Quiz Card Example -->
-  <div class="quiz-card" data-answer="B">
-    <h3>1. Which blockchain is known for smart contracts?</h3>
-    <div class="options">
-      <button class="option-btn" data-value="A">Bitcoin</button>
-      <button class="option-btn" data-value="B">Ethereum</button>
-      <button class="option-btn" data-value="C">Ripple</button>
-      <button class="option-btn" data-value="D">Litecoin</button>
-    </div>
-  </div>
-
-  <div class="quiz-card" data-answer="C">
-    <h3>2. What does ZAC stand for in our platform?</h3>
-    <div class="options">
-      <button class="option-btn" data-value="A">Zep Access Coin</button>
-      <button class="option-btn" data-value="B">Zero Asset Chain</button>
-      <button class="option-btn" data-value="C">Zep Automated Coin</button>
-      <button class="option-btn" data-value="D">Zep Advanced Crypto</button>
-    </div>
-  </div>
-
-  <div class="quiz-card" data-answer="A">
-    <h3>3. Which is a common crypto wallet type?</h3>
-    <div class="options">
-      <button class="option-btn" data-value="A">Hot Wallet</button>
-      <button class="option-btn" data-value="B">Cold Mine</button>
-      <button class="option-btn" data-value="C">Smart Wallet</button>
-      <button class="option-btn" data-value="D">Crypto Vault</button>
-    </div>
-  </div>
-
-  <button class="submit-btn" id="submitQuiz">Submit Answers</button>
+<main class="quiz-container" id="quizContainer">
+  <!-- Quiz questions will be dynamically generated -->
 </main>
 
+<!-- Reward Modal -->
+<div class="modal" id="rewardModal">
+  <div class="modal-content">
+    <span class="close-btn" onclick="closeModal()">&times;</span>
+    <h3>🎉 Reward Sent!</h3>
+    <p>50 ZAC has been sent to your wallet.</p>
+  </div>
+</div>
+
+<!-- Footer -->
 <footer class="footer">
   <a href="wallet-pos.html"><i class="fas fa-cash-register"></i><span>POS</span></a>
   <a href="dashboard-wallet.html"><i class="fas fa-wallet"></i><span>Wallet</span></a>
@@ -200,36 +187,22 @@ body {
 </footer>
 
 <script>
-// Quiz Logic
-const submitBtn = document.getElementById('submitQuiz');
-const quizCards = document.querySelectorAll('.quiz-card');
+// Quiz Data
+const quizData = [
+  {q:"What is a “wallet” in Web3?", a:"B", options:["A) A place to store your email","B) A digital tool to store cryptocurrencies and NFTs","C) A type of decentralized exchange","D) A smart contract"]},
+  {q:"Which of the following is a decentralized exchange (DEX)?", a:"B", options:["A) Coinbase","B) Uniswap","C) PayPal","D) Robinhood"]},
+  {q:"In crypto trading, what does “liquidity” mean?", a:"A", options:["A) The ease of converting an asset into cash without affecting its price","B) Total number of tokens in circulation","C) Speed at which a wallet can send tokens","D) Gas fee on a transaction"]},
+  {q:"What is the primary function of a token on a blockchain?", a:"A", options:["A) Represent ownership, access, or currency on a blockchain","B) Store user passwords","C) Secure email communications","D) Increase internet speed"]},
+  {q:"Main difference between centralized (CEX) and decentralized exchange (DEX)?", a:"A", options:["A) CEX requires ID verification, DEX does not","B) CEX is faster, DEX is slower","C) CEX is only for Bitcoin, DEX is only for Ethereum","D) CEX is a website, DEX is an app"]},
+  {q:"What is “slippage” in trading?", a:"B", options:["A) Fee paid for swapping tokens","B) Difference between expected and executed price","C) Type of wallet","D) Blockchain bug"]},
+  {q:"Which is a smart contract platform?", a:"A", options:["A) Ethereum","B) Bitcoin","C) Dogecoin","D) PayPal"]},
+  {q:"Purpose of a gas fee in Ethereum?", a:"A", options:["A) To pay for transaction processing","B) To buy NFTs","C) To increase token supply","D) To stake tokens"]},
+  {q:"What is “staking”?", a:"A", options:["A) Holding crypto to earn rewards","B) Sending crypto","C) Buying NFTs","D) Converting to fiat"]},
+  {q:"Why diversify crypto portfolio?", a:"A", options:["A) Reduce risk by spreading investments","B) Pay more fees","C) Faster transactions","D) Avoid using wallets"]}
+];
 
-submitBtn.addEventListener('click', () => {
-  quizCards.forEach(card => {
-    const answer = card.dataset.answer;
-    const options = card.querySelectorAll('.option-btn');
-    options.forEach(opt => {
-      if(opt.dataset.value === answer){
-        opt.classList.add('correct');
-      } else if(opt.classList.contains('selected')) {
-        opt.classList.add('wrong');
-      }
-      opt.disabled = true;
-    });
-  });
-});
+let userAnswers = {};
+let currentStudentCount = 0; // Track number of rewarded students
 
-// Option selection
-quizCards.forEach(card => {
-  const options = card.querySelectorAll('.option-btn');
-  options.forEach(opt => {
-    opt.addEventListener('click', () => {
-      options.forEach(o => o.classList.remove('selected'));
-      opt.classList.add('selected');
-    });
-  });
-});
-</script>
-
-</body>
-</html>
+// Render quiz
+const container
