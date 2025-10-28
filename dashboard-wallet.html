@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Zep Wallet — Home</title>
+<title>Zep Wallet — Dashboard</title>
 
 <!-- Tailwind CSS + Fonts + Icons -->
 <script src="https://cdn.tailwindcss.com"></script>
@@ -201,6 +201,7 @@ body {
   color: var(--neon-blue);
   font-size: 0.8rem;
   transition: 0.3s;
+  text-decoration: none;
 }
 .footer a i {
   font-size: 1.4rem;
@@ -285,7 +286,7 @@ body {
     <div class="sub-balance">
       <div>
         <h4>ZAC</h4>
-        <p id="zacBalance">1,250.00</p>
+        <p id="zacBalance">1250.00</p>
       </div>
       <div>
         <h4>USDT</h4>
@@ -309,4 +310,37 @@ body {
       <i class="fas fa-arrows-rotate"></i><span>Swap</span>
     </div>
     <div class="action-btn" onclick="openModal('topupModal')">
-      <i
+      <i class="fas fa-plus-circle"></i><span>Top Up</span>
+    </div>
+    <div class="action-btn" onclick="openModal('withdrawModal')">
+      <i class="fas fa-wallet"></i><span>Withdraw</span>
+    </div>
+  </div>
+
+  <!-- Transaction History -->
+  <div class="history">
+    <h3>Recent Transactions</h3>
+    <div class="tx-item">
+      <div class="left">
+        <i class="fas fa-arrow-up"></i>
+        <div>
+          <div class="name">Sent to Alex</div>
+          <div class="date">Oct 25, 2025</div>
+        </div>
+      </div>
+      <div class="amount negative">- $120.00</div>
+    </div>
+
+    <div class="tx-item">
+      <div class="left">
+        <i class="fas fa-arrow-down"></i>
+        <div>
+          <div class="name">Received from Mia</div>
+          <div class="date">Oct 23, 2025</div>
+        </div>
+      </div>
+      <div class="amount positive">+ $250.00</div>
+    </div>
+
+    <div class="tx-item">
+      <div class="left">
