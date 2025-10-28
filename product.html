@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cyberpunk Product Page - Earn ZAC</title>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
+<style>
+    /* Global Styles */
+    body {
+        margin: 0;
+        font-family: 'Orbitron', sans-serif;
+        background: #0b0b0b;
+        color: #fff;
+        overflow-x: hidden;
+    }
+
+    a {
+        text-decoration: none;
+        color: inherit;
+    }
+
+    /* Neon Header */
+    header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 20px;
+        background: linear-gradient(90deg, #ff00ff, #00ffff);
+        color: #fff;
+        box-shadow: 0 0 20px #ff00ff, 0 0 40px #00ffff;
+    }
+
+    header h1 {
+        font-size: 2rem;
+        text-shadow: 0 0 10px #ff00ff, 0 0 20px #00ffff;
+    }
+
+    .neon-icons {
+        display: flex;
+        gap: 15px;
+    }
+
+    .neon-icon {
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        background: linear-gradient(45deg, #ff00ff, #00ffff);
+        box-shadow: 0 0 10px #ff00ff, 0 0 20px #00ffff;
+        animation: pulse 1.5s infinite alternate;
+    }
+
+    @keyframes pulse {
+        0% { transform: scale(1); box-shadow: 0 0 10px #ff00ff, 0 0 20px #00ffff; }
+        100% { transform: scale(1.2); box-shadow: 0 0 20px #ff00ff, 0 0 40px #00ffff; }
+    }
+
+    /* Product Grid */
+    .product-section {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 20px;
+        padding: 40px 20px;
+    }
+
+    .product-card {
+        background: #111;
+        border: 2px solid #ff00ff;
+        border-radius: 15px;
+        overflow: hidden;
+        position: relative;
+        box-shadow: 0 0 10px #ff00ff, 0 0 20px #00ffff;
+        transition: transform 0.3s, box-shadow 0.3s;
+    }
+
+    .product-card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 0 20px #ff00ff, 0 0 40px #00ffff;
+    }
+
+    .product-card img {
+        width: 100%;
+        display: block;
+        border-bottom: 2px solid #00ffff;
+    }
+
+    .product-card .info {
+        padding: 15px;
+    }
+
+    .product-card h2 {
+        font-size: 1.2rem;
+        margin: 0 0 10px;
+        background: linear-gradient(90deg, #ff00ff, #00ffff);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
+
+    .product-card p {
+        font-size: 0.9rem;
+        color: #aaa;
+    }
+
+    .btn {
+        display: inline-block;
+        margin-top: 10px;
+        padding: 10px 20px;
+        color: #fff;
+        font-weight: bold;
+        text-transform: uppercase;
+        border: 2px solid #00ffff;
+        border-radius: 10px;
+        background: linear-gradient(45deg, #ff00ff, #00ffff);
+        box-shadow: 0 0 10px #ff00ff, 0 0 20px #00ffff;
+        transition: 0.3s;
+        cursor: pointer;
+    }
+
+    .btn:hover {
+        box-shadow: 0 0 20px #ff00ff, 0 0 40px #00ffff, 0 0 60px #ff00ff;
+        transform: scale(1.1);
+    }
+
+    /* Neon Foot Icons */
+    footer {
+        display: flex;
+        justify-content: center;
+        gap: 20px;
+        padding: 30px;
+        background: #111;
+        box-shadow: 0 -5px 15px #00ffff, 0 -10px 30px #ff00ff inset;
+    }
+
+    .foot-icon {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        background: linear-gradient(45deg, #00ffff, #ff00ff);
+        box-shadow: 0 0 10px #00ffff, 0 0 20px #ff00ff;
+        animation: bounce 2s infinite alternate;
+    }
+
+    @keyframes bounce {
+        0% { transform: translateY(0); }
+        100% { transform: translateY(-10px); }
+    }
+
+    /* Responsive */
+    @media(max-width: 600px){
+        header h1 { font-size: 1.5rem; }
+        .btn { padding: 8px 16px; }
+    }
+</style>
+</head>
+<body>
+
+<header>
+    <h1>Earn ZAC</h1>
+    <div class="neon-icons">
+        <div class="neon-icon"></div>
+        <div class="neon-icon"></div>
+        <div class="neon-icon"></div>
+    </div>
+</header>
+
+<section class="product-section">
+    <div class="product-card">
+        <img src="https://via.placeholder.com/300x200" alt="Product 1">
+        <div class="info">
+            <h2>Cyber Sneaker</h2>
+            <p>Lightweight, neon-infused sneakers for the modern urban runner.</p>
+            <a class="btn" href="#">Buy Now</a>
+        </div>
+    </div>
+
+    <div class="product-card">
+        <img src="https://via.placeholder.com/300x200" alt="Product 2">
+        <div class="info">
+            <h2>Holo Jacket</h2>
+            <p>Shimmering jacket with reactive neon patterns and smart fabric tech.</p>
+            <a class="btn" href="#">Buy Now</a>
+        </div>
+    </div>
+
+    <div class="product-card">
+        <img src="https://via.placeholder.com/300x200" alt="Product 3">
+        <div class="info">
+            <h2>Neon Headset</h2>
+            <p>Immersive sound experience with glowing accents for night city vibes.</p>
+            <a class="btn" href="#">Buy Now</a>
+        </div>
+    </div>
+
+    <div class="product-card">
+        <img src="https://via.placeholder.com/300x200" alt="Product 4">
+        <div class="info">
+            <h2>Cyber Gloves</h2>
+            <p>Touchscreen gloves with neon highlights, perfect for the tech-savvy.</p>
+            <a class="btn" href="#">Buy Now</a>
+        </div>
+    </div>
+</section>
+
+<footer>
+    <div class="foot-icon"></div>
+    <div class="foot-icon"></div>
+    <div class="foot-icon"></div>
+    <div class="foot-icon"></div>
+</footer>
+
+</body>
+</html>
