@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Zep Chat — Futuristic Interface</title>
+
+<!-- Tailwind CSS + Fonts + Icons -->
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+<style>
+:root {
+  --neon-cyan: #00fff5;
+  --neon-magenta: #ff00c8;
+  --glass-bg: rgba(255, 255, 255, 0.05);
+}
+
+body {
+  font-family: 'Poppins', sans-serif;
+  background: radial-gradient(circle at top, #090518 0%, #120a2a 100%);
+  color: white;
+  overflow: hidden;
+  height: 100vh;
+  display: flex;
+}
+
+/* CONTACTS PANEL */
+.contacts-panel {
+  width: 25%;
+  min-width: 240px;
+  background: var(--glass-bg);
+  backdrop-filter: blur(20px);
+  border-right: 1px solid rgba(255, 255, 255, 0.1);
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 0 25px rgba(0,255,255,0.1);
+}
+
+.contacts-header {
+  padding: 1rem;
+  font-family: 'Orbitron', sans-serif;
+  font-size: 1.2rem;
+  background: linear-gradient(90deg, var(--neon-cyan), var(--neon-magenta));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+}
+
+.contact-list {
+  overflow-y: auto;
+  flex: 1;
+  padding: 1rem 0.5rem;
+}
+.contact-item {
+  display: flex;
+  align-items: center;
+  padding: 0.6rem;
+  margin-bottom: 0.3rem;
+  border-radius: 0.8rem;
+  cursor: pointer;
+  transition: 0.3s;
+}
+.contact-item:hover {
+  background: rgba(255,255,255,0.1);
+  box-shadow: 0 0 10px var(--neon-cyan);
+}
+.contact-item.active {
+  background: rgba(0,255,255,0.15);
+  box-shadow: inset 0 0 10px var(--neon-magenta);
+}
+.contact-item img {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  margin-right: 0.8rem;
+  box-shadow: 0 0 10px rgba(0,255,255,0.4);
+}
+.contact-item span {
+  font-weight: 600;
+}
+
+/* CHAT WINDOW */
+.chat-window {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+.chat-header {
+  padding: 1rem 1.5rem;
+  background: var(--glass-bg);
+  backdrop-filter: blur(15px);
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.chat-header h2 {
+  font-family: 'Orbitron', sans-serif;
+  background: linear-gradient(90deg,var(--neon-cyan),var(--neon-magenta));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.chat-header i {
+  color: var(--neon-cyan);
+  cursor: pointer;
+  transition: 0.3s;
+}
+.chat-header i:hover {
+  color: var(--neon-magenta);
+  transform: scale(1.1);
+}
+
+/* MESSAGES AREA */
+.messages {
+  flex: 1;
+  overflow-y: auto;
+  padding: 1.2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.7rem;
+  scroll-behavior: smooth;
+}
+.message {
+  max-width: 70%;
+  padding: 0.8rem 1rem;
+  border-radius: 1rem;
+  backdrop-filter: blur(10px);
+  animation: fadeIn 0.4s ease;
+  box-shadow: 0 0 10px rgba(255,255,255,0.05);
+}
+.message.user {
+  align-self: flex-end;
+  background: linear-gradient(90deg,var(--neon-cyan),rgba(0,255,255,0.3));
+  color: #000;
+}
+.message.bot {
+  align-self: flex-start;
+  background: linear-gradient(90deg,rgba(255,0,255,0.3),var(--neon-magenta));
+  color: #fff;
+}
+
+/* INPUT BAR */
+.input-bar {
+  position: relative;
+  padding: 1rem;
+  display: flex;
+  align-items: center;
+  backdrop-filter: blur(20px);
+  background: var(--glass-bg);
+  border-top: 1px solid rgba(255,255,255,0.1);
+}
+.input-bar input {
+  flex: 1;
+  padding: 0.7rem 1rem;
+  border-radius: 2rem;
+  background: rgba(255,255,255,0.1);
+  border: none;
+  outline: none;
+  color: #fff;
+  font-size: 0.9rem;
+  transition: 0.3s;
+}
+.input-bar input:focus {
+  box-shadow: 0 0 10px var(--neon-cyan);
+}
+.send-btn {
+  margin-left: 0.8rem;
+  background: linear-gradient(90deg,var(--neon-cyan),var(--neon-magenta));
+  border: none;
+  border-radius: 50%;
+  width: 45px;
+  height: 45px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #fff;
+  font-size: 1.2rem;
+  cursor: pointer;
+  transition: 0.3s;
+  box-shadow: 0 0 15px rgba(0,255,255,0.4);
+}
+.send-btn:hover {
+  transform: scale(1.1);
+  box-shadow: 0 0 20px var(--neon-magenta);
+}
+
+/* ANIMATIONS */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* SCROLLBAR */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(var(--neon-cyan),var(--neon-magenta));
+  border-radius: 10px;
+}
+</style>
+</head>
+
+<body>
+
+<!-- CONTACTS PANEL -->
+<div class="contacts-panel">
+  <div class="contacts-header">Contacts</div>
+  <div class="contact-list">
+    <div class="contact-item active" onclick="switchChat('Alex')">
+      <img src="https://i.pravatar.cc/150?img=1" alt="Alex">
+      <span>Alex</span>
+    </div>
+    <div class="contact-item" onclick="switchChat('Mia')">
+      <img src="https://i.pravatar.cc/150?img=2" alt="Mia">
+      <span>Mia</span>
+    </div>
+    <div class="contact-item" onclick="switchChat('Zane')">
+      <img src="https://i.pravatar.cc/150?img=3" alt="Zane">
+      <span>Zane</span>
+    </div>
+    <div class="contact-item" onclick="switchChat('Luna')">
+      <img src="https://i.pravatar.cc/150?img=4" alt="Luna">
+      <span>Luna</span>
+    </div>
+  </div>
+</div>
+
+<!-- CHAT WINDOW -->
+<div class="chat-window">
+  <div class="chat-header">
+    <h2 id="chatName">Alex</h2>
+    <i class="fas fa-ellipsis-v"></i>
+  </div>
+
+  <div class="messages" id="chatMessages">
+    <div class="message bot">Hey there 👋 How’s your day going?</div>
+    <div class="message user">All good! Working on some new crypto features 💡</div>
+  </div>
+
+  <div class="input-bar">
+    <input type="text" id="chatInput" placeholder="Type your message...">
+    <button class="send-btn" onclick="sendMessage()"><i class="fas fa-paper-plane"></i></button>
+  </div>
+</div>
+
+<!-- SCRIPT -->
+<script>
+function switchChat(name) {
+  document.querySelectorAll('.contact-item').forEach(item => item.classList.remove('active'));
+  event.currentTarget.classList.add('active');
+  document.getElementById('chatName').innerText = name;
+  const chatMessages = document.getElementById('chatMessages');
+  chatMessages.innerHTML = `<div class="message bot">You’re now chatting with ${name}. Say hi 👋</div>`;
+}
+
+function sendMessage() {
+  const input = document.getElementById('chatInput');
+  const text = input.value.trim();
+  if (text === '') return;
+
+  const chatMessages = document.getElementById('chatMessages');
+  const userMsg = document.createElement('div');
+  userMsg.className = 'message user';
+  userMsg.textContent = text;
+  chatMessages.appendChild(userMsg);
+  input.value = '';
+
+  // Auto-scroll
+  chatMessages.scrollTop = chatMessages.scrollHeight;
+
+  // Simulate bot reply
+  setTimeout(() => {
+    const botMsg = document.createElement('div');
+    botMsg.className = 'message bot';
+    botMsg.textContent = "Got it 👍";
+    chatMessages.appendChild(botMsg);
+    chatMessages.scrollTop = chatMessages.scrollHeight;
+  }, 800);
+}
+</script>
+
+</body>
+</html>
