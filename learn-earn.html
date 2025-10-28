@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Learn & Earn — ZepStudent</title>
+
+<!-- Tailwind + Fonts + Icons -->
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Orbitron:wght@600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+<style>
+:root {
+  --neon-blue: #00f0ff;
+  --neon-pink: #ff00f0;
+  --glass: rgba(255,255,255,0.05);
+  --glass-hover: rgba(255,255,255,0.1);
+}
+
+body {
+  font-family: 'Poppins', sans-serif;
+  margin: 0;
+  background: radial-gradient(circle at top, #0b0520 0%, #120b2e 100%);
+  color: #fff;
+  min-height: 100vh;
+  padding-bottom: 100px;
+}
+
+/* Header */
+.header {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  padding: 1rem 1.5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  backdrop-filter: blur(15px);
+  background: rgba(15,5,32,0.85);
+  box-shadow: 0 0 25px rgba(0,240,255,0.3);
+  z-index: 50;
+  border-radius: 0 0 1.5rem 1.5rem;
+}
+.header h1 {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 1.4rem;
+  background: linear-gradient(90deg, var(--neon-blue), var(--neon-pink));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.header i {
+  color: var(--neon-blue);
+  font-size: 1.3rem;
+  cursor: pointer;
+  transition: 0.3s;
+}
+.header i:hover {
+  color: var(--neon-pink);
+  transform: scale(1.2);
+}
+
+/* Quiz Container */
+.quiz-container {
+  margin-top: 6rem;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+/* Quiz Card */
+.quiz-card {
+  background: var(--glass);
+  backdrop-filter: blur(20px);
+  border-radius: 1rem;
+  padding: 1.5rem;
+  box-shadow: 0 0 20px rgba(0,240,255,0.3);
+  transition: transform 0.3s;
+}
+.quiz-card:hover { transform: scale(1.02); }
+
+.quiz-card h3 {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 1.1rem;
+  color: var(--neon-blue);
+  margin-bottom: 1rem;
+}
+
+.options {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+.option-btn {
+  padding: 0.8rem;
+  border-radius: 0.7rem;
+  background: rgba(255,255,255,0.08);
+  border: none;
+  color: #fff;
+  cursor: pointer;
+  text-align: left;
+  transition: 0.3s;
+}
+.option-btn:hover { background: var(--glass-hover); }
+.option-btn.correct { background: #00f0ff; }
+.option-btn.wrong { background: #ff00f0; }
+
+/* Footer */
+.footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+  padding: 0.8rem 0;
+  background: rgba(15,5,32,0.85);
+  backdrop-filter: blur(12px);
+  box-shadow: 0 -2px 20px rgba(0,255,255,0.2);
+  z-index: 50;
+}
+.footer a {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: var(--neon-blue);
+  font-size: 0.8rem;
+  text-decoration: none;
+  transition: 0.3s;
+}
+.footer a i { font-size: 1.4rem; }
+.footer a:hover, .footer a.active { color: var(--neon-pink); transform: scale(1.2); }
+
+/* Submit Button */
+.submit-btn {
+  margin-top: 0.8rem;
+  background: linear-gradient(90deg,var(--neon-blue),var(--neon-pink));
+  color: #fff;
+  border: none;
+  padding: 0.8rem;
+  border-radius: 0.6rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.3s;
+}
+.submit-btn:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 15px var(--neon-blue);
+}
+</style>
+</head>
+<body>
+
+<header class="header">
+  <h1>Learn & Earn</h1>
+  <i class="fas fa-bell"></i>
+</header>
+
+<main class="quiz-container px-4 pb-32">
+  <!-- Quiz Card Example -->
+  <div class="quiz-card" data-answer="B">
+    <h3>1. Which blockchain is known for smart contracts?</h3>
+    <div class="options">
+      <button class="option-btn" data-value="A">Bitcoin</button>
+      <button class="option-btn" data-value="B">Ethereum</button>
+      <button class="option-btn" data-value="C">Ripple</button>
+      <button class="option-btn" data-value="D">Litecoin</button>
+    </div>
+  </div>
+
+  <div class="quiz-card" data-answer="C">
+    <h3>2. What does ZAC stand for in our platform?</h3>
+    <div class="options">
+      <button class="option-btn" data-value="A">Zep Access Coin</button>
+      <button class="option-btn" data-value="B">Zero Asset Chain</button>
+      <button class="option-btn" data-value="C">Zep Automated Coin</button>
+      <button class="option-btn" data-value="D">Zep Advanced Crypto</button>
+    </div>
+  </div>
+
+  <div class="quiz-card" data-answer="A">
+    <h3>3. Which is a common crypto wallet type?</h3>
+    <div class="options">
+      <button class="option-btn" data-value="A">Hot Wallet</button>
+      <button class="option-btn" data-value="B">Cold Mine</button>
+      <button class="option-btn" data-value="C">Smart Wallet</button>
+      <button class="option-btn" data-value="D">Crypto Vault</button>
+    </div>
+  </div>
+
+  <button class="submit-btn" id="submitQuiz">Submit Answers</button>
+</main>
+
+<footer class="footer">
+  <a href="wallet-pos.html"><i class="fas fa-cash-register"></i><span>POS</span></a>
+  <a href="dashboard-wallet.html"><i class="fas fa-wallet"></i><span>Wallet</span></a>
+  <a href="dashboard-store.html"><i class="fas fa-store"></i><span>Store</span></a>
+  <a href="profile.html"><i class="fas fa-user"></i><span>Profile</span></a>
+</footer>
+
+<script>
+// Quiz Logic
+const submitBtn = document.getElementById('submitQuiz');
+const quizCards = document.querySelectorAll('.quiz-card');
+
+submitBtn.addEventListener('click', () => {
+  quizCards.forEach(card => {
+    const answer = card.dataset.answer;
+    const options = card.querySelectorAll('.option-btn');
+    options.forEach(opt => {
+      if(opt.dataset.value === answer){
+        opt.classList.add('correct');
+      } else if(opt.classList.contains('selected')) {
+        opt.classList.add('wrong');
+      }
+      opt.disabled = true;
+    });
+  });
+});
+
+// Option selection
+quizCards.forEach(card => {
+  const options = card.querySelectorAll('.option-btn');
+  options.forEach(opt => {
+    opt.addEventListener('click', () => {
+      options.forEach(o => o.classList.remove('selected'));
+      opt.classList.add('selected');
+    });
+  });
+});
+</script>
+
+</body>
+</html>
