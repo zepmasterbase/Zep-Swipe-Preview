@@ -49,22 +49,13 @@ body {
   align-items: center;
   gap: 0.8rem;
 }
-.header-left i {
-  font-size: 1.3rem;
-  color: var(--neon-blue);
-  cursor: pointer;
-  transition: 0.3s;
-}
-.header-left i:hover {
-  color: var(--neon-pink);
-  transform: scale(1.2);
-}
 .header-left img {
   width: 40px;
   height: 40px;
   border-radius: 50%;
   border: 2px solid var(--neon-blue);
   object-fit: cover;
+  cursor: pointer;
 }
 .header-left .greeting {
   font-family: 'Orbitron', sans-serif;
@@ -82,10 +73,7 @@ body {
   cursor: pointer;
   transition: 0.3s;
 }
-.header-right i:hover {
-  color: var(--neon-pink);
-  transform: scale(1.2);
-}
+.header-right i:hover { color: var(--neon-pink); transform: scale(1.2); }
 
 /* Balance Card */
 .balance-card {
@@ -97,11 +85,7 @@ body {
   text-align: center;
   box-shadow: 0 0 25px rgba(0,240,255,0.3);
 }
-.balance-card h3 {
-  font-family: 'Orbitron', sans-serif;
-  font-weight: 600;
-  color: var(--neon-blue);
-}
+.balance-card h3 { font-family: 'Orbitron', sans-serif; font-weight: 600; color: var(--neon-blue); }
 .balance-card .total-balance {
   font-size: 2rem;
   font-weight: 700;
@@ -111,10 +95,7 @@ body {
   -webkit-text-fill-color: transparent;
   animation: pulse 2s infinite;
 }
-.balance-card .sub-balances {
-  display: flex;
-  justify-content: space-around;
-}
+.balance-card .sub-balances { display: flex; justify-content: space-around; }
 .sub-balances div {
   background: rgba(255,255,255,0.08);
   padding: 0.7rem 1rem;
@@ -125,6 +106,21 @@ body {
 }
 .sub-balances h4 { color: var(--neon-blue); font-size: 0.85rem; }
 .sub-balances p { font-weight: 600; font-size: 1rem; }
+
+/* Learn & Earn Button */
+.learn-earn-btn {
+  margin-top: 1rem;
+  text-align: center;
+}
+.learn-earn-btn a {
+  background: linear-gradient(90deg,var(--neon-blue),var(--neon-pink));
+  padding: 0.6rem 1.5rem;
+  border-radius: 9999px;
+  font-weight: 600;
+  display: inline-block;
+  transition: transform 0.3s;
+}
+.learn-earn-btn a:hover { transform: scale(1.05); }
 
 /* News Section */
 .news-section {
@@ -137,28 +133,21 @@ body {
   background: var(--glass);
   border-radius: 1rem;
   overflow: hidden;
-  box-shadow: 0 0 15px rgba(0,240,255,0.2);
-  transition: transform 0.3s;
+  box-shadow: 0 0 20px rgba(0,240,255,0.3);
+  transition: transform 0.3s, box-shadow 0.3s;
 }
-.news-card:hover { transform: scale(1.03); }
+.news-card:hover { transform: scale(1.03); box-shadow: 0 0 30px var(--neon-pink); }
 .news-card img {
   width: 100%;
   height: 100px;
   object-fit: cover;
-  filter: brightness(1.2); /* lighter image */
+  filter: brightness(1.2);
 }
 .news-card .news-content {
   padding: 0.5rem;
 }
-.news-card .news-content h4 {
-  font-size: 0.85rem;
-  font-weight: 600;
-}
-.news-card .news-content p {
-  font-size: 0.75rem;
-  opacity: 0.8;
-  margin: 0.2rem 0 0 0;
-}
+.news-card .news-content h4 { font-size: 0.85rem; font-weight: 600; }
+.news-card .news-content p { font-size: 0.75rem; opacity: 0.8; margin: 0.2rem 0 0 0; }
 
 /* Footer */
 .footer {
@@ -199,8 +188,8 @@ body {
 <!-- Header -->
 <header class="header">
   <div class="header-left">
-    <i class="fab fa-facebook-messenger"></i> <!-- Social mini icon -->
-    <img src="https://via.placeholder.com/40" alt="Profile Picture">
+    <img id="profilePic" src="https://via.placeholder.com/40" alt="Profile Picture" onclick="document.getElementById('fileInput').click()">
+    <input type="file" id="fileInput" style="display:none" accept="image/*" onchange="previewImage(event)">
     <span class="greeting">Hello Student</span>
   </div>
   <div class="header-right">
@@ -230,40 +219,13 @@ body {
   </div>
 
   <!-- Learn & Earn Button -->
-  <div class="mt-4 text-center">
-    <a href="learn-earn.html" class="bg-gradient-to-r from-blue-400 to-pink-500 px-6 py-2 rounded-full font-semibold hover:scale-105 inline-block transition transform text-white">Claim Reward Now</a>
+  <div class="learn-earn-btn">
+    <a href="learn-earn.html">Claim Reward Now</a>
   </div>
 
   <!-- News Section -->
-  <div class="news-section mt-6">
-    <div class="news-card">
-      <img src="https://via.placeholder.com/160x100/00f0ff/000000?text=Blockchain+News+1" alt="News 1">
-      <div class="news-content">
-        <h4>Onchain Analytics Tool</h4>
-        <p>Explore new blockchain dashboards for students</p>
-      </div>
-    </div>
-    <div class="news-card">
-      <img src="https://via.placeholder.com/160x100/ff00f0/000000?text=Blockchain+News+2" alt="News 2">
-      <div class="news-content">
-        <h4>DeFi Education</h4>
-        <p>Learn DeFi and earn ZAC rewards</p>
-      </div>
-    </div>
-    <div class="news-card">
-      <img src="https://via.placeholder.com/160x100/00f0ff/000000?text=Blockchain+News+3" alt="News 3">
-      <div class="news-content">
-        <h4>Crypto Tools</h4>
-        <p>On-chain tools for student projects</p>
-      </div>
-    </div>
-    <div class="news-card">
-      <img src="https://via.placeholder.com/160x100/ff00f0/000000?text=Blockchain+News+4" alt="News 4">
-      <div class="news-content">
-        <h4>Blockchain News</h4>
-        <p>Latest blockchain updates for students</p>
-      </div>
-    </div>
+  <div class="news-section" id="newsSection">
+    <!-- News will be dynamically inserted -->
   </div>
 </main>
 
@@ -277,7 +239,7 @@ body {
 </footer>
 
 <script>
-// Simulated dynamic balances (replace with your API/WebSocket)
+// Dynamic balances (simulate API)
 const zac = 1250.00;
 const usdt = 500.00;
 const eth = 0.75;
@@ -286,6 +248,37 @@ document.getElementById('zacBalance').innerText = zac.toLocaleString();
 document.getElementById('usdtBalance').innerText = usdt.toLocaleString();
 document.getElementById('ethBalance').innerText = eth.toLocaleString();
 document.getElementById('totalBalance').innerText = `$${(zac + usdt + eth).toLocaleString()}`;
+
+// Profile picture upload preview
+function previewImage(event){
+  const reader = new FileReader();
+  reader.onload = function(){
+    document.getElementById('profilePic').src = reader.result;
+  }
+  reader.readAsDataURL(event.target.files[0]);
+}
+
+// Sample news items (can be replaced with API)
+const newsItems = [
+  { title: "Onchain Analytics Tool", desc: "Explore new blockchain dashboards for students", img: "https://via.placeholder.com/160x100/00f0ff/000000?text=Blockchain+1" },
+  { title: "DeFi Education", desc: "Learn DeFi and earn ZAC rewards", img: "https://via.placeholder.com/160x100/ff00f0/000000?text=DeFi" },
+  { title: "Crypto Tools", desc: "On-chain tools for student projects", img: "https://via.placeholder.com/160x100/00f0ff/000000?text=Crypto" },
+  { title: "Blockchain News", desc: "Latest blockchain updates for students", img: "https://via.placeholder.com/160x100/ff00f0/000000?text=News" }
+];
+
+// Render news dynamically
+const newsSection = document.getElementById('newsSection');
+newsItems.forEach(n => {
+  const card = document.createElement('div');
+  card.className = 'news-card';
+  card.innerHTML = `
+    <img src="${n.img}" alt="${n.title}">
+    <div class="news-content">
+      <h4>${n.title}</h4>
+      <p>${n.desc}</p>
+    </div>`;
+  newsSection.appendChild(card);
+});
 </script>
 </body>
 </html>
