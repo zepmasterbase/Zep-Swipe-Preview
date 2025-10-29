@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Zep Swipe — Africa’s Student Super-App</title>
+<title>Zep Swipe — Student Super-App</title>
 
 <!-- Tailwind + Fonts + Icons -->
 <script src="https://cdn.tailwindcss.com"></script>
@@ -12,7 +12,6 @@
 
 <!-- Firebase SDKs -->
 <script type="module">
-  // Firebase configuration
   import { initializeApp } from "https://www.gstatic.com/firebasejs/10.6.1/firebase-app.js";
   import { getAuth, RecaptchaVerifier, signInWithPhoneNumber } from "https://www.gstatic.com/firebasejs/10.6.1/firebase-auth.js";
 
@@ -28,41 +27,61 @@
 
   const app = initializeApp(firebaseConfig);
   const auth = getAuth(app);
+  window.auth = auth; // expose globally
 
-  window.firebaseAuth = auth; // Expose globally for OTP functions
+  // Expose function for OTP
+  window.sendOTP = async function(phone, role) {
+    window.recaptchaVerifier = new RecaptchaVerifier('recaptcha-container', { 'size': 'invisible' }, auth);
+    try {
+      const confirmationResult = await signInWithPhoneNumber(auth, phone, window.recaptchaVerifier);
+      window.confirmationResult = confirmationResult;
+      alert('OTP sent! Please check your phone.');
+      localStorage.setItem('role', role);
+      document.getElementById('otp-section').classList.remove('hidden');
+    } catch (err) {
+      console.error(err);
+      alert('Error sending OTP: '+err.message);
+    }
+  }
+
+  window.verifyOTP = async function(code) {
+    try {
+      const result = await window.confirmationResult.confirm(code);
+      const role = localStorage.getItem('role');
+      alert('Login success! Redirecting...');
+      if(role === 'student') window.location.href = 'student-dashboard.html';
+      else window.location.href = 'vendor-dashboard.html';
+    } catch(err) {
+      alert('Incorrect OTP.');
+    }
+  }
 </script>
 
 <style>
-body { font-family:'Poppins',sans-serif; background:radial-gradient(circle at top,#120b2e 0%,#0b0520 100%); color:#fff; margin:0; min-height:100vh; display:flex; flex-direction:column; }
-
-/* Header */
+body { font-family:'Poppins',sans-serif; background:radial-gradient(circle at top,#120b2e 0%,#0b0520 100%); color:#fff; margin:0; min-height:100vh; display:flex; flex-direction:column;}
 .header { width:100%; padding:1rem 2rem; position:fixed; top:0; left:0; backdrop-filter:blur(12px); background:rgba(15,5,32,0.8); display:flex; justify-content:space-between; align-items:center; z-index:50; box-shadow:0 0 20px rgba(0,255,255,0.3);}
 .header h1 { font-family:'Orbitron',sans-serif; font-weight:700; font-size:1.8rem; background:linear-gradient(90deg,#ff00f0,#00f0ff,#00ff7a); -webkit-background-clip:text; -webkit-text-fill-color:transparent;}
 .header nav a { margin-left:1.5rem; color:#00f0ff; font-weight:500; transition:0.3s;}
 .header nav a:hover { color:#ff00f0; transform:scale(1.1); }
 
-/* Hero */
-.hero { margin-top:6.5rem; text-align:center; padding:2rem 1rem;}
-.hero img { width:200px; margin:1rem auto; border-radius:50%; animation: glow 2s infinite alternate;}
+.hero { margin-top:5rem; text-align:center; padding:2rem 1rem;}
+.hero img { width:180px; margin:1rem auto; border-radius:50%; animation: glow 2s infinite alternate;}
 @keyframes glow { 0% {box-shadow:0 0 10px #00f0ff,0 0 20px #ff00f0;} 50% {box-shadow:0 0 20px #00ff7a,0 0 40px #ff00f0;} 100% {box-shadow:0 0 10px #00f0ff,0 0 20px #ff00f0;}}
 .hero h2 { font-family:'Orbitron',sans-serif; font-size:2rem; background:linear-gradient(90deg,#00f0ff,#ff00f0,#00ff7a); -webkit-background-clip:text; -webkit-text-fill-color:transparent; margin-bottom:0.5rem;}
 .hero p { color:#c0bdf4; font-size:1rem; max-width:360px; margin:0.5rem auto 2rem; line-height:1.6;}
 
-/* Buttons */
 .btn { display:inline-block; padding:0.75rem 1.5rem; border-radius:1rem; font-weight:600; cursor:pointer; transition:all 0.3s ease; }
 .btn-gradient { background:linear-gradient(90deg,#ff00f0,#00f0ff,#00ff7a); color:#0b0520;}
 .btn-gradient:hover { transform:scale(1.05);}
 .btn-outline { border:2px solid #7c63ff; color:#c0bdf4;}
 .btn-outline:hover { background:rgba(124,99,255,0.15); transform:scale(1.03); }
 
-/* Modal */
 .modal-bg { position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(10,5,30,0.95); backdrop-filter:blur(15px); display:none; justify-content:center; align-items:center; z-index:100; animation:fadeIn 0.3s ease;}
 @keyframes fadeIn { from{opacity:0;} to{opacity:1;}}
 .modal { background:rgba(255,255,255,0.05); border-radius:1rem; padding:2rem; width:90%; max-width:400px; text-align:center; box-shadow:0 0 25px rgba(0,255,255,0.3);}
 .modal h3 { font-family:'Orbitron',sans-serif; margin-bottom:1rem; font-size:1.3rem; background:linear-gradient(90deg,#00f0ff,#ff00f0); -webkit-background-clip:text; -webkit-text-fill-color:transparent;}
 .input { width:100%; padding:0.75rem; background:rgba(255,255,255,0.1); border:none; border-radius:0.75rem; color:#fff; margin-bottom:1rem;}
 
-/* Footer */
 .footer { margin-top:auto; padding:1.5rem 1rem; text-align:center; background:rgba(15,5,32,0.8); backdrop-filter:blur(10px); color:#c0bdf4;}
 .footer a { margin:0 0.5rem; color:#00f0ff; transition:0.3s;}
 .footer a:hover { color:#ff00f0;}
@@ -70,7 +89,6 @@ body { font-family:'Poppins',sans-serif; background:radial-gradient(circle at to
 </head>
 <body>
 
-<!-- Header -->
 <header class="header">
   <h1>Zep Swipe</h1>
   <nav>
@@ -81,109 +99,47 @@ body { font-family:'Poppins',sans-serif; background:radial-gradient(circle at to
   </nav>
 </header>
 
-<!-- Hero -->
 <section class="hero">
   <img src="https://cdn-icons-png.flaticon.com/512/706/706830.png" alt="Neon Student">
   <h2>Earn. Learn. Get Rewarded.</h2>
-  <p>Choose your path — Student or Vendor — and start earning tokens today!</p>
-  <button class="btn btn-gradient" onclick="openModal('wallet')">
-    <i class="fas fa-wallet mr-2"></i> Connect Wallet
-  </button>
-  <button class="btn btn-outline" onclick="openModal('phone')">
-    <i class="fas fa-mobile-alt mr-2"></i> Continue with Phone
-  </button>
+  <p>Create your profile, earn tokens, and prepare for the upcoming marketplace.</p>
+  <button class="btn btn-gradient" onclick="openModal('wallet')"><i class="fas fa-wallet mr-2"></i> Connect Wallet</button>
+  <button class="btn btn-outline" onclick="openModal('phone')"><i class="fas fa-mobile-alt mr-2"></i> Continue with Phone</button>
 </section>
 
-<!-- How It Works -->
-<section class="section" id="how">
-  <h3>How It Works</h3>
-  <div class="flex flex-wrap justify-center gap-4">
-    <div class="card"><h4>Profile</h4><p>Create your student or vendor profile.</p></div>
-    <div class="card"><h4>Earn</h4><p>Complete activities and earn tokens.</p></div>
-    <div class="card"><h4>Redeem</h4><p>Use tokens in our upcoming marketplace.</p></div>
-  </div>
-</section>
-
-<!-- Wallet Preview -->
-<section class="section" id="wallet">
-  <h3>Rewards Wallet Preview</h3>
-  <img src="https://cdn-icons-png.flaticon.com/512/190/190411.png" alt="Wallet Preview" class="mx-auto w-32">
-</section>
-
-<!-- Marketplace -->
-<section class="section" id="market">
-  <h3>Marketplace Coming Soon</h3>
-  <p>Explore digital products, courses, and more!</p>
-</section>
-
-<!-- Footer -->
-<footer class="footer" id="contact">
-  <p>Contact us: <a href="mailto:support@zepswipe.com">support@zepswipe.com</a></p>
-  <p>
-    <a href="#"><i class="fab fa-facebook"></i></a>
-    <a href="#"><i class="fab fa-twitter"></i></a>
-    <a href="#"><i class="fab fa-instagram"></i></a>
-    <a href="#"><i class="fab fa-linkedin"></i></a>
-  </p>
-</footer>
-
-<!-- Modal -->
 <div id="loginModal" class="modal-bg">
   <div class="modal">
-    <h3 id="modalTitle">Login / Signup</h3>
-    <div id="modalFields">
-      <input type="text" id="phoneNumber" class="input" placeholder="Enter phone number (+234...)" />
+    <h3>Login / Signup</h3>
+    <div id="phone-section">
+      <input id="phoneInput" type="text" class="input" placeholder="+233XXXXXXXXX"/>
       <div id="recaptcha-container"></div>
+      <div class="flex justify-around mb-3">
+        <button class="btn-outline" onclick="selectedRole='student'">Student</button>
+        <button class="btn-outline" onclick="selectedRole='vendor'">Vendor</button>
+      </div>
+      <button class="btn btn-gradient" onclick="sendOTP(document.getElementById('phoneInput').value, selectedRole)">Send OTP</button>
     </div>
-    <div class="flex justify-around mt-4 mb-2">
-      <button class="btn-outline w-1/3 py-2 text-sm" id="studentBtn" onclick="switchRole('student')">🧑‍🎓 Student</button>
-      <button class="btn-outline w-1/3 py-2 text-sm" id="vendorBtn" onclick="switchRole('vendor')">🛍️ Vendor</button>
+    <div id="otp-section" class="hidden">
+      <input id="otpInput" type="text" class="input" placeholder="Enter OTP"/>
+      <button class="btn btn-gradient" onclick="verifyOTP(document.getElementById('otpInput').value)">Verify OTP</button>
     </div>
-    <button class="btn btn-gradient mt-3" onclick="sendOTP()">Send OTP</button>
     <button class="btn-outline mt-3" onclick="closeModal()">Close</button>
   </div>
 </div>
 
-<script type="module">
+<footer class="footer" id="contact">
+  <p>Contact: <a href="mailto:support@zepswipe.com">support@zepswipe.com</a></p>
+  <p class="mt-2">
+    <a href="https://www.instagram.com/zepswipe?igsh=bXF3anMxODhxZWFs" target="_blank"><i class="fab fa-instagram"></i></a>
+    <a href="https://x.com/ZepSwipe?t=r94a0_pgN7ew1xT5L4eOSA&s=09" target="_blank"><i class="fab fa-x-twitter"></i></a>
+    <a href="https://x.com/ZepSwipe?t=r94a0_pgN7ew1xT5L4eOSA&s=09" target="_blank"><i class="fab fa-facebook"></i></a>
+  </p>
+</footer>
+
+<script>
 let selectedRole = null;
-
-function openModal(type) {
-  document.getElementById('loginModal').style.display = 'flex';
-  document.getElementById('modalTitle').textContent = type === 'wallet' ? 'Connect Wallet' : 'Phone Login';
-}
-function closeModal() { document.getElementById('loginModal').style.display = 'none'; }
-function switchRole(role) { 
-  selectedRole = role;
-  document.getElementById('studentBtn').classList.toggle('btn-gradient', role === 'student');
-  document.getElementById('vendorBtn').classList.toggle('btn-gradient', role === 'vendor');
-}
-
-// Firebase Phone Auth
-import { firebaseAuth } from './firebase-config.js'; // Optional separate config
-
-function sendOTP() {
-  const phoneNumber = document.getElementById('phoneNumber').value;
-  if (!phoneNumber || !selectedRole) {
-    alert("Enter phone number and select role.");
-    return;
-  }
-  window.recaptchaVerifier = new RecaptchaVerifier('recaptcha-container', { size: 'invisible' }, firebaseAuth);
-  signInWithPhoneNumber(firebaseAuth, phoneNumber, window.recaptchaVerifier)
-    .then((confirmationResult) => {
-      window.confirmationResult = confirmationResult;
-      const otp = prompt("Enter the OTP sent to your phone:");
-      return confirmationResult.confirm(otp);
-    })
-    .then((result) => {
-      alert(`Logged in as ${selectedRole.toUpperCase()}`);
-      if (selectedRole === 'student') window.location.href = "student-dashboard.html";
-      else window.location.href = "vendor-dashboard.html";
-    })
-    .catch((error) => {
-      console.error(error);
-      alert("OTP verification failed. Try again.");
-    });
-}
+function openModal(type) { document.getElementById('loginModal').style.display='flex'; }
+function closeModal() { document.getElementById('loginModal').style.display='none'; }
 </script>
 
 </body>
