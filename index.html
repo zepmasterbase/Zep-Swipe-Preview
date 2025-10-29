@@ -3,86 +3,82 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Zep Swipe — Student Super-App</title>
+<title>Zep Swipe — Africa’s Student Super-App</title>
 
 <!-- Tailwind + Fonts + Icons -->
 <script src="https://cdn.tailwindcss.com"></script>
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700&family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
 
-<!-- Firebase SDKs -->
+<!-- Firebase SDK -->
 <script type="module">
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.6.1/firebase-app.js";
-  import { getAuth, RecaptchaVerifier, signInWithPhoneNumber } from "https://www.gstatic.com/firebasejs/10.6.1/firebase-auth.js";
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.6.1/firebase-app.js";
+import { getAuth, RecaptchaVerifier, signInWithPhoneNumber } from "https://www.gstatic.com/firebasejs/10.6.1/firebase-auth.js";
 
-  const firebaseConfig = {
-    apiKey: "AIzaSyCG3zNIlI44gANLTj85H_FPJUG6ZkqFJhs",
-    authDomain: "zep-swipe-8fc96.firebaseapp.com",
-    projectId: "zep-swipe-8fc96",
-    storageBucket: "zep-swipe-8fc96.firebasestorage.app",
-    messagingSenderId: "430114563998",
-    appId: "1:430114563998:web:c917a065789f733ccf588f",
-    measurementId: "G-N1YH00Q0WY"
-  };
+// Your Firebase Config
+const firebaseConfig = {
+  apiKey: "AIzaSyBxAQxTvuPCYVAG3eQu4MQfxHRWJB9Q3wI",
+  authDomain: "zep-swipe-6cb53.firebaseapp.com",
+  projectId: "zep-swipe-6cb53",
+  storageBucket: "zep-swipe-6cb53.firebasestorage.app",
+  messagingSenderId: "895701529881",
+  appId: "1:895701529881:web:81c6e3e420bfe6cb7dc188",
+  measurementId: "G-L48WTHMKKZ"
+};
 
-  const app = initializeApp(firebaseConfig);
-  const auth = getAuth(app);
-  window.auth = auth; // expose globally
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+window.auth = auth;
 
-  // Expose function for OTP
-  window.sendOTP = async function(phone, role) {
-    window.recaptchaVerifier = new RecaptchaVerifier('recaptcha-container', { 'size': 'invisible' }, auth);
-    try {
-      const confirmationResult = await signInWithPhoneNumber(auth, phone, window.recaptchaVerifier);
-      window.confirmationResult = confirmationResult;
-      alert('OTP sent! Please check your phone.');
-      localStorage.setItem('role', role);
-      document.getElementById('otp-section').classList.remove('hidden');
-    } catch (err) {
-      console.error(err);
-      alert('Error sending OTP: '+err.message);
-    }
-  }
+// Phone OTP login
+window.sendOTP = async (phone, role) => {
+  if(!phone || !role){ alert("Enter phone and select role"); return; }
+  window.recaptchaVerifier = new RecaptchaVerifier('recaptcha-container', {'size':'invisible'}, auth);
+  try{
+    const confirmationResult = await signInWithPhoneNumber(auth, phone, window.recaptchaVerifier);
+    window.confirmationResult = confirmationResult;
+    localStorage.setItem('role', role);
+    document.getElementById('otp-section').classList.remove('hidden');
+    alert("OTP Sent!");
+  } catch(err){ console.error(err); alert("Error sending OTP: "+err.message);}
+};
 
-  window.verifyOTP = async function(code) {
-    try {
-      const result = await window.confirmationResult.confirm(code);
-      const role = localStorage.getItem('role');
-      alert('Login success! Redirecting...');
-      if(role === 'student') window.location.href = 'student-dashboard.html';
-      else window.location.href = 'vendor-dashboard.html';
-    } catch(err) {
-      alert('Incorrect OTP.');
-    }
-  }
+window.verifyOTP = async (code) => {
+  try{
+    const result = await window.confirmationResult.confirm(code);
+    const role = localStorage.getItem('role');
+    alert('Login Successful!');
+    if(role==='student') window.location.href='student-dashboard.html';
+    else window.location.href='vendor-dashboard.html';
+  } catch(err){ alert("Incorrect OTP."); }
+};
 </script>
 
 <style>
 body { font-family:'Poppins',sans-serif; background:radial-gradient(circle at top,#120b2e 0%,#0b0520 100%); color:#fff; margin:0; min-height:100vh; display:flex; flex-direction:column;}
-.header { width:100%; padding:1rem 2rem; position:fixed; top:0; left:0; backdrop-filter:blur(12px); background:rgba(15,5,32,0.8); display:flex; justify-content:space-between; align-items:center; z-index:50; box-shadow:0 0 20px rgba(0,255,255,0.3);}
+.header { width:100%; padding:1rem 2rem; position:fixed; top:0; left:0; backdrop-filter:blur(12px); background:rgba(15,5,32,0.85); display:flex; justify-content:space-between; align-items:center; z-index:50; box-shadow:0 0 20px rgba(0,255,255,0.3);}
 .header h1 { font-family:'Orbitron',sans-serif; font-weight:700; font-size:1.8rem; background:linear-gradient(90deg,#ff00f0,#00f0ff,#00ff7a); -webkit-background-clip:text; -webkit-text-fill-color:transparent;}
 .header nav a { margin-left:1.5rem; color:#00f0ff; font-weight:500; transition:0.3s;}
 .header nav a:hover { color:#ff00f0; transform:scale(1.1); }
 
-.hero { margin-top:5rem; text-align:center; padding:2rem 1rem;}
+.hero { margin-top:6rem; text-align:center; padding:2rem 1rem;}
 .hero img { width:180px; margin:1rem auto; border-radius:50%; animation: glow 2s infinite alternate;}
-@keyframes glow { 0% {box-shadow:0 0 10px #00f0ff,0 0 20px #ff00f0;} 50% {box-shadow:0 0 20px #00ff7a,0 0 40px #ff00f0;} 100% {box-shadow:0 0 10px #00f0ff,0 0 20px #ff00f0;}}
+@keyframes glow {0%{box-shadow:0 0 10px #00f0ff,0 0 20px #ff00f0;}50%{box-shadow:0 0 20px #00ff7a,0 0 40px #ff00f0;}100%{box-shadow:0 0 10px #00f0ff,0 0 20px #ff00f0;}}
 .hero h2 { font-family:'Orbitron',sans-serif; font-size:2rem; background:linear-gradient(90deg,#00f0ff,#ff00f0,#00ff7a); -webkit-background-clip:text; -webkit-text-fill-color:transparent; margin-bottom:0.5rem;}
 .hero p { color:#c0bdf4; font-size:1rem; max-width:360px; margin:0.5rem auto 2rem; line-height:1.6;}
-
-.btn { display:inline-block; padding:0.75rem 1.5rem; border-radius:1rem; font-weight:600; cursor:pointer; transition:all 0.3s ease; }
+.btn { display:inline-block; padding:0.75rem 1.5rem; border-radius:1rem; font-weight:600; cursor:pointer; transition:all 0.3s ease; margin:0.5rem;}
 .btn-gradient { background:linear-gradient(90deg,#ff00f0,#00f0ff,#00ff7a); color:#0b0520;}
 .btn-gradient:hover { transform:scale(1.05);}
 .btn-outline { border:2px solid #7c63ff; color:#c0bdf4;}
 .btn-outline:hover { background:rgba(124,99,255,0.15); transform:scale(1.03); }
 
 .modal-bg { position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(10,5,30,0.95); backdrop-filter:blur(15px); display:none; justify-content:center; align-items:center; z-index:100; animation:fadeIn 0.3s ease;}
-@keyframes fadeIn { from{opacity:0;} to{opacity:1;}}
+@keyframes fadeIn {from{opacity:0;}to{opacity:1;}}
 .modal { background:rgba(255,255,255,0.05); border-radius:1rem; padding:2rem; width:90%; max-width:400px; text-align:center; box-shadow:0 0 25px rgba(0,255,255,0.3);}
 .modal h3 { font-family:'Orbitron',sans-serif; margin-bottom:1rem; font-size:1.3rem; background:linear-gradient(90deg,#00f0ff,#ff00f0); -webkit-background-clip:text; -webkit-text-fill-color:transparent;}
 .input { width:100%; padding:0.75rem; background:rgba(255,255,255,0.1); border:none; border-radius:0.75rem; color:#fff; margin-bottom:1rem;}
-
-.footer { margin-top:auto; padding:1.5rem 1rem; text-align:center; background:rgba(15,5,32,0.8); backdrop-filter:blur(10px); color:#c0bdf4;}
+.footer { margin-top:auto; padding:1.5rem 1rem; text-align:center; background:rgba(15,5,32,0.85); backdrop-filter:blur(10px); color:#c0bdf4;}
 .footer a { margin:0 0.5rem; color:#00f0ff; transition:0.3s;}
 .footer a:hover { color:#ff00f0;}
 </style>
@@ -109,7 +105,7 @@ body { font-family:'Poppins',sans-serif; background:radial-gradient(circle at to
 
 <div id="loginModal" class="modal-bg">
   <div class="modal">
-    <h3>Login / Signup</h3>
+    <h3 id="modalTitle">Login / Signup</h3>
     <div id="phone-section">
       <input id="phoneInput" type="text" class="input" placeholder="+233XXXXXXXXX"/>
       <div id="recaptcha-container"></div>
@@ -138,9 +134,11 @@ body { font-family:'Poppins',sans-serif; background:radial-gradient(circle at to
 
 <script>
 let selectedRole = null;
-function openModal(type) { document.getElementById('loginModal').style.display='flex'; }
-function closeModal() { document.getElementById('loginModal').style.display='none'; }
+function openModal(type){
+  document.getElementById('loginModal').style.display='flex';
+  document.getElementById('modalTitle').textContent = type==='wallet'?'Connect Wallet':'Continue with Phone';
+}
+function closeModal(){ document.getElementById('loginModal').style.display='none'; }
 </script>
-
 </body>
 </html>
