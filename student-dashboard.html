@@ -47,16 +47,20 @@ body {
   gap: 0.8rem;
 }
 .header-left img {
-  width: 40px;
-  height: 40px;
+  width: 42px;
+  height: 42px;
   border-radius: 50%;
   border: 2px solid var(--neon-blue);
   object-fit: cover;
   cursor: pointer;
+  transition: 0.3s;
+}
+.header-left img:hover {
+  box-shadow: 0 0 15px var(--neon-blue);
 }
 .header-left .greeting {
   font-family: 'Orbitron', sans-serif;
-  font-size: 1.1rem;
+  font-size: 1.15rem;
   font-weight: 600;
   background: linear-gradient(90deg, var(--neon-blue), var(--neon-pink));
   -webkit-background-clip: text;
@@ -70,18 +74,19 @@ body {
 }
 .header-right i:hover {
   color: var(--neon-pink);
-  transform: scale(1.2);
+  transform: scale(1.3);
 }
 
 /* Balance Card */
 .balance-card {
   margin-top: 6rem;
   background: var(--glass);
-  backdrop-filter: blur(20px);
-  border-radius: 1.2rem;
-  padding: 1.5rem;
+  backdrop-filter: blur(25px);
+  border-radius: 1.5rem;
+  padding: 1.8rem;
   text-align: center;
-  box-shadow: 0 0 25px rgba(0,240,255,0.3);
+  box-shadow: 0 0 35px rgba(0,240,255,0.5);
+  animation: glowPulse 2.5s infinite alternate;
 }
 .balance-card h3 {
   font-family: 'Orbitron', sans-serif;
@@ -89,7 +94,7 @@ body {
   color: var(--neon-blue);
 }
 .balance-card .total-balance {
-  font-size: 2rem;
+  font-size: 2.2rem;
   font-weight: 700;
   margin: 0.5rem 0 1rem 0;
   background: linear-gradient(90deg, var(--neon-blue), var(--neon-pink));
@@ -103,60 +108,68 @@ body {
 }
 .sub-balances div {
   background: rgba(255,255,255,0.08);
-  padding: 0.7rem 1rem;
-  border-radius: 0.8rem;
+  padding: 0.8rem 1rem;
+  border-radius: 1rem;
   flex: 1;
   margin: 0 0.3rem;
-  box-shadow: inset 0 0 8px rgba(0,240,255,0.2);
+  box-shadow: inset 0 0 12px rgba(0,240,255,0.25);
+  transition: 0.3s;
 }
+.sub-balances div:hover { box-shadow: 0 0 15px var(--neon-pink); }
 .sub-balances h4 { color: var(--neon-blue); font-size: 0.85rem; }
 .sub-balances p { font-weight: 600; font-size: 1rem; }
 
 /* Learn & Earn Button */
 .learn-earn-btn {
-  margin-top: 1rem;
+  margin-top: 1.5rem;
   text-align: center;
 }
 .learn-earn-btn a {
   background: linear-gradient(90deg,var(--neon-blue),var(--neon-pink));
-  padding: 0.6rem 1.5rem;
+  padding: 0.7rem 1.8rem;
   border-radius: 9999px;
   font-weight: 600;
   color: #fff;
   text-decoration: none;
   transition: 0.3s;
+  box-shadow: 0 0 15px var(--neon-blue);
 }
 .learn-earn-btn a:hover {
   transform: scale(1.05);
-  box-shadow: 0 0 15px var(--neon-blue);
+  box-shadow: 0 0 25px var(--neon-pink);
 }
 
 /* News Section */
 .news-section {
-  margin-top: 1.5rem;
+  margin-top: 1.8rem;
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-  gap: 1rem;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 0.9rem;
 }
 .news-card {
   background: var(--glass);
   border-radius: 1rem;
   overflow: hidden;
-  box-shadow: 0 0 15px rgba(0,240,255,0.2);
-  transition: transform 0.3s;
+  box-shadow: 0 0 20px rgba(0,240,255,0.3);
+  transition: transform 0.3s, box-shadow 0.3s;
+  animation: glowPulse 3s infinite alternate;
 }
-.news-card:hover { transform: scale(1.03); }
+.news-card:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 25px var(--neon-pink);
+}
 .news-card img {
   width: 100%;
-  height: 90px;
+  height: 80px;
   object-fit: cover;
-  filter: brightness(1.2);
+  filter: brightness(1.3);
+  background: #222;
 }
 .news-card .news-content {
   padding: 0.5rem;
 }
-.news-card .news-content h4 { font-size: 0.85rem; font-weight: 600; }
-.news-card .news-content p { font-size: 0.75rem; opacity: 0.8; margin: 0.2rem 0 0 0; }
+.news-card .news-content h4 { font-size: 0.8rem; font-weight: 600; }
+.news-card .news-content p { font-size: 0.7rem; opacity: 0.85; margin: 0.2rem 0 0 0; }
 
 /* Footer */
 .footer {
@@ -169,7 +182,7 @@ body {
   padding: 0.8rem 0;
   background: rgba(15,5,32,0.85);
   backdrop-filter: blur(12px);
-  box-shadow: 0 -2px 20px rgba(0,255,255,0.2);
+  box-shadow: 0 -2px 25px rgba(0,255,255,0.3);
   z-index: 50;
 }
 .footer a {
@@ -184,11 +197,16 @@ body {
 .footer a i { font-size: 1.4rem; }
 .footer a:hover, .footer a.active { color: var(--neon-pink); transform: scale(1.2); }
 
-/* Neon Pulse Animation */
+/* Animations */
 @keyframes pulse {
   0% { text-shadow: 0 0 10px #00f0ff; }
   50% { text-shadow: 0 0 20px #ff00f0; }
   100% { text-shadow: 0 0 10px #00f0ff; }
+}
+@keyframes glowPulse {
+  0% { box-shadow: 0 0 10px #00f0ff; }
+  50% { box-shadow: 0 0 20px #ff00f0; }
+  100% { box-shadow: 0 0 10px #00f0ff; }
 }
 </style>
 </head>
@@ -197,7 +215,7 @@ body {
 <!-- Header -->
 <header class="header">
   <div class="header-left">
-    <img src="https://via.placeholder.com/40" alt="Profile Picture" id="profilePic" onclick="uploadProfile()">
+    <img src="https://via.placeholder.com/42/00f0ff/000000?text=DP" alt="Profile Picture" id="profilePic" onclick="uploadProfile()">
     <span class="greeting">Hello Student</span>
     <input type="file" id="profileInput" style="display:none" accept="image/*" onchange="previewProfile(event)">
   </div>
@@ -207,7 +225,7 @@ body {
 </header>
 
 <main class="px-4 pb-32">
-  <!-- Total Balance Card -->
+  <!-- Balance Card -->
   <div class="balance-card">
     <h3>Total Balance</h3>
     <div class="total-balance" id="totalBalance">$0.00</div>
@@ -246,29 +264,27 @@ body {
 </footer>
 
 <script>
-// Dynamic wallet balances
+// Wallet balances
 let wallet = {ZAC:1250, USDT:500, ETH:0.75};
 document.getElementById('zacBalance').innerText = wallet.ZAC.toLocaleString();
 document.getElementById('usdtBalance').innerText = wallet.USDT.toLocaleString();
 document.getElementById('ethBalance').innerText = wallet.ETH.toLocaleString();
 document.getElementById('totalBalance').innerText = `$${(wallet.ZAC + wallet.USDT + wallet.ETH).toLocaleString()}`;
 
-// Profile Upload
+// Profile upload
 function uploadProfile() { document.getElementById('profileInput').click(); }
 function previewProfile(event) {
   const reader = new FileReader();
-  reader.onload = function(){
-    document.getElementById('profilePic').src = reader.result;
-  }
+  reader.onload = function(){ document.getElementById('profilePic').src = reader.result; }
   reader.readAsDataURL(event.target.files[0]);
 }
 
-// Lightweight News
+// Lightweight, glowing news
 const newsItems = [
-  { title: "Onchain Analytics", desc: "Explore blockchain dashboards", img: "https://via.placeholder.com/150x90/00f0ff/000000?text=1" },
-  { title: "DeFi Education", desc: "Learn DeFi & earn rewards", img: "https://via.placeholder.com/150x90/ff00f0/000000?text=2" },
-  { title: "Crypto Tools", desc: "Tools for student projects", img: "https://via.placeholder.com/150x90/00f0ff/000000?text=3" },
-  { title: "Blockchain News", desc: "Latest blockchain updates", img: "https://via.placeholder.com/150x90/ff00f0/000000?text=4" },
+  { title: "Onchain Analytics", desc: "Explore blockchain dashboards", img: "https://via.placeholder.com/140x80/00f0ff/000000?text=1" },
+  { title: "DeFi Education", desc: "Learn DeFi & earn rewards", img: "https://via.placeholder.com/140x80/ff00f0/000000?text=2" },
+  { title: "Crypto Tools", desc: "Tools for student projects", img: "https://via.placeholder.com/140x80/00f0ff/000000?text=3" },
+  { title: "Blockchain News", desc: "Latest blockchain updates", img: "https://via.placeholder.com/140x80/ff00f0/000000?text=4" },
 ];
 
 const newsSection = document.getElementById('newsSection');
