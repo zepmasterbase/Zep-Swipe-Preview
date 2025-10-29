@@ -198,35 +198,32 @@ body {
   background: rgba(15,5,32,0.85);
   backdrop-filter: blur(12px);
   box-shadow: 0 -2px 25px rgba(0,255,255,0.3);
-  z-index: 50;
+  z‑index: 50;
 }
 .footer a {
   display: flex;
-  flex-direction: column;
+  flex‑direction: column;
   align-items: center;
-  color: var(--neon-blue);
-  font-size: 0.8rem;
-  text-decoration: none;
+  color: var(--neon‑blue);
+  font‑size: 0.8rem;
+  text‑decoration: none;
   transition: 0.3s;
 }
 .footer a i {
-  font-size: 1.4rem;
+  font‑size: 1.4rem;
 }
-.footer a:hover, .footer a.active {
-  color: var(--neon-pink);
-  transform: scale(1.2);
-}
+.footer a:hover, .footer a.active { color: var(--neon‑pink); transform: scale(1.2); }
 
 /* Animations */
 @keyframes pulse {
-  0% { text-shadow: 0 0 10px #00f0ff; }
-  50% { text-shadow: 0 0 20px #ff00f0; }
-  100% { text-shadow: 0 0 10px #00f0ff; }
+  0% { text‑shadow: 0 0 10px #00f0ff; }
+  50% { text‑shadow: 0 0 20px #ff00f0; }
+  100% { text‑shadow: 0 0 10px #00f0ff; }
 }
 @keyframes glowPulse {
-  0% { box-shadow: 0 0 10px #00f0ff; }
-  50% { box-shadow: 0 0 20px #ff00f0; }
-  100% { box-shadow: 0 0 10px #00f0ff; }
+  0% { box‑shadow: 0 0 10px #00f0ff; }
+  50% { box‑shadow: 0 0 20px #ff00f0; }
+  100% { box‑shadow: 0 0 10px #00f0ff; }
 }
 </style>
 </head>
@@ -266,35 +263,38 @@ body {
   </div>
 
   <!-- Learn & Earn Button -->
-  <div class="learn-earn-btn">
-    <a href="learn-earn.html">Claim Reward Now</a>
+  <div class="learn‑earn-btn">
+    <a href="learn‑earn.html">Claim Reward Now</a>
   </div>
 
   <!-- News Section -->
-  <div class="news-section" id="newsSection">
-    <!-- Real‑time images will load here dynamically -->
+  <div class="news‑section" id="newsSection">
+    <h4 style="color: var(--neon‑blue); font‑family:'Orbitron'; margin‑bottom:0.8rem;">Latest News</h4>
+    <!-- dynamically loaded news cards here -->
   </div>
 </main>
 
 <!-- Footer -->
 <footer class="footer">
-  <a href="dashboard-store.html"><i class="fas fa-store"></i><span>Store</span></a>
-  <a href="dashboard-wallet.html"><i class="fas fa-wallet"></i><span>Wallet</span></a>
-  <a href="learn-earn.html"><i class="fas fa-gift"></i><span>Reward</span></a>
+  <a href="dashboard‑store.html"><i class="fas fa-store"></i><span>Store</span></a>
+  <a href="dashboard‑wallet.html"><i class="fas fa-wallet"></i><span>Wallet</span></a>
+  <a href="learn‑earn.html"><i class="fas fa‑gift"></i><span>Reward</span></a>
   <a href="profile.html"><i class="fas fa-user"></i><span>Profile</span></a>
-  <a href="student-social.html"><i class="fas fa-users"></i><span>Social</span></a>
+  <a href="student‑social.html"><i class="fas fa‑users"></i><span>Social</span></a>
 </footer>
 
 <script>
 // Wallet balances (simulate real‑API later)
-let wallet = {ZAC:1250, USDT:500, ETH:0.75};
+let wallet = { ZAC: 1250, USDT: 500, ETH: 0.75 };
 document.getElementById('zacBalance').innerText = wallet.ZAC.toLocaleString();
 document.getElementById('usdtBalance').innerText = wallet.USDT.toLocaleString();
 document.getElementById('ethBalance').innerText = wallet.ETH.toLocaleString();
 document.getElementById('totalBalance').innerText = `$${(wallet.ZAC + wallet.USDT + wallet.ETH).toLocaleString()}`;
 
 // Profile upload
-function uploadProfile() { document.getElementById('profileInput').click(); }
+function uploadProfile() {
+  document.getElementById('profileInput').click();
+}
 function previewProfile(event) {
   const reader = new FileReader();
   reader.onload = function(){
@@ -303,28 +303,41 @@ function previewProfile(event) {
   reader.readAsDataURL(event.target.files[0]);
 }
 
-// Fetch real‑time news (sample via placeholder list)
-// In production you would fetch an API endpoint for latest crypto/blockchain news
-const newsItems = [
-  { title: "Swiss banks execute first binding blockchain payment", desc: "Three Swiss banks used a public blockchain to settle payments", img: "https://via.placeholder.com/140x80/00f0ff/000000?text=Swiss+Banks" },
-  { title: "AI‑fueled crypto scams surge 456%", desc: "AI and deepfakes are driving a new wave of crypto fraud", img: "https://via.placeholder.com/140x80/ff00f0/000000?text=Scams+456%" },
-  { title: "London Stock Exchange launches blockchain fundraising", desc: "LSEG used a blockchain powered system for capital raising", img: "https://via.placeholder.com/140x80/00f0ff/000000?text=LSEG+Blockchain" },
-  { title: "DeFi & on‑chain tools for student projects", desc: "Tools to help students build on blockchain", img: "https://via.placeholder.com/140x80/ff00f0/000000?text=DeFi+Tools" }
-];
+// Fetch live crypto news
+async function loadNews() {
+  try {
+    const apiKey = 'YOUR_API_KEY_HERE';
+    const url = `https://cryptonews-api.com/api/v1?tickers=BTC,ETH&items=4&token=${apiKey}`;
+    const resp = await fetch(url);
+    const result = await resp.json();
+    const articles = result.data; // as per docs 0
 
-// Render news cards
-const newsSection = document.getElementById('newsSection');
-newsItems.forEach(n => {
-  const card = document.createElement('div');
-  card.className = 'news-card';
-  card.innerHTML = `
-    <img src="${n.img}" alt="${n.title}">
-    <div class="news-content">
-      <h4>${n.title}</h4>
-      <p>${n.desc}</p>
-    </div>`;
-  newsSection.appendChild(card);
-});
+    const newsSection = document.getElementById('newsSection');
+    newsSection.innerHTML = ''; // clear old
+    articles.forEach(item => {
+      const img = item.image_url || 'https://via.placeholder.com/140x80/000000/ffffff?text=No+Image';
+      const title = item.title || 'No Title';
+      const desc = item.text || item.description || '';
+      const urlLink = item.news_url || item.url || '#';
+
+      const card = document.createElement('a');
+      card.className = 'news-card';
+      card.href = urlLink;
+      card.target = '_blank';
+      card.innerHTML = `
+        <img src="${img}" alt="${title}">
+        <div class="news-content">
+          <h4>${title}</h4>
+          <p>${desc.substring(0,60)}…</p>
+        </div>`;
+      newsSection.appendChild(card);
+    });
+  } catch(err) {
+    console.error('Error loading news:', err);
+  }
+}
+
+loadNews();
 </script>
 
 </body>
