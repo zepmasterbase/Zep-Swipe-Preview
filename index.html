@@ -3,144 +3,172 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Zep Swipe - Student Rewards</title>
+<title>Zep Swipe - Login</title>
 
 <!-- Tailwind CSS -->
 <script src="https://cdn.tailwindcss.com"></script>
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Orbitron:wght@600&display=swap" rel="stylesheet">
 
 <!-- Firebase -->
-<script type="module">
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.1.0/firebase-app.js";
-import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.1.0/firebase-auth.js";
-import { getFirestore, doc, setDoc, getDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.1.0/firebase-firestore.js";
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
 
-const firebaseConfig = {
-  apiKey: "YOUR_FIREBASE_API_KEY",
-  authDomain: "YOUR_FIREBASE_AUTH_DOMAIN",
-  projectId: "YOUR_FIREBASE_PROJECT_ID",
-  storageBucket: "YOUR_FIREBASE_STORAGE_BUCKET",
-  messagingSenderId: "YOUR_FIREBASE_MESSAGING_SENDER_ID",
-  appId: "YOUR_FIREBASE_APP_ID"
-};
-
-const app = initializeApp(firebaseConfig);
-const auth = getAuth(app);
-const db = getFirestore(app);
-
-// Create user profile & wallet if not exists
-async function createUserRecords(user, name, role, university, country) {
-  const userRef = doc(db, "users", user.uid);
-  const walletRef = doc(db, "wallets", user.uid);
-
-  const userSnap = await getDoc(userRef);
-  if (!userSnap.exists()) {
-    await setDoc(userRef, {
-      name,
-      email: user.email,
-      role,
-      university,
-      country,
-      createdAt: serverTimestamp()
-    });
-  }
-
-  const walletSnap = await getDoc(walletRef);
-  if (!walletSnap.exists()) {
-    await setDoc(walletRef, { balance: 0, createdAt: serverTimestamp() });
-  }
-}
-
-// Sign up function
-window.registerUser = async function() {
-  const name = document.getElementById('name').value;
-  const email = document.getElementById('email').value;
-  const password = document.getElementById('password').value;
-  const university = document.getElementById('university').value;
-  const country = document.getElementById('country').value;
-  const role = document.querySelector('input[name="role"]:checked')?.value;
-
-  if (!role) { alert("Please select a role."); return; }
-
-  try {
-    const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-    await createUserRecords(userCredential.user, name, role, university, country);
-    alert("Registration successful! Redirecting to dashboard...");
-    window.location.href = "dashboard.html";
-  } catch(e) { alert(e.message); }
-}
-
-// Login function
-window.loginUser = async function() {
-  const email = document.getElementById('loginEmail').value;
-  const password = document.getElementById('loginPassword').value;
-
-  try {
-    const userCredential = await signInWithEmailAndPassword(auth, email, password);
-    alert("Login successful! Redirecting to dashboard...");
-    window.location.href = "dashboard.html";
-  } catch(e) { alert(e.message); }
-}
-</script>
+<!-- Fonts & Icons -->
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Orbitron:wght@600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
 <style>
-body { font-family: 'Poppins', sans-serif; background: linear-gradient(135deg,#0b0520,#120b2e); color:#fff;}
-.glass-card { background: rgba(255,255,255,0.05); backdrop-filter: blur(15px); border-radius: 1.5rem; padding: 1.5rem; box-shadow:0 0 25px rgba(0,255,255,0.2); transition: transform 0.3s, box-shadow 0.3s;}
-.glass-card:hover { transform: scale(1.03); box-shadow: 0 0 35px rgba(255,0,255,0.3);}
-.gradient-btn { background: linear-gradient(to right,#ff00f0,#00ffb3,#00f0ff); color:white; font-weight:600; border-radius:9999px; padding:0.75rem 2rem; transition: transform 0.2s, box-shadow 0.2s;}
-.gradient-btn:hover { transform: scale(1.05); box-shadow:0 8px 20px rgba(255,0,255,0.3);}
-.neon-header { font-family:'Orbitron',sans-serif; font-weight:700; background: linear-gradient(135deg,#ff00f0,#00ffb3,#00f0ff); -webkit-background-clip: text; -webkit-text-fill-color: transparent; text-shadow:0 0 10px #ff00f0,0 0 20px #00ffb3,0 0 30px #00f0ff;}
+:root {
+  --neon-pink: #ff00f0;
+  --neon-blue: #00f0ff;
+  --neon-green: #3affc1;
+  --glass: rgba(255,255,255,0.05);
+}
+body { font-family:'Poppins', sans-serif; background: radial-gradient(circle at top,#0b0520 0%,#120b2e 100%); color:#fff; margin:0; }
+.neon-glass{backdrop-filter: blur(20px); background:var(--glass); border-radius:1rem; padding:1rem 2rem; display:flex; justify-content:space-between; align-items:center; box-shadow:0 0 25px var(--neon-blue); position:fixed; width:100%; top:0; z-index:50;}
+.neon-logo{font-family:'Orbitron',sans-serif;font-size:1.8rem;font-weight:700;background:linear-gradient(90deg,var(--neon-pink),var(--neon-green),var(--neon-blue));-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+.nav-buttons button{margin-left:1rem;padding:0.5rem 1rem;border-radius:9999px;background:linear-gradient(90deg,var(--neon-pink),var(--neon-blue));font-weight:600;transition: transform 0.3s;}
+.nav-buttons button:hover{transform:scale(1.05);}
+.hero{padding-top:120px;text-align:center;position:relative;overflow:hidden;}
+.hero img{max-width:300px;margin:0 auto;animation:float 6s ease-in-out infinite;}
+@keyframes float{0%,100%{transform:translateY(0px);}50%{transform:translateY(-20px);}}
+.section{margin:4rem auto;max-width:500px;padding:0 1rem;}
+.section h2{font-family:'Orbitron',sans-serif;font-size:2rem;margin-bottom:1rem;background:linear-gradient(90deg,var(--neon-pink),var(--neon-blue),var(--neon-green));-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+.card{background:var(--glass);backdrop-filter:blur(20px);padding:2rem;border-radius:1rem;text-align:center;box-shadow:0 0 25px rgba(0,255,255,0.2);transition: transform 0.3s;}
+.card:hover{transform:scale(1.03);}
+input, select{padding:0.5rem 1rem;border-radius:9999px;border:none;margin:0.5rem 0;width:100%;}
+button.cta{padding:0.7rem 2rem;border-radius:9999px;font-weight:600;background:linear-gradient(90deg,var(--neon-pink),var(--neon-blue));transition: transform 0.3s;margin-top:0.5rem;}
+button.cta:hover{transform:scale(1.05);}
+#otp-section{display:none;}
+.wallet-btn{padding:0.7rem 2rem;border-radius:9999px;font-weight:600;background:linear-gradient(90deg,var(--neon-green),var(--neon-blue));margin-top:0.5rem;transition: transform 0.3s;}
+.wallet-btn:hover{transform:scale(1.05);}
 </style>
 </head>
-<body class="flex flex-col min-h-screen">
+<body>
 
-<!-- NAVBAR -->
-<header class="flex justify-between items-center py-6 px-8">
-  <div class="neon-header text-4xl md:text-5xl">Zep Swipe</div>
-  <nav class="flex gap-6 items-center">
-    <button onclick="document.getElementById('authModal').classList.remove('hidden')" class="gradient-btn">Login / Sign Up</button>
-  </nav>
+<!-- Header -->
+<header class="neon-glass">
+  <div class="neon-logo">Zep Swipe</div>
+  <div class="nav-buttons">
+    <button onclick="document.getElementById('login-section').scrollIntoView({behavior:'smooth'})">Sign Up / Login</button>
+  </div>
 </header>
 
-<!-- HERO -->
-<section class="text-center py-16 px-6 relative">
-  <h1 class="text-5xl md:text-6xl mb-4">Earn. Learn. Get Rewarded.</h1>
-  <p class="text-lg md:text-xl text-gray-200 max-w-2xl mx-auto">Join early access, build profile, earn tokens, and prepare for our upcoming marketplace.</p>
-  <img src="https://images.unsplash.com/photo-1612831455542-f2f7be25893a?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=800" alt="Web3 Neon Student" class="mx-auto mt-6 rounded-xl shadow-lg">
-  <a href="#join" class="gradient-btn mt-6 inline-block">Join Beta</a>
+<!-- Hero -->
+<section class="hero">
+  <img src="https://i.ibb.co/vmjXKdC/neon-student.png" alt="Web3 Student Light Image">
+  <h1 class="text-4xl font-bold mt-4">Earn. Learn. Get Rewarded.</h1>
+  <p class="mt-2 text-lg">Build your profile, earn tokens, and prepare for our upcoming marketplace.</p>
 </section>
 
-<!-- JOIN BETA FORM -->
-<section id="join" class="max-w-2xl mx-auto py-12 px-6 glass-card mb-12">
-  <h2 class="text-2xl font-bold mb-6 text-center text-pink-400">Join the Beta</h2>
-  <form class="flex flex-col gap-4">
-    <input id="name" type="text" placeholder="Full Name" required class="p-3 rounded-xl bg-white bg-opacity-10 border border-gray-400 focus:outline-none focus:ring-2 focus:ring-pink-400">
-    <input id="email" type="email" placeholder="Email" required class="p-3 rounded-xl bg-white bg-opacity-10 border border-gray-400 focus:outline-none focus:ring-2 focus:ring-pink-400">
-    <input type="password" id="password" placeholder="Password" required class="p-3 rounded-xl bg-white bg-opacity-10 border border-gray-400 focus:outline-none focus:ring-2 focus:ring-pink-400">
-    <input id="university" type="text" placeholder="University Name" required class="p-3 rounded-xl bg-white bg-opacity-10 border border-gray-400 focus:outline-none focus:ring-2 focus:ring-pink-400">
-    <select id="country" required class="p-3 rounded-xl bg-white bg-opacity-10 border border-gray-400 focus:outline-none focus:ring-2 focus:ring-pink-400">
-      <option value="" disabled selected>Select Your Country</option>
-      <option>Ghana</option>
-      <option>South Africa</option>
-      <option>Kenya</option>
-      <option>Nigeria</option>
-      <option>Uganda</option>
-      <option>Rwanda</option>
-      <option>Tanzania</option>
-      <option>Egypt</option>
-      <option>Morocco</option>
-      <option>Senegal</option>
+<!-- Login / SignUp Section -->
+<section id="login-section" class="section">
+  <h2>Sign Up / Login</h2>
+  <div class="card mx-auto flex flex-col gap-2">
+    <input type="text" id="fullName" placeholder="Full Name">
+    <select id="role">
+      <option value="student">Student</option>
+      <option value="vendor">Vendor</option>
     </select>
+    <input type="tel" id="phone" placeholder="+233 24 123 4567">
+    <div id="recaptcha-container"></div>
+    <button class="cta" onclick="sendOTP()">Send OTP</button>
+    <button class="wallet-btn" onclick="walletLogin()">Connect Wallet</button>
+  </div>
 
-    <!-- ROLE SELECTION -->
-    <div class="flex gap-6 mt-2">
-      <label class="flex items-center gap-2"><input type="radio" name="role" value="Student"> Student</label>
-      <label class="flex items-center gap-2"><input type="radio" name="role" value="Vendor"> Vendor</label>
-    </div>
-
-    <button type="button" onclick="registerUser()" class="gradient-btn mt-2">Sign Up</button>
-  </form>
+  <div class="card mx-auto flex flex-col gap-2 mt-4" id="otp-section">
+    <input type="text" id="otp" placeholder="Enter OTP">
+    <button class="cta" onclick="verifyOTP()">Verify OTP</button>
+    <p id="otp-msg" class="text-sm mt-2 text-gray-300"></p>
+  </div>
 </section>
+
+<!-- Firebase & Web3 Script -->
+<script>
+const firebaseConfig = {
+  apiKey: "AIzaSyCG3zNIlI44gANLTj85H_FPJUG6ZkqFJhs",
+  authDomain: "zep-swipe-8fc96.firebaseapp.com",
+  projectId: "zep-swipe-8fc96",
+  storageBucket: "zep-swipe-8fc96.firebasestorage.app",
+  messagingSenderId: "430114563998",
+  appId: "1:430114563998:web:c917a065789f733ccf588f",
+  measurementId: "G-N1YH00Q0WY"
+};
+
+firebase.initializeApp(firebaseConfig);
+const auth = firebase.auth();
+const db = firebase.firestore();
+
+// Recaptcha setup
+window.recaptchaVerifier = new firebase.auth.RecaptchaVerifier('recaptcha-container', {
+  'size': 'normal',
+  'callback': () => console.log('Recaptcha verified'),
+});
+recaptchaVerifier.render();
+
+let confirmationResult;
+
+// OTP login
+async function sendOTP() {
+  const phone = document.getElementById('phone').value;
+  try {
+    confirmationResult = await auth.signInWithPhoneNumber(phone, window.recaptchaVerifier);
+    document.getElementById('otp-section').style.display = 'block';
+    alert('OTP sent! Check your phone.');
+  } catch(err) {
+    alert(err.message);
+  }
+}
+
+async function verifyOTP() {
+  const code = document.getElementById('otp').value;
+  const name = document.getElementById('fullName').value;
+  const role = document.getElementById('role').value;
+
+  try {
+    const result = await confirmationResult.confirm(code);
+    const user = result.user;
+    const uid = user.uid;
+
+    // Firestore setup
+    const userDoc = await db.collection('users').doc(uid).get();
+    if(!userDoc.exists){
+      await db.collection('users').doc(uid).set({name, phone:user.phoneNumber, role, walletAddress:null});
+      await db.collection('wallets').doc(uid).set({ ZAC:0, USDT:0 });
+    }
+
+    alert('Phone verified! Redirecting...');
+    if(role==='student') window.location.href='students-dashboard.html';
+    else window.location.href='vendor-dashboard.html';
+  } catch(err) {
+    document.getElementById('otp-msg').innerText = err.message;
+  }
+}
+
+// Wallet login
+async function walletLogin() {
+  if(typeof window.ethereum === 'undefined') { alert('Install MetaMask or Coinbase Wallet!'); return; }
+  try {
+    const accounts = await ethereum.request({ method: 'eth_requestAccounts' });
+    const account = accounts[0];
+    const role = document.getElementById('role').value;
+    const name = document.getElementById('fullName').value || 'Wallet User';
+    const uid = account; // Use wallet address as uid
+
+    // Firestore setup
+    const userDoc = await db.collection('users').doc(uid).get();
+    if(!userDoc.exists){
+      await db.collection('users').doc(uid).set({name, phone:null, role, walletAddress:account});
+      await db.collection('wallets').doc(uid).set({ ZAC:0, USDT:0 });
+    }
+
+    alert('Wallet connected! Redirecting...');
+    if(role==='student') window.location.href='students-dashboard.html';
+    else window.location.href='vendor-dashboard.html';
+
+  } catch(err) { alert(err.message); }
+}
+</script>
 
 </body>
 </html>
