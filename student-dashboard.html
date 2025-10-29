@@ -115,9 +115,17 @@ body {
   box-shadow: inset 0 0 12px rgba(0,240,255,0.25);
   transition: 0.3s;
 }
-.sub-balances div:hover { box-shadow: 0 0 15px var(--neon-pink); }
-.sub-balances h4 { color: var(--neon-blue); font-size: 0.85rem; }
-.sub-balances p { font-weight: 600; font-size: 1rem; }
+.sub-balances div:hover {
+  box-shadow: 0 0 15px var(--neon-pink);
+}
+.sub-balances h4 {
+  color: var(--neon-blue);
+  font-size: 0.85rem;
+}
+.sub-balances p {
+  font-weight: 600;
+  font-size: 1rem;
+}
 
 /* Learn & Earn Button */
 .learn-earn-btn {
@@ -125,7 +133,7 @@ body {
   text-align: center;
 }
 .learn-earn-btn a {
-  background: linear-gradient(90deg,var(--neon-blue),var(--neon-pink));
+  background: linear-gradient(90deg, var(--neon-blue), var(--neon-pink));
   padding: 0.7rem 1.8rem;
   border-radius: 9999px;
   font-weight: 600;
@@ -168,8 +176,15 @@ body {
 .news-card .news-content {
   padding: 0.5rem;
 }
-.news-card .news-content h4 { font-size: 0.8rem; font-weight: 600; }
-.news-card .news-content p { font-size: 0.7rem; opacity: 0.85; margin: 0.2rem 0 0 0; }
+.news-card .news-content h4 {
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+.news-card .news-content p {
+  font-size: 0.7rem;
+  opacity: 0.85;
+  margin: 0.2rem 0 0 0;
+}
 
 /* Footer */
 .footer {
@@ -194,8 +209,13 @@ body {
   text-decoration: none;
   transition: 0.3s;
 }
-.footer a i { font-size: 1.4rem; }
-.footer a:hover, .footer a.active { color: var(--neon-pink); transform: scale(1.2); }
+.footer a i {
+  font-size: 1.4rem;
+}
+.footer a:hover, .footer a.active {
+  color: var(--neon-pink);
+  transform: scale(1.2);
+}
 
 /* Animations */
 @keyframes pulse {
@@ -245,13 +265,15 @@ body {
     </div>
   </div>
 
-  <!-- Learn & Earn -->
+  <!-- Learn & Earn Button -->
   <div class="learn-earn-btn">
     <a href="learn-earn.html">Claim Reward Now</a>
   </div>
 
   <!-- News Section -->
-  <div class="news-section" id="newsSection"></div>
+  <div class="news-section" id="newsSection">
+    <!-- Real‑time images will load here dynamically -->
+  </div>
 </main>
 
 <!-- Footer -->
@@ -264,7 +286,7 @@ body {
 </footer>
 
 <script>
-// Wallet balances
+// Wallet balances (simulate real‑API later)
 let wallet = {ZAC:1250, USDT:500, ETH:0.75};
 document.getElementById('zacBalance').innerText = wallet.ZAC.toLocaleString();
 document.getElementById('usdtBalance').innerText = wallet.USDT.toLocaleString();
@@ -275,29 +297,35 @@ document.getElementById('totalBalance').innerText = `$${(wallet.ZAC + wallet.USD
 function uploadProfile() { document.getElementById('profileInput').click(); }
 function previewProfile(event) {
   const reader = new FileReader();
-  reader.onload = function(){ document.getElementById('profilePic').src = reader.result; }
+  reader.onload = function(){
+    document.getElementById('profilePic').src = reader.result;
+  }
   reader.readAsDataURL(event.target.files[0]);
 }
 
-// Lightweight, glowing news
+// Fetch real‑time news (sample via placeholder list)
+// In production you would fetch an API endpoint for latest crypto/blockchain news
 const newsItems = [
-  { title: "Onchain Analytics", desc: "Explore blockchain dashboards", img: "https://via.placeholder.com/140x80/00f0ff/000000?text=1" },
-  { title: "DeFi Education", desc: "Learn DeFi & earn rewards", img: "https://via.placeholder.com/140x80/ff00f0/000000?text=2" },
-  { title: "Crypto Tools", desc: "Tools for student projects", img: "https://via.placeholder.com/140x80/00f0ff/000000?text=3" },
-  { title: "Blockchain News", desc: "Latest blockchain updates", img: "https://via.placeholder.com/140x80/ff00f0/000000?text=4" },
+  { title: "Swiss banks execute first binding blockchain payment", desc: "Three Swiss banks used a public blockchain to settle payments", img: "https://via.placeholder.com/140x80/00f0ff/000000?text=Swiss+Banks" },
+  { title: "AI‑fueled crypto scams surge 456%", desc: "AI and deepfakes are driving a new wave of crypto fraud", img: "https://via.placeholder.com/140x80/ff00f0/000000?text=Scams+456%" },
+  { title: "London Stock Exchange launches blockchain fundraising", desc: "LSEG used a blockchain powered system for capital raising", img: "https://via.placeholder.com/140x80/00f0ff/000000?text=LSEG+Blockchain" },
+  { title: "DeFi & on‑chain tools for student projects", desc: "Tools to help students build on blockchain", img: "https://via.placeholder.com/140x80/ff00f0/000000?text=DeFi+Tools" }
 ];
 
+// Render news cards
 const newsSection = document.getElementById('newsSection');
 newsItems.forEach(n => {
   const card = document.createElement('div');
   card.className = 'news-card';
-  card.innerHTML = `<img src="${n.img}" alt="${n.title}">
-                    <div class="news-content">
-                      <h4>${n.title}</h4>
-                      <p>${n.desc}</p>
-                    </div>`;
+  card.innerHTML = `
+    <img src="${n.img}" alt="${n.title}">
+    <div class="news-content">
+      <h4>${n.title}</h4>
+      <p>${n.desc}</p>
+    </div>`;
   newsSection.appendChild(card);
 });
 </script>
+
 </body>
 </html>
