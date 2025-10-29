@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Zep Swipe - Login</title>
+<title>Zep Swipe - Student Rewards</title>
 
 <!-- Tailwind CSS -->
 <script src="https://cdn.tailwindcss.com"></script>
@@ -24,23 +24,133 @@
   --neon-green: #3affc1;
   --glass: rgba(255,255,255,0.05);
 }
-body { font-family:'Poppins', sans-serif; background: radial-gradient(circle at top,#0b0520 0%,#120b2e 100%); color:#fff; margin:0; }
-.neon-glass{backdrop-filter: blur(20px); background:var(--glass); border-radius:1rem; padding:1rem 2rem; display:flex; justify-content:space-between; align-items:center; box-shadow:0 0 25px var(--neon-blue); position:fixed; width:100%; top:0; z-index:50;}
-.neon-logo{font-family:'Orbitron',sans-serif;font-size:1.8rem;font-weight:700;background:linear-gradient(90deg,var(--neon-pink),var(--neon-green),var(--neon-blue));-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
-.nav-buttons button{margin-left:1rem;padding:0.5rem 1rem;border-radius:9999px;background:linear-gradient(90deg,var(--neon-pink),var(--neon-blue));font-weight:600;transition: transform 0.3s;}
+
+/* Body */
+body {
+  font-family:'Poppins',sans-serif;
+  background: radial-gradient(circle at top,#0b0520 0%,#120b2e 100%);
+  color:#fff;
+  margin:0;
+}
+
+/* Neon Glass Header */
+.neon-glass{
+  backdrop-filter: blur(20px);
+  background:var(--glass);
+  border-radius:1rem;
+  padding:1rem 2rem;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  box-shadow:0 0 25px var(--neon-blue);
+  position:fixed;
+  width:100%;
+  top:0;
+  z-index:50;
+}
+.neon-logo{
+  font-family:'Orbitron',sans-serif;
+  font-size:2rem;
+  font-weight:700;
+  background:linear-gradient(90deg,var(--neon-pink),var(--neon-green),var(--neon-blue));
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+}
+.nav-buttons button{
+  margin-left:1rem;
+  padding:0.5rem 1rem;
+  border-radius:9999px;
+  background:linear-gradient(90deg,var(--neon-pink),var(--neon-blue));
+  font-weight:600;
+  transition: transform 0.3s;
+}
 .nav-buttons button:hover{transform:scale(1.05);}
-.hero{padding-top:120px;text-align:center;position:relative;overflow:hidden;}
-.hero img{max-width:300px;margin:0 auto;animation:float 6s ease-in-out infinite;}
-@keyframes float{0%,100%{transform:translateY(0px);}50%{transform:translateY(-20px);}}
-.section{margin:4rem auto;max-width:500px;padding:0 1rem;}
-.section h2{font-family:'Orbitron',sans-serif;font-size:2rem;margin-bottom:1rem;background:linear-gradient(90deg,var(--neon-pink),var(--neon-blue),var(--neon-green));-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
-.card{background:var(--glass);backdrop-filter:blur(20px);padding:2rem;border-radius:1rem;text-align:center;box-shadow:0 0 25px rgba(0,255,255,0.2);transition: transform 0.3s;}
+
+/* Hero Section */
+.hero{
+  padding-top:140px;
+  text-align:center;
+  position:relative;
+}
+.hero img{
+  width:180px;
+  height:180px;
+  border-radius:50%;
+  background: radial-gradient(circle,#ff00f0,#00f0ff,#3affc1);
+  animation: spin 10s linear infinite, float 6s ease-in-out infinite;
+  margin:0 auto;
+  display:block;
+}
+@keyframes spin{
+  0%{transform:rotate(0deg);}
+  100%{transform:rotate(360deg);}
+}
+@keyframes float{
+  0%,100%{transform:translateY(0px);}
+  50%{transform:translateY(-20px);}
+}
+.hero h1{
+  font-size:3rem;
+  font-weight:700;
+  margin-top:1rem;
+}
+.hero p{
+  font-size:1.2rem;
+  margin-top:0.5rem;
+  opacity:0.85;
+}
+
+/* Sections */
+.section{
+  margin:4rem auto;
+  max-width:500px;
+  padding:0 1rem;
+}
+.section h2{
+  font-family:'Orbitron',sans-serif;
+  font-size:2rem;
+  margin-bottom:1rem;
+  background:linear-gradient(90deg,var(--neon-pink),var(--neon-blue),var(--neon-green));
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+}
+
+/* Cards */
+.card{
+  background:var(--glass);
+  backdrop-filter:blur(20px);
+  padding:2rem;
+  border-radius:1rem;
+  text-align:center;
+  box-shadow:0 0 25px rgba(0,255,255,0.2);
+  transition: transform 0.3s;
+}
 .card:hover{transform:scale(1.03);}
-input, select{padding:0.5rem 1rem;border-radius:9999px;border:none;margin:0.5rem 0;width:100%;}
-button.cta{padding:0.7rem 2rem;border-radius:9999px;font-weight:600;background:linear-gradient(90deg,var(--neon-pink),var(--neon-blue));transition: transform 0.3s;margin-top:0.5rem;}
+input, select{
+  padding:0.5rem 1rem;
+  border-radius:9999px;
+  border:none;
+  margin:0.5rem 0;
+  width:100%;
+}
+button.cta{
+  padding:0.7rem 2rem;
+  border-radius:9999px;
+  font-weight:600;
+  background:linear-gradient(90deg,var(--neon-pink),var(--neon-blue));
+  transition: transform 0.3s;
+  margin-top:0.5rem;
+}
 button.cta:hover{transform:scale(1.05);}
 #otp-section{display:none;}
-.wallet-btn{padding:0.7rem 2rem;border-radius:9999px;font-weight:600;background:linear-gradient(90deg,var(--neon-green),var(--neon-blue));margin-top:0.5rem;transition: transform 0.3s;}
+.wallet-btn{
+  padding:0.7rem 2rem;
+  border-radius:9999px;
+  font-weight:600;
+  background:linear-gradient(90deg,var(--neon-green),var(--neon-blue));
+  margin-top:0.5rem;
+  transition: transform 0.3s;
+}
 .wallet-btn:hover{transform:scale(1.05);}
 </style>
 </head>
@@ -56,9 +166,10 @@ button.cta:hover{transform:scale(1.05);}
 
 <!-- Hero -->
 <section class="hero">
-  <img src="https://i.ibb.co/vmjXKdC/neon-student.png" alt="Web3 Student Light Image">
-  <h1 class="text-4xl font-bold mt-4">Earn. Learn. Get Rewarded.</h1>
-  <p class="mt-2 text-lg">Build your profile, earn tokens, and prepare for our upcoming marketplace.</p>
+  <div class="hero-image"></div>
+  <img src="https://i.ibb.co/7V5Bqnk/web3-circle-neon.png" alt="Web3 Neon Student">
+  <h1>Earn. Learn. Get Rewarded.</h1>
+  <p>Join early access, build your profile, earn tokens, and prepare for our marketplace.</p>
 </section>
 
 <!-- Login / SignUp Section -->
@@ -86,7 +197,7 @@ button.cta:hover{transform:scale(1.05);}
 <!-- Firebase & Web3 Script -->
 <script>
 const firebaseConfig = {
-  apiKey: "AIzaSyCG3zNIlI44gANLTj85H_FPJUG6ZkqFJhs",
+  apiKey: "AIzaSyCG3zNIlI44gANLTj85H_FPJUG6ZkFJhs",
   authDomain: "zep-swipe-8fc96.firebaseapp.com",
   projectId: "zep-swipe-8fc96",
   storageBucket: "zep-swipe-8fc96.firebasestorage.app",
@@ -94,12 +205,10 @@ const firebaseConfig = {
   appId: "1:430114563998:web:c917a065789f733ccf588f",
   measurementId: "G-N1YH00Q0WY"
 };
-
 firebase.initializeApp(firebaseConfig);
 const auth = firebase.auth();
 const db = firebase.firestore();
 
-// Recaptcha setup
 window.recaptchaVerifier = new firebase.auth.RecaptchaVerifier('recaptcha-container', {
   'size': 'normal',
   'callback': () => console.log('Recaptcha verified'),
@@ -108,16 +217,13 @@ recaptchaVerifier.render();
 
 let confirmationResult;
 
-// OTP login
 async function sendOTP() {
   const phone = document.getElementById('phone').value;
   try {
     confirmationResult = await auth.signInWithPhoneNumber(phone, window.recaptchaVerifier);
     document.getElementById('otp-section').style.display = 'block';
     alert('OTP sent! Check your phone.');
-  } catch(err) {
-    alert(err.message);
-  }
+  } catch(err) { alert(err.message); }
 }
 
 async function verifyOTP() {
@@ -130,22 +236,17 @@ async function verifyOTP() {
     const user = result.user;
     const uid = user.uid;
 
-    // Firestore setup
     const userDoc = await db.collection('users').doc(uid).get();
     if(!userDoc.exists){
       await db.collection('users').doc(uid).set({name, phone:user.phoneNumber, role, walletAddress:null});
       await db.collection('wallets').doc(uid).set({ ZAC:0, USDT:0 });
     }
 
-    alert('Phone verified! Redirecting...');
     if(role==='student') window.location.href='students-dashboard.html';
     else window.location.href='vendor-dashboard.html';
-  } catch(err) {
-    document.getElementById('otp-msg').innerText = err.message;
-  }
+  } catch(err) { document.getElementById('otp-msg').innerText = err.message; }
 }
 
-// Wallet login
 async function walletLogin() {
   if(typeof window.ethereum === 'undefined') { alert('Install MetaMask or Coinbase Wallet!'); return; }
   try {
@@ -153,22 +254,19 @@ async function walletLogin() {
     const account = accounts[0];
     const role = document.getElementById('role').value;
     const name = document.getElementById('fullName').value || 'Wallet User';
-    const uid = account; // Use wallet address as uid
+    const uid = account;
 
-    // Firestore setup
     const userDoc = await db.collection('users').doc(uid).get();
     if(!userDoc.exists){
       await db.collection('users').doc(uid).set({name, phone:null, role, walletAddress:account});
       await db.collection('wallets').doc(uid).set({ ZAC:0, USDT:0 });
     }
 
-    alert('Wallet connected! Redirecting...');
     if(role==='student') window.location.href='students-dashboard.html';
     else window.location.href='vendor-dashboard.html';
 
-  } catch(err) { alert(err.message); }
+  } catch(err){ alert(err.message); }
 }
 </script>
-
 </body>
 </html>
