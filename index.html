@@ -1,120 +1,155 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Student Rewards MVP | Earn. Learn. Get Rewarded.</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Zep Swipe - Student Rewards</title>
 
-  <!-- Tailwind CSS -->
-  <script src="https://cdn.tailwindcss.com"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
 
-  <style>
-    body {
-      font-family: 'Poppins', sans-serif;
-      background: linear-gradient(135deg, #f0f9ff 0%, #e0e7ff 100%);
-      color: #1e1e2f;
-    }
-    .gradient-btn {
-      background: linear-gradient(to right, #6366f1, #06b6d4);
-      color: white;
-      transition: transform 0.2s ease, box-shadow 0.2s ease;
-    }
-    .gradient-btn:hover {
-      transform: scale(1.05);
-      box-shadow: 0 8px 20px rgba(99,102,241,0.3);
-    }
-    .icon-circle {
-      width: 64px;
-      height: 64px;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin: 0 auto 1rem;
-      background: linear-gradient(145deg, #e0e7ff, #c7d2fe);
-    }
-  </style>
+<style>
+  body {
+    font-family: 'Poppins', sans-serif;
+    background: linear-gradient(135deg, #0b0520, #120b2e);
+    color: #fff;
+  }
+  .glass-card {
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(15px);
+    border-radius: 1.5rem;
+    padding: 1.5rem;
+    box-shadow: 0 0 25px rgba(0,255,255,0.2);
+    transition: transform 0.3s, box-shadow 0.3s;
+  }
+  .glass-card:hover {
+    transform: scale(1.03);
+    box-shadow: 0 0 35px rgba(255,0,255,0.3);
+  }
+  .gradient-btn {
+    background: linear-gradient(to right, #ff00f0, #00ffb3, #00f0ff);
+    color: white;
+    font-weight: 600;
+    border-radius: 9999px;
+    padding: 0.75rem 2rem;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .gradient-btn:hover {
+    transform: scale(1.05);
+    box-shadow: 0 8px 20px rgba(255,0,255,0.3);
+  }
+  .neon-header {
+    background: linear-gradient(135deg, #ff00f0, #00ffb3, #00f0ff);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-family: 'Orbitron', sans-serif;
+    font-weight: 700;
+  }
+</style>
 </head>
 <body class="flex flex-col min-h-screen">
 
-  <!-- HERO SECTION -->
-  <section class="text-center py-20 px-6 bg-gradient-to-b from-indigo-50 to-white">
-    <h1 class="text-4xl md:text-6xl font-extrabold text-indigo-700 mb-4">Earn. Learn. Get Rewarded.</h1>
-    <p class="text-lg md:text-xl text-gray-600 max-w-2xl mx-auto mb-8">
-      Join our early access program — build your profile, earn tokens, and get ready for our upcoming marketplace.
-    </p>
-    <a href="login.html" class="gradient-btn px-6 py-3 rounded-full font-semibold text-lg">
-      Join the Beta
-    </a>
-  </section>
+<!-- NEON HEADER -->
+<header class="text-center py-12">
+  <h1 class="text-5xl md:text-6xl neon-header mb-4">Zep Swipe</h1>
+  <p class="text-lg md:text-xl text-gray-200 max-w-2xl mx-auto">
+    Earn. Learn. Get Rewarded.
+  </p>
+  <img src="https://via.placeholder.com/600x300/ff00f0/00ffb3?text=Students+Neon+Illustration" alt="Students Neon" class="mx-auto mt-6 rounded-xl shadow-lg">
+</header>
 
-  <!-- HOW IT WORKS -->
-  <section class="py-16 px-6 bg-white text-center">
-    <h2 class="text-3xl font-bold text-indigo-700 mb-10">How It Works</h2>
-    <div class="grid md:grid-cols-3 gap-10 max-w-5xl mx-auto">
-      <div class="p-6 bg-indigo-50 rounded-2xl shadow hover:shadow-lg transition">
-        <div class="icon-circle text-indigo-600 text-3xl">
-          <i class="fas fa-user"></i>
-        </div>
-        <h3 class="text-xl font-semibold mb-2">1. Build Your Profile</h3>
-        <p class="text-gray-600">Create your student profile to unlock your personalized learning and earning experience.</p>
-      </div>
-      <div class="p-6 bg-indigo-50 rounded-2xl shadow hover:shadow-lg transition">
-        <div class="icon-circle text-teal-600 text-3xl">
-          <i class="fas fa-coins"></i>
-        </div>
-        <h3 class="text-xl font-semibold mb-2">2. Earn Tokens</h3>
-        <p class="text-gray-600">Complete learning modules, engage with the community, and earn ZAC tokens.</p>
-      </div>
-      <div class="p-6 bg-indigo-50 rounded-2xl shadow hover:shadow-lg transition">
-        <div class="icon-circle text-pink-600 text-3xl">
-          <i class="fas fa-gift"></i>
-        </div>
-        <h3 class="text-xl font-semibold mb-2">3. Redeem Rewards</h3>
-        <p class="text-gray-600">Use your tokens for real rewards and access the student marketplace when it launches!</p>
-      </div>
+<!-- JOIN BETA FORM -->
+<section class="max-w-2xl mx-auto py-12 px-6 glass-card mb-12">
+  <h2 class="text-2xl font-bold mb-6 text-center text-pink-400">Join the Beta</h2>
+  <form id="joinForm" class="flex flex-col gap-4">
+    <input type="text" placeholder="Full Name" required class="p-3 rounded-xl bg-white bg-opacity-10 border border-gray-400 placeholder-gray-300 focus:outline-none focus:ring-2 focus:ring-pink-400">
+    <input type="email" placeholder="Email Address" required class="p-3 rounded-xl bg-white bg-opacity-10 border border-gray-400 placeholder-gray-300 focus:outline-none focus:ring-2 focus:ring-pink-400">
+    <input type="text" placeholder="University Name" required class="p-3 rounded-xl bg-white bg-opacity-10 border border-gray-400 placeholder-gray-300 focus:outline-none focus:ring-2 focus:ring-pink-400">
+    <select required class="p-3 rounded-xl bg-white bg-opacity-10 border border-gray-400 placeholder-gray-300 focus:outline-none focus:ring-2 focus:ring-pink-400">
+      <option value="" disabled selected>Select Your Country</option>
+      <option>Ghana</option>
+      <option>South Africa</option>
+      <option>Kenya</option>
+      <option>Nigeria</option>
+      <option>Uganda</option>
+      <option>Rwanda</option>
+      <option>Tanzania</option>
+      <option>Egypt</option>
+      <option>Morocco</option>
+      <option>Senegal</option>
+    </select>
+    <button type="submit" class="gradient-btn mt-2">Join Beta</button>
+  </form>
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="py-16 px-6 text-center max-w-5xl mx-auto">
+  <h2 class="text-3xl font-bold text-indigo-400 mb-10">How It Works</h2>
+  <div class="grid md:grid-cols-3 gap-8">
+    <div class="glass-card">
+      <div class="text-4xl mb-3">👤</div>
+      <h3 class="font-semibold mb-2">Build Your Profile</h3>
+      <p>Create your student profile to unlock personalized learning and earning experiences.</p>
     </div>
-  </section>
-
-  <!-- REWARDS WALLET PREVIEW -->
-  <section class="py-16 px-6 bg-gradient-to-b from-white to-indigo-50 text-center">
-    <h2 class="text-3xl font-bold text-indigo-700 mb-6">Your Rewards Wallet</h2>
-    <p class="text-gray-600 mb-8">Track your earnings, see your token balance, and view your redeemable rewards in one place.</p>
-    <div class="max-w-md mx-auto bg-white rounded-2xl shadow-lg p-6 border border-indigo-100">
-      <div class="flex justify-between items-center mb-4">
-        <h3 class="text-lg font-semibold text-gray-700">ZAC Token Balance</h3>
-        <span class="text-2xl font-bold text-indigo-600">1250 ZAC</span>
-      </div>
-      <div class="h-48 bg-gray-100 rounded-xl flex items-center justify-center text-gray-400 italic">
-        [ Rewards Wallet Preview Image ]
-      </div>
+    <div class="glass-card">
+      <div class="text-4xl mb-3">💰</div>
+      <h3 class="font-semibold mb-2">Earn Tokens</h3>
+      <p>Complete modules and earn ZAC tokens for achievements and engagement.</p>
     </div>
-  </section>
-
-  <!-- MARKETPLACE TEASER -->
-  <section class="py-20 px-6 bg-indigo-700 text-center text-white">
-    <h2 class="text-3xl font-bold mb-4">Marketplace Coming Soon</h2>
-    <p class="max-w-xl mx-auto text-indigo-100 mb-6">
-      Get ready to use your tokens to shop, trade, and support creators. Exciting opportunities are on the horizon!
-    </p>
-    <div class="text-5xl animate-bounce">🚀</div>
-  </section>
-
-  <!-- FOOTER -->
-  <footer class="bg-white py-8 border-t border-gray-200 text-center">
-    <div class="flex justify-center gap-6 mb-4">
-      <a href="#" class="text-indigo-600 text-2xl hover:text-indigo-800"><i class="fab fa-twitter"></i></a>
-      <a href="#" class="text-indigo-600 text-2xl hover:text-indigo-800"><i class="fab fa-instagram"></i></a>
-      <a href="#" class="text-indigo-600 text-2xl hover:text-indigo-800"><i class="fab fa-linkedin"></i></a>
+    <div class="glass-card">
+      <div class="text-4xl mb-3">🎁</div>
+      <h3 class="font-semibold mb-2">Redeem Rewards</h3>
+      <p>Use your tokens to unlock rewards and access the upcoming marketplace.</p>
     </div>
-    <p class="text-gray-500 text-sm">
-      Contact us: <a href="mailto:support@zepnetwork.com" class="text-indigo-600 hover:underline">support@zepnetwork.com</a>
-    </p>
-    <p class="text-gray-400 text-xs mt-2">© 2025 Zep Network. All rights reserved.</p>
-  </footer>
+  </div>
+</section>
 
-  <!-- FontAwesome Icons -->
-  <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+<!-- REWARDS WALLET PREVIEW -->
+<section class="py-16 px-6 text-center max-w-xl mx-auto">
+  <h2 class="text-3xl font-bold text-indigo-400 mb-6">Your Rewards Wallet</h2>
+  <div class="glass-card">
+    <div class="flex justify-between mb-4">
+      <h3 class="font-semibold text-gray-200">ZAC Token Balance</h3>
+      <span class="text-2xl font-bold text-green-400">1250 ZAC</span>
+    </div>
+    <div class="h-48 bg-gray-900 bg-opacity-30 rounded-xl flex items-center justify-center text-gray-400 italic">
+      [ Rewards Wallet Preview Image ]
+    </div>
+  </div>
+</section>
+
+<!-- MARKETPLACE TEASER -->
+<section class="py-20 px-6 text-center">
+  <h2 class="text-3xl font-bold text-pink-400 mb-4">Marketplace Coming Soon</h2>
+  <p class="max-w-xl mx-auto text-gray-300 mb-6">
+    Prepare to use your tokens to shop, trade, and support student creators!
+  </p>
+  <div class="text-5xl animate-bounce">🚀</div>
+</section>
+
+<!-- FOOTER -->
+<footer class="bg-gray-900 py-8 border-t border-gray-700 text-center">
+  <div class="flex justify-center gap-6 mb-4">
+    <a href="#" class="text-pink-400 text-2xl hover:text-pink-600"><i class="fab fa-twitter"></i></a>
+    <a href="#" class="text-pink-400 text-2xl hover:text-pink-600"><i class="fab fa-instagram"></i></a>
+    <a href="#" class="text-pink-400 text-2xl hover:text-pink-600"><i class="fab fa-linkedin"></i></a>
+  </div>
+  <p class="text-gray-400 text-sm">
+    Contact us: <a href="mailto:support@zepnetwork.com" class="hover:underline">support@zepnetwork.com</a>
+  </p>
+  <p class="text-gray-500 text-xs mt-2">© 2025 Zep Network. All rights reserved.</p>
+</footer>
+
+<!-- FontAwesome -->
+<script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+
+<!-- Form Submission Placeholder -->
+<script>
+  document.getElementById('joinForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    alert('Thank you for joining the beta! Your details have been recorded.');
+  });
+</script>
 </body>
 </html>
