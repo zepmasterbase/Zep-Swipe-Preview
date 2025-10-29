@@ -126,11 +126,16 @@ body {
   border-radius: 50%;
   border: 2px solid var(--neon-blue);
   object-fit: cover;
+  cursor: pointer;
 }
 .post-card .post-header .username {
   font-family: 'Orbitron', sans-serif;
   font-weight: 600;
   color: var(--neon-purple);
+}
+.post-card .post-header .description {
+  font-size: 0.75rem;
+  opacity: 0.7;
 }
 .post-card .post-body {
   font-size: 0.9rem;
@@ -146,7 +151,7 @@ body {
 }
 .post-card .post-footer {
   display: flex;
-  justify-content: space-between;
+  justify-content: space-around;
   margin-top: 0.5rem;
   font-size: 0.85rem;
 }
@@ -206,6 +211,33 @@ body {
   color: var(--neon-pink);
   transform: scale(1.2);
 }
+
+/* Text Inputs */
+.input-edit {
+  background: rgba(255,255,255,0.1);
+  border: 1px solid var(--neon-blue);
+  color: #fff;
+  padding: 0.3rem 0.5rem;
+  border-radius: 0.5rem;
+  width: 100%;
+  margin-top: 0.2rem;
+}
+.comment-text {
+  width: 80%;
+  border: 1px solid var(--neon-blue);
+  border-radius: 0.5rem;
+  padding: 0.2rem 0.5rem;
+  background: rgba(255,255,255,0.1);
+  color: #fff;
+}
+.comment-btn {
+  padding: 0.2rem 0.5rem;
+  background: var(--neon-purple);
+  color: #000;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  font-weight: 600;
+}
 </style>
 </head>
 <body>
@@ -214,7 +246,10 @@ body {
 <header class="header">
   <div class="header-left">
     <img src="https://via.placeholder.com/42/00f0ff/000000?text=DP" alt="Profile Picture" id="profilePic">
-    <span class="greeting">Hello Student</span>
+    <div>
+      <span class="greeting" id="username">Hello Student</span>
+      <input class="input-edit" type="text" id="userDescription" placeholder="Edit your description">
+    </div>
   </div>
   <div class="header-right">
     <i class="fas fa-bell"></i>
@@ -223,7 +258,6 @@ body {
 
 <!-- MAIN CONTENT -->
 <main class="main-grid">
-  <!-- Dashboard Placeholder -->
   <div class="card text-center">
     <i class="fas fa-users icon text-4xl"></i>
     <h3>Student Social Dashboard</h3>
@@ -237,69 +271,89 @@ body {
 
 <!-- FOOTER -->
 <footer class="footer">
+  <a href="student-dashboard.html"><i class="fas fa-home"></i><span>Home</span></a>
+  <a href="profile.html"><i class="fas fa-user"></i><span>Profile</span></a>
   <a href="dashboard-store.html"><i class="fas fa-store"></i><span>Store</span></a>
-  <a href="dashboard-wallet.html"><i class="fas fa-wallet"></i><span>Wallet</span></a>
   <a href="learn-earn.html"><i class="fas fa-gift"></i><span>Reward</span></a>
-  <a href="profile.html" class="active"><i class="fas fa-user"></i><span>Profile</span></a>
-  <a href="student-social.html"><i class="fas fa-users"></i><span>Social</span></a>
+  <a href="dashboard-wallet.html"><i class="fas fa-wallet"></i><span>Wallet</span></a>
 </footer>
 
 <script>
-// Profile picture upload simulation
+// Profile picture upload
 document.getElementById('profilePic').addEventListener('click', () => {
   const fileInput = document.createElement('input');
   fileInput.type = 'file';
   fileInput.accept = 'image/*';
   fileInput.onchange = e => {
     const file = e.target.files[0];
-    if(file) {
-      document.getElementById('profilePic').src = URL.createObjectURL(file);
-    }
+    if(file) document.getElementById('profilePic').src = URL.createObjectURL(file);
   };
   fileInput.click();
 });
 
 // Dynamic posts feed
 const posts = [
-  {user: 'Alice', avatar:'https://via.placeholder.com/36/ff00f0/000000?text=A', text:'Just completed my first cross-border trade!', image:'https://via.placeholder.com/300x180/00f0ff/000000?text=Trade1'},
-  {user: 'Bob', avatar:'https://via.placeholder.com/36/00f0ff/000000?text=B', text:'Anyone interested in forming a study group?', image:'https://via.placeholder.com/300x180/ff00f0/000000?text=Trade2'},
-  {user: 'Charlie', avatar:'https://via.placeholder.com/36/3affc1/000000?text=C', text:'Check out this market analysis tool!', image:'https://via.placeholder.com/300x180/9b59b6/000000?text=Trade3'}
+  {user: 'Alice', avatar:'https://via.placeholder.com/36/ff00f0/000000?text=A', text:'Just completed my first cross-border trade!', image:'https://via.placeholder.com/300x180/00f0ff/000000?text=Trade1', likes:0, comments:[]},
+  {user: 'Bob', avatar:'https://via.placeholder.com/36/00f0ff/000000?text=B', text:'Anyone interested in forming a study group?', image:'https://via.placeholder.com/300x180/ff00f0/000000?text=Trade2', likes:0, comments:[]}
 ];
 
 function renderFeed() {
   const feed = document.getElementById('feed');
   feed.innerHTML = '';
-  posts.forEach(p => {
+  posts.forEach((p,index) => {
     const card = document.createElement('div');
     card.className = 'post-card';
     card.innerHTML = `
       <span class="new-badge">NEW</span>
       <div class="post-header">
         <img src="${p.avatar}" alt="${p.user}">
-        <span class="username">${p.user}</span>
+        <div>
+          <span class="username">${p.user}</span>
+          <div class="description">Student in Cross-Border Commerce</div>
+        </div>
       </div>
       <div class="post-body">${p.text}</div>
       <img class="post-image" src="${p.image}" alt="Post Image">
       <div class="post-footer">
-        <i class="fas fa-heart"></i> <i class="fas fa-comment"></i> <i class="fas fa-share"></i>
+        <span><i class="fas fa-heart" onclick="likePost(${index})"></i> <span id="like-count-${index}">${p.likes}</span></span>
+        <span><i class="fas fa-comment" onclick="commentPost(${index})"></i> <span id="comment-count-${index}">${p.comments.length}</span></span>
+        <span><i class="fas fa-share" onclick="sharePost(${index})"></i></span>
       </div>
     `;
     feed.appendChild(card);
   });
 }
 
-// Simulate real-time post updates
+// Like, Comment, Share
+function likePost(i) {
+  posts[i].likes += 1;
+  document.getElementById(`like-count-${i}`).innerText = posts[i].likes;
+}
+function commentPost(i) {
+  const comment = prompt('Add your comment:');
+  if(comment) {
+    posts[i].comments.push(comment);
+    document.getElementById(`comment-count-${i}`).innerText = posts[i].comments.length;
+  }
+}
+function sharePost(i) {
+  alert('Post shared!');
+}
+
+// Simulate new posts
 setInterval(() => {
   const newPost = {
     user: `User${Math.floor(Math.random()*100)}`,
     avatar:`https://via.placeholder.com/36/${Math.floor(Math.random()*16777215).toString(16)}/000000?text=U`,
     text:'New post from cross-border trading class!',
-    image:`https://via.placeholder.com/300x180/${Math.floor(Math.random()*16777215).toString(16)}/000000?text=Trade`
+    image:`https://via.placeholder.com/300x180/${Math.floor(Math.random()*16777215).toString(16)}/000000?text=Trade`,
+    likes:0,
+    comments:[]
   };
   posts.unshift(newPost);
   if(posts.length>10) posts.pop();
   renderFeed();
-}, 10000);
+}, 15000);
 
 renderFeed();
 </script>
