@@ -12,10 +12,10 @@
 
 <style>
 :root {
+  --neon-blue: #00f0ff;
+  --neon-pink: #ff00f0;
   --neon-purple: #9b59b6;
-  --neon-cyan: #00f0ff;
-  --neon-magenta: #ff00f0;
-  --neon-mint: #3affc1;
+  --neon-green: #3affc1;
   --glass: rgba(255,255,255,0.05);
 }
 
@@ -52,73 +52,80 @@ body {
   width: 42px;
   height: 42px;
   border-radius: 50%;
-  border: 2px solid var(--neon-cyan);
+  border: 2px solid var(--neon-blue);
   object-fit: cover;
-  cursor: pointer;
 }
 .header-left .greeting {
   font-family: 'Orbitron', sans-serif;
   font-size: 1.15rem;
   font-weight: 600;
-  background: linear-gradient(90deg, var(--neon-purple), var(--neon-cyan), var(--neon-magenta));
+  background: linear-gradient(90deg, var(--neon-purple), var(--neon-blue), var(--neon-pink));
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 .header-right i {
   font-size: 1.3rem;
-  color: var(--neon-cyan);
+  color: var(--neon-blue);
   cursor: pointer;
   transition: 0.3s;
 }
 .header-right i:hover {
-  color: var(--neon-magenta);
+  color: var(--neon-pink);
   transform: scale(1.3);
 }
 
-/* MAIN SECTIONS */
+/* MAIN GRID */
 .main-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  grid-template-columns: 1fr;
   gap: 1rem;
   margin-top: 6rem;
   padding: 0 1rem 1rem 1rem;
 }
 
-/* Glass Card */
+/* GLASS CARD */
 .card {
   background: var(--glass);
   backdrop-filter: blur(20px);
   border-radius: 1rem;
-  padding: 1rem;
+  padding: 1.5rem;
   text-align: center;
   box-shadow: 0 0 25px rgba(0,255,255,0.2);
   transition: transform 0.3s, box-shadow 0.3s;
 }
 .card:hover {
   transform: scale(1.03);
-  box-shadow: 0 0 35px var(--neon-magenta);
+  box-shadow: 0 0 35px var(--neon-pink);
 }
 .card h3 {
   font-family: 'Orbitron', sans-serif;
   font-weight: 600;
-  font-size: 1rem;
-  color: var(--neon-cyan);
+  font-size: 1.2rem;
+  color: var(--neon-blue);
   margin-bottom: 0.5rem;
 }
 .card p {
-  font-size: 0.8rem;
+  font-size: 0.9rem;
   opacity: 0.85;
 }
-
-/* Icon Glow */
-.icon {
+.card .value {
+  font-family: 'Orbitron', sans-serif;
   font-size: 1.8rem;
-  margin-bottom: 0.5rem;
-  color: var(--neon-magenta);
-  text-shadow: 0 0 8px var(--neon-magenta), 0 0 15px var(--neon-cyan);
+  font-weight: 700;
+  margin-top: 0.5rem;
+  color: var(--neon-green);
+  text-shadow: 0 0 10px var(--neon-green), 0 0 20px var(--neon-blue);
 }
 
-/* Footer */
+/* ICONS */
+.icon {
+  font-size: 2rem;
+  margin-bottom: 0.5rem;
+  color: var(--neon-pink);
+  text-shadow: 0 0 8px var(--neon-pink), 0 0 15px var(--neon-blue);
+}
+
+/* FOOTER */
 .footer {
   position: fixed;
   bottom: 0;
@@ -136,7 +143,7 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  color: var(--neon-cyan);
+  color: var(--neon-blue);
   font-size: 0.8rem;
   text-decoration: none;
   transition: 0.3s;
@@ -145,7 +152,7 @@ body {
   font-size: 1.4rem;
 }
 .footer a:hover, .footer a.active {
-  color: var(--neon-magenta);
+  color: var(--neon-pink);
   transform: scale(1.2);
 }
 </style>
@@ -155,7 +162,7 @@ body {
 <!-- HEADER -->
 <header class="header">
   <div class="header-left">
-    <img src="https://via.placeholder.com/42/00f0ff/000000?text=DP" alt="Profile">
+    <img src="https://via.placeholder.com/42/00f0ff/000000?text=DP" alt="Profile Picture">
     <span class="greeting">Hello Student</span>
   </div>
   <div class="header-right">
@@ -165,82 +172,28 @@ body {
 
 <!-- MAIN CONTENT -->
 <main class="main-grid">
-  <!-- Zep Web3 Courses in Progress -->
+  <!-- Learn & Earn -->
   <div class="card">
-    <i class="fas fa-graduation-cap icon"></i>
-    <h3>Courses in Progress</h3>
-    <p>Track your ongoing Zep Web3 Courses</p>
-    <a href="learn-earn.html" class="text-neon-blue font-semibold hover:underline">Go to Learn & Earn</a>
+    <i class="fas fa-gift icon"></i>
+    <h3>Learn & Earn</h3>
+    <p>Join courses and earn ZAC rewards!</p>
+    <a href="learn-earn.html" class="text-neon-blue font-semibold hover:underline">Start Now</a>
   </div>
 
-  <!-- Recommended Courses -->
+  <!-- ETH Rate -->
   <div class="card">
-    <i class="fas fa-lightbulb icon"></i>
-    <h3>Recommended Courses</h3>
-    <p>Courses tailored for you to improve skills</p>
+    <i class="fab fa-ethereum icon"></i>
+    <h3>ETH Rate</h3>
+    <p>Live exchange rate</p>
+    <div class="value" id="ethRate">Loading...</div>
   </div>
 
-  <!-- Quizzes & Rewards -->
+  <!-- USDT Rate -->
   <div class="card">
-    <i class="fas fa-award icon"></i>
-    <h3>Quizzes & Rewards</h3>
-    <p>Complete quizzes to earn ZAC rewards</p>
-  </div>
-
-  <!-- Market Overview -->
-  <div class="card">
-    <i class="fas fa-chart-line icon"></i>
-    <h3>Market Overview</h3>
-    <p>Get live insights into global trade markets</p>
-  </div>
-
-  <!-- Trade Opportunities -->
-  <div class="card">
-    <i class="fas fa-exchange-alt icon"></i>
-    <h3>Trade Opportunities</h3>
-    <p>Discover profitable cross-border trades</p>
-  </div>
-
-  <!-- Currency Rates -->
-  <div class="card">
-    <i class="fas fa-coins icon"></i>
-    <h3>Currency Rates</h3>
-    <p>USDT: $1.00 | ETH: $2000</p>
-  </div>
-
-  <!-- Trade Tips -->
-  <div class="card">
-    <i class="fas fa-handshake icon"></i>
-    <h3>Trade Tips</h3>
-    <p>Smart strategies for cross-border trading</p>
-  </div>
-
-  <!-- Learning & Trade Progress -->
-  <div class="card">
-    <i class="fas fa-tasks icon"></i>
-    <h3>Learning & Trade Progress</h3>
-    <p>Visualize your achievements in learning & trading</p>
-  </div>
-
-  <!-- Earnings Dashboard -->
-  <div class="card">
-    <i class="fas fa-wallet icon"></i>
-    <h3>Earnings Dashboard</h3>
-    <p>Track your ZAC & USD earnings over time</p>
-  </div>
-
-  <!-- Mentor Chat -->
-  <div class="card">
-    <i class="fas fa-user-tie icon"></i>
-    <h3>Mentor Chat</h3>
-    <p>Connect with your mentor for guidance</p>
-  </div>
-
-  <!-- Announcements -->
-  <div class="card">
-    <i class="fas fa-bullhorn icon"></i>
-    <h3>Announcements</h3>
-    <p>Stay updated with latest platform news</p>
+    <i class="fas fa-dollar-sign icon"></i>
+    <h3>USDT Rate</h3>
+    <p>Live exchange rate</p>
+    <div class="value" id="usdtRate">Loading...</div>
   </div>
 </main>
 
@@ -252,5 +205,25 @@ body {
   <a href="profile.html"><i class="fas fa-user"></i><span>Profile</span></a>
   <a href="student-social.html"><i class="fas fa-users"></i><span>Social</span></a>
 </footer>
+
+<script>
+// Fetch live ETH and USDT rates
+async function fetchRates() {
+  try {
+    const res = await fetch('https://api.coingecko.com/api/v3/simple/price?ids=ethereum,tether&vs_currencies=usd');
+    const data = await res.json();
+    document.getElementById('ethRate').innerText = `$${data.ethereum.usd.toLocaleString()}`;
+    document.getElementById('usdtRate').innerText = `$${data.tether.usd.toLocaleString()}`;
+  } catch (error) {
+    document.getElementById('ethRate').innerText = 'Error';
+    document.getElementById('usdtRate').innerText = 'Error';
+  }
+}
+
+// Initial fetch and refresh every 60s
+fetchRates();
+setInterval(fetchRates, 60000);
+</script>
+
 </body>
 </html>
