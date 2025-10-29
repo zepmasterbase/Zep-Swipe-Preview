@@ -17,7 +17,6 @@
   --glass: rgba(255,255,255,0.05);
 }
 
-/* Body */
 body {
   font-family: 'Poppins', sans-serif;
   margin: 0;
@@ -42,8 +41,6 @@ body {
   z-index: 50;
   border-radius: 0 0 1.5rem 1.5rem;
 }
-
-/* Left Header */
 .header-left {
   display: flex;
   align-items: center;
@@ -65,15 +62,16 @@ body {
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
-
-/* Right Header */
 .header-right i {
   font-size: 1.3rem;
   color: var(--neon-blue);
   cursor: pointer;
   transition: 0.3s;
 }
-.header-right i:hover { color: var(--neon-pink); transform: scale(1.2); }
+.header-right i:hover {
+  color: var(--neon-pink);
+  transform: scale(1.2);
+}
 
 /* Balance Card */
 .balance-card {
@@ -85,7 +83,11 @@ body {
   text-align: center;
   box-shadow: 0 0 25px rgba(0,240,255,0.3);
 }
-.balance-card h3 { font-family: 'Orbitron', sans-serif; font-weight: 600; color: var(--neon-blue); }
+.balance-card h3 {
+  font-family: 'Orbitron', sans-serif;
+  font-weight: 600;
+  color: var(--neon-blue);
+}
 .balance-card .total-balance {
   font-size: 2rem;
   font-weight: 700;
@@ -95,7 +97,10 @@ body {
   -webkit-text-fill-color: transparent;
   animation: pulse 2s infinite;
 }
-.balance-card .sub-balances { display: flex; justify-content: space-around; }
+.balance-card .sub-balances {
+  display: flex;
+  justify-content: space-around;
+}
 .sub-balances div {
   background: rgba(255,255,255,0.08);
   padding: 0.7rem 1rem;
@@ -117,29 +122,33 @@ body {
   padding: 0.6rem 1.5rem;
   border-radius: 9999px;
   font-weight: 600;
-  display: inline-block;
-  transition: transform 0.3s;
+  color: #fff;
+  text-decoration: none;
+  transition: 0.3s;
 }
-.learn-earn-btn a:hover { transform: scale(1.05); }
+.learn-earn-btn a:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 15px var(--neon-blue);
+}
 
 /* News Section */
 .news-section {
   margin-top: 1.5rem;
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
   gap: 1rem;
 }
 .news-card {
   background: var(--glass);
   border-radius: 1rem;
   overflow: hidden;
-  box-shadow: 0 0 20px rgba(0,240,255,0.3);
-  transition: transform 0.3s, box-shadow 0.3s;
+  box-shadow: 0 0 15px rgba(0,240,255,0.2);
+  transition: transform 0.3s;
 }
-.news-card:hover { transform: scale(1.03); box-shadow: 0 0 30px var(--neon-pink); }
+.news-card:hover { transform: scale(1.03); }
 .news-card img {
   width: 100%;
-  height: 100px;
+  height: 90px;
   object-fit: cover;
   filter: brightness(1.2);
 }
@@ -188,9 +197,9 @@ body {
 <!-- Header -->
 <header class="header">
   <div class="header-left">
-    <img id="profilePic" src="https://via.placeholder.com/40" alt="Profile Picture" onclick="document.getElementById('fileInput').click()">
-    <input type="file" id="fileInput" style="display:none" accept="image/*" onchange="previewImage(event)">
+    <img src="https://via.placeholder.com/40" alt="Profile Picture" id="profilePic" onclick="uploadProfile()">
     <span class="greeting">Hello Student</span>
+    <input type="file" id="profileInput" style="display:none" accept="image/*" onchange="previewProfile(event)">
   </div>
   <div class="header-right">
     <i class="fas fa-bell"></i>
@@ -218,15 +227,13 @@ body {
     </div>
   </div>
 
-  <!-- Learn & Earn Button -->
+  <!-- Learn & Earn -->
   <div class="learn-earn-btn">
     <a href="learn-earn.html">Claim Reward Now</a>
   </div>
 
   <!-- News Section -->
-  <div class="news-section" id="newsSection">
-    <!-- News will be dynamically inserted -->
-  </div>
+  <div class="news-section" id="newsSection"></div>
 </main>
 
 <!-- Footer -->
@@ -239,18 +246,16 @@ body {
 </footer>
 
 <script>
-// Dynamic balances (simulate API)
-const zac = 1250.00;
-const usdt = 500.00;
-const eth = 0.75;
+// Dynamic wallet balances
+let wallet = {ZAC:1250, USDT:500, ETH:0.75};
+document.getElementById('zacBalance').innerText = wallet.ZAC.toLocaleString();
+document.getElementById('usdtBalance').innerText = wallet.USDT.toLocaleString();
+document.getElementById('ethBalance').innerText = wallet.ETH.toLocaleString();
+document.getElementById('totalBalance').innerText = `$${(wallet.ZAC + wallet.USDT + wallet.ETH).toLocaleString()}`;
 
-document.getElementById('zacBalance').innerText = zac.toLocaleString();
-document.getElementById('usdtBalance').innerText = usdt.toLocaleString();
-document.getElementById('ethBalance').innerText = eth.toLocaleString();
-document.getElementById('totalBalance').innerText = `$${(zac + usdt + eth).toLocaleString()}`;
-
-// Profile picture upload preview
-function previewImage(event){
+// Profile Upload
+function uploadProfile() { document.getElementById('profileInput').click(); }
+function previewProfile(event) {
   const reader = new FileReader();
   reader.onload = function(){
     document.getElementById('profilePic').src = reader.result;
@@ -258,25 +263,23 @@ function previewImage(event){
   reader.readAsDataURL(event.target.files[0]);
 }
 
-// Sample news items (can be replaced with API)
+// Lightweight News
 const newsItems = [
-  { title: "Onchain Analytics Tool", desc: "Explore new blockchain dashboards for students", img: "https://via.placeholder.com/160x100/00f0ff/000000?text=Blockchain+1" },
-  { title: "DeFi Education", desc: "Learn DeFi and earn ZAC rewards", img: "https://via.placeholder.com/160x100/ff00f0/000000?text=DeFi" },
-  { title: "Crypto Tools", desc: "On-chain tools for student projects", img: "https://via.placeholder.com/160x100/00f0ff/000000?text=Crypto" },
-  { title: "Blockchain News", desc: "Latest blockchain updates for students", img: "https://via.placeholder.com/160x100/ff00f0/000000?text=News" }
+  { title: "Onchain Analytics", desc: "Explore blockchain dashboards", img: "https://via.placeholder.com/150x90/00f0ff/000000?text=1" },
+  { title: "DeFi Education", desc: "Learn DeFi & earn rewards", img: "https://via.placeholder.com/150x90/ff00f0/000000?text=2" },
+  { title: "Crypto Tools", desc: "Tools for student projects", img: "https://via.placeholder.com/150x90/00f0ff/000000?text=3" },
+  { title: "Blockchain News", desc: "Latest blockchain updates", img: "https://via.placeholder.com/150x90/ff00f0/000000?text=4" },
 ];
 
-// Render news dynamically
 const newsSection = document.getElementById('newsSection');
 newsItems.forEach(n => {
   const card = document.createElement('div');
   card.className = 'news-card';
-  card.innerHTML = `
-    <img src="${n.img}" alt="${n.title}">
-    <div class="news-content">
-      <h4>${n.title}</h4>
-      <p>${n.desc}</p>
-    </div>`;
+  card.innerHTML = `<img src="${n.img}" alt="${n.title}">
+                    <div class="news-content">
+                      <h4>${n.title}</h4>
+                      <p>${n.desc}</p>
+                    </div>`;
   newsSection.appendChild(card);
 });
 </script>
