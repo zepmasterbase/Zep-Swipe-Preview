@@ -7,66 +7,118 @@
 
 <!-- Tailwind CSS -->
 <script src="https://cdn.tailwindcss.com"></script>
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Orbitron:wght@600&display=swap" rel="stylesheet">
+
+<!-- Firebase -->
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.1.0/firebase-app.js";
+import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.1.0/firebase-auth.js";
+import { getFirestore, doc, setDoc, getDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.1.0/firebase-firestore.js";
+
+const firebaseConfig = {
+  apiKey: "YOUR_FIREBASE_API_KEY",
+  authDomain: "YOUR_FIREBASE_AUTH_DOMAIN",
+  projectId: "YOUR_FIREBASE_PROJECT_ID",
+  storageBucket: "YOUR_FIREBASE_STORAGE_BUCKET",
+  messagingSenderId: "YOUR_FIREBASE_MESSAGING_SENDER_ID",
+  appId: "YOUR_FIREBASE_APP_ID"
+};
+
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db = getFirestore(app);
+
+// Create user profile & wallet if not exists
+async function createUserRecords(user, name, role, university, country) {
+  const userRef = doc(db, "users", user.uid);
+  const walletRef = doc(db, "wallets", user.uid);
+
+  const userSnap = await getDoc(userRef);
+  if (!userSnap.exists()) {
+    await setDoc(userRef, {
+      name,
+      email: user.email,
+      role,
+      university,
+      country,
+      createdAt: serverTimestamp()
+    });
+  }
+
+  const walletSnap = await getDoc(walletRef);
+  if (!walletSnap.exists()) {
+    await setDoc(walletRef, { balance: 0, createdAt: serverTimestamp() });
+  }
+}
+
+// Sign up function
+window.registerUser = async function() {
+  const name = document.getElementById('name').value;
+  const email = document.getElementById('email').value;
+  const password = document.getElementById('password').value;
+  const university = document.getElementById('university').value;
+  const country = document.getElementById('country').value;
+  const role = document.querySelector('input[name="role"]:checked')?.value;
+
+  if (!role) { alert("Please select a role."); return; }
+
+  try {
+    const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+    await createUserRecords(userCredential.user, name, role, university, country);
+    alert("Registration successful! Redirecting to dashboard...");
+    window.location.href = "dashboard.html";
+  } catch(e) { alert(e.message); }
+}
+
+// Login function
+window.loginUser = async function() {
+  const email = document.getElementById('loginEmail').value;
+  const password = document.getElementById('loginPassword').value;
+
+  try {
+    const userCredential = await signInWithEmailAndPassword(auth, email, password);
+    alert("Login successful! Redirecting to dashboard...");
+    window.location.href = "dashboard.html";
+  } catch(e) { alert(e.message); }
+}
+</script>
 
 <style>
-  body {
-    font-family: 'Poppins', sans-serif;
-    background: linear-gradient(135deg, #0b0520, #120b2e);
-    color: #fff;
-  }
-  .glass-card {
-    background: rgba(255, 255, 255, 0.05);
-    backdrop-filter: blur(15px);
-    border-radius: 1.5rem;
-    padding: 1.5rem;
-    box-shadow: 0 0 25px rgba(0,255,255,0.2);
-    transition: transform 0.3s, box-shadow 0.3s;
-  }
-  .glass-card:hover {
-    transform: scale(1.03);
-    box-shadow: 0 0 35px rgba(255,0,255,0.3);
-  }
-  .gradient-btn {
-    background: linear-gradient(to right, #ff00f0, #00ffb3, #00f0ff);
-    color: white;
-    font-weight: 600;
-    border-radius: 9999px;
-    padding: 0.75rem 2rem;
-    transition: transform 0.2s, box-shadow 0.2s;
-  }
-  .gradient-btn:hover {
-    transform: scale(1.05);
-    box-shadow: 0 8px 20px rgba(255,0,255,0.3);
-  }
-  .neon-header {
-    background: linear-gradient(135deg, #ff00f0, #00ffb3, #00f0ff);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    font-family: 'Orbitron', sans-serif;
-    font-weight: 700;
-  }
+body { font-family: 'Poppins', sans-serif; background: linear-gradient(135deg,#0b0520,#120b2e); color:#fff;}
+.glass-card { background: rgba(255,255,255,0.05); backdrop-filter: blur(15px); border-radius: 1.5rem; padding: 1.5rem; box-shadow:0 0 25px rgba(0,255,255,0.2); transition: transform 0.3s, box-shadow 0.3s;}
+.glass-card:hover { transform: scale(1.03); box-shadow: 0 0 35px rgba(255,0,255,0.3);}
+.gradient-btn { background: linear-gradient(to right,#ff00f0,#00ffb3,#00f0ff); color:white; font-weight:600; border-radius:9999px; padding:0.75rem 2rem; transition: transform 0.2s, box-shadow 0.2s;}
+.gradient-btn:hover { transform: scale(1.05); box-shadow:0 8px 20px rgba(255,0,255,0.3);}
+.neon-header { font-family:'Orbitron',sans-serif; font-weight:700; background: linear-gradient(135deg,#ff00f0,#00ffb3,#00f0ff); -webkit-background-clip: text; -webkit-text-fill-color: transparent; text-shadow:0 0 10px #ff00f0,0 0 20px #00ffb3,0 0 30px #00f0ff;}
 </style>
 </head>
 <body class="flex flex-col min-h-screen">
 
-<!-- NEON HEADER -->
-<header class="text-center py-12">
-  <h1 class="text-5xl md:text-6xl neon-header mb-4">Zep Swipe</h1>
-  <p class="text-lg md:text-xl text-gray-200 max-w-2xl mx-auto">
-    Earn. Learn. Get Rewarded.
-  </p>
-  <img src="https://via.placeholder.com/600x300/ff00f0/00ffb3?text=Students+Neon+Illustration" alt="Students Neon" class="mx-auto mt-6 rounded-xl shadow-lg">
+<!-- NAVBAR -->
+<header class="flex justify-between items-center py-6 px-8">
+  <div class="neon-header text-4xl md:text-5xl">Zep Swipe</div>
+  <nav class="flex gap-6 items-center">
+    <button onclick="document.getElementById('authModal').classList.remove('hidden')" class="gradient-btn">Login / Sign Up</button>
+  </nav>
 </header>
 
+<!-- HERO -->
+<section class="text-center py-16 px-6 relative">
+  <h1 class="text-5xl md:text-6xl mb-4">Earn. Learn. Get Rewarded.</h1>
+  <p class="text-lg md:text-xl text-gray-200 max-w-2xl mx-auto">Join early access, build profile, earn tokens, and prepare for our upcoming marketplace.</p>
+  <img src="https://images.unsplash.com/photo-1612831455542-f2f7be25893a?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=800" alt="Web3 Neon Student" class="mx-auto mt-6 rounded-xl shadow-lg">
+  <a href="#join" class="gradient-btn mt-6 inline-block">Join Beta</a>
+</section>
+
 <!-- JOIN BETA FORM -->
-<section class="max-w-2xl mx-auto py-12 px-6 glass-card mb-12">
+<section id="join" class="max-w-2xl mx-auto py-12 px-6 glass-card mb-12">
   <h2 class="text-2xl font-bold mb-6 text-center text-pink-400">Join the Beta</h2>
-  <form id="joinForm" class="flex flex-col gap-4">
-    <input type="text" placeholder="Full Name" required class="p-3 rounded-xl bg-white bg-opacity-10 border border-gray-400 placeholder-gray-300 focus:outline-none focus:ring-2 focus:ring-pink-400">
-    <input type="email" placeholder="Email Address" required class="p-3 rounded-xl bg-white bg-opacity-10 border border-gray-400 placeholder-gray-300 focus:outline-none focus:ring-2 focus:ring-pink-400">
-    <input type="text" placeholder="University Name" required class="p-3 rounded-xl bg-white bg-opacity-10 border border-gray-400 placeholder-gray-300 focus:outline-none focus:ring-2 focus:ring-pink-400">
-    <select required class="p-3 rounded-xl bg-white bg-opacity-10 border border-gray-400 placeholder-gray-300 focus:outline-none focus:ring-2 focus:ring-pink-400">
+  <form class="flex flex-col gap-4">
+    <input id="name" type="text" placeholder="Full Name" required class="p-3 rounded-xl bg-white bg-opacity-10 border border-gray-400 focus:outline-none focus:ring-2 focus:ring-pink-400">
+    <input id="email" type="email" placeholder="Email" required class="p-3 rounded-xl bg-white bg-opacity-10 border border-gray-400 focus:outline-none focus:ring-2 focus:ring-pink-400">
+    <input type="password" id="password" placeholder="Password" required class="p-3 rounded-xl bg-white bg-opacity-10 border border-gray-400 focus:outline-none focus:ring-2 focus:ring-pink-400">
+    <input id="university" type="text" placeholder="University Name" required class="p-3 rounded-xl bg-white bg-opacity-10 border border-gray-400 focus:outline-none focus:ring-2 focus:ring-pink-400">
+    <select id="country" required class="p-3 rounded-xl bg-white bg-opacity-10 border border-gray-400 focus:outline-none focus:ring-2 focus:ring-pink-400">
       <option value="" disabled selected>Select Your Country</option>
       <option>Ghana</option>
       <option>South Africa</option>
@@ -79,77 +131,16 @@
       <option>Morocco</option>
       <option>Senegal</option>
     </select>
-    <button type="submit" class="gradient-btn mt-2">Join Beta</button>
+
+    <!-- ROLE SELECTION -->
+    <div class="flex gap-6 mt-2">
+      <label class="flex items-center gap-2"><input type="radio" name="role" value="Student"> Student</label>
+      <label class="flex items-center gap-2"><input type="radio" name="role" value="Vendor"> Vendor</label>
+    </div>
+
+    <button type="button" onclick="registerUser()" class="gradient-btn mt-2">Sign Up</button>
   </form>
 </section>
 
-<!-- HOW IT WORKS -->
-<section class="py-16 px-6 text-center max-w-5xl mx-auto">
-  <h2 class="text-3xl font-bold text-indigo-400 mb-10">How It Works</h2>
-  <div class="grid md:grid-cols-3 gap-8">
-    <div class="glass-card">
-      <div class="text-4xl mb-3">👤</div>
-      <h3 class="font-semibold mb-2">Build Your Profile</h3>
-      <p>Create your student profile to unlock personalized learning and earning experiences.</p>
-    </div>
-    <div class="glass-card">
-      <div class="text-4xl mb-3">💰</div>
-      <h3 class="font-semibold mb-2">Earn Tokens</h3>
-      <p>Complete modules and earn ZAC tokens for achievements and engagement.</p>
-    </div>
-    <div class="glass-card">
-      <div class="text-4xl mb-3">🎁</div>
-      <h3 class="font-semibold mb-2">Redeem Rewards</h3>
-      <p>Use your tokens to unlock rewards and access the upcoming marketplace.</p>
-    </div>
-  </div>
-</section>
-
-<!-- REWARDS WALLET PREVIEW -->
-<section class="py-16 px-6 text-center max-w-xl mx-auto">
-  <h2 class="text-3xl font-bold text-indigo-400 mb-6">Your Rewards Wallet</h2>
-  <div class="glass-card">
-    <div class="flex justify-between mb-4">
-      <h3 class="font-semibold text-gray-200">ZAC Token Balance</h3>
-      <span class="text-2xl font-bold text-green-400">1250 ZAC</span>
-    </div>
-    <div class="h-48 bg-gray-900 bg-opacity-30 rounded-xl flex items-center justify-center text-gray-400 italic">
-      [ Rewards Wallet Preview Image ]
-    </div>
-  </div>
-</section>
-
-<!-- MARKETPLACE TEASER -->
-<section class="py-20 px-6 text-center">
-  <h2 class="text-3xl font-bold text-pink-400 mb-4">Marketplace Coming Soon</h2>
-  <p class="max-w-xl mx-auto text-gray-300 mb-6">
-    Prepare to use your tokens to shop, trade, and support student creators!
-  </p>
-  <div class="text-5xl animate-bounce">🚀</div>
-</section>
-
-<!-- FOOTER -->
-<footer class="bg-gray-900 py-8 border-t border-gray-700 text-center">
-  <div class="flex justify-center gap-6 mb-4">
-    <a href="#" class="text-pink-400 text-2xl hover:text-pink-600"><i class="fab fa-twitter"></i></a>
-    <a href="#" class="text-pink-400 text-2xl hover:text-pink-600"><i class="fab fa-instagram"></i></a>
-    <a href="#" class="text-pink-400 text-2xl hover:text-pink-600"><i class="fab fa-linkedin"></i></a>
-  </div>
-  <p class="text-gray-400 text-sm">
-    Contact us: <a href="mailto:support@zepnetwork.com" class="hover:underline">support@zepnetwork.com</a>
-  </p>
-  <p class="text-gray-500 text-xs mt-2">© 2025 Zep Network. All rights reserved.</p>
-</footer>
-
-<!-- FontAwesome -->
-<script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
-
-<!-- Form Submission Placeholder -->
-<script>
-  document.getElementById('joinForm').addEventListener('submit', function(e) {
-    e.preventDefault();
-    alert('Thank you for joining the beta! Your details have been recorded.');
-  });
-</script>
 </body>
 </html>
