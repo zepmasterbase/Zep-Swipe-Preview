@@ -4,8 +4,6 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>ZepShop Marketplace</title>
-
-<!-- Tailwind CSS + Fonts + Icons -->
 <script src="https://cdn.tailwindcss.com"></script>
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -14,15 +12,14 @@
 :root {
   --neon-blue: #00f0ff;
   --neon-pink: #ff00f0;
-  --glass: rgba(255,255,255,0.06);
+  --glass: rgba(255,255,255,0.05);
 }
 
 body {
   font-family: 'Poppins', sans-serif;
-  background: radial-gradient(circle at top, #0b0520 0%, #130b2f 100%);
-  color: #fff;
   margin: 0;
-  overflow-x: hidden;
+  background: radial-gradient(circle at top, #0b0520 0%, #120b2e 100%);
+  color: #fff;
   min-height: 100vh;
   padding-bottom: 100px;
 }
@@ -32,34 +29,27 @@ body {
   position: fixed;
   top: 0;
   width: 100%;
-  padding: 1rem 1.2rem;
-  background: rgba(15,5,32,0.75);
-  backdrop-filter: blur(14px);
+  padding: 1rem;
+  background: rgba(15,5,32,0.6);
+  backdrop-filter: blur(12px);
   display: flex;
   justify-content: space-between;
   align-items: center;
-  box-shadow: 0 0 25px rgba(0,240,255,0.3);
+  box-shadow: 0 0 20px rgba(0,240,255,0.3);
   z-index: 50;
 }
 .header h1 {
   font-family: 'Orbitron', sans-serif;
-  font-size: 1.5rem;
+  font-size: 1.4rem;
   background: linear-gradient(90deg, var(--neon-blue), var(--neon-pink));
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
-.header i {
-  color: var(--neon-blue);
-  font-size: 1.4rem;
-  cursor: pointer;
-  transition: 0.3s;
-}
-.header i:hover { color: var(--neon-pink); transform: scale(1.2); }
 
-/* BANNER */
+/* LEARN & EARN BANNER */
 .learn-earn {
-  margin: 6rem 1rem 1rem 1rem;
-  padding: 1rem;
+  margin: 5.5rem 1rem 1rem 1rem;
+  padding: 0.8rem;
   background: rgba(255,255,255,0.05);
   border: 1px solid var(--neon-blue);
   border-radius: 1rem;
@@ -67,69 +57,40 @@ body {
   font-weight: 600;
   font-family: 'Orbitron', sans-serif;
   color: var(--neon-blue);
-  text-shadow: 0 0 12px #00f0ff;
-  box-shadow: 0 0 20px rgba(0,240,255,0.1);
+  text-shadow: 0 0 8px #00f0ff;
+  cursor: pointer;
 }
-
-/* LIVE RATES */
-.live-rates {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-around;
-  margin: 0.8rem 1rem;
-  padding: 0.8rem 1rem;
-  background: var(--glass);
-  border-radius: 1rem;
-  backdrop-filter: blur(12px);
-  box-shadow: 0 0 20px rgba(255,255,255,0.05);
-}
-.live-rates span {
-  font-weight: 600;
+.learn-earn:hover {
   color: var(--neon-pink);
+  border-color: var(--neon-pink);
+  transform: scale(1.02);
+  transition: 0.3s;
 }
 
-/* SEARCH & FILTER */
-.search-bar {
-  margin: 0.8rem 1rem;
-  display: flex;
-  gap: 0.6rem;
-  flex-wrap: wrap;
-}
-.search-bar input, .search-bar select {
-  flex: 1 1 48%;
-  padding: 0.6rem 1rem;
-  border-radius: 0.6rem;
-  border: none;
-  outline: none;
-  background: rgba(255,255,255,0.1);
-  color: #fff;
-  backdrop-filter: blur(6px);
-}
-.search-bar select { cursor: pointer; }
-
-/* WALLET */
+/* WALLET BALANCE DISPLAY */
 .wallet-balance {
-  margin: 0.8rem 1rem;
+  margin: 0.5rem 1rem;
   padding: 0.8rem;
-  border-radius: 1rem;
   background: var(--glass);
+  border-radius: 1rem;
+  backdrop-filter: blur(20px);
+  box-shadow: 0 0 20px rgba(0,240,255,0.3);
   display: flex;
   justify-content: space-around;
   flex-wrap: wrap;
-  backdrop-filter: blur(14px);
-  box-shadow: 0 0 25px rgba(0,240,255,0.25);
 }
 .wallet-balance span {
   font-weight: 600;
+  margin: 0.2rem 0;
   color: var(--neon-blue);
 }
 
-/* PRODUCT GRID */
+/* PRODUCTS GRID */
 .marketplace {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: 1rem;
-  margin: 1rem;
+  gap: 0.6rem;
+  margin: 0.5rem 1rem 1rem 1rem;
 }
 @media (max-width: 640px) {
   .marketplace {
@@ -137,117 +98,49 @@ body {
   }
 }
 
-/* PRODUCT CARD (3D effect + glow) */
+/* PRODUCT CARD */
 .product-card {
-  background: rgba(255,255,255,0.05);
-  border-radius: 1.2rem;
-  padding: 1rem;
+  background: var(--glass);
+  border-radius: 1rem;
+  padding: 0.6rem;
   text-align: center;
-  position: relative;
-  overflow: hidden;
-  box-shadow: 0 0 15px rgba(0,240,255,0.15);
-  transition: all 0.4s ease;
-  backdrop-filter: blur(15px);
-}
-.product-card::before {
-  content: '';
-  position: absolute;
-  top: -50%;
-  left: -50%;
-  width: 200%;
-  height: 200%;
-  background: radial-gradient(circle, rgba(0,240,255,0.08), transparent 60%);
-  transform: rotate(25deg);
-  pointer-events: none;
+  backdrop-filter: blur(12px);
+  box-shadow: 0 0 12px rgba(0,240,255,0.2);
+  transition: transform 0.3s, box-shadow 0.3s;
 }
 .product-card:hover {
-  transform: translateY(-6px) scale(1.02);
-  box-shadow: 0 0 25px rgba(255,0,255,0.3);
+  transform: scale(1.03) translateY(-2px);
+  box-shadow: 0 0 25px var(--neon-blue);
 }
 .product-card img {
-  width: 100%;
-  border-radius: 0.8rem;
-  margin-bottom: 0.8rem;
-  object-fit: cover;
-  box-shadow: 0 0 15px rgba(255,255,255,0.1);
+  width: 80px;
+  height: 80px;
+  object-fit: contain;
+  border-radius: 0.5rem;
+  margin-bottom: 0.3rem;
 }
 .product-card h3 {
   font-family: 'Orbitron', sans-serif;
-  color: var(--neon-blue);
-  font-size: 1rem;
-  margin-bottom: 0.2rem;
-}
-.product-card p {
-  color: #ddd;
-  font-size: 0.85rem;
-  margin-bottom: 0.3rem;
+  font-size: 0.95rem;
+  margin: 0.2rem 0;
 }
 .product-card .price {
-  color: var(--neon-pink);
   font-weight: 700;
-  margin: 0.4rem 0;
+  color: var(--neon-blue);
+  margin: 0.3rem 0;
 }
 .product-card button {
   background: linear-gradient(90deg,var(--neon-blue),var(--neon-pink));
   border: none;
-  border-radius: 0.6rem;
+  padding: 0.4rem 0.6rem;
+  border-radius: 0.5rem;
   color: #fff;
-  padding: 0.5rem 1rem;
-  font-weight: 600;
+  cursor: pointer;
+  font-size: 0.8rem;
   transition: 0.3s;
 }
 .product-card button:hover {
-  box-shadow: 0 0 15px var(--neon-pink);
   transform: scale(1.05);
-}
-
-/* MODAL */
-.modal {
-  position: fixed;
-  top: 0; left: 0;
-  width: 100%; height: 100%;
-  background: rgba(10,5,25,0.9);
-  display: none;
-  align-items: center;
-  justify-content: center;
-  z-index: 100;
-}
-.modal-content {
-  background: rgba(255,255,255,0.07);
-  border-radius: 1rem;
-  padding: 1rem;
-  text-align: center;
-  width: 90%;
-  max-width: 400px;
-  box-shadow: 0 0 25px var(--neon-blue);
-}
-.close-btn {
-  position: absolute;
-  top: 0.8rem;
-  right: 1rem;
-  font-size: 1.6rem;
-  color: var(--neon-pink);
-  cursor: pointer;
-}
-
-/* TRANSACTIONS */
-.transactions {
-  margin: 1rem;
-  background: rgba(255,255,255,0.05);
-  border-radius: 1rem;
-  padding: 0.8rem;
-  box-shadow: 0 0 20px rgba(0,240,255,0.15);
-}
-.tx-item {
-  background: rgba(255,255,255,0.07);
-  padding: 0.6rem;
-  border-radius: 0.6rem;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 0.4rem;
-  font-size: 0.85rem;
-  border-left: 3px solid var(--neon-blue);
 }
 
 /* FOOTER */
@@ -257,162 +150,87 @@ body {
   width: 100%;
   display: flex;
   justify-content: space-around;
+  padding: 0.6rem 0;
   background: rgba(15,5,32,0.85);
   backdrop-filter: blur(12px);
-  box-shadow: 0 -2px 20px rgba(0,240,255,0.2);
-  padding: 0.8rem 0;
+  box-shadow: 0 -2px 15px rgba(0,240,255,0.2);
 }
 .footer a {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  display: flex; flex-direction: column; align-items: center;
   color: var(--neon-blue);
-  text-decoration: none;
+  font-size: 0.7rem; text-decoration: none;
   transition: 0.3s;
-  font-size: 0.8rem;
 }
-.footer a:hover, .footer a.active {
-  color: var(--neon-pink);
-  transform: scale(1.2);
-}
+.footer a i { font-size: 1.2rem; }
+.footer a:hover, .footer a.active { color: var(--neon-pink); transform: scale(1.2); }
+
 </style>
 </head>
-
 <body>
+
 <header class="header">
   <h1>ZepShop</h1>
   <i class="fas fa-bell"></i>
 </header>
 
-<div class="learn-earn">Earn ZAC by Joining the Learn & Earn Programs!</div>
-
-<div class="live-rates">
-  <span id="ethRate">ETH: Loading...</span>
-  <span id="usdtRate">USDT: Loading...</span>
-</div>
-
-<div class="search-bar">
-  <input type="text" id="searchInput" placeholder="Search products..." onkeyup="filterProducts()">
-  <select id="categoryFilter" onchange="filterProducts()">
-    <option value="all">All Categories</option>
-    <option value="digital">Digital</option>
-    <option value="food">Food</option>
-    <option value="books">Books</option>
-    <option value="cafe">Cafe</option>
-  </select>
+<div class="learn-earn" onclick="window.location.href='learn-earn.html'">
+  Earn ZAC by Joining the Learn & Earn Programs!
 </div>
 
 <div class="wallet-balance" id="walletBalance">
-  <span id="zacBalance">ZAC: 1250</span>
-  <span id="usdtBalance">USDT: 500</span>
-  <span id="ethBalance">ETH: 2</span>
+  <span id="zacBalance">ZAC: 0</span>
+  <span id="usdtBalance">USDT: 0</span>
 </div>
 
 <div class="marketplace" id="marketplace"></div>
 
-<div class="transactions" id="transactions">
-  <h3>Recent Transactions</h3>
-  <div id="txList"></div>
-</div>
-
-<!-- Modal -->
-<div class="modal" id="productModal">
-  <div class="modal-content">
-    <span class="close-btn" onclick="closeModal()">&times;</span>
-    <h3 id="modalTitle"></h3>
-    <p id="modalDesc"></p>
-    <p id="modalPrice"></p>
-    <button onclick="buyProduct()">Buy Now</button>
-    <p id="buyFeedback" style="margin-top:0.5rem;font-weight:600;"></p>
-  </div>
-</div>
-
 <footer class="footer">
-  <a href="wallet-pos.html"><i class="fas fa-cash-register"></i><span>POS</span></a>
-  <a href="chat.html"><i class="fas fa-comments"></i><span>Chat</span></a>
-  <a href="product.html" class="active"><i class="fas fa-layer-group"></i><span>Products</span></a>
+  <a href="dashboard-store.html"><i class="fas fa-store"></i><span>Store</span></a>
+  <a href="dashboard-wallet.html"><i class="fas fa-wallet"></i><span>Wallet</span></a>
+  <a href="learn-earn.html"><i class="fas fa-gift"></i><span>Rewards</span></a>
   <a href="profile.html"><i class="fas fa-user"></i><span>Profile</span></a>
 </footer>
 
 <script>
-const products = [
-  { title: 'Zep Quantum Watch', desc: 'Tracks time across dimensions', image: 'https://images.unsplash.com/photo-1518544889286-abc1d9f8b6d7?auto=format&fit=crop&w=600&q=80', price: 199, currency: 'ZAC', category: 'digital' },
-  { title: 'Neon Drone Pro', desc: 'AI-powered flight stabilization', image: 'https://images.unsplash.com/photo-1606813902771-9b5b4b5b6b1a?auto=format&fit=crop&w=600&q=80', price: 450, currency: 'ZAC', category: 'digital' },
-  { title: 'Zep AR Headset', desc: 'Immersive holographic visuals', image: 'https://images.unsplash.com/photo-1605296867304-46d5465a13f1?auto=format&fit=crop&w=600&q=80', price: 299, currency: 'ZAC', category: 'digital' },
-  { title: 'Cafe Latte', desc: 'Fresh Brew Coffee', image: 'https://images.unsplash.com/photo-1552058544-f2b08422138a?auto=format&fit=crop&w=600&q=80', price: 5, currency: 'USDT', category: 'cafe' }
-];
+// Mocked wallet balances (replace with real API later)
+let wallet = { ZAC: 1250, USDT: 200 };
 
-let wallet = { ZAC: 1250, USDT: 500, ETH: 2 };
-
+// Function to update wallet UI
 function updateWallet() {
   document.getElementById('zacBalance').innerText = `ZAC: ${wallet.ZAC}`;
   document.getElementById('usdtBalance').innerText = `USDT: ${wallet.USDT}`;
-  document.getElementById('ethBalance').innerText = `ETH: ${wallet.ETH}`;
 }
 
-function renderProducts(filter='all', search='') {
-  const grid = document.getElementById('marketplace');
-  grid.innerHTML = '';
-  products.filter(p =>
-    (filter==='all' || p.category===filter) &&
-    p.title.toLowerCase().includes(search.toLowerCase())
-  ).forEach(p => {
-    grid.innerHTML += `
-      <div class="product-card">
-        <img src="${p.image}" alt="${p.title}">
-        <h3>${p.title}</h3>
-        <p>${p.desc}</p>
-        <p class="price">${p.price} ${p.currency}</p>
-        <button onclick="openModal('${p.title}')">Buy Now</button>
-      </div>`;
+// Products: digital (ZAC) & other (USDT)
+const products = [
+  { title: 'Neon NFT', desc: 'Futuristic NFT Art', image: 'https://i.ibb.co/fHBKXx1/neon-nft.png', price: 500, currency: 'ZAC', category: 'digital', link: 'students-listing.html' },
+  { title: 'AI Ebook', desc: 'Learn AI & Blockchain', image: 'https://i.ibb.co/QY2Zx8V/ebook.png', price: 300, currency: 'ZAC', category: 'digital', link: 'students-listing.html' },
+  { title: 'Cafe Latte', desc: 'Fresh Brew Coffee', image: 'https://i.ibb.co/2d4t1Lb/cafe.png', price: 5, currency: 'USDT', category: 'cafe', link: 'vendor-listing.html' },
+  { title: 'Smart Gadget', desc: 'High-tech wearable', image: 'https://i.ibb.co/Sf9Xh7B/gadget.png', price: 50, currency: 'USDT', category: 'gadgets', link: 'vendor-listing.html' },
+];
+
+// Render marketplace
+function renderProducts() {
+  const container = document.getElementById('marketplace');
+  container.innerHTML = '';
+  products.forEach(p => {
+    const card = document.createElement('div');
+    card.classList.add('product-card');
+    card.innerHTML = `
+      <img src="${p.image}" alt="${p.title}">
+      <h3>${p.title}</h3>
+      <p>${p.desc}</p>
+      <p class="price">${p.price} ${p.currency}</p>
+      <button onclick="window.location.href='${p.link}'">View</button>
+    `;
+    container.appendChild(card);
   });
 }
 
-function filterProducts() {
-  const search = document.getElementById('searchInput').value;
-  const cat = document.getElementById('categoryFilter').value;
-  renderProducts(cat, search);
-}
-
-let selectedProduct = null;
-function openModal(title) {
-  selectedProduct = products.find(p => p.title === title);
-  document.getElementById('modalTitle').innerText = selectedProduct.title;
-  document.getElementById('modalDesc').innerText = selectedProduct.desc;
-  document.getElementById('modalPrice').innerText = `Price: ${selectedProduct.price} ${selectedProduct.currency}`;
-  document.getElementById('buyFeedback').innerText = '';
-  document.getElementById('productModal').style.display = 'flex';
-}
-function closeModal() { document.getElementById('productModal').style.display = 'none'; }
-
-function buyProduct() {
-  const c = selectedProduct.currency, price = selectedProduct.price;
-  if(wallet[c] >= price) {
-    wallet[c] -= price;
-    updateWallet();
-    document.getElementById('buyFeedback').innerText = 'Payment Successful!';
-    document.getElementById('buyFeedback').style.color = '#00f0ff';
-  } else {
-    document.getElementById('buyFeedback').innerText = `Insufficient ${c} balance!`;
-    document.getElementById('buyFeedback').style.color = '#ff00f0';
-  }
-}
-
-async function fetchRates() {
-  try {
-    const res = await fetch('https://api.coingecko.com/api/v3/simple/price?ids=ethereum,tether&vs_currencies=usd');
-    const d = await res.json();
-    document.getElementById('ethRate').innerText = `ETH: $${d.ethereum.usd}`;
-    document.getElementById('usdtRate').innerText = `USDT: $${d.tether.usd}`;
-  } catch {
-    document.getElementById('ethRate').innerText = 'ETH: Error';
-    document.getElementById('usdtRate').innerText = 'USDT: Error';
-  }
-}
-
-renderProducts();
+// Initialize
 updateWallet();
-fetchRates();
+renderProducts();
 </script>
+
 </body>
 </html>
