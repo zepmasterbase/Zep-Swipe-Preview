@@ -1,279 +1,220 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Zep Swipe — Africa’s Student Super-App</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Zep Swipe — Africa's Student Super-App</title>
 
-  <!-- Tailwind + Fonts + Icons -->
-  <script src="https://cdn.tailwindcss.com"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700&family=Poppins:wght@400;500;600&display=swap" rel="stylesheet"/>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700&family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
-  <style>
-    body {
-      font-family: 'Poppins', sans-serif;
-      background: radial-gradient(circle at top, #120b2e 0%, #0b0520 100%);
-      color: #fff;
-      margin: 0;
-      padding: 0;
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      text-align: center;
-    }
+<style>
+:root {
+  --neon-blue: #00f0ff;
+  --neon-pink: #ff00f0;
+  --neon-purple: #9b59b6;
+  --neon-green: #3affc1;
+  --glass: rgba(255,255,255,0.05);
+}
 
-    .header {
-      width: 100%;
-      padding: 1rem 1.5rem;
-      position: fixed;
-      top: 0;
-      left: 0;
-      backdrop-filter: blur(10px);
-      background: rgba(15,5,32,0.8);
-      box-shadow: 0 0 20px rgba(0,240,255,0.3);
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      z-index: 50;
-    }
+body {
+  font-family: 'Poppins', sans-serif;
+  margin: 0;
+  background: radial-gradient(circle at top, #120b2e 0%, #0b0520 100%);
+  color: #fff;
+  min-height: 100vh;
+}
 
-    .glass-text {
-      background: linear-gradient(90deg, #00f0ff, #ff00f0);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      font-family: 'Orbitron', sans-serif;
-      font-size: 1.3rem;
-      font-weight: 700;
-      text-shadow: 0 0 15px rgba(0,240,255,0.4);
-    }
+/* Header */
+.header {
+  width: 100%;
+  padding: 1rem 2rem;
+  backdrop-filter: blur(15px);
+  background: rgba(15,5,32,0.85);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 0 25px rgba(0,255,255,0.2);
+}
 
-    .hero {
-      margin-top: 8rem;
-      padding: 2rem 1rem;
-    }
+.header-logo {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 1.8rem;
+  font-weight: 700;
+  background: linear-gradient(90deg, var(--neon-pink), var(--neon-green), var(--neon-blue));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
 
-    .hero img {
-      width: 260px;
-      margin: 2rem auto;
-      filter: drop-shadow(0 0 20px #00f0ff);
-      border-radius: 50%;
-      transition: all 0.4s ease-in-out;
-    }
+.header-menu a {
+  margin-left: 1.5rem;
+  font-weight: 600;
+  color: var(--neon-blue);
+  text-decoration: none;
+  transition: 0.3s;
+}
 
-    .hero img:hover {
-      transform: scale(1.05);
-      filter: drop-shadow(0 0 35px #ff00f0);
-    }
+.header-menu a:hover {
+  color: var(--neon-pink);
+  transform: scale(1.1);
+}
 
-    .hero h2 {
-      font-family: 'Orbitron', sans-serif;
-      font-size: 2rem;
-      background: linear-gradient(90deg, #00f0ff, #ff00f0);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      margin-bottom: 0.5rem;
-    }
+/* Hero Section */
+.hero {
+  text-align: center;
+  padding: 10rem 1rem 5rem 1rem;
+  max-width: 700px;
+  margin: 0 auto;
+}
 
-    .btn {
-      display: block;
-      width: 280px;
-      margin: 0.7rem auto;
-      padding: 0.75rem;
-      border-radius: 1rem;
-      text-align: center;
-      font-weight: 500;
-      transition: all 0.3s ease;
-      cursor: pointer;
-    }
+.hero img {
+  width: 200px;
+  border-radius: 50%;
+  margin-bottom: 1rem;
+  filter: drop-shadow(0 0 15px var(--neon-blue));
+}
 
-    .btn-gradient {
-      background: linear-gradient(90deg, #00f0ff, #ff00f0);
-      color: #0b0520;
-    }
+.hero h1 {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 2.5rem;
+  background: linear-gradient(90deg, var(--neon-blue), var(--neon-pink));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin-bottom: 1rem;
+}
 
-    .btn-gradient:hover {
-      transform: scale(1.05);
-    }
+.hero p {
+  color: #c0bdf4;
+  font-size: 1rem;
+  margin-bottom: 2rem;
+  line-height: 1.6;
+}
 
-    .btn-outline {
-      border: 2px solid #7c63ff;
-      color: #c0bdf4;
-    }
+/* Buttons */
+.btn {
+  display: inline-block;
+  padding: 0.75rem 2rem;
+  border-radius: 1rem;
+  font-weight: 600;
+  margin: 0.5rem;
+  transition: 0.3s;
+  cursor: pointer;
+}
 
-    .btn-outline:hover {
-      background: rgba(124,99,255,0.15);
-      transform: scale(1.03);
-    }
+.btn-gradient {
+  background: linear-gradient(90deg, var(--neon-blue), var(--neon-pink));
+  color: #0b0520;
+}
 
-    .footer {
-      width: 100%;
-      position: fixed;
-      bottom: 0;
-      left: 0;
-      backdrop-filter: blur(8px);
-      background: rgba(15,5,32,0.7);
-      display: flex;
-      justify-content: center;
-      gap: 1.5rem;
-      padding: 0.7rem 0;
-      box-shadow: 0 -2px 20px rgba(255,0,240,0.2);
-    }
+.btn-gradient:hover {
+  transform: scale(1.05);
+}
 
-    .footer i {
-      font-size: 1.6rem;
-      color: #00f0ff;
-      transition: 0.3s;
-    }
+.btn-outline {
+  border: 2px solid var(--neon-purple);
+  color: var(--neon-purple);
+}
 
-    .footer i:hover {
-      color: #ff00f0;
-      transform: scale(1.2);
-    }
+.btn-outline:hover {
+  background: rgba(155,89,182,0.2);
+  transform: scale(1.03);
+}
 
-    input {
-      color: #00f0ff;
-      background: rgba(255,255,255,0.1);
-      border-radius: 0.75rem;
-      border: none;
-      width: 80%;
-      padding: 0.75rem;
-      margin: 0.5rem auto;
-      display: block;
-      text-align: center;
-    }
+/* Sections */
+.section {
+  max-width: 900px;
+  margin: 4rem auto;
+  padding: 0 1rem;
+  text-align: center;
+}
 
-    #otpSection {
-      display: none;
-    }
-  </style>
+.section h2 {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 2rem;
+  color: var(--neon-green);
+  margin-bottom: 1rem;
+}
+
+.section p {
+  color: #c0bdf4;
+  line-height: 1.6;
+}
+
+/* Glass placeholders */
+.glass-card {
+  background: var(--glass);
+  backdrop-filter: blur(20px);
+  border-radius: 1.5rem;
+  padding: 2rem;
+  margin: 1.5rem auto;
+  max-width: 400px;
+  box-shadow: 0 0 25px rgba(0,255,255,0.2);
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.glass-card:hover {
+  transform: scale(1.03);
+  box-shadow: 0 0 35px var(--neon-pink);
+}
+
+/* Footer */
+.footer {
+  margin-top: 4rem;
+  padding: 2rem 1rem;
+  text-align: center;
+  color: #888;
+  font-size: 0.9rem;
+}
+.footer a {
+  color: var(--neon-pink);
+  margin: 0 0.5rem;
+  text-decoration: none;
+}
+.footer a:hover {
+  color: var(--neon-blue);
+}
+</style>
 </head>
 
 <body>
 
-  <!-- Header -->
-  <header class="header">
-    <div class="glass-text">🛍️ ZepShop Coming Soon</div>
-  </header>
+<!-- Header -->
+<header class="header">
+  <div class="header-logo">Zep Swipe</div>
+  <div class="header-menu">
+    <a href="signup.html">Sign Up</a>
+    <a href="login.html">Login</a>
+    <a href="#how-it-works">How It Works</a>
+  </div>
+</header>
 
-  <!-- Hero -->
-  <section class="hero">
-    <img src="https://cdn.dribbble.com/users/1162077/screenshots/15698276/media/83a8cc7c2d47b1b08173c0d35e89062b.gif" alt="Neon Student Illustration"/>
-    <h2>Learn. Earn. Trade. 🔥</h2>
-    <p class="text-[#c0bdf4] max-w-md mx-auto">Your Digital Student Life Starts Here.  
-      Connect your wallet or continue with your mobile number.</p>
+<!-- Hero -->
+<section class="hero">
+  <img src="https://cdn-icons-png.flaticon.com/512/706/706830.png" alt="Student Neon">
+  <h1>Earn. Learn. Get Rewarded.</h1>
+  <p>Join our early access program — build your profile, earn tokens, and get ready for the upcoming ZepShop Marketplace.</p>
+  <a href="signup.html" class="btn btn-gradient">Join the Beta</a>
+  <a href="login.html" class="btn btn-outline">Login</a>
+</section>
 
-    <button class="btn btn-gradient" onclick="connectWallet()"><i class="fas fa-wallet mr-2"></i> Connect Wallet</button>
-    <div>
-      <input id="phoneNumber" type="text" placeholder="+234 800 000 0000" />
-      <div id="recaptcha-container"></div>
-      <button class="btn btn-outline" id="sendOtpBtn" onclick="sendOTP()">Send OTP</button>
-    </div>
+<!-- How It Works -->
+<section class="section" id="how-it-works">
+  <h2>How It Works</h2>
+  <p>1️⃣ Build your profile → 2️⃣ Earn tokens through activities → 3️⃣ Redeem rewards in our Marketplace (coming soon).</p>
+  <div class="glass-card">ZepShop Marketplace Coming Soon</div>
+  <div class="glass-card">Rewards Wallet Preview</div>
+</section>
 
-    <div id="otpSection">
-      <input id="otpCode" type="text" placeholder="Enter OTP Code" />
-      <button class="btn btn-gradient" onclick="verifyOTP()">Verify & Login</button>
-    </div>
-  </section>
+<!-- Footer -->
+<footer class="footer">
+  Follow us:
+  <a href="https://www.instagram.com/zepswipe?igsh=bXF3anMxODhxZWFs" target="_blank"><i class="fab fa-instagram"></i></a>
+  <a href="https://x.com/ZepSwipe?t=r94a0_pgN7ew1xT5L4eOSA&s=09" target="_blank"><i class="fab fa-x-twitter"></i></a>
+  <a href="https://x.com/ZepSwipe?t=r94a0_pgN7ew1xT5L4eOSA&s=09" target="_blank"><i class="fab fa-facebook"></i></a>
+  <p>Contact: support@zepswipe.com</p>
+</footer>
 
-  <!-- Footer Socials -->
-  <footer class="footer">
-    <a href="https://www.instagram.com/zepswipe?igsh=bXF3anMxODhxZWFs" target="_blank"><i class="fab fa-instagram"></i></a>
-    <a href="https://x.com/ZepSwipe?t=r94a0_pgN7ew1xT5L4eOSA&s=09" target="_blank"><i class="fab fa-x-twitter"></i></a>
-    <a href="https://facebook.com/ZepSwipe" target="_blank"><i class="fab fa-facebook"></i></a>
-  </footer>
-
-  <!-- Firebase + Web3 Scripts -->
-  <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.2/firebase-app.js";
-    import { getAuth, RecaptchaVerifier, signInWithPhoneNumber } from "https://www.gstatic.com/firebasejs/10.7.2/firebase-auth.js";
-    import { getFirestore, doc, setDoc } from "https://www.gstatic.com/firebasejs/10.7.2/firebase-firestore.js";
-
-    // Firebase Config
-    const firebaseConfig = {
-      apiKey: "AIzaSyBxAQxTvuPCYVAG3eQu4MQfxHRWJB9Q3wI",
-      authDomain: "zep-swipe-6cb53.firebaseapp.com",
-      projectId: "zep-swipe-6cb53",
-      storageBucket: "zep-swipe-6cb53.firebasestorage.app",
-      messagingSenderId: "895701529881",
-      appId: "1:895701529881:web:81c6e3e420bfe6cb7dc188",
-      measurementId: "G-L48WTHMKKZ"
-    };
-
-    const app = initializeApp(firebaseConfig);
-    const auth = getAuth(app);
-    const db = getFirestore(app);
-
-    // ReCAPTCHA setup
-    window.recaptchaVerifier = new RecaptchaVerifier(auth, "recaptcha-container", {
-      size: "invisible",
-      callback: () => {
-        console.log("reCAPTCHA verified");
-      }
-    });
-
-    let confirmationResult;
-
-    // Send OTP
-    window.sendOTP = async function () {
-      const phone = document.getElementById("phoneNumber").value;
-      if (!phone) return alert("Please enter your phone number.");
-
-      try {
-        confirmationResult = await signInWithPhoneNumber(auth, phone, window.recaptchaVerifier);
-        document.getElementById("otpSection").style.display = "block";
-        alert("OTP sent successfully!");
-      } catch (error) {
-        console.error(error);
-        alert(error.message);
-      }
-    };
-
-    // Verify OTP
-    window.verifyOTP = async function () {
-      const code = document.getElementById("otpCode").value;
-      if (!code) return alert("Enter the OTP code.");
-
-      try {
-        const result = await confirmationResult.confirm(code);
-        const user = result.user;
-
-        // Save or update user record
-        await setDoc(doc(db, "users", user.uid), {
-          phone: user.phoneNumber,
-          createdAt: new Date(),
-        }, { merge: true });
-
-        alert("Login successful!");
-        window.location.href = "student-dashboard.html";
-      } catch (error) {
-        console.error(error);
-        alert("Invalid OTP. Try again.");
-      }
-    };
-
-    // Wallet Connect
-    window.connectWallet = async function () {
-      if (window.ethereum) {
-        try {
-          const accounts = await window.ethereum.request({ method: "eth_requestAccounts" });
-          const walletAddress = accounts[0];
-          alert("Wallet Connected: " + walletAddress);
-
-          await setDoc(doc(db, "wallets", walletAddress), {
-            wallet: walletAddress,
-            connectedAt: new Date(),
-          }, { merge: true });
-
-          window.location.href = "vendor-dashboard.html";
-        } catch (err) {
-          console.error(err);
-          alert("Wallet connection failed.");
-        }
-      } else {
-        alert("Please install MetaMask or Coinbase Wallet to continue.");
-      }
-    };
-  </script>
 </body>
 </html>
