@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Zep Swipe — Earn. Learn. Get Rewarded.</title>
 
-  <!-- Tailwind + Fonts + Icons -->
+  <!-- Tailwind + Fonts -->
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700&family=Poppins:wght@400;500;600&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
@@ -13,7 +13,7 @@
   <style>
     body {
       font-family: 'Poppins', sans-serif;
-      background: radial-gradient(circle at top, #0a021b 0%, #10062a 100%);
+      background: radial-gradient(circle at top, #09011a 0%, #0d0326 100%);
       color: #fff;
       margin: 0;
       min-height: 100vh;
@@ -72,15 +72,17 @@
       text-align: center;
       padding: 1rem;
     }
+
     .hero h1 {
       font-family: 'Orbitron', sans-serif;
-      font-size: 1.9rem;
+      font-size: 2rem;
       font-weight: 700;
       background: linear-gradient(90deg, #ff00ff, #ff66ff, #00ffff);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       text-shadow: 0 0 15px rgba(255, 0, 240, 0.4);
     }
+
     .hero p {
       max-width: 320px;
       margin: 0.8rem auto 1.8rem;
@@ -89,7 +91,7 @@
       line-height: 1.6;
     }
 
-    /* Neon Circle Image */
+    /* Neon Circle Student Icon */
     .neon-circle {
       width: 180px;
       height: 180px;
@@ -98,13 +100,18 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      background: radial-gradient(circle at 30% 30%, rgba(255, 0, 240, 0.2), rgba(0, 255, 255, 0.05));
+      background: radial-gradient(circle at 30% 30%, rgba(255, 0, 240, 0.15), rgba(0, 255, 255, 0.05));
       box-shadow: 0 0 20px rgba(255, 0, 240, 0.3), 0 0 40px rgba(0, 255, 255, 0.3);
-      border: 2px solid rgba(255, 255, 255, 0.15);
+      border: 2px solid rgba(255, 255, 255, 0.1);
     }
-    .neon-circle img {
+
+    .neon-circle svg {
       width: 100px;
-      filter: drop-shadow(0 0 15px rgba(255, 0, 240, 0.6));
+      height: 100px;
+      stroke: #c366ff;
+      stroke-width: 2;
+      fill: none;
+      filter: drop-shadow(0 0 12px rgba(195, 102, 255, 0.8));
     }
 
     /* Buttons */
@@ -164,6 +171,13 @@
       color: #ff00ff;
       transform: scale(1.1);
     }
+
+    .x-icon {
+      width: 20px;
+      height: 20px;
+      vertical-align: middle;
+      filter: drop-shadow(0 0 6px rgba(255, 0, 240, 0.5));
+    }
   </style>
 </head>
 
@@ -181,7 +195,12 @@
     <p>Join our early access program — build your profile, earn tokens, and get ready for our upcoming marketplace.</p>
 
     <div class="neon-circle">
-      <img src="https://cdn-icons-png.flaticon.com/512/706/706830.png" alt="Student Neon Icon" />
+      <!-- Violet Student Outline SVG -->
+      <svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
+        <path d="M32 4L4 16l28 12 28-12L32 4zm0 24v24M20 52c0 0 4 8 12 8s12-8 12-8" />
+        <circle cx="32" cy="32" r="8" />
+        <path d="M16 44c0-8 32-8 32 0" />
+      </svg>
     </div>
 
     <a href="signup.html" class="btn btn-primary">JOIN THE BETA</a>
@@ -194,7 +213,13 @@
   <!-- FOOTER -->
   <footer>
     <div>
-      <a href="https://x.com/ZepSwipe?t=r94a0_pgN7ew1xT5L4eOSA&s=09" target="_blank"><i class="fab fa-x-twitter fa-lg"></i></a>
+      <!-- X (Twitter) Icon -->
+      <a href="https://x.com/ZepSwipe?t=r94a0_pgN7ew1xT5L4eOSA&s=09" target="_blank">
+        <svg class="x-icon" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 1200 1227">
+          <path d="M714.163 519.284L1160.89 0H1059.8L667.137 450.887L356.69 0H0L468.083 681.821L0 1226.37H101.092L515.217 742.218L843.31 1226.37H1200L714.137 519.284H714.163ZM568.62 678.955L521.693 610.258L138.042 79.5628H305.946L608.883 514.912L655.81 583.609L1059.84 1150.49H891.936L568.62 678.955Z"/>
+        </svg>
+      </a>
+
       <a href="https://www.instagram.com/zepswipe?igsh=bXF3anMxODhxZWFs" target="_blank"><i class="fab fa-instagram fa-lg"></i></a>
       <a href="https://facebook.com/ZepSwipe" target="_blank"><i class="fab fa-facebook fa-lg"></i></a>
     </div>
