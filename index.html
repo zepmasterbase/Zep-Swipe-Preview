@@ -1,201 +1,201 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Zep Swipe — Africa's Student Super-App</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Zep Swipe — Learn. Earn. Get Rewarded.</title>
 
-<!-- Tailwind CSS -->
-<script src="https://cdn.tailwindcss.com"></script>
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700&family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <!-- Tailwind CSS + Fonts -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700&family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
-<style>
-body {
-  font-family: 'Poppins', sans-serif;
-  margin: 0;
-  background: radial-gradient(circle at top, #120b2e 0%, #0b0520 100%);
-  color: #fff;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-}
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: radial-gradient(circle at top, #0b0520 0%, #120b2e 100%);
+      color: #fff;
+      margin: 0;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      overflow-x: hidden;
+    }
 
-/* Header */
-.header {
-  width: 100%;
-  padding: 1rem 2rem;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  backdrop-filter: blur(15px);
-  background: rgba(15,5,32,0.85);
-  box-shadow: 0 0 25px rgba(0,255,255,0.2);
-  position: fixed;
-  top: 0;
-  z-index: 50;
-  border-radius: 0 0 1.5rem 1.5rem;
-}
-.header-left h1 {
-  font-family: 'Orbitron', sans-serif;
-  font-size: 1.5rem;
-  font-weight: 700;
-  background: linear-gradient(90deg, #ff00f0, #00f0ff);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-.header-right {
-  display: flex;
-  gap: 1rem;
-  align-items: center;
-}
-.header-right a i {
-  font-size: 1.5rem;
-  color: #00f0ff;
-  transition: 0.3s;
-}
-.header-right a i:hover {
-  color: #ff00f0;
-}
+    /* HEADER */
+    header {
+      width: 100%;
+      position: fixed;
+      top: 0;
+      left: 0;
+      backdrop-filter: blur(10px);
+      background: rgba(15,5,32,0.85);
+      box-shadow: 0 0 25px rgba(255,0,240,0.25);
+      padding: 1rem 1.5rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      z-index: 50;
+    }
+    .logo {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 1.6rem;
+      font-weight: 700;
+      background: linear-gradient(90deg, #ff00f0, #00ffcc, #9b59b6);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      letter-spacing: 1px;
+      text-shadow: 0 0 15px rgba(255,0,240,0.5);
+    }
+    .login-btn {
+      border: 2px solid rgba(255,255,255,0.2);
+      border-radius: 1rem;
+      padding: 0.4rem 1.2rem;
+      font-weight: 600;
+      background: rgba(255,255,255,0.05);
+      color: #fff;
+      transition: 0.3s;
+    }
+    .login-btn:hover {
+      background: linear-gradient(90deg, #ff00f0, #00ffcc);
+      color: #0b0520;
+      transform: scale(1.05);
+      box-shadow: 0 0 15px rgba(255,0,240,0.6);
+    }
 
-/* Hero Section */
-.hero {
-  margin-top: 6rem;
-  text-align: center;
-  padding: 2rem 1rem;
-}
-.hero img {
-  width: 220px;
-  margin: 1rem auto;
-  border-radius: 50%;
-  animation: float 3s ease-in-out infinite alternate;
-  filter: drop-shadow(0 0 15px #00f0ff);
-}
-@keyframes float {
-  0% { transform: translateY(0px); }
-  100% { transform: translateY(-15px); }
-}
-.hero h2 {
-  font-family: 'Orbitron', sans-serif;
-  font-size: 2rem;
-  background: linear-gradient(90deg, #00f0ff, #ff00f0);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  margin: 0.5rem 0;
-}
-.hero p {
-  color: #c0bdf4;
-  font-size: 1rem;
-  max-width: 400px;
-  margin: 0.5rem auto 2rem;
-  line-height: 1.5;
-}
+    /* HERO */
+    .hero {
+      margin-top: 7rem;
+      text-align: center;
+      padding: 1.5rem;
+    }
+    .hero img {
+      width: 240px;
+      margin: 0 auto 1rem;
+      filter: drop-shadow(0 0 25px #00f0ff);
+      border-radius: 50%;
+    }
+    .hero h1 {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 2rem;
+      margin-bottom: 0.5rem;
+      background: linear-gradient(90deg, #ff00f0, #00ffcc, #9b59b6);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .hero p {
+      color: #c0bdf4;
+      font-size: 1rem;
+      max-width: 340px;
+      margin: 0.5rem auto 2rem;
+      line-height: 1.6;
+    }
 
-/* Buttons */
-.btn {
-  display: inline-block;
-  padding: 0.75rem 2rem;
-  margin: 0.5rem;
-  font-weight: 600;
-  border-radius: 1rem;
-  cursor: pointer;
-  transition: all 0.3s ease-in-out;
-}
+    /* BUTTONS */
+    .btn {
+      display: block;
+      width: 260px;
+      margin: 0.5rem auto;
+      padding: 0.75rem;
+      border-radius: 1rem;
+      text-align: center;
+      font-weight: 600;
+      transition: all 0.3s ease;
+      cursor: pointer;
+    }
+    .btn-primary {
+      background: linear-gradient(90deg, #00ffcc, #ff00f0);
+      color: #0b0520;
+      box-shadow: 0 0 15px rgba(255,0,240,0.3);
+    }
+    .btn-primary:hover {
+      background: linear-gradient(90deg, #ff00f0, #9b59b6);
+      box-shadow: 0 0 25px rgba(255,0,240,0.7);
+      transform: scale(1.05);
+    }
+    .btn-outline {
+      border: 2px solid #00f0ff;
+      color: #00f0ff;
+    }
+    .btn-outline:hover {
+      background: rgba(0,240,255,0.1);
+      box-shadow: 0 0 10px rgba(0,240,255,0.4);
+      transform: scale(1.03);
+    }
 
-/* Neon Gradient Toned-down */
-.btn-gradient {
-  background: linear-gradient(90deg, #ff00f0, #00f0ff, #3affc1);
-  color: #0b0520;
-  box-shadow: 0 0 5px #ff00f0, 0 0 10px #00f0ff, 0 0 15px #3affc1;
-}
-.btn-gradient:hover {
-  transform: scale(1.05);
-  background: linear-gradient(90deg, #ff00f0, #3affc1, #9b59b6);
-  box-shadow: 0 0 15px #ff00f0, 0 0 25px #3affc1, 0 0 35px #9b59b6;
-}
-.btn-gradient:active {
-  transform: scale(1.02);
-  box-shadow: 0 0 20px #ff00f0, 0 0 30px #3affc1, 0 0 40px #9b59b6;
-}
+    /* GLASS PLACEHOLDER */
+    .placeholder {
+      margin: 2rem auto;
+      max-width: 320px;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 1rem;
+      padding: 1rem;
+      text-align: center;
+      backdrop-filter: blur(10px);
+      box-shadow: 0 0 25px rgba(0,255,255,0.2);
+      font-family: 'Orbitron', sans-serif;
+      font-size: 1rem;
+      color: #00f0ff;
+      animation: glow 2s infinite alternate;
+    }
 
-/* Glass placeholder */
-.glass-card {
-  margin: 2rem auto;
-  padding: 1.5rem 2rem;
-  max-width: 300px;
-  backdrop-filter: blur(15px);
-  background: rgba(255,255,255,0.05);
-  border-radius: 1.5rem;
-  box-shadow: 0 0 25px rgba(255,255,255,0.1);
-  text-align: center;
-  font-weight: 600;
-  color: #fff;
-  border: 1px solid rgba(255,255,255,0.2);
-}
+    @keyframes glow {
+      0% { box-shadow: 0 0 10px rgba(0,255,255,0.2); }
+      100% { box-shadow: 0 0 25px rgba(255,0,240,0.4); }
+    }
 
-/* Footer */
-.footer {
-  display: flex;
-  justify-content: center;
-  gap: 2rem;
-  padding: 1rem;
-  margin-top: auto;
-}
-.footer a i {
-  font-size: 1.5rem;
-  color: #00f0ff;
-  transition: 0.3s;
-}
-.footer a i:hover {
-  color: #ff00f0;
-}
-
-/* Responsive */
-@media(max-width:640px){
-  .hero h2 { font-size:1.5rem; }
-  .hero p { max-width: 280px; font-size:0.9rem; }
-}
-</style>
+    /* FOOTER */
+    footer {
+      margin-top: auto;
+      padding: 1rem 0 1.5rem;
+      text-align: center;
+      color: #c0bdf4;
+    }
+    footer a {
+      color: #00f0ff;
+      margin: 0 0.5rem;
+      transition: 0.3s;
+    }
+    footer a:hover {
+      color: #ff00f0;
+      transform: scale(1.1);
+    }
+  </style>
 </head>
+
 <body>
 
-<!-- Header -->
-<header class="header flex justify-between items-center">
-  <div class="header-left">
-    <h1>Zep Swipe</h1>
-  </div>
-  <div class="header-right flex gap-4">
-    <a href="signup.html"><i class="fas fa-user-plus" title="Sign Up"></i></a>
-    <a href="login.html"><i class="fas fa-sign-in-alt" title="Login"></i></a>
-    <a href="https://www.instagram.com/zepswipe?igsh=bXF3anMxODhxZWFs" target="_blank"><i class="fab fa-instagram"></i></a>
-    <a href="https://x.com/ZepSwipe?t=r94a0_pgN7ew1xT5L4eOSA&s=09" target="_blank"><i class="fab fa-twitter"></i></a>
-    <a href="https://www.facebook.com/ZepSwipe" target="_blank"><i class="fab fa-facebook"></i></a>
-  </div>
-</header>
+  <!-- HEADER -->
+  <header>
+    <div class="logo">Zep Swipe</div>
+    <a href="login.html" class="login-btn">Login</a>
+  </header>
 
-<!-- Hero -->
-<section class="hero">
-  <img src="https://cdn-icons-png.flaticon.com/512/706/706830.png" alt="Web3 Student Illustration">
-  <h2>Earn. Learn. Get Rewarded.</h2>
-  <p>Join our early access program — build your profile, earn tokens, and get ready for our upcoming marketplace.</p>
-  <div>
-    <a href="signup.html" class="btn btn-gradient">Join the Beta</a>
-    <a href="login.html" class="btn btn-gradient">Login</a>
-  </div>
-</section>
+  <!-- HERO SECTION -->
+  <section class="hero">
+    <img src="https://cdn-icons-png.flaticon.com/512/706/706830.png" alt="Neon Student Illustration" />
+    <h1>Earn. Learn. Get Rewarded.</h1>
+    <p>Join the next generation of African students and vendors — learn, earn tokens, and get ready for the <span class="text-[#ff00f0] font-semibold">ZepShop Marketplace</span>.</p>
 
-<!-- Marketplace Glass Placeholder -->
-<div class="glass-card">
-  ZepShop Marketplace Coming Soon
-</div>
+    <a href="signup.html" class="btn btn-primary">Join the Beta</a>
+    <a href="login.html" class="btn btn-outline">Login</a>
+  </section>
 
-<!-- Footer -->
-<footer class="footer">
-  <a href="#"><i class="fas fa-home"></i></a>
-  <a href="#"><i class="fas fa-wallet"></i></a>
-  <a href="#"><i class="fas fa-store"></i></a>
-  <a href="#"><i class="fas fa-user"></i></a>
-</footer>
+  <!-- GLASS PLACEHOLDER -->
+  <div class="placeholder">ZepShop Marketplace Coming Soon</div>
+
+  <!-- FOOTER -->
+  <footer>
+    <p>Connect with us</p>
+    <div>
+      <a href="https://x.com/ZepSwipe" target="_blank"><i class="fab fa-x-twitter fa-lg"></i></a>
+      <a href="https://www.instagram.com/zepswipe" target="_blank"><i class="fab fa-instagram fa-lg"></i></a>
+      <a href="https://facebook.com/zepswipe" target="_blank"><i class="fab fa-facebook fa-lg"></i></a>
+    </div>
+    <p class="mt-2 text-sm opacity-70">© 2025 Zep Swipe. All Rights Reserved.</p>
+  </footer>
 
 </body>
 </html>
