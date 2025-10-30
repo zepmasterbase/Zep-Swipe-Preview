@@ -3,17 +3,17 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Zep Swipe — Learn. Earn. Get Rewarded.</title>
+  <title>Zep Swipe — Earn. Learn. Get Rewarded.</title>
 
-  <!-- Tailwind CSS + Fonts -->
+  <!-- Tailwind + Fonts + Icons -->
   <script src="https://cdn.tailwindcss.com"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700&family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700&family=Poppins:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
 
   <style>
     body {
       font-family: 'Poppins', sans-serif;
-      background: radial-gradient(circle at top, #0b0520 0%, #120b2e 100%);
+      background: radial-gradient(circle at top, #0a021b 0%, #10062a 100%);
       color: #fff;
       margin: 0;
       min-height: 100vh;
@@ -23,149 +23,145 @@
       overflow-x: hidden;
     }
 
-    /* HEADER */
+    /* Header */
     header {
       width: 100%;
       position: fixed;
       top: 0;
       left: 0;
-      backdrop-filter: blur(10px);
-      background: rgba(15,5,32,0.85);
-      box-shadow: 0 0 25px rgba(255,0,240,0.25);
-      padding: 1rem 1.5rem;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      z-index: 50;
+      padding: 1rem 1.5rem;
+      backdrop-filter: blur(10px);
+      background: rgba(10, 2, 27, 0.8);
+      box-shadow: 0 0 25px rgba(255, 0, 240, 0.3);
+      z-index: 100;
     }
+
     .logo {
       font-family: 'Orbitron', sans-serif;
-      font-size: 1.6rem;
+      font-size: 1.5rem;
       font-weight: 700;
-      background: linear-gradient(90deg, #ff00f0, #00ffcc, #9b59b6);
+      background: linear-gradient(90deg, #00ffff, #ff00ff);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
-      letter-spacing: 1px;
-      text-shadow: 0 0 15px rgba(255,0,240,0.5);
+      text-shadow: 0 0 15px rgba(0, 255, 255, 0.5);
     }
+
     .login-btn {
-      border: 2px solid rgba(255,255,255,0.2);
-      border-radius: 1rem;
-      padding: 0.4rem 1.2rem;
+      padding: 0.4rem 1rem;
+      border-radius: 9999px;
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      color: #ff00ff;
+      background: rgba(255, 255, 255, 0.05);
       font-weight: 600;
-      background: rgba(255,255,255,0.05);
-      color: #fff;
+      font-size: 0.9rem;
       transition: 0.3s;
     }
     .login-btn:hover {
-      background: linear-gradient(90deg, #ff00f0, #00ffcc);
+      background: linear-gradient(90deg, #ff00ff, #00ffff);
       color: #0b0520;
       transform: scale(1.05);
-      box-shadow: 0 0 15px rgba(255,0,240,0.6);
+      box-shadow: 0 0 20px rgba(255, 0, 240, 0.6);
     }
 
-    /* HERO */
+    /* Hero */
     .hero {
-      margin-top: 7rem;
+      margin-top: 8rem;
       text-align: center;
-      padding: 1.5rem;
-    }
-    .hero img {
-      width: 260px;
-      margin: 0 auto 1.5rem;
-      border-radius: 50%;
-      border: 2px solid rgba(255,255,255,0.1);
-      box-shadow: 0 0 25px rgba(0,255,255,0.3);
-      transition: transform 0.4s ease;
-    }
-    .hero img:hover {
-      transform: scale(1.05);
-      box-shadow: 0 0 40px rgba(255,0,240,0.4);
+      padding: 1rem;
     }
     .hero h1 {
       font-family: 'Orbitron', sans-serif;
-      font-size: 2rem;
-      margin-bottom: 0.5rem;
-      background: linear-gradient(90deg, #ff00f0, #00ffcc, #9b59b6);
+      font-size: 1.9rem;
+      font-weight: 700;
+      background: linear-gradient(90deg, #ff00ff, #ff66ff, #00ffff);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
+      text-shadow: 0 0 15px rgba(255, 0, 240, 0.4);
     }
     .hero p {
-      color: #c0bdf4;
+      max-width: 320px;
+      margin: 0.8rem auto 1.8rem;
       font-size: 1rem;
-      max-width: 340px;
-      margin: 0.5rem auto 2rem;
+      color: #bdbaf9;
       line-height: 1.6;
     }
 
-    /* BUTTONS */
+    /* Neon Circle Image */
+    .neon-circle {
+      width: 180px;
+      height: 180px;
+      margin: 1.5rem auto 2rem;
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: radial-gradient(circle at 30% 30%, rgba(255, 0, 240, 0.2), rgba(0, 255, 255, 0.05));
+      box-shadow: 0 0 20px rgba(255, 0, 240, 0.3), 0 0 40px rgba(0, 255, 255, 0.3);
+      border: 2px solid rgba(255, 255, 255, 0.15);
+    }
+    .neon-circle img {
+      width: 100px;
+      filter: drop-shadow(0 0 15px rgba(255, 0, 240, 0.6));
+    }
+
+    /* Buttons */
     .btn {
       display: block;
-      width: 260px;
-      margin: 0.5rem auto;
-      padding: 0.75rem;
-      border-radius: 1rem;
+      width: 280px;
+      margin: 0.7rem auto;
+      padding: 0.8rem;
+      border-radius: 9999px;
       text-align: center;
       font-weight: 600;
-      transition: all 0.3s ease;
-      cursor: pointer;
-    }
-    .btn-primary {
-      background: linear-gradient(90deg, #00ffcc, #ff00f0);
-      color: #0b0520;
-      box-shadow: 0 0 15px rgba(255,0,240,0.3);
-    }
-    .btn-primary:hover {
-      background: linear-gradient(90deg, #ff00f0, #9b59b6);
-      box-shadow: 0 0 25px rgba(255,0,240,0.7);
-      transform: scale(1.05);
-    }
-    .btn-outline {
-      border: 2px solid #00f0ff;
-      color: #00f0ff;
-    }
-    .btn-outline:hover {
-      background: rgba(0,240,255,0.1);
-      box-shadow: 0 0 10px rgba(0,240,255,0.4);
-      transform: scale(1.03);
-    }
-
-    /* GLASS PLACEHOLDER */
-    .placeholder {
-      margin: 2rem auto;
-      max-width: 320px;
-      background: rgba(255,255,255,0.05);
-      border: 1px solid rgba(255,255,255,0.1);
-      border-radius: 1rem;
-      padding: 1rem;
-      text-align: center;
-      backdrop-filter: blur(10px);
-      box-shadow: 0 0 25px rgba(0,255,255,0.2);
-      font-family: 'Orbitron', sans-serif;
-      font-size: 1rem;
-      color: #00f0ff;
-      animation: glow 2s infinite alternate;
-    }
-
-    @keyframes glow {
-      0% { box-shadow: 0 0 10px rgba(0,255,255,0.2); }
-      100% { box-shadow: 0 0 25px rgba(255,0,240,0.4); }
-    }
-
-    /* FOOTER */
-    footer {
-      margin-top: auto;
-      padding: 1rem 0 1.5rem;
-      text-align: center;
-      color: #c0bdf4;
-    }
-    footer a {
-      color: #00f0ff;
-      margin: 0 0.6rem;
       transition: 0.3s;
     }
+
+    .btn-primary {
+      background: linear-gradient(90deg, #00ffff, #ff00ff);
+      color: #0b0520;
+      box-shadow: 0 0 20px rgba(255, 0, 240, 0.4);
+    }
+    .btn-primary:hover {
+      background: linear-gradient(90deg, #ff00ff, #00ffcc);
+      transform: scale(1.05);
+      box-shadow: 0 0 30px rgba(255, 0, 240, 0.6);
+    }
+
+    .placeholder {
+      margin: 2rem auto;
+      max-width: 300px;
+      padding: 1rem;
+      text-align: center;
+      border-radius: 1rem;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      background: rgba(255, 255, 255, 0.05);
+      color: #bdbaf9;
+      box-shadow: 0 0 20px rgba(0, 255, 255, 0.2);
+      font-weight: 600;
+      font-family: 'Orbitron', sans-serif;
+      font-size: 0.9rem;
+      line-height: 1.4;
+    }
+
+    /* Footer */
+    footer {
+      text-align: center;
+      margin-top: auto;
+      padding: 1.5rem 0;
+      color: #bdbaf9;
+    }
+
+    footer a {
+      margin: 0 0.6rem;
+      color: #00ffff;
+      transition: 0.3s;
+    }
+
     footer a:hover {
-      color: #ff00f0;
+      color: #ff00ff;
       transform: scale(1.1);
     }
   </style>
@@ -175,33 +171,34 @@
 
   <!-- HEADER -->
   <header>
-    <div class="logo">Zep Swipe</div>
-    <a href="login.html" class="login-btn">Login</a>
+    <div class="logo">ZEP SWIPE</div>
+    <a href="login.html" class="login-btn">LOGIN</a>
   </header>
 
-  <!-- HERO SECTION -->
+  <!-- HERO -->
   <section class="hero">
-    <!-- Updated mockup image -->
-    <img src="A_digital_rendering_showcases_a_smartphone_display.png" alt="Zep Swipe Mockup" />
     <h1>Earn. Learn. Get Rewarded.</h1>
-    <p>Join the next generation of African students and vendors — learn, earn tokens, and get ready for the <span class="text-[#ff00f0] font-semibold">ZepShop Marketplace</span>.</p>
+    <p>Join our early access program — build your profile, earn tokens, and get ready for our upcoming marketplace.</p>
 
-    <a href="signup.html" class="btn btn-primary">Join the Beta</a>
-    <a href="login.html" class="btn btn-outline">Login</a>
+    <div class="neon-circle">
+      <img src="https://cdn-icons-png.flaticon.com/512/706/706830.png" alt="Student Neon Icon" />
+    </div>
+
+    <a href="signup.html" class="btn btn-primary">JOIN THE BETA</a>
+
+    <div class="placeholder">
+      ZEP SHOP MARKETPLACE<br>COMING SOON
+    </div>
   </section>
-
-  <!-- GLASS PLACEHOLDER -->
-  <div class="placeholder">ZepShop Marketplace Coming Soon</div>
 
   <!-- FOOTER -->
   <footer>
-    <p>Connect with us</p>
     <div>
       <a href="https://x.com/ZepSwipe?t=r94a0_pgN7ew1xT5L4eOSA&s=09" target="_blank"><i class="fab fa-x-twitter fa-lg"></i></a>
       <a href="https://www.instagram.com/zepswipe?igsh=bXF3anMxODhxZWFs" target="_blank"><i class="fab fa-instagram fa-lg"></i></a>
       <a href="https://facebook.com/ZepSwipe" target="_blank"><i class="fab fa-facebook fa-lg"></i></a>
     </div>
-    <p class="mt-2 text-sm opacity-70">© 2025 Zep Swipe. All Rights Reserved.</p>
+    <p class="text-sm mt-2 opacity-70">© 2025 Zep Swipe. All rights reserved.</p>
   </footer>
 
 </body>
