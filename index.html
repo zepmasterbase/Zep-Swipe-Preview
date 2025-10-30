@@ -53,12 +53,15 @@ body {
   background: rgba(255,255,255,0.05);
   border: 1px solid rgba(255,255,255,0.1);
   color: #fff;
-  font-weight: 600;
+  font-weight: 700;
+  font-family: 'Orbitron', sans-serif;
+  text-shadow: 0 0 6px #ff00f0, 0 0 12px #00f0ff;
   transition: all 0.3s;
 }
 .header-right a:hover {
   background: rgba(255,255,255,0.15);
   transform: scale(1.05);
+  text-shadow: 0 0 15px #ff00f0, 0 0 25px #00f0ff, 0 0 35px #3affc1;
 }
 
 /* Glow glass placeholder */
@@ -105,27 +108,35 @@ body {
   margin: 0.5rem auto 1.5rem;
   color: #c0bdf4;
 }
+
+/* Neon CTA Buttons */
 .hero .btn {
   margin: 0.5rem;
   padding: 0.75rem 1.5rem;
   border-radius: 1rem;
-  font-weight: 600;
+  font-weight: 700;
+  font-family: 'Orbitron', sans-serif;
+  text-shadow: 0 0 6px #ff00f0, 0 0 12px #00f0ff;
   transition: all 0.3s;
 }
 .btn-gradient {
   background: linear-gradient(90deg, #ff00f0, #00f0ff, #3affc1);
   color: #0b0520;
+  box-shadow: 0 0 10px #ff00f0, 0 0 20px #00f0ff, 0 0 30px #3affc1;
 }
 .btn-gradient:hover {
   transform: scale(1.05);
+  box-shadow: 0 0 15px #ff00f0, 0 0 30px #00f0ff, 0 0 45px #3affc1;
 }
 .btn-outline {
   border: 2px solid #7c63ff;
   color: #c0bdf4;
+  box-shadow: 0 0 5px #7c63ff;
 }
 .btn-outline:hover {
   background: rgba(124,99,255,0.15);
   transform: scale(1.03);
+  box-shadow: 0 0 15px #7c63ff, 0 0 25px #00f0ff;
 }
 
 /* Footer */
@@ -177,6 +188,7 @@ body {
   <h2>Learn. Earn. Trade.</h2>
   <p>Join our student super-app to build your profile, earn tokens, and get ready for the marketplace.</p>
   <a href="signup.html" class="btn btn-gradient">Join the Beta</a>
+  <a href="login.html" class="btn btn-outline">Login</a>
 </section>
 
 <!-- Footer with Socials -->
