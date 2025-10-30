@@ -3,119 +3,154 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Zep Swipe — Africa's Student Super-App</title>
+<title>Zep Swipe — Student Super-App</title>
 
-<!-- Tailwind CSS -->
+<!-- Tailwind CDN -->
 <script src="https://cdn.tailwindcss.com"></script>
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700&family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
 
 <style>
-:root {
-  --neon-blue: #00f0ff;
-  --neon-pink: #ff00f0;
-  --neon-purple: #9b59b6;
-  --neon-green: #3affc1;
-  --glass: rgba(255,255,255,0.05);
-}
-
 body {
   font-family: 'Poppins', sans-serif;
-  margin: 0;
-  background: radial-gradient(circle at top, #120b2e 0%, #0b0520 100%);
+  background: radial-gradient(circle at top, #0b0520 0%, #120b2e 100%);
   color: #fff;
+  margin: 0;
   min-height: 100vh;
+  display: flex;
+  flex-direction: column;
 }
 
 /* Header */
 .header {
   width: 100%;
-  padding: 1rem 2rem;
-  backdrop-filter: blur(15px);
+  padding: 1rem 1.5rem;
+  backdrop-filter: blur(12px);
   background: rgba(15,5,32,0.85);
   display: flex;
   justify-content: space-between;
   align-items: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 50;
+  border-radius: 0 0 1rem 1rem;
   box-shadow: 0 0 25px rgba(0,255,255,0.2);
-  flex-wrap: wrap;
 }
-
-.header-logo {
+.header-left h1 {
   font-family: 'Orbitron', sans-serif;
-  font-size: 1.8rem;
+  font-size: 1.5rem;
   font-weight: 700;
-  background: linear-gradient(90deg, var(--neon-pink), var(--neon-green), var(--neon-blue));
+  background: linear-gradient(90deg, #ff00f0, #00f0ff, #3affc1);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
-
-.header-actions {
-  display: flex;
-  gap: 1rem;
-  margin-top: 0.5rem;
-  flex-wrap: wrap;
-}
-
-.glass-btn {
-  background: var(--glass);
-  backdrop-filter: blur(15px);
+.header-right a {
+  margin-left: 1rem;
+  padding: 0.5rem 1rem;
   border-radius: 1rem;
-  padding: 0.5rem 1.5rem;
+  backdrop-filter: blur(8px);
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.1);
+  color: #fff;
   font-weight: 600;
-  color: var(--neon-blue);
-  text-decoration: none;
-  transition: 0.3s;
+  transition: all 0.3s;
+}
+.header-right a:hover {
+  background: rgba(255,255,255,0.15);
+  transform: scale(1.05);
 }
 
-.glass-btn:hover {
-  color: var(--neon-pink);
-  transform: scale(1.05);
+/* Glow glass placeholder */
+.glass-placeholder {
+  margin-top: 80px;
+  margin-bottom: 2rem;
+  text-align: center;
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.15);
+  backdrop-filter: blur(20px);
+  padding: 1.5rem;
+  border-radius: 1.5rem;
+  font-family: 'Orbitron', sans-serif;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #fff;
+  text-shadow: 0 0 15px #ff00f0, 0 0 25px #00f0ff, 0 0 35px #3affc1;
 }
 
 /* Hero Section */
 .hero {
+  flex: 1;
   text-align: center;
-  padding: 8rem 1rem 5rem 1rem;
+  padding: 2rem 1rem;
 }
-
 .hero img {
   width: 200px;
-  border-radius: 50%;
+  max-width: 80%;
   margin: 1rem auto;
-  filter: drop-shadow(0 0 20px var(--neon-blue));
+  border-radius: 50%;
+  box-shadow: 0 0 25px #ff00f0, 0 0 50px #00f0ff, 0 0 75px #3affc1;
 }
-
-.hero h1 {
+.hero h2 {
   font-family: 'Orbitron', sans-serif;
-  font-size: 2.5rem;
-  background: linear-gradient(90deg, var(--neon-blue), var(--neon-pink));
+  font-size: 2rem;
+  background: linear-gradient(90deg, #ff00f0, #00f0ff, #3affc1);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-  margin-bottom: 1rem;
+  margin-bottom: 0.5rem;
 }
-
 .hero p {
-  color: #c0bdf4;
   font-size: 1rem;
-  margin-bottom: 2rem;
-  line-height: 1.6;
+  max-width: 320px;
+  margin: 0.5rem auto 1.5rem;
+  color: #c0bdf4;
+}
+.hero .btn {
+  margin: 0.5rem;
+  padding: 0.75rem 1.5rem;
+  border-radius: 1rem;
+  font-weight: 600;
+  transition: all 0.3s;
+}
+.btn-gradient {
+  background: linear-gradient(90deg, #ff00f0, #00f0ff, #3affc1);
+  color: #0b0520;
+}
+.btn-gradient:hover {
+  transform: scale(1.05);
+}
+.btn-outline {
+  border: 2px solid #7c63ff;
+  color: #c0bdf4;
+}
+.btn-outline:hover {
+  background: rgba(124,99,255,0.15);
+  transform: scale(1.03);
 }
 
 /* Footer */
 .footer {
-  margin-top: 4rem;
-  padding: 2rem 1rem;
+  width: 100%;
   text-align: center;
-  color: #888;
-  font-size: 0.9rem;
+  padding: 1rem 0;
+  backdrop-filter: blur(8px);
+  background: rgba(15,5,32,0.8);
+  border-top: 1px solid rgba(255,255,255,0.1);
 }
 .footer a {
-  color: var(--neon-pink);
-  margin: 0 0.5rem;
-  text-decoration: none;
+  margin: 0 0.75rem;
+  font-size: 1.25rem;
+  color: #00f0ff;
+  transition: all 0.3s;
 }
 .footer a:hover {
-  color: var(--neon-blue);
+  color: #ff00f0;
+  transform: scale(1.2);
+}
+
+@media(max-width:640px) {
+  .hero h2 { font-size: 1.5rem; }
+  .hero p { font-size: 0.9rem; }
 }
 </style>
 </head>
@@ -123,27 +158,32 @@ body {
 <body>
 
 <!-- Header -->
-<header class="header">
-  <div class="header-logo">Zep Swipe</div>
-  <div class="header-actions">
-    <a href="signup.html" class="glass-btn">Sign Up</a>
-    <a href="login.html" class="glass-btn">Login</a>
-    <a href="https://www.instagram.com/zepswipe?igsh=bXF3anMxODhxZWFs" target="_blank" class="glass-btn"><i class="fab fa-instagram"></i></a>
-    <a href="https://x.com/ZepSwipe?t=r94a0_pgN7ew1xT5L4eOSA&s=09" target="_blank" class="glass-btn"><i class="fab fa-x-twitter"></i></a>
-    <a href="https://x.com/ZepSwipe?t=r94a0_pgN7ew1xT5L4eOSA&s=09" target="_blank" class="glass-btn"><i class="fab fa-facebook"></i></a>
+<header class="header flex justify-between items-center">
+  <div class="header-left">
+    <h1>Zep Swipe</h1>
+  </div>
+  <div class="header-right flex">
+    <a href="signup.html">Sign Up</a>
+    <a href="login.html">Login</a>
   </div>
 </header>
 
-<!-- Hero -->
+<!-- Glow Glass Placeholder -->
+<div class="glass-placeholder">ZepShop Marketplace Coming Soon</div>
+
+<!-- Hero Section -->
 <section class="hero">
-  <img src="https://cdn-icons-png.flaticon.com/512/706/706830.png" alt="Student Neon">
-  <h1>Earn. Learn. Get Rewarded.</h1>
-  <p>Join our early access program — build your profile, earn tokens, and get ready for the ZepShop Marketplace.</p>
+  <img src="https://cdn-icons-png.flaticon.com/512/706/706830.png" alt="Web3 Student Neon" />
+  <h2>Learn. Earn. Trade.</h2>
+  <p>Join our student super-app to build your profile, earn tokens, and get ready for the marketplace.</p>
+  <a href="signup.html" class="btn btn-gradient">Join the Beta</a>
 </section>
 
-<!-- Footer -->
+<!-- Footer with Socials -->
 <footer class="footer">
-  Contact: support@zepswipe.com
+  <a href="https://www.instagram.com/zepswipe?igsh=bXF3anMxODhxZWFs" target="_blank"><i class="fab fa-instagram"></i></a>
+  <a href="https://x.com/ZepSwipe?t=r94a0_pgN7ew1xT5L4eOSA&s=09" target="_blank"><i class="fab fa-twitter"></i></a>
+  <a href="https://x.com/ZepSwipe?t=r94a0_pgN7ew1xT5L4eOSA&s=09" target="_blank"><i class="fab fa-facebook"></i></a>
 </footer>
 
 </body>
