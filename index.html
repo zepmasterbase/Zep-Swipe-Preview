@@ -1,261 +1,279 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Zep Swipe — Africa’s Student Super App</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Zep Swipe — Africa’s Student Super-App</title>
 
-<!-- Tailwind & Fonts -->
-<script src="https://cdn.tailwindcss.com"></script>
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700&family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+  <!-- Tailwind + Fonts + Icons -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700&family=Poppins:wght@400;500;600&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
 
-<!-- Wallet SDKs -->
-<script src="https://cdn.jsdelivr.net/npm/@coinbase/wallet-sdk@3.8.1/dist/coinbase-wallet-sdk.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/ethers@5.7.2/dist/ethers.umd.min.js"></script>
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: radial-gradient(circle at top, #120b2e 0%, #0b0520 100%);
+      color: #fff;
+      margin: 0;
+      padding: 0;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      text-align: center;
+    }
 
-<style>
-body {
-  font-family: 'Poppins', sans-serif;
-  background: radial-gradient(circle at top, #120b2e 0%, #0b0520 100%);
-  color: #fff;
-  min-height: 100vh;
-}
-.header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 1rem 2rem;
-  background: rgba(15,5,32,0.85);
-  backdrop-filter: blur(15px);
-  box-shadow: 0 0 25px rgba(0,255,255,0.3);
-  position: fixed;
-  width: 100%;
-  top: 0;
-  z-index: 50;
-}
-.header h1 {
-  font-family: 'Orbitron', sans-serif;
-  font-size: 1.6rem;
-  background: linear-gradient(90deg,#ff00f0,#00f0ff,#00ff7a);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-.header nav a {
-  margin-left: 1rem;
-  color: #00f0ff;
-  transition: .3s;
-}
-.header nav a:hover { color: #ff00f0; }
+    .header {
+      width: 100%;
+      padding: 1rem 1.5rem;
+      position: fixed;
+      top: 0;
+      left: 0;
+      backdrop-filter: blur(10px);
+      background: rgba(15,5,32,0.8);
+      box-shadow: 0 0 20px rgba(0,240,255,0.3);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 50;
+    }
 
-.hero {
-  text-align: center;
-  padding: 7rem 1rem 3rem;
-}
-.hero img {
-  width: 220px;
-  height: 220px;
-  border-radius: 50%;
-  animation: glow 3s infinite alternate;
-  margin: 1.5rem auto;
-}
-@keyframes glow {
-  from { box-shadow: 0 0 15px #00f0ff, 0 0 25px #ff00f0; }
-  to { box-shadow: 0 0 35px #00ff7a, 0 0 45px #ff00f0; }
-}
-.btn {
-  display: inline-block;
-  padding: .75rem 1.5rem;
-  border-radius: 1rem;
-  font-weight: 600;
-  margin: .5rem;
-  cursor: pointer;
-  transition: .3s;
-}
-.btn-gradient {
-  background: linear-gradient(90deg,#ff00f0,#00f0ff,#00ff7a);
-  color: #0b0520;
-}
-.btn-outline {
-  border: 2px solid #7c63ff;
-  color: #c0bdf4;
-}
-.btn:hover { transform: scale(1.05); }
+    .glass-text {
+      background: linear-gradient(90deg, #00f0ff, #ff00f0);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      font-family: 'Orbitron', sans-serif;
+      font-size: 1.3rem;
+      font-weight: 700;
+      text-shadow: 0 0 15px rgba(0,240,255,0.4);
+    }
 
-.modal-bg {
-  position: fixed;
-  inset: 0;
-  background: rgba(10,5,30,0.95);
-  backdrop-filter: blur(15px);
-  display: none;
-  justify-content: center;
-  align-items: center;
-  z-index: 100;
-}
-.modal {
-  background: rgba(255,255,255,0.07);
-  border-radius: 1rem;
-  padding: 2rem;
-  width: 90%;
-  max-width: 400px;
-  text-align: center;
-}
-.input {
-  width: 100%;
-  padding: .75rem;
-  border-radius: .75rem;
-  background: rgba(255,255,255,0.1);
-  border: none;
-  color: #fff;
-  margin-bottom: 1rem;
-  text-align: center;
-}
-.footer {
-  text-align: center;
-  padding: 2rem 1rem;
-  background: rgba(15,5,32,0.9);
-  margin-top: 3rem;
-}
-.footer a { margin: 0 .6rem; color: #00f0ff; }
-.footer a:hover { color: #ff00f0; }
-</style>
+    .hero {
+      margin-top: 8rem;
+      padding: 2rem 1rem;
+    }
+
+    .hero img {
+      width: 260px;
+      margin: 2rem auto;
+      filter: drop-shadow(0 0 20px #00f0ff);
+      border-radius: 50%;
+      transition: all 0.4s ease-in-out;
+    }
+
+    .hero img:hover {
+      transform: scale(1.05);
+      filter: drop-shadow(0 0 35px #ff00f0);
+    }
+
+    .hero h2 {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 2rem;
+      background: linear-gradient(90deg, #00f0ff, #ff00f0);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 0.5rem;
+    }
+
+    .btn {
+      display: block;
+      width: 280px;
+      margin: 0.7rem auto;
+      padding: 0.75rem;
+      border-radius: 1rem;
+      text-align: center;
+      font-weight: 500;
+      transition: all 0.3s ease;
+      cursor: pointer;
+    }
+
+    .btn-gradient {
+      background: linear-gradient(90deg, #00f0ff, #ff00f0);
+      color: #0b0520;
+    }
+
+    .btn-gradient:hover {
+      transform: scale(1.05);
+    }
+
+    .btn-outline {
+      border: 2px solid #7c63ff;
+      color: #c0bdf4;
+    }
+
+    .btn-outline:hover {
+      background: rgba(124,99,255,0.15);
+      transform: scale(1.03);
+    }
+
+    .footer {
+      width: 100%;
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      backdrop-filter: blur(8px);
+      background: rgba(15,5,32,0.7);
+      display: flex;
+      justify-content: center;
+      gap: 1.5rem;
+      padding: 0.7rem 0;
+      box-shadow: 0 -2px 20px rgba(255,0,240,0.2);
+    }
+
+    .footer i {
+      font-size: 1.6rem;
+      color: #00f0ff;
+      transition: 0.3s;
+    }
+
+    .footer i:hover {
+      color: #ff00f0;
+      transform: scale(1.2);
+    }
+
+    input {
+      color: #00f0ff;
+      background: rgba(255,255,255,0.1);
+      border-radius: 0.75rem;
+      border: none;
+      width: 80%;
+      padding: 0.75rem;
+      margin: 0.5rem auto;
+      display: block;
+      text-align: center;
+    }
+
+    #otpSection {
+      display: none;
+    }
+  </style>
 </head>
+
 <body>
 
-<!-- HEADER -->
-<header class="header">
-  <h1>Zep Swipe</h1>
-  <nav>
-    <a href="#wallet">Wallet</a>
-    <a href="#zepshop">ZepShop</a>
-    <a href="#contact">Contact</a>
-  </nav>
-</header>
+  <!-- Header -->
+  <header class="header">
+    <div class="glass-text">🛍️ ZepShop Coming Soon</div>
+  </header>
 
-<!-- HERO -->
-<section class="hero">
-  <img src="https://cdn-icons-png.flaticon.com/512/706/706830.png" alt="Student" />
-  <h2 class="font-orbitron text-2xl mt-3 bg-gradient-to-r from-[#ff00f0] via-[#00f0ff] to-[#00ff7a] bg-clip-text text-transparent">Earn. Learn. Get Rewarded.</h2>
-  <p class="max-w-md mx-auto text-purple-200 mt-3">Join Africa’s most vibrant student platform. Connect your wallet or verify your phone to begin your ZepSwipe journey 🚀</p>
+  <!-- Hero -->
+  <section class="hero">
+    <img src="https://cdn.dribbble.com/users/1162077/screenshots/15698276/media/83a8cc7c2d47b1b08173c0d35e89062b.gif" alt="Neon Student Illustration"/>
+    <h2>Learn. Earn. Trade. 🔥</h2>
+    <p class="text-[#c0bdf4] max-w-md mx-auto">Your Digital Student Life Starts Here.  
+      Connect your wallet or continue with your mobile number.</p>
 
-  <button class="btn btn-gradient" id="metaBtn"><i class="fa-brands fa-ethereum mr-2"></i> Connect MetaMask</button>
-  <button class="btn btn-gradient" id="coinBtn"><i class="fa-brands fa-coinbase mr-2"></i> Connect Coinbase</button>
-  <button class="btn btn-outline" id="phoneBtn"><i class="fa-solid fa-mobile-screen-button mr-2"></i> Continue with Phone</button>
-</section>
-
-<!-- ZEP SHOP -->
-<section id="zepshop" class="text-center my-10">
-  <div class="bg-white/10 border border-white/10 rounded-2xl max-w-md mx-auto p-6 backdrop-blur-md shadow-lg">
-    <h2 class="text-xl font-bold mb-2">🛍 Zepshop Marketplace</h2>
-    <p class="text-purple-200">Coming Soon — Buy | Sell | Earn with Zep Tokens 💎</p>
-  </div>
-</section>
-
-<!-- PHONE MODAL -->
-<div id="loginModal" class="modal-bg">
-  <div class="modal">
-    <h3 class="text-lg font-bold mb-3">Phone Login / Signup</h3>
-    <input id="phoneInput" type="text" class="input" placeholder="+233XXXXXXXXX" />
-    <div id="recaptcha-container"></div>
-    <div class="flex justify-around mb-3">
-      <button class="btn-outline" onclick="window.selectedRole='student'">Student</button>
-      <button class="btn-outline" onclick="window.selectedRole='vendor'">Vendor</button>
+    <button class="btn btn-gradient" onclick="connectWallet()"><i class="fas fa-wallet mr-2"></i> Connect Wallet</button>
+    <div>
+      <input id="phoneNumber" type="text" placeholder="+234 800 000 0000" />
+      <div id="recaptcha-container"></div>
+      <button class="btn btn-outline" id="sendOtpBtn" onclick="sendOTP()">Send OTP</button>
     </div>
-    <button class="btn btn-gradient" id="sendOtpBtn">Send OTP</button>
-    <div id="otpSection" class="hidden mt-4">
-      <input id="otpInput" type="text" class="input" placeholder="Enter OTP Code" />
-      <button class="btn btn-gradient" id="verifyOtpBtn">Verify OTP</button>
+
+    <div id="otpSection">
+      <input id="otpCode" type="text" placeholder="Enter OTP Code" />
+      <button class="btn btn-gradient" onclick="verifyOTP()">Verify & Login</button>
     </div>
-    <button class="btn-outline mt-3" onclick="closeModal()">Close</button>
-  </div>
-</div>
+  </section>
 
-<!-- FOOTER -->
-<footer class="footer" id="contact">
-  <p class="mb-2 text-sm text-purple-200">© 2025 Zep Swipe — Africa’s Student Super-App</p>
-  <a href="https://www.instagram.com/zepswipe?igsh=bXF3anMxODhxZWFs" target="_blank"><i class="fab fa-instagram"></i></a>
-  <a href="https://x.com/ZepSwipe?t=r94a0_pgN7ew1xT5L4eOSA&s=09" target="_blank"><i class="fab fa-x-twitter"></i></a>
-  <a href="https://facebook.com/zepswipe" target="_blank"><i class="fab fa-facebook"></i></a>
-</footer>
+  <!-- Footer Socials -->
+  <footer class="footer">
+    <a href="https://www.instagram.com/zepswipe?igsh=bXF3anMxODhxZWFs" target="_blank"><i class="fab fa-instagram"></i></a>
+    <a href="https://x.com/ZepSwipe?t=r94a0_pgN7ew1xT5L4eOSA&s=09" target="_blank"><i class="fab fa-x-twitter"></i></a>
+    <a href="https://facebook.com/ZepSwipe" target="_blank"><i class="fab fa-facebook"></i></a>
+  </footer>
 
-<!-- FIREBASE + WALLET LOGIC -->
-<script type="module">
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-import { getAuth, RecaptchaVerifier, signInWithPhoneNumber } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
-import { getFirestore, doc, setDoc } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+  <!-- Firebase + Web3 Scripts -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.2/firebase-app.js";
+    import { getAuth, RecaptchaVerifier, signInWithPhoneNumber } from "https://www.gstatic.com/firebasejs/10.7.2/firebase-auth.js";
+    import { getFirestore, doc, setDoc } from "https://www.gstatic.com/firebasejs/10.7.2/firebase-firestore.js";
 
-const firebaseConfig = {
-  apiKey: "AIzaSyBxAQxTvuPCYVAG3eQu4MQfxHRWJB9Q3wI",
-  authDomain: "zep-swipe-6cb53.firebaseapp.com",
-  projectId: "zep-swipe-6cb53",
-  storageBucket: "zep-swipe-6cb53.firebasestorage.app",
-  messagingSenderId: "895701529881",
-  appId: "1:895701529881:web:81c6e3e420bfe6cb7dc188",
-  measurementId: "G-L48WTHMKKZ"
-};
+    // Firebase Config
+    const firebaseConfig = {
+      apiKey: "AIzaSyBxAQxTvuPCYVAG3eQu4MQfxHRWJB9Q3wI",
+      authDomain: "zep-swipe-6cb53.firebaseapp.com",
+      projectId: "zep-swipe-6cb53",
+      storageBucket: "zep-swipe-6cb53.firebasestorage.app",
+      messagingSenderId: "895701529881",
+      appId: "1:895701529881:web:81c6e3e420bfe6cb7dc188",
+      measurementId: "G-L48WTHMKKZ"
+    };
 
-const app = initializeApp(firebaseConfig);
-const auth = getAuth(app);
-const db = getFirestore(app);
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const db = getFirestore(app);
 
-window.selectedRole = null;
+    // ReCAPTCHA setup
+    window.recaptchaVerifier = new RecaptchaVerifier(auth, "recaptcha-container", {
+      size: "invisible",
+      callback: () => {
+        console.log("reCAPTCHA verified");
+      }
+    });
 
-// Modal controls
-const modal = document.getElementById("loginModal");
-document.getElementById("phoneBtn").onclick = () => modal.style.display = "flex";
-window.closeModal = () => modal.style.display = "none";
+    let confirmationResult;
 
-// Send OTP
-document.getElementById("sendOtpBtn").onclick = async () => {
-  const phone = document.getElementById("phoneInput").value;
-  if (!phone || !window.selectedRole) return alert("Enter phone number and select a role first.");
-  window.recaptchaVerifier = new RecaptchaVerifier(auth, 'recaptcha-container', { size: 'invisible' });
-  try {
-    window.confirmationResult = await signInWithPhoneNumber(auth, phone, window.recaptchaVerifier);
-    document.getElementById("otpSection").classList.remove("hidden");
-    alert("OTP sent successfully!");
-  } catch (err) { alert(err.message); }
-};
+    // Send OTP
+    window.sendOTP = async function () {
+      const phone = document.getElementById("phoneNumber").value;
+      if (!phone) return alert("Please enter your phone number.");
 
-// Verify OTP
-document.getElementById("verifyOtpBtn").onclick = async () => {
-  const code = document.getElementById("otpInput").value;
-  try {
-    const result = await window.confirmationResult.confirm(code);
-    await setDoc(doc(db, "users", result.user.uid), {
-      phone: result.user.phoneNumber,
-      role: window.selectedRole,
-      timestamp: Date.now()
-    }, { merge: true });
-    alert("Login successful!");
-    window.location.href = window.selectedRole === "student" ? "student-dashboard.html" : "vendor-dashboard.html";
-  } catch { alert("Invalid OTP. Try again."); }
-};
+      try {
+        confirmationResult = await signInWithPhoneNumber(auth, phone, window.recaptchaVerifier);
+        document.getElementById("otpSection").style.display = "block";
+        alert("OTP sent successfully!");
+      } catch (error) {
+        console.error(error);
+        alert(error.message);
+      }
+    };
 
-// MetaMask
-document.getElementById("metaBtn").onclick = async () => {
-  if (!window.ethereum) return alert("Please install MetaMask.");
-  const provider = new ethers.providers.Web3Provider(window.ethereum);
-  await provider.send("eth_requestAccounts", []);
-  const signer = provider.getSigner();
-  const address = await signer.getAddress();
-  await setDoc(doc(db, "wallets", address), { address, role: window.selectedRole || "student", type: "metamask" }, { merge: true });
-  alert("MetaMask Connected: " + address);
-  window.location.href = "student-dashboard.html";
-};
+    // Verify OTP
+    window.verifyOTP = async function () {
+      const code = document.getElementById("otpCode").value;
+      if (!code) return alert("Enter the OTP code.");
 
-// Coinbase
-document.getElementById("coinBtn").onclick = async () => {
-  const walletLink = new window.CoinbaseWalletSDK({ appName: "Zep Swipe" });
-  const ethereum = walletLink.makeWeb3Provider("https://mainnet.infura.io/v3/9aa0a25b4da84f00a4016da67cb73088", 1);
-  const provider = new ethers.providers.Web3Provider(ethereum);
-  await provider.send("eth_requestAccounts", []);
-  const signer = provider.getSigner();
-  const address = await signer.getAddress();
-  await setDoc(doc(db, "wallets", address), { address, role: window.selectedRole || "student", type: "coinbase" }, { merge: true });
-  alert("Coinbase Connected: " + address);
-  window.location.href = "student-dashboard.html";
-};
-</script>
+      try {
+        const result = await confirmationResult.confirm(code);
+        const user = result.user;
+
+        // Save or update user record
+        await setDoc(doc(db, "users", user.uid), {
+          phone: user.phoneNumber,
+          createdAt: new Date(),
+        }, { merge: true });
+
+        alert("Login successful!");
+        window.location.href = "student-dashboard.html";
+      } catch (error) {
+        console.error(error);
+        alert("Invalid OTP. Try again.");
+      }
+    };
+
+    // Wallet Connect
+    window.connectWallet = async function () {
+      if (window.ethereum) {
+        try {
+          const accounts = await window.ethereum.request({ method: "eth_requestAccounts" });
+          const walletAddress = accounts[0];
+          alert("Wallet Connected: " + walletAddress);
+
+          await setDoc(doc(db, "wallets", walletAddress), {
+            wallet: walletAddress,
+            connectedAt: new Date(),
+          }, { merge: true });
+
+          window.location.href = "vendor-dashboard.html";
+        } catch (err) {
+          console.error(err);
+          alert("Wallet connection failed.");
+        }
+      } else {
+        alert("Please install MetaMask or Coinbase Wallet to continue.");
+      }
+    };
+  </script>
 </body>
 </html>
