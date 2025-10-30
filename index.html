@@ -37,6 +37,7 @@ body {
   justify-content: space-between;
   align-items: center;
   box-shadow: 0 0 25px rgba(0,255,255,0.2);
+  flex-wrap: wrap;
 }
 
 .header-logo {
@@ -48,32 +49,40 @@ body {
   -webkit-text-fill-color: transparent;
 }
 
-.header-menu a {
-  margin-left: 1.5rem;
+.header-actions {
+  display: flex;
+  gap: 1rem;
+  margin-top: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.glass-btn {
+  background: var(--glass);
+  backdrop-filter: blur(15px);
+  border-radius: 1rem;
+  padding: 0.5rem 1.5rem;
   font-weight: 600;
   color: var(--neon-blue);
   text-decoration: none;
   transition: 0.3s;
 }
 
-.header-menu a:hover {
+.glass-btn:hover {
   color: var(--neon-pink);
-  transform: scale(1.1);
+  transform: scale(1.05);
 }
 
 /* Hero Section */
 .hero {
   text-align: center;
-  padding: 10rem 1rem 5rem 1rem;
-  max-width: 700px;
-  margin: 0 auto;
+  padding: 8rem 1rem 5rem 1rem;
 }
 
 .hero img {
   width: 200px;
   border-radius: 50%;
-  margin-bottom: 1rem;
-  filter: drop-shadow(0 0 15px var(--neon-blue));
+  margin: 1rem auto;
+  filter: drop-shadow(0 0 20px var(--neon-blue));
 }
 
 .hero h1 {
@@ -90,73 +99,6 @@ body {
   font-size: 1rem;
   margin-bottom: 2rem;
   line-height: 1.6;
-}
-
-/* Buttons */
-.btn {
-  display: inline-block;
-  padding: 0.75rem 2rem;
-  border-radius: 1rem;
-  font-weight: 600;
-  margin: 0.5rem;
-  transition: 0.3s;
-  cursor: pointer;
-}
-
-.btn-gradient {
-  background: linear-gradient(90deg, var(--neon-blue), var(--neon-pink));
-  color: #0b0520;
-}
-
-.btn-gradient:hover {
-  transform: scale(1.05);
-}
-
-.btn-outline {
-  border: 2px solid var(--neon-purple);
-  color: var(--neon-purple);
-}
-
-.btn-outline:hover {
-  background: rgba(155,89,182,0.2);
-  transform: scale(1.03);
-}
-
-/* Sections */
-.section {
-  max-width: 900px;
-  margin: 4rem auto;
-  padding: 0 1rem;
-  text-align: center;
-}
-
-.section h2 {
-  font-family: 'Orbitron', sans-serif;
-  font-size: 2rem;
-  color: var(--neon-green);
-  margin-bottom: 1rem;
-}
-
-.section p {
-  color: #c0bdf4;
-  line-height: 1.6;
-}
-
-/* Glass placeholders */
-.glass-card {
-  background: var(--glass);
-  backdrop-filter: blur(20px);
-  border-radius: 1.5rem;
-  padding: 2rem;
-  margin: 1.5rem auto;
-  max-width: 400px;
-  box-shadow: 0 0 25px rgba(0,255,255,0.2);
-  transition: transform 0.3s, box-shadow 0.3s;
-}
-
-.glass-card:hover {
-  transform: scale(1.03);
-  box-shadow: 0 0 35px var(--neon-pink);
 }
 
 /* Footer */
@@ -183,10 +125,12 @@ body {
 <!-- Header -->
 <header class="header">
   <div class="header-logo">Zep Swipe</div>
-  <div class="header-menu">
-    <a href="signup.html">Sign Up</a>
-    <a href="login.html">Login</a>
-    <a href="#how-it-works">How It Works</a>
+  <div class="header-actions">
+    <a href="signup.html" class="glass-btn">Sign Up</a>
+    <a href="login.html" class="glass-btn">Login</a>
+    <a href="https://www.instagram.com/zepswipe?igsh=bXF3anMxODhxZWFs" target="_blank" class="glass-btn"><i class="fab fa-instagram"></i></a>
+    <a href="https://x.com/ZepSwipe?t=r94a0_pgN7ew1xT5L4eOSA&s=09" target="_blank" class="glass-btn"><i class="fab fa-x-twitter"></i></a>
+    <a href="https://x.com/ZepSwipe?t=r94a0_pgN7ew1xT5L4eOSA&s=09" target="_blank" class="glass-btn"><i class="fab fa-facebook"></i></a>
   </div>
 </header>
 
@@ -194,26 +138,12 @@ body {
 <section class="hero">
   <img src="https://cdn-icons-png.flaticon.com/512/706/706830.png" alt="Student Neon">
   <h1>Earn. Learn. Get Rewarded.</h1>
-  <p>Join our early access program — build your profile, earn tokens, and get ready for the upcoming ZepShop Marketplace.</p>
-  <a href="signup.html" class="btn btn-gradient">Join the Beta</a>
-  <a href="login.html" class="btn btn-outline">Login</a>
-</section>
-
-<!-- How It Works -->
-<section class="section" id="how-it-works">
-  <h2>How It Works</h2>
-  <p>1️⃣ Build your profile → 2️⃣ Earn tokens through activities → 3️⃣ Redeem rewards in our Marketplace (coming soon).</p>
-  <div class="glass-card">ZepShop Marketplace Coming Soon</div>
-  <div class="glass-card">Rewards Wallet Preview</div>
+  <p>Join our early access program — build your profile, earn tokens, and get ready for the ZepShop Marketplace.</p>
 </section>
 
 <!-- Footer -->
 <footer class="footer">
-  Follow us:
-  <a href="https://www.instagram.com/zepswipe?igsh=bXF3anMxODhxZWFs" target="_blank"><i class="fab fa-instagram"></i></a>
-  <a href="https://x.com/ZepSwipe?t=r94a0_pgN7ew1xT5L4eOSA&s=09" target="_blank"><i class="fab fa-x-twitter"></i></a>
-  <a href="https://x.com/ZepSwipe?t=r94a0_pgN7ew1xT5L4eOSA&s=09" target="_blank"><i class="fab fa-facebook"></i></a>
-  <p>Contact: support@zepswipe.com</p>
+  Contact: support@zepswipe.com
 </footer>
 
 </body>
