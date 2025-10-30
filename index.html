@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Zep Swipe — Web3 Student Super-App</title>
+<title>Zep Swipe — Africa’s Web3 Student Super App</title>
 
 <!-- Tailwind + Fonts + Icons -->
 <script src="https://cdn.tailwindcss.com"></script>
@@ -14,114 +14,118 @@
 <script src="https://cdn.jsdelivr.net/npm/@coinbase/wallet-sdk@3.8.1/dist/coinbase-wallet-sdk.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/ethers@5.7.2/dist/ethers.min.js"></script>
 
-<!-- Firebase -->
-<script type="module">
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.6.1/firebase-app.js";
-import { getAuth, RecaptchaVerifier, signInWithPhoneNumber } from "https://www.gstatic.com/firebasejs/10.6.1/firebase-auth.js";
-import { getFirestore, doc, setDoc } from "https://www.gstatic.com/firebasejs/10.6.1/firebase-firestore.js";
-
-const firebaseConfig = {
-  apiKey: "AIzaSyBxAQxTvuPCYVAG3eQu4MQfxHRWJB9Q3wI",
-  authDomain: "zep-swipe-6cb53.firebaseapp.com",
-  projectId: "zep-swipe-6cb53",
-  storageBucket: "zep-swipe-6cb53.firebasestorage.app",
-  messagingSenderId: "895701529881",
-  appId: "1:895701529881:web:81c6e3e420bfe6cb7dc188",
-  measurementId: "G-L48WTHMKKZ"
-};
-
-const app = initializeApp(firebaseConfig);
-const auth = getAuth(app);
-const db = getFirestore(app);
-window.auth = auth;
-window.db = db;
-
-// Send OTP
-window.sendOTP = async (phone, role) => {
-  if (!phone || !role) { alert("Enter phone number and select your role."); return; }
-  window.recaptchaVerifier = new RecaptchaVerifier('recaptcha-container', { 'size': 'invisible' }, auth);
-  try {
-    const confirmationResult = await signInWithPhoneNumber(auth, phone, window.recaptchaVerifier);
-    window.confirmationResult = confirmationResult;
-    localStorage.setItem('role', role);
-    document.getElementById('otp-section').classList.remove('hidden');
-    alert("OTP sent successfully!");
-  } catch (err) {
-    alert("Error sending OTP: " + err.message);
-  }
-};
-
-// Verify OTP
-window.verifyOTP = async (code) => {
-  try {
-    await window.confirmationResult.confirm(code);
-    const role = localStorage.getItem('role');
-    alert("Login successful!");
-    const userRef = doc(db, "users", auth.currentUser.uid);
-    await setDoc(userRef, { phone: auth.currentUser.phoneNumber, role }, { merge: true });
-    window.location.href = role === "student" ? "student-dashboard.html" : "vendor-dashboard.html";
-  } catch {
-    alert("Invalid OTP. Try again.");
-  }
-};
-
-// Wallet Connect (MetaMask)
-window.connectMetaMask = async () => {
-  if (!window.ethereum) { alert("MetaMask not detected."); return; }
-  const provider = new ethers.providers.Web3Provider(window.ethereum);
-  await provider.send("eth_requestAccounts", []);
-  const signer = provider.getSigner();
-  const address = await signer.getAddress();
-  await storeWallet(address, "metamask");
-};
-
-// Wallet Connect (Coinbase)
-window.connectCoinbase = async () => {
-  const APP_NAME = "Zep Swipe";
-  const APP_LOGO_URL = "https://cdn-icons-png.flaticon.com/512/706/706830.png";
-  const DEFAULT_ETH_JSONRPC_URL = "https://mainnet.infura.io/v3/9aa0a25b4da84f00a4016da67cb73088";
-  const DEFAULT_CHAIN_ID = 1;
-
-  const walletLink = new window.CoinbaseWalletSDK({ appName: APP_NAME, appLogoUrl: APP_LOGO_URL });
-  const ethereum = walletLink.makeWeb3Provider(DEFAULT_ETH_JSONRPC_URL, DEFAULT_CHAIN_ID);
-  const provider = new ethers.providers.Web3Provider(ethereum);
-  await provider.send("eth_requestAccounts", []);
-  const signer = provider.getSigner();
-  const address = await signer.getAddress();
-  await storeWallet(address, "coinbase");
-};
-
-// Store wallet to Firestore
-async function storeWallet(address, walletType) {
-  const role = localStorage.getItem('role') || "student";
-  const userId = auth.currentUser ? auth.currentUser.uid : address;
-  await setDoc(doc(db, "users", userId), { wallet: address, walletType, role }, { merge: true });
-  alert(`${walletType} wallet connected: ${address}`);
-  window.location.href = role === "student" ? "student-dashboard.html" : "vendor-dashboard.html";
-}
-</script>
-
 <style>
-body{font-family:'Poppins',sans-serif;background:radial-gradient(circle at top,#120b2e 0%,#0b0520 100%);color:#fff;margin:0;min-height:100vh;display:flex;flex-direction:column;}
-.header{position:fixed;width:100%;top:0;left:0;padding:1rem 2rem;display:flex;justify-content:space-between;align-items:center;background:rgba(15,5,32,0.85);backdrop-filter:blur(12px);box-shadow:0 0 20px rgba(0,255,255,.4);z-index:50;}
-.header h1{font-family:'Orbitron',sans-serif;font-size:1.7rem;background:linear-gradient(90deg,#ff00f0,#00f0ff,#00ff7a);-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
-.header nav a{margin-left:1rem;color:#00f0ff;transition:.3s;}
-.header nav a:hover{color:#ff00f0;}
-.hero{text-align:center;margin-top:6rem;padding:2rem 1rem;}
-.hero img{width:220px;margin:1rem auto;border-radius:50%;animation:glow 2s infinite alternate;}
-@keyframes glow{0%{box-shadow:0 0 15px #00f0ff,0 0 25px #ff00f0;}50%{box-shadow:0 0 30px #00ff7a,0 0 45px #ff00f0;}100%{box-shadow:0 0 15px #00f0ff,0 0 25px #ff00f0;}}
-.hero h2{font-family:'Orbitron',sans-serif;font-size:2rem;background:linear-gradient(90deg,#00f0ff,#ff00f0,#00ff7a);-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
-.hero p{color:#c0bdf4;max-width:380px;margin:0.5rem auto 2rem;}
-.btn{display:inline-block;padding:.7rem 1.5rem;border-radius:1rem;font-weight:600;margin:.5rem;cursor:pointer;transition:.3s;}
-.btn-gradient{background:linear-gradient(90deg,#ff00f0,#00f0ff,#00ff7a);color:#0b0520;}
-.btn-outline{border:2px solid #7c63ff;color:#c0bdf4;}
-.btn:hover{transform:scale(1.05);}
-.modal-bg{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(10,5,30,.95);backdrop-filter:blur(15px);display:none;justify-content:center;align-items:center;z-index:100;}
-.modal{background:rgba(255,255,255,.07);border-radius:1rem;padding:2rem;max-width:400px;width:90%;text-align:center;}
-.input{width:100%;padding:.75rem;border:none;border-radius:.75rem;background:rgba(255,255,255,.1);color:#fff;margin-bottom:1rem;}
-.footer{margin-top:auto;text-align:center;padding:1rem;background:rgba(15,5,32,.9);}
-.footer a{margin:0 .5rem;color:#00f0ff;}
-.footer a:hover{color:#ff00f0;}
+body {
+  font-family: 'Poppins', sans-serif;
+  background: radial-gradient(circle at top, #120b2e 0%, #0b0520 100%);
+  color: #fff;
+  min-height: 100vh;
+  margin: 0;
+}
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 2rem;
+  background: rgba(15,5,32,0.85);
+  backdrop-filter: blur(15px);
+  box-shadow: 0 0 25px rgba(0,255,255,0.3);
+  position: fixed;
+  width: 100%;
+  top: 0;
+  z-index: 50;
+}
+.header h1 {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 1.7rem;
+  background: linear-gradient(90deg, #ff00f0, #00f0ff, #00ff7a);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.header nav a {
+  margin-left: 1.2rem;
+  color: #00f0ff;
+  transition: .3s;
+}
+.header nav a:hover { color: #ff00f0; }
+
+.hero {
+  text-align: center;
+  padding: 7rem 1rem 3rem;
+}
+.hero img {
+  width: 220px;
+  height: 220px;
+  border-radius: 50%;
+  margin: 1rem auto;
+  animation: glow 3s infinite alternate;
+  object-fit: cover;
+}
+@keyframes glow {
+  from { box-shadow: 0 0 15px #00f0ff, 0 0 25px #ff00f0; }
+  to { box-shadow: 0 0 30px #00ff7a, 0 0 50px #ff00f0; }
+}
+.hero h2 {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 2rem;
+  background: linear-gradient(90deg,#00f0ff,#ff00f0,#00ff7a);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin-bottom: .5rem;
+}
+.hero p { color: #c0bdf4; max-width: 380px; margin: 0 auto 2rem; }
+.btn {
+  display: inline-block;
+  padding: .75rem 1.5rem;
+  border-radius: 1rem;
+  margin: .5rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: .3s;
+}
+.btn-gradient {
+  background: linear-gradient(90deg,#ff00f0,#00f0ff,#00ff7a);
+  color: #0b0520;
+}
+.btn-outline {
+  border: 2px solid #7c63ff;
+  color: #c0bdf4;
+}
+.btn:hover { transform: scale(1.05); }
+.modal-bg {
+  position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+  background: rgba(10,5,30,0.95);
+  backdrop-filter: blur(15px);
+  display: none;
+  justify-content: center;
+  align-items: center;
+  z-index: 100;
+}
+.modal {
+  background: rgba(255,255,255,0.07);
+  border-radius: 1rem;
+  padding: 2rem;
+  max-width: 400px;
+  width: 90%;
+  text-align: center;
+}
+.input {
+  width: 100%;
+  padding: .75rem;
+  border: none;
+  border-radius: .75rem;
+  background: rgba(255,255,255,0.1);
+  color: #fff;
+  margin-bottom: 1rem;
+}
+.footer {
+  text-align: center;
+  padding: 2rem 1rem;
+  background: rgba(15,5,32,0.9);
+  margin-top: 3rem;
+}
+.footer a { margin: 0 .6rem; color: #00f0ff; }
+.footer a:hover { color: #ff00f0; }
 </style>
 </head>
 
@@ -136,15 +140,16 @@ body{font-family:'Poppins',sans-serif;background:radial-gradient(circle at top,#
 </header>
 
 <section class="hero">
-  <img src="https://cdn-icons-png.flaticon.com/512/706/706830.png" alt="Student" />
-  <h2>Learn | Earn | Shop</h2>
-  <p>Empowering Africa’s students with Web3 wallets & rewards. Join ZepShop coming soon!</p>
-  <button class="btn btn-gradient" onclick="connectMetaMask()"><i class="fa-brands fa-ethereum mr-2"></i>MetaMask Login</button>
-  <button class="btn btn-gradient" onclick="connectCoinbase()"><i class="fa-brands fa-coinbase mr-2"></i>Coinbase Login</button>
-  <button class="btn btn-outline" onclick="openModal()">Continue with Phone</button>
+  <img src="https://cdn-icons-png.flaticon.com/512/706/706830.png" alt="Student Image" />
+  <h2>Earn • Learn • Get Rewarded</h2>
+  <p>Join Africa’s futuristic student economy. Earn tokens, connect wallets, and unlock ZepShop Marketplace 🚀</p>
+
+  <button class="btn btn-gradient" id="metaBtn"><i class="fa-brands fa-ethereum mr-2"></i> Connect MetaMask</button>
+  <button class="btn btn-gradient" id="coinBtn"><i class="fa-brands fa-coinbase mr-2"></i> Connect Coinbase</button>
+  <button class="btn btn-outline" id="phoneBtn"><i class="fa-solid fa-mobile-screen mr-2"></i> Continue with Phone</button>
 </section>
 
-<section id="zepshop" class="text-center my-8">
+<section id="zepshop" class="text-center my-10">
   <div class="backdrop-blur-md bg-white/5 rounded-xl p-6 mx-auto max-w-md shadow-lg border border-white/10">
     <h2 class="text-xl font-bold mb-2">🛍 ZepShop Marketplace</h2>
     <p class="text-purple-200 text-sm">Coming Soon — Buy | Sell | Earn in Web3 Style 🚀</p>
@@ -161,10 +166,10 @@ body{font-family:'Poppins',sans-serif;background:radial-gradient(circle at top,#
       <button class="btn-outline" onclick="selectedRole='student'">Student</button>
       <button class="btn-outline" onclick="selectedRole='vendor'">Vendor</button>
     </div>
-    <button class="btn btn-gradient" onclick="sendOTP(document.getElementById('phoneInput').value,selectedRole)">Send OTP</button>
-    <div id="otp-section" class="hidden mt-4">
-      <input id="otpInput" type="text" class="input" placeholder="Enter OTP">
-      <button class="btn btn-gradient" onclick="verifyOTP(document.getElementById('otpInput').value)">Verify OTP</button>
+    <button class="btn btn-gradient" id="sendOtpBtn">Send OTP</button>
+    <div id="otpSection" class="hidden mt-4">
+      <input id="otpInput" type="text" class="input" placeholder="Enter OTP" />
+      <button class="btn btn-gradient" id="verifyOtpBtn">Verify OTP</button>
     </div>
     <button class="btn-outline mt-3" onclick="closeModal()">Close</button>
   </div>
@@ -177,10 +182,76 @@ body{font-family:'Poppins',sans-serif;background:radial-gradient(circle at top,#
   <a href="https://facebook.com/zepswipe" target="_blank"><i class="fab fa-facebook"></i></a>
 </footer>
 
-<script>
-let selectedRole=null;
-function openModal(){document.getElementById('loginModal').style.display='flex';}
-function closeModal(){document.getElementById('loginModal').style.display='none';}
+<!-- Firebase + Wallet Integration -->
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.6.1/firebase-app.js";
+import { getAuth, RecaptchaVerifier, signInWithPhoneNumber } from "https://www.gstatic.com/firebasejs/10.6.1/firebase-auth.js";
+import { getFirestore, doc, setDoc } from "https://www.gstatic.com/firebasejs/10.6.1/firebase-firestore.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyBxAQxTvuPCYVAG3eQu4MQfxHRWJB9Q3wI",
+  authDomain: "zep-swipe-6cb53.firebaseapp.com",
+  projectId: "zep-swipe-6cb53",
+  storageBucket: "zep-swipe-6cb53.firebasestorage.app",
+  messagingSenderId: "895701529881",
+  appId: "1:895701529881:web:81c6e3e420bfe6cb7dc188",
+  measurementId: "G-L48WTHMKKZ"
+};
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db = getFirestore(app);
+
+window.selectedRole = null;
+
+function openModal() { document.getElementById("loginModal").style.display = "flex"; }
+window.closeModal = () => document.getElementById("loginModal").style.display = "none";
+document.getElementById("phoneBtn").onclick = openModal;
+
+// OTP SEND
+document.getElementById("sendOtpBtn").onclick = async () => {
+  const phone = document.getElementById("phoneInput").value;
+  if (!phone || !selectedRole) return alert("Please enter phone and select role");
+  window.recaptchaVerifier = new RecaptchaVerifier('recaptcha-container', {'size':'invisible'}, auth);
+  try {
+    window.confirmationResult = await signInWithPhoneNumber(auth, phone, window.recaptchaVerifier);
+    document.getElementById("otpSection").classList.remove("hidden");
+    alert("OTP sent successfully!");
+  } catch (err) { alert(err.message); }
+};
+
+// VERIFY OTP
+document.getElementById("verifyOtpBtn").onclick = async () => {
+  const code = document.getElementById("otpInput").value;
+  try {
+    const result = await window.confirmationResult.confirm(code);
+    await setDoc(doc(db,"users",result.user.uid),{phone:result.user.phoneNumber,role:selectedRole},{merge:true});
+    alert("Login Success!");
+    window.location.href = selectedRole === "student" ? "student-dashboard.html" : "vendor-dashboard.html";
+  } catch { alert("Invalid OTP"); }
+};
+
+// METAMASK
+document.getElementById("metaBtn").onclick = async () => {
+  if (!window.ethereum) return alert("MetaMask not installed");
+  const provider = new ethers.providers.Web3Provider(window.ethereum);
+  await provider.send("eth_requestAccounts", []);
+  const address = await provider.getSigner().getAddress();
+  await setDoc(doc(db,"wallets",address),{address,role:selectedRole||"student",type:"metamask"},{merge:true});
+  alert("MetaMask Connected: " + address);
+  window.location.href = "student-dashboard.html";
+};
+
+// COINBASE
+document.getElementById("coinBtn").onclick = async () => {
+  const walletLink = new window.CoinbaseWalletSDK({appName:"Zep Swipe"});
+  const ethereum = walletLink.makeWeb3Provider("https://mainnet.infura.io/v3/9aa0a25b4da84f00a4016da67cb73088",1);
+  const provider = new ethers.providers.Web3Provider(ethereum);
+  await provider.send("eth_requestAccounts", []);
+  const address = await provider.getSigner().getAddress();
+  await setDoc(doc(db,"wallets",address),{address,role:selectedRole||"student",type:"coinbase"},{merge:true});
+  alert("Coinbase Connected: " + address);
+  window.location.href = "student-dashboard.html";
+};
 </script>
 </body>
 </html>
