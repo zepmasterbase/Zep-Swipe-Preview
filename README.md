@@ -8,8 +8,7 @@
 
 - **Responsive Landing Page**: Mobile-first design with neon glass effects and student-centric visuals.  
 - **Authentication**:
-  - Phone OTP login (Firebase Auth).  
-  - Email/password login (Firebase Auth).  
+  - Phone OTP login (Firebase Auth).     
   - Web3 Wallet login: Metamask and Coinbase Base integration.  
 - **Role-based Sign Up**: Users can register as **Student** or **Vendor**.  
 - **Dashboard Redirects**: Authenticated users are redirected to their respective dashboards.  
@@ -51,3 +50,5 @@
 ---
 
 ## 📂 Project Structure
+
+zep-swipe/ ├── index.html           # Landing page ├── login.html           # Login page ├── signup.html          # Signup page ├── student-dashboard.html ├── vendor-dashboard.html ├── assets/              # Images, icons, animations ├── css/ │   └── styles.css       # Tailwind + custom styles └── js/ └── main.js          # Firebase auth, wallet login, OTP logic
