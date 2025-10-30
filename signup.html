@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Zep Swipe — Signup</title>
+
+  <!-- Tailwind + Fonts + Icons -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700&family=Poppins:wght@400;500;600&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: radial-gradient(circle at top, #120b2e 0%, #0b0520 100%);
+      color: #fff;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      text-align: center;
+    }
+
+    .glass-box {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.15);
+      border-radius: 1.5rem;
+      padding: 2rem;
+      width: 90%;
+      max-width: 420px;
+      box-shadow: 0 0 30px rgba(0,240,255,0.3);
+      backdrop-filter: blur(12px);
+    }
+
+    h1 {
+      font-family: 'Orbitron', sans-serif;
+      background: linear-gradient(90deg, #00f0ff, #ff00f0);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      font-size: 1.8rem;
+      margin-bottom: 1rem;
+    }
+
+    input, select {
+      width: 100%;
+      padding: 0.8rem;
+      margin: 0.5rem 0;
+      border-radius: 0.75rem;
+      border: none;
+      background: rgba(255,255,255,0.1);
+      color: #00f0ff;
+      text-align: center;
+    }
+
+    input::placeholder {
+      color: #ff00f0;
+    }
+
+    .btn {
+      width: 100%;
+      padding: 0.8rem;
+      border-radius: 1rem;
+      font-weight: 600;
+      margin-top: 0.7rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .btn-gradient {
+      background: linear-gradient(90deg, #00f0ff, #ff00f0);
+      color: #0b0520;
+    }
+
+    .btn-gradient:hover {
+      transform: scale(1.05);
+    }
+
+    .role-btn {
+      padding: 0.6rem 1.2rem;
+      border-radius: 0.8rem;
+      margin: 0.4rem;
+      border: 2px solid #7c63ff;
+      color: #c0bdf4;
+      transition: 0.3s;
+      cursor: pointer;
+    }
+
+    .role-btn.active {
+      background: linear-gradient(90deg, #00f0ff, #ff00f0);
+      color: #0b0520;
+      border: none;
+    }
+
+    a {
+      color: #00f0ff;
+      text-decoration: none;
+      font-size: 0.9rem;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="glass-box">
+    <h1>Sign Up for Zep Swipe</h1>
+    <p class="text-sm text-[#c0bdf4] mb-3">Join Africa’s leading student super-app 🚀</p>
+
+    <input type="text" id="fullName" placeholder="Full Name" />
+    <select id="country">
+      <option value="">Select Country</option>
+      <option>Ghana</option>
+      <option>Nigeria</option>
+      <option>Kenya</option>
+      <option>Uganda</option>
+      <option>South Africa</option>
+      <option>Rwanda</option>
+      <option>Tanzania</option>
+      <option>Egypt</option>
+      <option>Morocco</option>
+      <option>Zimbabwe</option>
+    </select>
+
+    <div class="flex justify-center mb-2">
+      <div id="studentBtn" class="role-btn" onclick="selectRole('student')">🧑‍🎓 Student</div>
+      <div id="vendorBtn" class="role-btn" onclick="selectRole('vendor')">🛍️ Vendor</div>
+    </div>
+
+    <input type="text" id="phoneNumber" placeholder="+234 800 000 0000" />
+    <div id="recaptcha-container"></div>
+    <button class="btn btn-gradient" id="sendOtpBtn" onclick="sendOTP()">Send OTP</button>
+
+    <div id="otpSection" style="display:none;">
+      <input type="text" id="otpCode" placeholder="Enter OTP Code" />
+      <button class="btn btn-gradient" onclick="verifyOTP()">Verify & Register</button>
+    </div>
+
+    <p class="mt-4">Already have an account? <a href="index.html">Login here</a></p>
+  </div>
+
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.2/firebase-app.js";
+    import { getAuth, RecaptchaVerifier, signInWithPhoneNumber } from "https://www.gstatic.com/firebasejs/10.7.2/firebase-auth.js";
+    import { getFirestore, doc, setDoc } from "https://www.gstatic.com/firebasejs/10.7.2/firebase-firestore.js";
+
+    // Firebase config
+    const firebaseConfig = {
+      apiKey: "AIzaSyBxAQxTvuPCYVAG3eQu4MQfxHRWJB9Q3wI",
+      authDomain: "zep-swipe-6cb53.firebaseapp.com",
+      projectId: "zep-swipe-6cb53",
+      storageBucket: "zep-swipe-6cb53.firebasestorage.app",
+      messagingSenderId: "895701529881",
+      appId: "1:895701529881:web:81c6e3e420bfe6cb7dc188",
+      measurementId: "G-L48WTHMKKZ"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const db = getFirestore(app);
+
+    let selectedRole = null;
+    let confirmationResult;
+
+    // Role selector
+    window.selectRole = function(role) {
+      selectedRole = role;
+      document.getElementById("studentBtn").classList.toggle("active", role === "student");
+      document.getElementById("vendorBtn").classList.toggle("active", role === "vendor");
+    }
+
+    // reCAPTCHA
+    window.recaptchaVerifier = new RecaptchaVerifier(auth, "recaptcha-container", {
+      size: "invisible",
+      callback: () => console.log("reCAPTCHA verified")
+    });
+
+    // Send OTP
+    window.sendOTP = async function() {
+      const phone = document.getElementById("phoneNumber").value;
+      if (!phone) return alert("Enter a valid phone number.");
+      try {
+        confirmationResult = await signInWithPhoneNumber(auth, phone, window.recaptchaVerifier);
+        document.getElementById("otpSection").style.display = "block";
+        alert("OTP sent successfully!");
+      } catch (error) {
+        console.error(error);
+        alert(error.message);
+      }
+    }
+
+    // Verify OTP and Register
+    window.verifyOTP = async function() {
+      const code = document.getElementById("otpCode").value;
+      const name = document.getElementById("fullName").value;
+      const country = document.getElementById("country").value;
+
+      if (!code || !name || !country || !selectedRole) {
+        alert("Please fill all fields and select your role.");
+        return;
+      }
+
+      try {
+        const result = await confirmationResult.confirm(code);
+        const user = result.user;
+
+        await setDoc(doc(db, "users", user.uid), {
+          name,
+          country,
+          role: selectedRole,
+          phone: user.phoneNumber,
+          createdAt: new Date()
+        });
+
+        alert("Signup successful!");
+
+        if (selectedRole === "student") {
+          window.location.href = "student-dashboard.html";
+        } else {
+          window.location.href = "vendor-dashboard.html";
+        }
+      } catch (error) {
+        console.error(error);
+        alert("OTP verification failed. Try again.");
+      }
+    }
+  </script>
+</body>
+</html>
