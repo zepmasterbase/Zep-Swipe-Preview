@@ -4,74 +4,50 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Zep Swipe — Signup</title>
-
-  <!-- Tailwind + Fonts + Icons -->
   <script src="https://cdn.tailwindcss.com"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700&family=Poppins:wght@400;500;600&display=swap" rel="stylesheet"/>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700&family=Poppins:wght@400;500;600&display=swap" rel="stylesheet" />
+  <script src="https://kit.fontawesome.com/a2e0e6b6a2.js" crossorigin="anonymous"></script>
+
+  <!-- Firebase SDK -->
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js"></script>
 
   <style>
     body {
       font-family: 'Poppins', sans-serif;
-      background: radial-gradient(circle at top, #120b2e 0%, #0b0520 100%);
+      background: radial-gradient(circle at top, #100820 0%, #050312 100%);
       color: #fff;
-      margin: 0;
-      padding: 0;
+      min-height: 100vh;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      min-height: 100vh;
-      text-align: center;
+      padding: 1rem;
     }
 
-    .glass-box {
-      background: rgba(255,255,255,0.05);
-      border: 1px solid rgba(255,255,255,0.15);
+    .glass-card {
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      backdrop-filter: blur(15px);
       border-radius: 1.5rem;
       padding: 2rem;
-      width: 90%;
-      max-width: 420px;
-      box-shadow: 0 0 30px rgba(0,240,255,0.3);
-      backdrop-filter: blur(12px);
-    }
-
-    h1 {
-      font-family: 'Orbitron', sans-serif;
-      background: linear-gradient(90deg, #00f0ff, #ff00f0);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      font-size: 1.8rem;
-      margin-bottom: 1rem;
-    }
-
-    input, select {
+      max-width: 400px;
       width: 100%;
-      padding: 0.8rem;
-      margin: 0.5rem 0;
-      border-radius: 0.75rem;
-      border: none;
-      background: rgba(255,255,255,0.1);
-      color: #00f0ff;
-      text-align: center;
-    }
-
-    input::placeholder {
-      color: #ff00f0;
+      box-shadow: 0 0 25px rgba(255, 0, 255, 0.25);
     }
 
     .btn {
       width: 100%;
-      padding: 0.8rem;
-      border-radius: 1rem;
-      font-weight: 600;
-      margin-top: 0.7rem;
+      padding: 0.75rem;
+      border-radius: 0.75rem;
+      font-weight: 500;
       cursor: pointer;
       transition: all 0.3s ease;
     }
 
     .btn-gradient {
-      background: linear-gradient(90deg, #00f0ff, #ff00f0);
+      background: linear-gradient(90deg, #ff00f0, #00f0ff);
       color: #0b0520;
     }
 
@@ -79,38 +55,76 @@
       transform: scale(1.05);
     }
 
+    input, select {
+      width: 100%;
+      margin-top: 0.5rem;
+      margin-bottom: 1rem;
+      padding: 0.75rem;
+      border-radius: 0.75rem;
+      background: rgba(255, 255, 255, 0.1);
+      border: none;
+      color: #fff;
+      outline: none;
+    }
+
+    ::placeholder {
+      color: #b3faff;
+      opacity: 0.8;
+    }
+
     .role-btn {
-      padding: 0.6rem 1.2rem;
-      border-radius: 0.8rem;
-      margin: 0.4rem;
-      border: 2px solid #7c63ff;
-      color: #c0bdf4;
-      transition: 0.3s;
+      width: 48%;
+      padding: 0.5rem;
+      border-radius: 0.75rem;
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      background: rgba(255, 255, 255, 0.05);
+      color: #fff;
       cursor: pointer;
+      transition: 0.3s;
     }
 
     .role-btn.active {
       background: linear-gradient(90deg, #00f0ff, #ff00f0);
       color: #0b0520;
-      border: none;
     }
 
-    a {
-      color: #00f0ff;
-      text-decoration: none;
+    .glow-header {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 1.8rem;
+      margin-bottom: 1rem;
+      text-align: center;
+      background: linear-gradient(90deg, #00f0ff, #ff00f0);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    footer {
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+      text-align: center;
+      padding: 1rem;
       font-size: 0.9rem;
+      color: #b3faff;
+    }
+
+    footer a {
+      margin: 0 10px;
+      color: #00f0ff;
+      transition: 0.3s;
+    }
+
+    footer a:hover {
+      color: #ff00f0;
     }
   </style>
 </head>
 
 <body>
+  <div class="glass-card">
+    <h1 class="glow-header">Zep Swipe Signup</h1>
 
-  <div class="glass-box">
-    <h1>Sign Up for Zep Swipe</h1>
-    <p class="text-sm text-[#c0bdf4] mb-3">Join Africa’s leading student super-app 🚀</p>
-
-    <input type="text" id="fullName" placeholder="Full Name" />
-    <select id="country">
+    <select id="country" required>
       <option value="">Select Country</option>
       <option>Ghana</option>
       <option>Nigeria</option>
@@ -121,32 +135,33 @@
       <option>Tanzania</option>
       <option>Egypt</option>
       <option>Morocco</option>
-      <option>Zimbabwe</option>
+      <option>Senegal</option>
     </select>
 
-    <div class="flex justify-center mb-2">
-      <div id="studentBtn" class="role-btn" onclick="selectRole('student')">🧑‍🎓 Student</div>
-      <div id="vendorBtn" class="role-btn" onclick="selectRole('vendor')">🛍️ Vendor</div>
+    <div class="flex justify-between mb-3">
+      <button id="studentBtn" class="role-btn" onclick="selectRole('student')">🧑‍🎓 Student</button>
+      <button id="vendorBtn" class="role-btn" onclick="selectRole('vendor')">🛍️ Vendor</button>
     </div>
 
-    <input type="text" id="phoneNumber" placeholder="+234 800 000 0000" />
+    <input type="tel" id="phoneNumber" placeholder="+233 54 000 0000" />
     <div id="recaptcha-container"></div>
-    <button class="btn btn-gradient" id="sendOtpBtn" onclick="sendOTP()">Send OTP</button>
 
-    <div id="otpSection" style="display:none;">
-      <input type="text" id="otpCode" placeholder="Enter OTP Code" />
-      <button class="btn btn-gradient" onclick="verifyOTP()">Verify & Register</button>
-    </div>
-
-    <p class="mt-4">Already have an account? <a href="index.html">Login here</a></p>
+    <button class="btn btn-gradient mt-2" onclick="sendOTP()">Send OTP</button>
+    <input type="text" id="otpCode" placeholder="Enter OTP" />
+    <button class="btn btn-gradient" onclick="verifyOTP()">Verify OTP</button>
   </div>
 
-  <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.2/firebase-app.js";
-    import { getAuth, RecaptchaVerifier, signInWithPhoneNumber } from "https://www.gstatic.com/firebasejs/10.7.2/firebase-auth.js";
-    import { getFirestore, doc, setDoc } from "https://www.gstatic.com/firebasejs/10.7.2/firebase-firestore.js";
+  <footer>
+    <a href="https://x.com/ZepSwipe?t=r94a0_pgN7ew1xT5L4eOSA&s=09" target="_blank"><i class="fab fa-x-twitter"></i></a>
+    <a href="https://www.instagram.com/zepswipe?igsh=bXF3anMxODhxZWFs" target="_blank"><i class="fab fa-instagram"></i></a>
+    <a href="https://facebook.com/ZepSwipe" target="_blank"><i class="fab fa-facebook"></i></a>
+  </footer>
 
-    // Firebase config
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+    import { getAuth, RecaptchaVerifier, signInWithPhoneNumber } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+
+    // Your Firebase config
     const firebaseConfig = {
       apiKey: "AIzaSyBxAQxTvuPCYVAG3eQu4MQfxHRWJB9Q3wI",
       authDomain: "zep-swipe-6cb53.firebaseapp.com",
@@ -157,74 +172,57 @@
       measurementId: "G-L48WTHMKKZ"
     };
 
+    // Initialize Firebase
     const app = initializeApp(firebaseConfig);
     const auth = getAuth(app);
-    const db = getFirestore(app);
-
-    let selectedRole = null;
     let confirmationResult;
+    let selectedRole = null;
 
-    // Role selector
+    // Role selection
     window.selectRole = function(role) {
       selectedRole = role;
-      document.getElementById("studentBtn").classList.toggle("active", role === "student");
-      document.getElementById("vendorBtn").classList.toggle("active", role === "vendor");
+      document.getElementById('studentBtn').classList.toggle('active', role === 'student');
+      document.getElementById('vendorBtn').classList.toggle('active', role === 'vendor');
     }
 
-    // reCAPTCHA
-    window.recaptchaVerifier = new RecaptchaVerifier(auth, "recaptcha-container", {
-      size: "invisible",
-      callback: () => console.log("reCAPTCHA verified")
+    // reCAPTCHA setup
+    window.recaptchaVerifier = new RecaptchaVerifier(auth, 'recaptcha-container', {
+      size: 'invisible',
+      callback: (response) => { console.log("reCAPTCHA verified"); }
     });
 
     // Send OTP
-    window.sendOTP = async function() {
-      const phone = document.getElementById("phoneNumber").value;
-      if (!phone) return alert("Enter a valid phone number.");
-      try {
-        confirmationResult = await signInWithPhoneNumber(auth, phone, window.recaptchaVerifier);
-        document.getElementById("otpSection").style.display = "block";
-        alert("OTP sent successfully!");
-      } catch (error) {
-        console.error(error);
-        alert(error.message);
-      }
+    window.sendOTP = function() {
+      const phoneNumber = document.getElementById("phoneNumber").value;
+      if (!phoneNumber) return alert("Please enter your phone number.");
+      signInWithPhoneNumber(auth, phoneNumber, window.recaptchaVerifier)
+        .then((result) => {
+          confirmationResult = result;
+          alert("OTP sent! Check your phone.");
+        })
+        .catch((error) => {
+          alert("Error sending OTP: " + error.message);
+        });
     }
 
-    // Verify OTP and Register
-    window.verifyOTP = async function() {
+    // Verify OTP
+    window.verifyOTP = function() {
       const code = document.getElementById("otpCode").value;
-      const name = document.getElementById("fullName").value;
-      const country = document.getElementById("country").value;
-
-      if (!code || !name || !country || !selectedRole) {
-        alert("Please fill all fields and select your role.");
-        return;
-      }
-
-      try {
-        const result = await confirmationResult.confirm(code);
-        const user = result.user;
-
-        await setDoc(doc(db, "users", user.uid), {
-          name,
-          country,
-          role: selectedRole,
-          phone: user.phoneNumber,
-          createdAt: new Date()
+      if (!code) return alert("Enter OTP.");
+      confirmationResult.confirm(code)
+        .then((result) => {
+          alert("Verification successful!");
+          if (selectedRole === "student") {
+            window.location.href = "students-dashboard.html";
+          } else if (selectedRole === "vendor") {
+            window.location.href = "vendor-dashboard.html";
+          } else {
+            alert("Please select your role before signing up.");
+          }
+        })
+        .catch((error) => {
+          alert("Verification failed: " + error.message);
         });
-
-        alert("Signup successful!");
-
-        if (selectedRole === "student") {
-          window.location.href = "student-dashboard.html";
-        } else {
-          window.location.href = "vendor-dashboard.html";
-        }
-      } catch (error) {
-        console.error(error);
-        alert("OTP verification failed. Try again.");
-      }
     }
   </script>
 </body>
