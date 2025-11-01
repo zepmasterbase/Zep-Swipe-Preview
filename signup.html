@@ -3,118 +3,135 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Zep Swipe — Signup</title>
+  <title>Zep Swipe — Sign Up</title>
+
+  <!-- TailwindCSS -->
   <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700&family=Poppins:wght@400;500;600&display=swap" rel="stylesheet" />
+
+  <!-- Icons -->
   <script src="https://kit.fontawesome.com/a2e0e6b6a2.js" crossorigin="anonymous"></script>
 
-  <!-- Firebase SDK -->
+  <!-- Firebase -->
   <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js"></script>
 
   <style>
     body {
       font-family: 'Poppins', sans-serif;
-      background: radial-gradient(circle at top, #100820 0%, #050312 100%);
-      color: #fff;
+      background: radial-gradient(circle at 20% 20%, #1b0034, #050012, #0a021f);
+      color: white;
       min-height: 100vh;
       display: flex;
-      flex-direction: column;
       align-items: center;
       justify-content: center;
-      padding: 1rem;
+      padding: 2rem;
     }
 
     .glass-card {
       background: rgba(255, 255, 255, 0.08);
-      border: 1px solid rgba(255, 255, 255, 0.15);
-      backdrop-filter: blur(15px);
       border-radius: 1.5rem;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      backdrop-filter: blur(20px);
+      box-shadow: 0 0 30px rgba(255, 0, 255, 0.15);
+      max-width: 420px;
+      width: 100%;
       padding: 2rem;
-      max-width: 400px;
-      width: 100%;
-      box-shadow: 0 0 25px rgba(255, 0, 255, 0.25);
-    }
-
-    .btn {
-      width: 100%;
-      padding: 0.75rem;
-      border-radius: 0.75rem;
-      font-weight: 500;
-      cursor: pointer;
       transition: all 0.3s ease;
     }
 
-    .btn-gradient {
-      background: linear-gradient(90deg, #ff00f0, #00f0ff);
-      color: #0b0520;
-    }
-
-    .btn-gradient:hover {
-      transform: scale(1.05);
+    .glow-title {
+      font-family: 'Orbitron', sans-serif;
+      background: linear-gradient(90deg, #00f0ff, #ff00f0, #8ef8b8);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      text-align: center;
+      font-size: 1.8rem;
+      margin-bottom: 1rem;
     }
 
     input, select {
       width: 100%;
-      margin-top: 0.5rem;
-      margin-bottom: 1rem;
-      padding: 0.75rem;
-      border-radius: 0.75rem;
+      padding: 0.8rem;
+      border-radius: 0.8rem;
       background: rgba(255, 255, 255, 0.1);
-      border: none;
-      color: #fff;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      color: white;
+      margin-bottom: 1rem;
       outline: none;
     }
 
     ::placeholder {
-      color: #b3faff;
-      opacity: 0.8;
+      color: #a7faff;
+    }
+
+    .btn {
+      width: 100%;
+      padding: 0.8rem;
+      border-radius: 0.8rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.3s;
+      border: none;
+    }
+
+    .btn-primary {
+      background: linear-gradient(90deg, #00f0ff, #ff00f0);
+      color: #0a021f;
+    }
+
+    .btn-primary:hover {
+      box-shadow: 0 0 15px rgba(255, 0, 255, 0.4);
+      transform: scale(1.03);
+    }
+
+    .wallet-btn {
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      font-weight: 500;
+      transition: all 0.3s ease;
+      color: white;
+    }
+
+    .wallet-btn:hover {
+      background: linear-gradient(90deg, #00f0ff33, #ff00f033);
+      box-shadow: 0 0 10px rgba(0, 255, 255, 0.2);
     }
 
     .role-btn {
       width: 48%;
       padding: 0.5rem;
-      border-radius: 0.75rem;
-      border: 1px solid rgba(255, 255, 255, 0.3);
-      background: rgba(255, 255, 255, 0.05);
-      color: #fff;
-      cursor: pointer;
-      transition: 0.3s;
+      border-radius: 0.8rem;
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      color: white;
+      transition: all 0.3s;
     }
 
     .role-btn.active {
-      background: linear-gradient(90deg, #00f0ff, #ff00f0);
-      color: #0b0520;
+      background: linear-gradient(90deg, #ff00f0, #00f0ff);
+      color: #0a021f;
     }
 
-    .glow-header {
-      font-family: 'Orbitron', sans-serif;
-      font-size: 1.8rem;
-      margin-bottom: 1rem;
+    .footer {
       text-align: center;
-      background: linear-gradient(90deg, #00f0ff, #ff00f0);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
+      margin-top: 1.5rem;
+      color: #8feaff;
     }
 
-    footer {
-      position: fixed;
-      bottom: 0;
-      width: 100%;
-      text-align: center;
-      padding: 1rem;
-      font-size: 0.9rem;
-      color: #b3faff;
-    }
-
-    footer a {
-      margin: 0 10px;
+    .footer a {
+      margin: 0 0.5rem;
       color: #00f0ff;
       transition: 0.3s;
     }
 
-    footer a:hover {
+    .footer a:hover {
       color: #ff00f0;
     }
   </style>
@@ -122,9 +139,22 @@
 
 <body>
   <div class="glass-card">
-    <h1 class="glow-header">Zep Swipe Signup</h1>
+    <h1 class="glow-title">Zep Swipe Signup</h1>
 
-    <select id="country" required>
+    <!-- Wallet Connect -->
+    <button class="wallet-btn mb-3" id="connectMetaMask">
+      <i class="fa-brands fa-ethereum text-lg"></i> Connect MetaMask
+    </button>
+
+    <button class="wallet-btn mb-4" id="connectCoinbase">
+      <i class="fa-brands fa-bitcoin text-lg"></i> Connect Coinbase
+    </button>
+
+    <!-- Divider -->
+    <p class="text-center text-sm mb-2 text-gray-300">or continue with phone</p>
+
+    <!-- Country Selection -->
+    <select id="country">
       <option value="">Select Country</option>
       <option>Ghana</option>
       <option>Nigeria</option>
@@ -138,30 +168,34 @@
       <option>Senegal</option>
     </select>
 
+    <!-- Role -->
     <div class="flex justify-between mb-3">
       <button id="studentBtn" class="role-btn" onclick="selectRole('student')">🧑‍🎓 Student</button>
       <button id="vendorBtn" class="role-btn" onclick="selectRole('vendor')">🛍️ Vendor</button>
     </div>
 
+    <!-- Phone Auth -->
     <input type="tel" id="phoneNumber" placeholder="+233 54 000 0000" />
     <div id="recaptcha-container"></div>
+    <button id="sendOtpBtn" class="btn btn-primary mb-3" onclick="sendOTP()">Send OTP</button>
 
-    <button class="btn btn-gradient mt-2" onclick="sendOTP()">Send OTP</button>
-    <input type="text" id="otpCode" placeholder="Enter OTP" />
-    <button class="btn btn-gradient" onclick="verifyOTP()">Verify OTP</button>
+    <div id="otpSection" class="hidden">
+      <input type="text" id="otpCode" placeholder="Enter OTP" />
+      <button class="btn btn-primary" onclick="verifyOTP()">Verify & Continue</button>
+    </div>
+
+    <!-- Footer Links -->
+    <div class="footer mt-6">
+      <a href="https://x.com/ZepSwipe?t=r94a0_pgN7ew1xT5L4eOSA&s=09" target="_blank"><i class="fab fa-x-twitter"></i></a>
+      <a href="https://www.instagram.com/zepswipe?igsh=bXF3anMxODhxZWFs" target="_blank"><i class="fab fa-instagram"></i></a>
+      <a href="https://facebook.com/ZepSwipe" target="_blank"><i class="fab fa-facebook"></i></a>
+    </div>
   </div>
-
-  <footer>
-    <a href="https://x.com/ZepSwipe?t=r94a0_pgN7ew1xT5L4eOSA&s=09" target="_blank"><i class="fab fa-x-twitter"></i></a>
-    <a href="https://www.instagram.com/zepswipe?igsh=bXF3anMxODhxZWFs" target="_blank"><i class="fab fa-instagram"></i></a>
-    <a href="https://facebook.com/ZepSwipe" target="_blank"><i class="fab fa-facebook"></i></a>
-  </footer>
 
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
     import { getAuth, RecaptchaVerifier, signInWithPhoneNumber } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 
-    // Your Firebase config
     const firebaseConfig = {
       apiKey: "AIzaSyBxAQxTvuPCYVAG3eQu4MQfxHRWJB9Q3wI",
       authDomain: "zep-swipe-6cb53.firebaseapp.com",
@@ -172,7 +206,6 @@
       measurementId: "G-L48WTHMKKZ"
     };
 
-    // Initialize Firebase
     const app = initializeApp(firebaseConfig);
     const auth = getAuth(app);
     let confirmationResult;
@@ -183,47 +216,61 @@
       selectedRole = role;
       document.getElementById('studentBtn').classList.toggle('active', role === 'student');
       document.getElementById('vendorBtn').classList.toggle('active', role === 'vendor');
-    }
+    };
 
-    // reCAPTCHA setup
-    window.recaptchaVerifier = new RecaptchaVerifier(auth, 'recaptcha-container', {
-      size: 'invisible',
-      callback: (response) => { console.log("reCAPTCHA verified"); }
-    });
+    // Initialize invisible reCAPTCHA
+    window.recaptchaVerifier = new RecaptchaVerifier(auth, 'recaptcha-container', { size: 'invisible' });
 
     // Send OTP
     window.sendOTP = function() {
       const phoneNumber = document.getElementById("phoneNumber").value;
-      if (!phoneNumber) return alert("Please enter your phone number.");
+      if (!phoneNumber) return alert("Please enter a valid phone number.");
       signInWithPhoneNumber(auth, phoneNumber, window.recaptchaVerifier)
         .then((result) => {
           confirmationResult = result;
-          alert("OTP sent! Check your phone.");
+          document.getElementById("otpSection").classList.remove("hidden");
+          alert("OTP sent successfully!");
         })
         .catch((error) => {
           alert("Error sending OTP: " + error.message);
         });
-    }
+    };
 
     // Verify OTP
     window.verifyOTP = function() {
       const code = document.getElementById("otpCode").value;
-      if (!code) return alert("Enter OTP.");
+      if (!code) return alert("Enter your OTP.");
       confirmationResult.confirm(code)
-        .then((result) => {
-          alert("Verification successful!");
-          if (selectedRole === "student") {
-            window.location.href = "students-dashboard.html";
-          } else if (selectedRole === "vendor") {
-            window.location.href = "vendor-dashboard.html";
-          } else {
-            alert("Please select your role before signing up.");
-          }
+        .then(() => {
+          alert("Signup successful!");
+          if (selectedRole === "student") window.location.href = "students-dashboard.html";
+          else if (selectedRole === "vendor") window.location.href = "vendor-dashboard.html";
+          else alert("Please select your role first.");
         })
         .catch((error) => {
           alert("Verification failed: " + error.message);
         });
-    }
+    };
+
+    // Wallet connection
+    const connectMetaMask = document.getElementById("connectMetaMask");
+    connectMetaMask.addEventListener("click", async () => {
+      if (window.ethereum) {
+        try {
+          const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
+          alert("Connected to MetaMask: " + accounts[0]);
+        } catch (err) {
+          alert("MetaMask connection failed: " + err.message);
+        }
+      } else {
+        alert("Please install MetaMask wallet.");
+      }
+    });
+
+    const connectCoinbase = document.getElementById("connectCoinbase");
+    connectCoinbase.addEventListener("click", () => {
+      window.open("https://www.coinbase.com/wallet", "_blank");
+    });
   </script>
 </body>
 </html>
