@@ -1,132 +1,80 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>ZepChat — Futuristic Chat Dashboard</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ZepChat Futuristic Dashboard</title>
 
-<!-- Tailwind for quick utilities (no server required) -->
+<!-- Tailwind + Fonts + Icons -->
 <script src="https://cdn.tailwindcss.com"></script>
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
 <style>
 :root{
-  --bg-1:#060216;
+  --bg:#060216;
   --glass: rgba(255,255,255,0.04);
-  --neon-blue: #00f0ff;
-  --neon-pink: #ff00f0;
-  --muted: rgba(255,255,255,0.7);
+  --neon-blue:#00f0ff;
+  --neon-pink:#ff00f0;
+  --neon-mint:#3affc1;
+  --neon-violet:#9b59b6;
 }
 
-/* Page */
-html,body{height:100%}
-body{
-  margin:0;
-  font-family:'Poppins',sans-serif;
-  background: radial-gradient(1200px 600px at 10% 10%, #0b0420 0%, var(--bg-1) 55%), #030014;
-  color:#e9f0ff;
-  -webkit-font-smoothing:antialiased;
-  -moz-osx-font-smoothing:grayscale;
-}
+/* Body & layout */
+html,body{height:100%;margin:0;font-family:'Poppins',sans-serif;background:radial-gradient(circle at top,#0b0420 0%,var(--bg) 100%);color:#fff;}
+.app{display:grid;grid-template-columns:320px 1fr 320px;gap:16px;padding:84px 16px 120px 16px;max-width:1200px;margin:0 auto;}
+@media(max-width:1000px){.app{grid-template-columns:1fr;padding:84px 12px 120px 12px;}}
 
 /* Header */
-.header{
-  position:fixed; top:0; left:0; right:0;
-  height:64px; display:flex; align-items:center; justify-content:space-between;
-  padding:0 20px; gap:12px;
-  background: linear-gradient(90deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01));
-  backdrop-filter: blur(8px); border-bottom:1px solid rgba(255,255,255,0.02);
-  z-index:60;
-}
-.header .brand{
-  display:flex; gap:12px; align-items:center;
-}
-.logo {
-  width:44px; height:44px; border-radius:10px;
-  background: linear-gradient(135deg,var(--neon-blue),var(--neon-pink));
-  box-shadow:0 6px 24px rgba(0,240,255,0.08), inset 0 -6px 24px rgba(255,0,240,0.06);
-  display:flex; align-items:center; justify-content:center; color:#04020a; font-weight:700; font-family:'Orbitron';
-}
-.header h1{margin:0; font-family:'Orbitron'; font-size:1.05rem; letter-spacing:0.6px; color:transparent;
-  background:linear-gradient(90deg,var(--neon-blue),var(--neon-pink)); -webkit-background-clip:text;}
-.header .icons { display:flex; gap:12px; align-items:center;}
-.header .icons i{color:var(--neon-blue); font-size:18px; cursor:pointer; transition:all .18s}
-.header .icons i:hover{color:var(--neon-pink); transform:scale(1.15); filter:drop-shadow(0 6px 12px rgba(255,0,240,0.08))}
+.header{position:fixed;top:0;left:0;right:0;height:64px;display:flex;align-items:center;justify-content:space-between;padding:0 20px;background:linear-gradient(90deg,rgba(255,255,255,0.03),rgba(255,255,255,0.01));backdrop-filter:blur(8px);z-index:60;box-shadow:0 0 20px rgba(0,255,255,0.1);}
+.header .brand{display:flex;align-items:center;gap:12px;}
+.header .logo{width:44px;height:44px;border-radius:10px;background:linear-gradient(135deg,var(--neon-mint),var(--neon-violet));display:flex;align-items:center;justify-content:center;color:#04020a;font-weight:700;font-family:'Orbitron';}
+.header h1{margin:0;font-family:'Orbitron';font-size:1.05rem;letter-spacing:0.6px;color:transparent;background:linear-gradient(90deg,var(--neon-blue),var(--neon-violet));-webkit-background-clip:text;}
+.header .icons i{color:var(--neon-blue);font-size:18px;cursor:pointer;transition:0.18s;}
+.header .icons i:hover{color:var(--neon-violet);transform:scale(1.15);filter:drop-shadow(0 6px 12px rgba(255,0,240,0.08));}
 
-/* Layout */
-.app {
-  display:grid;
-  grid-template-columns: 320px 1fr 320px;
-  gap:18px;
-  padding:84px 20px 110px 20px; /* header + footer room */
-  max-width:1200px;
-  margin:0 auto;
-}
-@media (max-width:1000px){
-  .app{ grid-template-columns: 1fr; padding:84px 12px 120px 12px; gap:12px;}
-}
+/* Panel glass */
+.panel{background:var(--glass);border-radius:12px;padding:12px;box-shadow:0 6px 30px rgba(0,0,0,0.6);border:1px solid rgba(255,255,255,0.02);}
 
-/* Panels glass */
-.panel {
-  background: var(--glass);
-  border-radius:12px; padding:12px; box-shadow: 0 6px 30px rgba(0,0,0,0.6);
-  border:1px solid rgba(255,255,255,0.02);
-}
+/* Left panel: contacts */
+.contacts-list{height:calc(100vh - 220px);overflow:auto;padding:6px;}
+.contact-item{display:flex;gap:12px;align-items:center;padding:10px;border-radius:12px;cursor:pointer;transition:all .18s;margin-bottom:6px;}
+.contact-item:hover{transform:translateY(-3px);box-shadow:0 6px 24px rgba(0,240,255,0.06);}
+.contact-item.active{background: linear-gradient(90deg, rgba(0,240,255,0.05), rgba(255,0,240,0.02)); box-shadow:0 12px 40px rgba(0,240,255,0.03);}
+.avatar{width:48px;height:48px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-weight:700;color:#04020a;background:linear-gradient(90deg,var(--neon-mint),var(--neon-violet));box-shadow:0 0 10px var(--neon-mint),0 0 16px var(--neon-violet);position:relative;}
+.avatar::after{content:'';position:absolute;width:10px;height:10px;border-radius:50%;bottom:0;right:0;background:#3affc1;box-shadow:0 0 6px #3affc1;}
+.contact-meta small{color:rgba(255,255,255,0.7);display:block;font-size:12px;}
 
-/* Left: contacts */
-.contacts-list { height:calc(100vh - 220px); overflow:auto; padding:6px; }
-.contact-item{
-  display:flex; gap:12px; align-items:center; padding:10px; border-radius:10px; cursor:pointer;
-  transition:all .18s; margin-bottom:6px;
-}
-.contact-item:hover{ transform:translateY(-4px); box-shadow:0 6px 30px rgba(0,240,255,0.03); }
-.contact-item.active{ background: linear-gradient(90deg, rgba(0,240,255,0.05), rgba(255,0,240,0.02)); box-shadow:0 12px 40px rgba(0,240,255,0.03) }
-.avatar{ width:48px; height:48px; border-radius:12px; display:flex; align-items:center; justify-content:center; font-weight:700; color:#04020a;
-  background: linear-gradient(90deg,var(--neon-blue),var(--neon-pink)); box-shadow: inset 0 -6px 12px rgba(0,0,0,0.2); }
-.contact-meta small { color: rgba(255,255,255,0.7); display:block; font-size:12px;}
+/* Center chat */
+.chat-window{display:flex;flex-direction:column;height:calc(100vh - 220px);}
+.chat-messages{flex:1;overflow:auto;padding:14px;display:flex;flex-direction:column;gap:10px;}
+.msg{max-width:70%;padding:12px 16px;border-radius:20px;line-height:1.2;box-shadow:0 4px 18px rgba(0,0,0,0.5);opacity:0;transform:translateY(8px);animation:fadeSlide 0.25s forwards;}
+.msg.in{background:linear-gradient(135deg,var(--neon-violet),var(--neon-blue));color:#fff;align-self:flex-start;}
+.msg.out{background:linear-gradient(135deg,var(--neon-mint),var(--neon-blue));color:#04020a;font-weight:600;align-self:flex-end;}
+@keyframes fadeSlide{to{opacity:1;transform:translateY(0);}}
+.input-bar{display:flex;gap:8px;align-items:center;padding:10px;border-radius:12px;margin-top:10px;}
+.input-bar input[type=text]{flex:1;padding:10px 12px;border-radius:999px;border:none;outline:none;background:rgba(255,255,255,0.03);color:#fff;}
+.send-btn{background:linear-gradient(135deg,var(--neon-mint),var(--neon-blue));padding:10px 14px;border-radius:999px;cursor:pointer;color:#04020a;font-weight:700;border:none;transition:all .15s;box-shadow:0 6px 18px var(--neon-mint),0 0 12px var(--neon-blue);}
+.send-btn:hover{transform:scale(1.05);filter:drop-shadow(0 8px 16px var(--neon-blue));}
 
-/* upload button */
-.upload-row{ display:flex; gap:8px; align-items:center; margin-top:8px; }
-.upload-row label{ cursor:pointer; padding:8px 11px; border-radius:10px; background:linear-gradient(90deg, rgba(0,240,255,0.06), rgba(255,0,240,0.04)); color:var(--neon-blue); font-weight:600; font-size:13px;}
-.upload-row input[type=file]{ display:none; }
+/* Right panel: saved contacts / info */
+.info-pane{height:calc(100vh - 220px);overflow:auto;padding:12px;display:flex;flex-direction:column;gap:12px;}
+.info-pane h3{font-family:'Orbitron';color:var(--neon-blue);margin:0;margin-bottom:6px;}
+.saved-list{display:grid;gap:8px;}
 
-/* Center: chat */
-.chat-window { display:flex; flex-direction:column; height: calc(100vh - 220px); }
-.chat-messages { flex:1; overflow:auto; padding:14px; display:flex; flex-direction:column; gap:10px; }
-.msg { max-width:78%; padding:10px 12px; border-radius:12px; line-height:1.15; font-size:14px; box-shadow:0 6px 18px rgba(0,0,0,0.6); }
-.msg.in { align-self:flex-start; background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01)); border:1px solid rgba(255,255,255,0.02); }
-.msg.out { align-self:flex-end; background: linear-gradient(90deg, rgba(0,240,255,0.12), rgba(255,0,240,0.10)); color:#04020a; font-weight:600; }
-.msg small{ display:block; font-size:11px; color:rgba(255,255,255,0.7); margin-top:6px; }
+/* Footer */
+.footer{position:fixed;bottom:0;left:0;right:0;height:78px;display:flex;align-items:center;justify-content:center;backdrop-filter:blur(14px);background:rgba(0,0,0,0.35);box-shadow:0 -8px 25px rgba(0,0,0,0.1);z-index:100;}
+.footer-inner{display:flex;gap:16px;align-items:center;width:100%;max-width:900px;justify-content:space-around;}
+.footer-button{display:flex;flex-direction:column;align-items:center;color:var(--neon-blue);font-size:12px;text-decoration:none;transition:0.2s;}
+.footer-button i{font-size:22px;padding:10px;border-radius:50%;background:rgba(0,240,255,0.06);box-shadow:0 4px 12px rgba(0,240,255,0.15);}
+.footer-button:hover{color:var(--neon-violet);transform:translateY(-3px);filter:drop-shadow(0 10px 24px rgba(255,0,240,0.06));}
+.add-contact-btn{position:relative;top:-20px;border:none;background:linear-gradient(90deg,var(--neon-pink),var(--neon-blue));box-shadow:0 0 24px var(--neon-pink),0 0 36px var(--neon-blue);color:#04020a;}
+.add-contact-btn i{font-size:26px;padding:14px;border-radius:50%;}
+.add-contact-btn span{font-size:10px;font-weight:700;margin-top:2px;}
 
-/* input bar */
-.input-bar{ display:flex; gap:8px; align-items:center; padding:10px; border-radius:12px; margin-top:10px;}
-.input-bar input[type="text"]{ flex:1; padding:10px 12px; border-radius:999px; border:none; outline:none; background:rgba(255,255,255,0.03); color:#fff;}
-.send-btn{ background:linear-gradient(90deg,var(--neon-blue),var(--neon-pink)); padding:10px 14px; border-radius:999px; cursor:pointer; color:#04020a; font-weight:700; border:none; transition:all .14s;}
-.send-btn:hover{ transform:scale(1.03); box-shadow:0 10px 30px rgba(0,240,255,0.08); }
-
-/* Right: saved contacts / details */
-.info-pane { height: calc(100vh - 220px); overflow:auto; padding:12px; display:flex; flex-direction:column; gap:12px; }
-.info-pane h3{ font-family:'Orbitron'; color:var(--neon-blue); margin:0; margin-bottom:6px; }
-
-/* saved contacts list */
-.saved-list { display:grid; gap:8px; }
-
-/* footer */
-.footer{
-  position:fixed; left:0; right:0; bottom:0; height:78px; display:flex; align-items:center; justify-content:center; z-index:80;
-  background: linear-gradient(180deg, rgba(10,4,24,0.6), rgba(5,3,10,0.7));
-  backdrop-filter: blur(12px);
-  box-shadow: 0 -12px 40px rgba(0,0,0,0.6);
-}
-.footer-inner{ width:100%; max-width:900px; display:flex; justify-content:space-around; gap:8px; align-items:center; padding:0 16px; }
-.footer-button{ display:flex; flex-direction:column; align-items:center; color:var(--neon-blue); text-decoration:none; font-size:12px; gap:6px; transition:all .14s; }
-.footer-button i{ font-size:22px; display:block; padding:10px; border-radius:12px; background:linear-gradient(90deg, rgba(0,240,255,0.03), rgba(255,0,240,0.03)); box-shadow:0 8px 30px rgba(0,240,255,0.03); }
-.footer-button:hover{ color:var(--neon-pink); transform:translateY(-4px); filter:drop-shadow(0 10px 24px rgba(255,0,240,0.06)); }
-
-/* small helpers */
-.empty{ opacity:0.6; text-align:center; padding:18px; color:rgba(255,255,255,0.6); border-radius:8px; background: rgba(255,255,255,0.02); }
-.badge{ background:linear-gradient(90deg,var(--neon-blue),var(--neon-pink)); color:#04020a; padding:4px 8px; border-radius:8px; font-weight:700; font-size:12px;}
+/* Empty placeholder */
+.empty{opacity:0.6;text-align:center;padding:18px;color:rgba(255,255,255,0.6);border-radius:8px;background:rgba(255,255,255,0.02);}
+.badge{background:linear-gradient(90deg,var(--neon-mint),var(--neon-violet));color:#04020a;padding:4px 8px;border-radius:8px;font-weight:700;font-size:12px;}
 </style>
 </head>
 <body>
@@ -145,30 +93,14 @@ body{
 
 <!-- APP GRID -->
 <div class="app">
-
-  <!-- LEFT: Contacts / Saved -->
+  <!-- LEFT: Contacts -->
   <aside class="panel">
     <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
       <h3 style="font-family:Orbitron;margin:0">Contacts</h3>
       <span class="badge" id="savedCount">0</span>
     </div>
-
-    <div style="display:flex;gap:8px;align-items:center;margin-bottom:8px">
-      <input id="quickSearch" type="search" placeholder="Search contacts..." oninput="filterContacts()" class="w-full px-3 py-2 rounded-md bg-[rgba(255,255,255,0.03)] outline-none" />
-    </div>
-
-    <div style="display:flex;flex-direction:column;gap:8px">
-      <div class="upload-row">
-        <label for="contactUpload"><i class="fas fa-upload"></i>&nbsp;Upload Contacts</label>
-        <input id="contactUpload" type="file" accept=".csv,.vcf,text/*" />
-        <button class="badge" onclick="exportSavedContacts()">Export</button>
-      </div>
-      <div style="font-size:12px;color:rgba(255,255,255,0.6)">Tip: upload CSV (name,phone,email) or vCard (.vcf). Contacts saved locally to your account (browser storage).</div>
-    </div>
-
-    <div class="contacts-list" id="contactsList" role="list">
-      <!-- contacts dynamically injected -->
-    </div>
+    <input id="quickSearch" type="search" placeholder="Search contacts..." oninput="filterContacts()" class="w-full px-3 py-2 rounded-md bg-[rgba(255,255,255,0.03)] outline-none mb-2"/>
+    <div class="contacts-list" id="contactsList"></div>
   </aside>
 
   <!-- CENTER: Chat -->
@@ -178,16 +110,11 @@ body{
         <div id="activeName" style="font-weight:700;font-family:Orbitron">Select a contact</div>
         <div id="activeInfo" style="font-size:12px;color:rgba(255,255,255,0.6)"></div>
       </div>
-      <div style="display:flex;gap:8px;align-items:center">
-        <button id="importContactBtn" class="px-3 py-2 rounded-md bg-[rgba(0,240,255,0.06)] text-[var(--neon-blue)]" title="Upload contact"><i class="fas fa-address-book"></i> Upload</button>
-      </div>
     </div>
-
     <div class="chat-window">
       <div class="chat-messages" id="messagesArea">
-        <div class="empty" id="noMessages">No chat selected — pick or upload a contact to start messaging.</div>
+        <div class="empty" id="noMessages">No chat selected — pick a contact to start messaging.</div>
       </div>
-
       <div class="input-bar" id="chatInputBar" style="display:none">
         <input type="text" id="messageInput" placeholder="Type a message..." onkeydown="if(event.key==='Enter') sendMessage()" />
         <button class="send-btn" onclick="sendMessage()"><i class="fas fa-paper-plane"></i></button>
@@ -195,347 +122,34 @@ body{
     </div>
   </section>
 
-  <!-- RIGHT: Saved Contacts / Info -->
+  <!-- RIGHT: Info panel -->
   <aside class="panel info-pane">
     <h3>Saved Contacts</h3>
     <div id="savedContactsList" class="saved-list"></div>
-
-    <h3 style="margin-top:12px">Quick Actions</h3>
-    <div style="display:flex;flex-direction:column;gap:8px;margin-top:6px">
-      <button class="px-3 py-2 rounded-md bg-[rgba(0,240,255,0.04)]" onclick="openAllContactsModal()">View All Contacts</button>
-      <button class="px-3 py-2 rounded-md bg-[rgba(255,0,240,0.04)]" onclick="clearAllSaved()">Clear Contacts</button>
-    </div>
   </aside>
 </div>
 
-<!-- FOOTER with neon icons -->
+<!-- FOOTER -->
 <footer class="footer">
   <div class="footer-inner">
-    <a class="footer-button" href="wallet-pos.html"><i class="fas fa-cash-register"></i><span>POS</span></a>
-    <a class="footer-button" href="dashboard-wallet.html"><i class="fas fa-wallet"></i><span>Wallet</span></a>
-    <a class="footer-button" href="dashboard-store.html"><i class="fas fa-layer-group"></i><span>Store</span></a>
-    <a class="footer-button" href="profile.html"><i class="fas fa-user"></i><span>Profile</span></a>
+    <a class="footer-button" href="#" onclick="scrollToContacts()"><i class="fas fa-address-book"></i><span>Contacts</span></a>
+    <a class="footer-button" href="#" onclick="initCall()"><i class="fas fa-phone"></i><span>Call</span></a>
+    <a class="footer-button" href="#" onclick="focusChat()"><i class="fas fa-comments"></i><span>Chat</span></a>
+    <button class="footer-button add-contact-btn" title="Add Contact" onclick="document.getElementById('contactUpload').click()">
+      <i class="fas fa-plus"></i><span>Add</span>
+    </button>
   </div>
 </footer>
 
-<!-- Modal: All contacts -->
-<div id="allContactsModal" class="modal" style="display:none;align-items:center;justify-content:center;position:fixed;inset:0;z-index:140;">
-  <div style="width:100%;max-width:560px;padding:16px;border-radius:12px;background:var(--glass);box-shadow:0 12px 40px rgba(0,0,0,0.7);">
-    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">
-      <h3 style="font-family:Orbitron;margin:0;color:var(--neon-blue)">All Saved Contacts</h3>
-      <button onclick="closeAllContactsModal()" style="color:var(--neon-pink);font-size:20px">✕</button>
-    </div>
-    <div id="modalContactsList" style="max-height:60vh;overflow:auto;"></div>
-  </div>
-</div>
+<input id="contactUpload" type="file" accept=".csv,.vcf,text/*" style="display:none" />
 
 <script>
 /* ---------------------------
-   Storage helpers & parsing
-   --------------------------- */
-const STORAGE_KEY = 'zepchat_savedContacts';
-const MSG_KEY = 'zepchat_messages';
+   Local storage for contacts/messages
+---------------------------- */
+const STORAGE_KEY='zepchat_savedContacts';
+const MSG_KEY='zepchat_messages';
 
-function loadSavedContacts(){
-  try {
-    const raw = localStorage.getItem(STORAGE_KEY);
-    return raw? JSON.parse(raw): [];
-  } catch(e){ console.error(e); return [];}
-}
-function saveSavedContacts(list){
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(list));
-  renderContactsList();
-  renderSavedList();
-}
-function loadMessages(){
-  try {
-    const raw = localStorage.getItem(MSG_KEY);
-    return raw? JSON.parse(raw): {};
-  } catch(e){ console.error(e); return {};}
-}
-function saveMessages(obj){
-  localStorage.setItem(MSG_KEY, JSON.stringify(obj));
-}
-
-/* ---------------------------
-   Contact parsing (CSV & vCard)
-   - CSV expected headers: name,phone,email (case-insensitive)
-   - vCard basic parsing (FN and TEL)
-   --------------------------- */
-function parseCSV(text){
-  const lines = text.split(/\r?\n/).map(l=>l.trim()).filter(Boolean);
-  const header = lines[0].split(',').map(h=>h.trim().toLowerCase());
-  const rows = lines.slice(1);
-  const out = [];
-  for(const r of rows){
-    const cols = r.split(',');
-    const obj = {};
-    for(let i=0;i<header.length;i++){
-      obj[header[i]] = (cols[i]||'').trim();
-    }
-    if(obj.name || obj.phone || obj.email){
-      out.push({ id: genId(), name: obj.name||obj.name||'Unknown', phone: obj.phone||'', email: obj.email||''});
-    }
-  }
-  return out;
-}
-
-function parseVCard(text){
-  const blocks = text.split(/END:VCARD/i);
-  const out=[];
-  for(const block of blocks){
-    if(!/BEGIN:VCARD/i.test(block)) continue;
-    const lines = block.split(/\r?\n/);
-    let fn='', tel='', email='';
-    lines.forEach(l=>{
-      if(l.toUpperCase().startsWith('FN:')) fn = l.substring(3).trim();
-      if(l.toUpperCase().startsWith('TEL')) {
-        const parts = l.split(':'); tel = parts[parts.length-1].trim();
-      }
-      if(l.toUpperCase().startsWith('EMAIL')) {
-        const parts = l.split(':'); email = parts[parts.length-1].trim();
-      }
-    });
-    out.push({ id: genId(), name: fn||'Unknown', phone: tel||'', email: email||''});
-  }
-  return out;
-}
-
-/* ---------------------------
-   UI Rendering
-   --------------------------- */
-let contacts = loadSavedContacts();
-let messages = loadMessages();
-let activeContactId = null;
-
-function genId(){ return 'c_' + Math.random().toString(36).slice(2,9); }
-
-function renderContactsList(filter=''){
-  contacts = loadSavedContacts();
-  const container = document.getElementById('contactsList');
-  container.innerHTML = '';
-  if(contacts.length===0){
-    container.innerHTML = '<div class="empty">No saved contacts yet — upload from phone (CSV or vCard) or add manually.</div>';
-    document.getElementById('savedCount').innerText = '0';
-    return;
-  }
-  document.getElementById('savedCount').innerText = contacts.length;
-  const q = filter.toLowerCase().trim();
-  for(const c of contacts){
-    if(q && !(c.name||'').toLowerCase().includes(q) && !(c.phone||'').includes(q)) continue;
-    const el = document.createElement('div');
-    el.className = 'contact-item';
-    if(c.id === activeContactId) el.classList.add('active');
-    el.innerHTML = `
-      <div class="avatar">${initials(c.name)}</div>
-      <div class="contact-meta">
-        <div style="font-weight:700">${escapeHtml(c.name)}</div>
-        <small>${escapeHtml(c.phone||'no phone')} • ${escapeHtml(c.email||'')}</small>
-      </div>
-    `;
-    el.addEventListener('click', ()=> selectContact(c.id));
-    container.appendChild(el);
-  }
-}
-
-function renderSavedList(){
-  const container = document.getElementById('savedContactsList');
-  container.innerHTML = '';
-  if(contacts.length===0){
-    container.innerHTML = '<div class="empty">No saved contacts</div>'; return;
-  }
-  for(const c of contacts.slice(0,50)){
-    const row = document.createElement('div');
-    row.style.display='flex'; row.style.justifyContent='space-between'; row.style.alignItems='center'; row.style.padding='8px'; row.style.borderRadius='8px';
-    row.innerHTML = `<div><strong>${escapeHtml(c.name)}</strong><div style="font-size:12px;color:rgba(255,255,255,0.6)">${escapeHtml(c.phone||'')}</div></div><button style="background:linear-gradient(90deg,var(--neon-blue),var(--neon-pink));color:#04020a;border:none;padding:6px 8px;border-radius:8px" onclick="startChat('${c.id}')">Chat</button>`;
-    container.appendChild(row);
-  }
-}
-
-/* ---------------------------
-   Contact actions
-   --------------------------- */
-function initials(name){
-  if(!name) return 'U';
-  return name.split(' ').map(s=>s[0]).slice(0,2).join('').toUpperCase();
-}
-function escapeHtml(s){ return String(s||'').replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;'); }
-
-function handleUploadFile(file){
-  const reader = new FileReader();
-  reader.onload = (e)=>{
-    const text = e.target.result;
-    let parsed = [];
-    if(file.name.toLowerCase().endsWith('.vcf') || /BEGIN:VCARD/i.test(text)){
-      parsed = parseVCard(text);
-    } else {
-      parsed = parseCSV(text);
-    }
-    if(parsed.length){
-      // merge unique by phone/email/name
-      const existing = loadSavedContacts();
-      for(const p of parsed){
-        // avoid duplicates (match phone or email)
-        const dup = existing.find(x=> x.phone && p.phone && x.phone.replace(/\D/g,'') === p.phone.replace(/\D/g,'') ) || existing.find(x=> x.email && p.email && (x.email.toLowerCase()===p.email.toLowerCase())) || existing.find(x=> x.name && p.name && x.name.toLowerCase()===p.name.toLowerCase());
-        if(!dup) existing.push(p);
-      }
-      saveSavedContacts(existing);
-      alert(`Imported ${parsed.length} contact(s).`);
-    } else {
-      alert('No contacts parsed from file — ensure CSV (name,phone,email) or vCard format.');
-    }
-  };
-  reader.readAsText(file);
-}
-
-/* connect upload input */
-document.getElementById('contactUpload').addEventListener('change', (ev)=>{
-  const f = ev.target.files && ev.target.files[0];
-  if(!f) return;
-  handleUploadFile(f);
-  ev.target.value = '';
-});
-
-/* quick filter */
-function filterContacts(){
-  const q = document.getElementById('quickSearch').value;
-  renderContactsList(q);
-}
-
-/* export contacts as CSV */
-function exportSavedContacts(){
-  const list = loadSavedContacts();
-  if(!list.length){ alert('No contacts to export'); return; }
-  const rows = ['name,phone,email'];
-  for(const c of list) rows.push(`${csvEscape(c.name)},${csvEscape(c.phone)},${csvEscape(c.email)}`);
-  const blob = new Blob([rows.join('\n')], {type:'text/csv'});
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement('a'); a.href=url; a.download='zepchat_contacts.csv'; a.click();
-  URL.revokeObjectURL(url);
-}
-function csvEscape(v){ return `"${String(v||'').replaceAll('"','""')}"`; }
-
-/* ---------------------------
-   Chat & messages
-   --------------------------- */
-function selectContact(id){
-  activeContactId = id;
-  const contact = (loadSavedContacts()).find(c=>c.id===id);
-  if(!contact) return;
-  // highlight active
-  document.querySelectorAll('.contact-item').forEach(el=> el.classList.remove('active'));
-  // re-render list to set active
-  renderContactsList(document.getElementById('quickSearch').value||'');
-  // fill header
-  document.getElementById('activeName').innerText = contact.name;
-  document.getElementById('activeInfo').innerText = contact.phone || contact.email || '';
-  // show messages panel
-  document.getElementById('chatInputBar').style.display = 'flex';
-  document.getElementById('noMessages').style.display = 'none';
-  renderMessagesFor(contact.id);
-}
-
-function startChat(id){
-  selectContact(id);
-  const contact = loadSavedContacts().find(x=>x.id===id);
-  if(contact){
-    // scroll messages into view
-    const msgsBox = document.getElementById('messagesArea');
-    setTimeout(()=> msgsBox.scrollTop = msgsBox.scrollHeight, 120);
-  }
-}
-
-function renderMessagesFor(contactId){
-  messages = loadMessages();
-  const messagesArea = document.getElementById('messagesArea');
-  messagesArea.innerHTML = '';
-  const arr = messages[contactId] || [];
-  if(!arr.length) messagesArea.innerHTML = '<div class="empty">No messages yet — say hello 👋</div>';
-  for(const m of arr){
-    const el = document.createElement('div');
-    el.className = 'msg ' + (m.out? 'out':'in');
-    el.innerHTML = `<div>${escapeHtml(m.text)}</div><small>${new Date(m.t).toLocaleString()}</small>`;
-    messagesArea.appendChild(el);
-  }
-  // scroll to bottom
-  setTimeout(()=> messagesArea.scrollTop = messagesArea.scrollHeight, 120);
-}
-
-function sendMessage(){
-  const text = document.getElementById('messageInput').value.trim();
-  if(!text || !activeContactId){ return; }
-  const now = Date.now();
-  messages = loadMessages();
-  messages[activeContactId] = messages[activeContactId] || [];
-  messages[activeContactId].push({ out:true, text, t: now });
-  saveMessages(messages);
-  document.getElementById('messageInput').value = '';
-  renderMessagesFor(activeContactId);
-
-  // simulate auto-reply & microinteraction
-  setTimeout(()=> {
-    messages = loadMessages();
-    messages[activeContactId].push({ out:false, text:'(auto) Received: ' + text, t: Date.now() });
-    saveMessages(messages);
-    renderMessagesFor(activeContactId);
-  }, 700 + Math.random()*700);
-}
-
-/* ---------------------------
-   Modal for all contacts
-   --------------------------- */
-function openAllContactsModal(){
-  const modal = document.getElementById('allContactsModal');
-  const listBox = document.getElementById('modalContactsList');
-  listBox.innerHTML = '';
-  const saved = loadSavedContacts();
-  if(!saved.length) listBox.innerHTML = '<div class="empty">No contacts saved</div>';
-  for(const c of saved){
-    const row = document.createElement('div');
-    row.style.display='flex'; row.style.justifyContent='space-between'; row.style.alignItems='center'; row.style.padding='8px'; row.style.borderBottom='1px solid rgba(255,255,255,0.02)';
-    row.innerHTML = `<div><strong>${escapeHtml(c.name)}</strong><div style="font-size:12px;color:rgba(255,255,255,0.6)">${escapeHtml(c.phone||'')}</div></div><div style="display:flex;gap:8px"><button class="px-3 py-1 rounded-md" onclick="startChat('${c.id}')">Chat</button><button class="px-3 py-1 rounded-md" onclick="removeContact('${c.id}')">Remove</button></div>`;
-    listBox.appendChild(row);
-  }
-  modal.style.display = 'flex';
-}
-function closeAllContactsModal(){ document.getElementById('allContactsModal').style.display='none'; }
-
-function removeContact(id){
-  contacts = loadSavedContacts().filter(c=>c.id!==id);
-  saveSavedContacts(contacts);
-  closeAllContactsModal();
-}
-
-function clearAllSaved(){
-  if(!confirm('Clear all saved contacts?')) return;
-  saveSavedContacts([]);
-  alert('Contacts cleared.');
-}
-
-/* ---------------------------
-   Utility & init
-   --------------------------- */
-function escapeHtmlSimple(s){ return String(s||'').replace(/[&<>]/g,c=>({ '&':'&amp;','<':'&lt;','>':'&gt;' })[c]); }
-function csvEscape(s){ return `"${String(s||'').replaceAll('"','""')}"`; }
-
-/* init UI */
-(function init(){
-  contacts = loadSavedContacts();
-  messages = loadMessages();
-  renderContactsList();
-  renderSavedList();
-  // wire import button to file input
-  document.getElementById('importContactBtn').addEventListener('click', ()=> document.getElementById('contactUpload').click());
-})();
-
-/* quick helper: add a demo contact when empty (only for demo) */
-if(loadSavedContacts().length===0){
-  const demo = [{ id:genId(), name:'Alex Mercer', phone:'+277000111', email:'alex@example.com' }, { id:genId(), name:'Mia Chen', phone:'+277000222', email:'mia@example.com' }];
-  saveSavedContacts(demo);
-}
-
-/* allow longpress on contact to quick chat on mobile */
-document.addEventListener('touchstart', (e)=>{}, {passive:true});
-</script>
-</body>
-</html>
+function loadSavedContacts(){return JSON.parse(localStorage.getItem(STORAGE_KEY)||'[]');}
+function saveSavedContacts(list){localStorage.setItem(STORAGE_KEY,JSON.stringify(list));renderContactsList();renderSavedList();}
+function loadMessages(){return
