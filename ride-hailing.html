@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ZepSwipe Ride Hail</title>
+
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700&family=Poppins:wght@400;500&display=swap" rel="stylesheet">
+
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: radial-gradient(circle at top, #120b2e 0%, #0b0520 100%);
+      color: white;
+      min-height: 100vh;
+    }
+
+    header {
+      background: rgba(20, 10, 50, 0.8);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+      padding: 1rem 1.5rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 0 15px rgba(255, 0, 240, 0.3);
+    }
+
+    header h1 {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 1.4rem;
+      background: linear-gradient(90deg, #00f0ff, #ff00f0);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .glass-box {
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.15);
+      border-radius: 1rem;
+      box-shadow: 0 0 25px rgba(0,240,255,0.2);
+      padding: 1.5rem;
+      width: 90%;
+      max-width: 400px;
+      margin: 2rem auto;
+    }
+
+    input, select {
+      width: 100%;
+      padding: 0.8rem;
+      background: rgba(255,255,255,0.1);
+      border: none;
+      border-radius: 0.8rem;
+      margin-bottom: 1rem;
+      color: white;
+    }
+
+    input::placeholder {
+      color: #c0bdf4;
+    }
+
+    button {
+      width: 100%;
+      padding: 0.9rem;
+      border-radius: 1rem;
+      font-weight: 600;
+      background: linear-gradient(90deg, #00f0ff, #ff00f0);
+      color: #0b0520;
+      transition: all 0.3s ease;
+    }
+
+    button:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 15px rgba(255,0,240,0.5);
+    }
+
+    .ride-list {
+      margin-top: 1.5rem;
+    }
+
+    .ride-item {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.1);
+      padding: 1rem;
+      border-radius: 1rem;
+      margin-bottom: 1rem;
+    }
+
+    .ride-item p {
+      font-size: 0.9rem;
+      color: #c0bdf4;
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <h1>ZepSwipe Ride</h1>
+    <a href="student-dashboard.html" class="text-sm text-pink-400 hover:text-pink-500">← Back</a>
+  </header>
+
+  <section class="glass-box text-center">
+    <h2 class="text-xl font-bold mb-3 text-cyan-300">Request a Ride 🚗</h2>
+    <form id="rideForm">
+      <input type="text" id="pickup" placeholder="Pickup Location" required>
+      <input type="text" id="destination" placeholder="Destination" required>
+      <select id="rideType" required>
+        <option value="">Select Ride Type</option>
+        <option value="Solo Ride">Solo Ride</option>
+        <option value="Shared Ride">Shared Ride</option>
+      </select>
+      <button type="submit">Request Ride</button>
+    </form>
+  </section>
+
+  <section class="glass-box ride-list">
+    <h3 class="text-lg mb-3 text-pink-400">Recent Ride Requests</h3>
+    <div id="ridesContainer"></div>
+  </section>
+
+  <!-- Firebase SDK -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-app.js";
+    import { getFirestore, collection, addDoc, onSnapshot, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-firestore.js";
+
+    // Firebase config
+    const firebaseConfig = {
+      apiKey: "AIzaSyBxAQxTvuPCYVAG3eQu4MQfxHRWJB9Q3wI",
+      authDomain: "zep-swipe-6cb53.firebaseapp.com",
+      projectId: "zep-swipe-6cb53",
+      storageBucket: "zep-swipe-6cb53.firebasestorage.app",
+      messagingSenderId: "895701529881",
+      appId: "1:895701529881:web:81c6e3e420bfe6cb7dc188",
+      measurementId: "G-L48WTHMKKZ"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+
+    // Handle Ride Requests
+    const rideForm = document.getElementById("rideForm");
+    const ridesContainer = document.getElementById("ridesContainer");
+
+    rideForm.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const pickup = document.getElementById("pickup").value.trim();
+      const destination = document.getElementById("destination").value.trim();
+      const rideType = document.getElementById("rideType").value;
+
+      try {
+        await addDoc(collection(db, "rideRequests"), {
+          pickup,
+          destination,
+          rideType,
+          status: "Pending",
+          createdAt: serverTimestamp(),
+        });
+
+        alert("Ride request sent successfully 🚀");
+        rideForm.reset();
+      } catch (error) {
+        alert("Error requesting ride: " + error.message);
+      }
+    });
+
+    // Real-time Ride Display
+    onSnapshot(collection(db, "rideRequests"), (snapshot) => {
+      ridesContainer.innerHTML = "";
+      snapshot.forEach((doc) => {
+        const ride = doc.data();
+        const rideDiv = document.createElement("div");
+        rideDiv.classList.add("ride-item");
+        rideDiv.innerHTML = `
+          <p><strong>Pickup:</strong> ${ride.pickup}</p>
+          <p><strong>Destination:</strong> ${ride.destination}</p>
+          <p><strong>Type:</strong> ${ride.rideType}</p>
+          <p><strong>Status:</strong> <span class="text-yellow-400">${ride.status}</span></p>
+        `;
+        ridesContainer.appendChild(rideDiv);
+      });
+    });
+  </script>
+</body>
+</html>
