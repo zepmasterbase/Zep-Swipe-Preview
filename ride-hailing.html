@@ -1,131 +1,131 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>ZepSwipe Ride Hail</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Zep Swipe — Ride Hailing</title>
 
-  <!-- Tailwind CSS -->
   <script src="https://cdn.tailwindcss.com"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700&family=Poppins:wght@400;500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700&family=Poppins:wght@400;500;600&display=swap" rel="stylesheet" />
+  <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js"></script>
 
   <style>
     body {
       font-family: 'Poppins', sans-serif;
-      background: radial-gradient(circle at top, #120b2e 0%, #0b0520 100%);
+      background: radial-gradient(circle at top, #0a051f 0%, #000010 100%);
       color: white;
       min-height: 100vh;
-    }
-
-    header {
-      background: rgba(20, 10, 50, 0.8);
-      backdrop-filter: blur(10px);
-      border-bottom: 1px solid rgba(255,255,255,0.1);
-      padding: 1rem 1.5rem;
       display: flex;
-      justify-content: space-between;
-      align-items: center;
-      box-shadow: 0 0 15px rgba(255, 0, 240, 0.3);
+      flex-direction: column;
     }
 
-    header h1 {
-      font-family: 'Orbitron', sans-serif;
-      font-size: 1.4rem;
-      background: linear-gradient(90deg, #00f0ff, #ff00f0);
+    .glass-card {
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      backdrop-filter: blur(20px);
+      border-radius: 1rem;
+      box-shadow: 0 0 25px rgba(0, 240, 255, 0.2);
+    }
+
+    .glow-text {
+      background: linear-gradient(90deg, #00f0ff, #ff00f0, #00ffb3);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
     }
 
-    .glass-box {
-      background: rgba(255,255,255,0.08);
-      border: 1px solid rgba(255,255,255,0.15);
-      border-radius: 1rem;
-      box-shadow: 0 0 25px rgba(0,240,255,0.2);
-      padding: 1.5rem;
-      width: 90%;
-      max-width: 400px;
-      margin: 2rem auto;
-    }
-
     input, select {
-      width: 100%;
-      padding: 0.8rem;
-      background: rgba(255,255,255,0.1);
+      background: rgba(255, 255, 255, 0.1);
       border: none;
-      border-radius: 0.8rem;
+      border-radius: 0.75rem;
+      padding: 0.8rem;
+      color: #fff;
+      width: 100%;
       margin-bottom: 1rem;
-      color: white;
     }
 
-    input::placeholder {
-      color: #c0bdf4;
+    input:focus {
+      outline: none;
+      box-shadow: 0 0 10px #00f0ff;
     }
 
     button {
       width: 100%;
-      padding: 0.9rem;
-      border-radius: 1rem;
-      font-weight: 600;
       background: linear-gradient(90deg, #00f0ff, #ff00f0);
+      border: none;
+      border-radius: 1rem;
+      padding: 0.8rem;
+      font-weight: 600;
+      cursor: pointer;
       color: #0b0520;
-      transition: all 0.3s ease;
+      transition: transform 0.2s;
     }
 
     button:hover {
       transform: scale(1.05);
-      box-shadow: 0 0 15px rgba(255,0,240,0.5);
-    }
-
-    .ride-list {
-      margin-top: 1.5rem;
-    }
-
-    .ride-item {
-      background: rgba(255,255,255,0.05);
-      border: 1px solid rgba(255,255,255,0.1);
-      padding: 1rem;
-      border-radius: 1rem;
-      margin-bottom: 1rem;
-    }
-
-    .ride-item p {
-      font-size: 0.9rem;
-      color: #c0bdf4;
     }
   </style>
 </head>
 
 <body>
-  <header>
-    <h1>ZepSwipe Ride</h1>
-    <a href="student-dashboard.html" class="text-sm text-pink-400 hover:text-pink-500">← Back</a>
+
+  <!-- HEADER -->
+  <header class="fixed top-0 left-0 w-full flex justify-between items-center px-6 py-4 bg-opacity-30 backdrop-blur-lg glass-card z-50">
+    <h1 class="text-xl font-orbitron glow-text font-bold">Zep Swipe Rides</h1>
+    <button onclick="logout()" class="px-3 py-1 text-sm bg-pink-500 hover:bg-pink-600 rounded-full font-semibold">Logout</button>
   </header>
 
-  <section class="glass-box text-center">
-    <h2 class="text-xl font-bold mb-3 text-cyan-300">Request a Ride 🚗</h2>
-    <form id="rideForm">
-      <input type="text" id="pickup" placeholder="Pickup Location" required>
-      <input type="text" id="destination" placeholder="Destination" required>
-      <select id="rideType" required>
-        <option value="">Select Ride Type</option>
-        <option value="Solo Ride">Solo Ride</option>
-        <option value="Shared Ride">Shared Ride</option>
-      </select>
-      <button type="submit">Request Ride</button>
-    </form>
-  </section>
+  <!-- MAIN -->
+  <main class="flex-1 mt-28 px-6">
+    <section class="glass-card p-6 text-center">
+      <h2 class="glow-text text-lg font-semibold mb-2">🚘 Request a Ride</h2>
+      <p class="text-gray-300 mb-5 text-sm">Fill in your trip details and nearby student drivers will see your request instantly.</p>
 
-  <section class="glass-box ride-list">
-    <h3 class="text-lg mb-3 text-pink-400">Recent Ride Requests</h3>
-    <div id="ridesContainer"></div>
-  </section>
+      <form id="rideForm" class="text-left">
+        <input type="text" id="studentName" placeholder="Your Name" required />
+        <select id="university" required>
+          <option value="">Select Your University</option>
+          <option>University of Ghana</option>
+          <option>University of Nairobi</option>
+          <option>Makerere University (Uganda)</option>
+          <option>University of Lagos</option>
+          <option>University of Cape Town</option>
+          <option>Kigali Tech University</option>
+          <option>University of Zambia</option>
+          <option>Ashesi University</option>
+          <option>Strathmore University</option>
+          <option>Kwame Nkrumah University of Science & Technology</option>
+        </select>
+        <input type="text" id="pickup" placeholder="Pickup Location" required />
+        <input type="text" id="destination" placeholder="Destination" required />
 
-  <!-- Firebase SDK -->
+        <button type="submit">🚀 Request Ride</button>
+      </form>
+
+      <p id="statusMessage" class="text-sm text-gray-400 mt-4"></p>
+    </section>
+
+    <section class="mt-8 glass-card p-4 text-center">
+      <h3 class="glow-text text-base font-semibold mb-2">🚖 Recent Requests</h3>
+      <div id="recentRides" class="text-left text-sm space-y-2"></div>
+    </section>
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="fixed bottom-0 left-0 w-full bg-opacity-30 backdrop-blur-lg glass-card py-3 flex justify-around text-cyan-400 text-lg">
+    <a href="student-dashboard.html"><i class="fas fa-home"></i></a>
+    <a href="ride-hailing.html" class="text-pink-400"><i class="fas fa-car"></i></a>
+    <a href="driver-dashboard.html"><i class="fas fa-id-card"></i></a>
+    <a href="#"><i class="fas fa-user"></i></a>
+  </footer>
+
+  <script src="https://kit.fontawesome.com/a2e0e6ad42.js" crossorigin="anonymous"></script>
+
+  <!-- Firebase Logic -->
   <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-app.js";
-    import { getFirestore, collection, addDoc, onSnapshot, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-firestore.js";
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+    import { getFirestore, collection, addDoc, onSnapshot, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
-    // Firebase config
     const firebaseConfig = {
       apiKey: "AIzaSyBxAQxTvuPCYVAG3eQu4MQfxHRWJB9Q3wI",
       authDomain: "zep-swipe-6cb53.firebaseapp.com",
@@ -139,48 +139,57 @@
     const app = initializeApp(firebaseConfig);
     const db = getFirestore(app);
 
-    // Handle Ride Requests
-    const rideForm = document.getElementById("rideForm");
-    const ridesContainer = document.getElementById("ridesContainer");
+    const form = document.getElementById("rideForm");
+    const statusMsg = document.getElementById("statusMessage");
+    const recentRidesDiv = document.getElementById("recentRides");
 
-    rideForm.addEventListener("submit", async (e) => {
+    form.addEventListener("submit", async (e) => {
       e.preventDefault();
+      const studentName = document.getElementById("studentName").value.trim();
+      const university = document.getElementById("university").value.trim();
       const pickup = document.getElementById("pickup").value.trim();
       const destination = document.getElementById("destination").value.trim();
-      const rideType = document.getElementById("rideType").value;
+
+      if (!studentName || !university || !pickup || !destination) {
+        statusMsg.textContent = "⚠️ Please fill in all fields.";
+        return;
+      }
 
       try {
-        await addDoc(collection(db, "rideRequests"), {
+        await addDoc(collection(db, "ride-requests"), {
+          studentName,
+          university,
           pickup,
           destination,
-          rideType,
-          status: "Pending",
-          createdAt: serverTimestamp(),
+          status: "pending",
+          timestamp: serverTimestamp()
         });
-
-        alert("Ride request sent successfully 🚀");
-        rideForm.reset();
+        statusMsg.textContent = "✅ Ride Request Sent Successfully!";
+        form.reset();
       } catch (error) {
-        alert("Error requesting ride: " + error.message);
+        statusMsg.textContent = "❌ Error sending request: " + error.message;
       }
     });
 
-    // Real-time Ride Display
-    onSnapshot(collection(db, "rideRequests"), (snapshot) => {
-      ridesContainer.innerHTML = "";
-      snapshot.forEach((doc) => {
-        const ride = doc.data();
-        const rideDiv = document.createElement("div");
-        rideDiv.classList.add("ride-item");
-        rideDiv.innerHTML = `
-          <p><strong>Pickup:</strong> ${ride.pickup}</p>
-          <p><strong>Destination:</strong> ${ride.destination}</p>
-          <p><strong>Type:</strong> ${ride.rideType}</p>
-          <p><strong>Status:</strong> <span class="text-yellow-400">${ride.status}</span></p>
+    // 🔄 Live Feed of Recent Requests
+    onSnapshot(collection(db, "ride-requests"), (snapshot) => {
+      recentRidesDiv.innerHTML = "";
+      snapshot.docs.slice(-5).reverse().forEach((docSnap) => {
+        const ride = docSnap.data();
+        recentRidesDiv.innerHTML += `
+          <div class="p-2 border-b border-gray-700">
+            <p><strong>${ride.studentName}</strong> → ${ride.destination}</p>
+            <p class="text-xs text-gray-400">${ride.university}</p>
+          </div>
         `;
-        ridesContainer.appendChild(rideDiv);
       });
     });
+
+    // 🚪 Logout
+    window.logout = () => {
+      alert("Logged out successfully!");
+      window.location.href = "index.html";
+    };
   </script>
 </body>
 </html>
