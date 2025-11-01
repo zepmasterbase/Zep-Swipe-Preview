@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Zep Swipe — Sign Up</title>
 
-  <!-- Tailwind -->
+  <!-- Tailwind CSS -->
   <script src="https://cdn.tailwindcss.com"></script>
 
   <!-- Fonts -->
@@ -35,6 +35,11 @@
       max-width: 420px;
       width: 100%;
       padding: 2rem;
+      transition: 0.3s ease-in-out;
+    }
+
+    .glass-card:hover {
+      box-shadow: 0 0 40px rgba(255, 0, 255, 0.3);
     }
 
     .glow-title {
@@ -44,7 +49,7 @@
       -webkit-text-fill-color: transparent;
       font-size: 1.8rem;
       text-align: center;
-      margin-bottom: 1rem;
+      margin-bottom: 1.2rem;
     }
 
     input, select {
@@ -74,6 +79,7 @@
       background: linear-gradient(90deg, #00f0ff, #ff00f0);
       color: #0a021f;
     }
+
     .btn-primary:hover {
       box-shadow: 0 0 15px rgba(255, 0, 255, 0.4);
       transform: scale(1.03);
@@ -101,7 +107,7 @@
 
     .role-btn {
       width: 48%;
-      padding: 0.5rem;
+      padding: 0.6rem;
       border-radius: 0.8rem;
       background: rgba(255, 255, 255, 0.1);
       border: 1px solid rgba(255, 255, 255, 0.2);
@@ -167,12 +173,7 @@
     </div>
 
     <input type="tel" id="phoneNumber" placeholder="+233 54 000 0000" />
-    <button id="sendOtpBtn" class="btn btn-primary mb-3" onclick="sendOTP()">Send OTP</button>
-
-    <div id="otpSection" class="hidden">
-      <input type="text" id="otpCode" placeholder="Enter OTP" />
-      <button class="btn btn-primary" onclick="verifyOTP()">Verify & Continue</button>
-    </div>
+    <button id="signUpBtn" class="btn btn-primary mb-3" onclick="signupUser()">Sign Up</button>
 
     <div class="footer">
       <a href="https://x.com/ZepSwipe?t=r94a0_pgN7ew1xT5L4eOSA&s=09" target="_blank"><i class="fab fa-x-twitter"></i></a>
@@ -183,7 +184,7 @@
 
   <!-- Developer Mode Script -->
   <script>
-    const DEV_MODE = true; // set false when real Firebase auth ready
+    const DEV_MODE = true;
     let selectedRole = null;
 
     function selectRole(role) {
@@ -192,37 +193,33 @@
       document.getElementById('vendorBtn').classList.toggle('active', role === 'vendor');
     }
 
-    function sendOTP() {
-      if (DEV_MODE) {
-        alert("⚙️ Developer mode active — skipping OTP verification.");
-        document.getElementById("otpSection").classList.remove("hidden");
-        return;
-      }
-      // Firebase OTP logic placeholder
-    }
-
-    function verifyOTP() {
-      if (DEV_MODE) {
-        if (!selectedRole) return alert("Please select your role first.");
-        alert("✅ Developer login successful!");
-        if (selectedRole === "student") window.location.href = "students-dashboard.html";
-        else if (selectedRole === "vendor") window.location.href = "vendor-dashboard.html";
-        return;
-      }
-      // Firebase verify logic placeholder
-    }
-
+    // Simulated Wallet Connections
     document.getElementById("connectMetaMask").addEventListener("click", () => {
-      alert("Simulated MetaMask connection (Developer Mode).");
+      alert("🦊 MetaMask connected successfully (Developer Mode).");
     });
 
     document.getElementById("connectCoinbase").addEventListener("click", () => {
-      alert("Simulated Coinbase connection (Developer Mode).");
+      alert("💼 Coinbase wallet connected (Developer Mode).");
     });
 
-    window.selectRole = selectRole;
-    window.sendOTP = sendOTP;
-    window.verifyOTP = verifyOTP;
+    // Developer Signup Simulation
+    function signupUser() {
+      const phone = document.getElementById("phoneNumber").value;
+      if (!phone) return alert("Please enter your phone number.");
+      if (!selectedRole) return alert("Please select your role (Student or Vendor).");
+
+      if (DEV_MODE) {
+        alert("✅ Signup successful (Developer Mode)");
+        if (selectedRole === "student") {
+          window.location.href = "student-dashboard.html";
+        } else if (selectedRole === "vendor") {
+          window.location.href = "vendor-dashboard.html";
+        }
+        return;
+      }
+
+      // Firebase signup logic placeholder for future real-time auth
+    }
   </script>
 </body>
 </html>
