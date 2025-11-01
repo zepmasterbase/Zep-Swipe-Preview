@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Zep Swipe — Sign Up</title>
 
-  <!-- TailwindCSS -->
+  <!-- Tailwind -->
   <script src="https://cdn.tailwindcss.com"></script>
 
   <!-- Fonts -->
@@ -14,19 +14,15 @@
   <!-- Icons -->
   <script src="https://kit.fontawesome.com/a2e0e6b6a2.js" crossorigin="anonymous"></script>
 
-  <!-- Firebase -->
-  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js"></script>
-
   <style>
     body {
       font-family: 'Poppins', sans-serif;
       background: radial-gradient(circle at 20% 20%, #1b0034, #050012, #0a021f);
-      color: white;
-      min-height: 100vh;
+      color: #fff;
       display: flex;
       align-items: center;
       justify-content: center;
+      min-height: 100vh;
       padding: 2rem;
     }
 
@@ -34,12 +30,11 @@
       background: rgba(255, 255, 255, 0.08);
       border-radius: 1.5rem;
       border: 1px solid rgba(255, 255, 255, 0.15);
-      backdrop-filter: blur(20px);
+      backdrop-filter: blur(18px);
       box-shadow: 0 0 30px rgba(255, 0, 255, 0.15);
       max-width: 420px;
       width: 100%;
       padding: 2rem;
-      transition: all 0.3s ease;
     }
 
     .glow-title {
@@ -47,8 +42,8 @@
       background: linear-gradient(90deg, #00f0ff, #ff00f0, #8ef8b8);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
-      text-align: center;
       font-size: 1.8rem;
+      text-align: center;
       margin-bottom: 1rem;
     }
 
@@ -58,50 +53,50 @@
       border-radius: 0.8rem;
       background: rgba(255, 255, 255, 0.1);
       border: 1px solid rgba(255, 255, 255, 0.2);
-      color: white;
+      color: #fff;
       margin-bottom: 1rem;
       outline: none;
     }
 
-    ::placeholder {
-      color: #a7faff;
-    }
+    ::placeholder { color: #a7faff; }
 
     .btn {
       width: 100%;
       padding: 0.8rem;
       border-radius: 0.8rem;
       font-weight: 500;
+      border: none;
       cursor: pointer;
       transition: all 0.3s;
-      border: none;
     }
 
     .btn-primary {
       background: linear-gradient(90deg, #00f0ff, #ff00f0);
       color: #0a021f;
     }
-
     .btn-primary:hover {
       box-shadow: 0 0 15px rgba(255, 0, 255, 0.4);
       transform: scale(1.03);
     }
 
     .wallet-btn {
+      width: 100%;
+      padding: 0.8rem;
+      border-radius: 0.8rem;
       background: rgba(255, 255, 255, 0.1);
       border: 1px solid rgba(255, 255, 255, 0.2);
+      color: #fff;
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 0.5rem;
-      font-weight: 500;
-      transition: all 0.3s ease;
-      color: white;
+      gap: 0.6rem;
+      margin-bottom: 1rem;
+      transition: 0.3s;
     }
 
     .wallet-btn:hover {
       background: linear-gradient(90deg, #00f0ff33, #ff00f033);
-      box-shadow: 0 0 10px rgba(0, 255, 255, 0.2);
+      box-shadow: 0 0 10px rgba(0, 255, 255, 0.25);
     }
 
     .role-btn {
@@ -111,7 +106,7 @@
       background: rgba(255, 255, 255, 0.1);
       border: 1px solid rgba(255, 255, 255, 0.2);
       color: white;
-      transition: all 0.3s;
+      transition: 0.3s;
     }
 
     .role-btn.active {
@@ -131,29 +126,26 @@
       transition: 0.3s;
     }
 
-    .footer a:hover {
-      color: #ff00f0;
-    }
+    .footer a:hover { color: #ff00f0; }
   </style>
 </head>
 
 <body>
   <div class="glass-card">
-    <h1 class="glow-title">Zep Swipe Signup</h1>
+    <h1 class="glow-title">Zep Swipe Sign Up</h1>
 
     <!-- Wallet Connect -->
-    <button class="wallet-btn mb-3" id="connectMetaMask">
-      <i class="fa-brands fa-ethereum text-lg"></i> Connect MetaMask
+    <button class="wallet-btn" id="connectMetaMask">
+      <i class="fa-brands fa-ethereum"></i> Connect MetaMask
     </button>
 
-    <button class="wallet-btn mb-4" id="connectCoinbase">
-      <i class="fa-brands fa-bitcoin text-lg"></i> Connect Coinbase
+    <button class="wallet-btn" id="connectCoinbase">
+      <i class="fa-brands fa-bitcoin"></i> Connect Coinbase
     </button>
 
-    <!-- Divider -->
-    <p class="text-center text-sm mb-2 text-gray-300">or continue with phone</p>
+    <p class="text-center text-sm text-gray-300 mb-2">or continue with phone</p>
 
-    <!-- Country Selection -->
+    <!-- Country dropdown -->
     <select id="country">
       <option value="">Select Country</option>
       <option>Ghana</option>
@@ -174,9 +166,7 @@
       <button id="vendorBtn" class="role-btn" onclick="selectRole('vendor')">🛍️ Vendor</button>
     </div>
 
-    <!-- Phone Auth -->
     <input type="tel" id="phoneNumber" placeholder="+233 54 000 0000" />
-    <div id="recaptcha-container"></div>
     <button id="sendOtpBtn" class="btn btn-primary mb-3" onclick="sendOTP()">Send OTP</button>
 
     <div id="otpSection" class="hidden">
@@ -184,93 +174,55 @@
       <button class="btn btn-primary" onclick="verifyOTP()">Verify & Continue</button>
     </div>
 
-    <!-- Footer Links -->
-    <div class="footer mt-6">
+    <div class="footer">
       <a href="https://x.com/ZepSwipe?t=r94a0_pgN7ew1xT5L4eOSA&s=09" target="_blank"><i class="fab fa-x-twitter"></i></a>
       <a href="https://www.instagram.com/zepswipe?igsh=bXF3anMxODhxZWFs" target="_blank"><i class="fab fa-instagram"></i></a>
       <a href="https://facebook.com/ZepSwipe" target="_blank"><i class="fab fa-facebook"></i></a>
     </div>
   </div>
 
-  <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-    import { getAuth, RecaptchaVerifier, signInWithPhoneNumber } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
-
-    const firebaseConfig = {
-      apiKey: "AIzaSyBxAQxTvuPCYVAG3eQu4MQfxHRWJB9Q3wI",
-      authDomain: "zep-swipe-6cb53.firebaseapp.com",
-      projectId: "zep-swipe-6cb53",
-      storageBucket: "zep-swipe-6cb53.firebasestorage.app",
-      messagingSenderId: "895701529881",
-      appId: "1:895701529881:web:81c6e3e420bfe6cb7dc188",
-      measurementId: "G-L48WTHMKKZ"
-    };
-
-    const app = initializeApp(firebaseConfig);
-    const auth = getAuth(app);
-    let confirmationResult;
+  <!-- Developer Mode Script -->
+  <script>
+    const DEV_MODE = true; // set false when real Firebase auth ready
     let selectedRole = null;
 
-    // Role selection
-    window.selectRole = function(role) {
+    function selectRole(role) {
       selectedRole = role;
       document.getElementById('studentBtn').classList.toggle('active', role === 'student');
       document.getElementById('vendorBtn').classList.toggle('active', role === 'vendor');
-    };
+    }
 
-    // Initialize invisible reCAPTCHA
-    window.recaptchaVerifier = new RecaptchaVerifier(auth, 'recaptcha-container', { size: 'invisible' });
-
-    // Send OTP
-    window.sendOTP = function() {
-      const phoneNumber = document.getElementById("phoneNumber").value;
-      if (!phoneNumber) return alert("Please enter a valid phone number.");
-      signInWithPhoneNumber(auth, phoneNumber, window.recaptchaVerifier)
-        .then((result) => {
-          confirmationResult = result;
-          document.getElementById("otpSection").classList.remove("hidden");
-          alert("OTP sent successfully!");
-        })
-        .catch((error) => {
-          alert("Error sending OTP: " + error.message);
-        });
-    };
-
-    // Verify OTP
-    window.verifyOTP = function() {
-      const code = document.getElementById("otpCode").value;
-      if (!code) return alert("Enter your OTP.");
-      confirmationResult.confirm(code)
-        .then(() => {
-          alert("Signup successful!");
-          if (selectedRole === "student") window.location.href = "students-dashboard.html";
-          else if (selectedRole === "vendor") window.location.href = "vendor-dashboard.html";
-          else alert("Please select your role first.");
-        })
-        .catch((error) => {
-          alert("Verification failed: " + error.message);
-        });
-    };
-
-    // Wallet connection
-    const connectMetaMask = document.getElementById("connectMetaMask");
-    connectMetaMask.addEventListener("click", async () => {
-      if (window.ethereum) {
-        try {
-          const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
-          alert("Connected to MetaMask: " + accounts[0]);
-        } catch (err) {
-          alert("MetaMask connection failed: " + err.message);
-        }
-      } else {
-        alert("Please install MetaMask wallet.");
+    function sendOTP() {
+      if (DEV_MODE) {
+        alert("⚙️ Developer mode active — skipping OTP verification.");
+        document.getElementById("otpSection").classList.remove("hidden");
+        return;
       }
+      // Firebase OTP logic placeholder
+    }
+
+    function verifyOTP() {
+      if (DEV_MODE) {
+        if (!selectedRole) return alert("Please select your role first.");
+        alert("✅ Developer login successful!");
+        if (selectedRole === "student") window.location.href = "students-dashboard.html";
+        else if (selectedRole === "vendor") window.location.href = "vendor-dashboard.html";
+        return;
+      }
+      // Firebase verify logic placeholder
+    }
+
+    document.getElementById("connectMetaMask").addEventListener("click", () => {
+      alert("Simulated MetaMask connection (Developer Mode).");
     });
 
-    const connectCoinbase = document.getElementById("connectCoinbase");
-    connectCoinbase.addEventListener("click", () => {
-      window.open("https://www.coinbase.com/wallet", "_blank");
+    document.getElementById("connectCoinbase").addEventListener("click", () => {
+      alert("Simulated Coinbase connection (Developer Mode).");
     });
+
+    window.selectRole = selectRole;
+    window.sendOTP = sendOTP;
+    window.verifyOTP = verifyOTP;
   </script>
 </body>
 </html>
