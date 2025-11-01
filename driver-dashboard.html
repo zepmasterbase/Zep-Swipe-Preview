@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Zep Swipe Driver Dashboard</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700&family=Poppins:wght@400;500;600&display=swap" rel="stylesheet"/>
+  <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js"></script>
+
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: radial-gradient(circle at top, #100427, #09011a 80%);
+      color: #fff;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 1.5rem;
+    }
+
+    .header {
+      width: 100%;
+      max-width: 800px;
+      text-align: center;
+      margin-bottom: 1.5rem;
+    }
+
+    .header h1 {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 1.8rem;
+      background: linear-gradient(90deg, #00f0ff, #ff00f0);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .rides {
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 1.2rem;
+      padding: 1rem;
+      width: 100%;
+      max-width: 800px;
+      backdrop-filter: blur(15px);
+      box-shadow: 0 0 25px rgba(255, 0, 240, 0.25);
+    }
+
+    .ride-card {
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 0.8rem;
+      padding: 1rem;
+      margin-bottom: 1rem;
+      transition: transform 0.2s ease;
+    }
+
+    .ride-card:hover {
+      transform: scale(1.02);
+    }
+
+    .btn {
+      display: inline-block;
+      padding: 0.6rem 1.2rem;
+      border-radius: 0.6rem;
+      font-weight: 600;
+      color: #100427;
+      background: linear-gradient(90deg, #00f0ff, #ff00f0);
+      border: none;
+      cursor: pointer;
+      transition: transform 0.2s ease;
+    }
+
+    .btn:hover {
+      transform: scale(1.05);
+    }
+
+    .no-rides {
+      text-align: center;
+      color: #bbb;
+      padding: 2rem;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="header">
+    <h1>Zep Swipe — Driver Dashboard</h1>
+    <p class="text-gray-300 text-sm">Welcome back, verified student driver.</p>
+  </div>
+
+  <div class="rides">
+    <h2 class="text-lg font-semibold mb-3">Available Ride Requests</h2>
+    <div id="ridesList"></div>
+  </div>
+
+  <script>
+    const firebaseConfig = {
+      apiKey: "AIzaSyBxAQxTvuPCYVAG3eQu4MQfxHRWJB9Q3wI",
+      authDomain: "zep-swipe-6cb53.firebaseapp.com",
+      projectId: "zep-swipe-6cb53",
+      storageBucket: "zep-swipe-6cb53.firebasestorage.app",
+      messagingSenderId: "895701529881",
+      appId: "1:895701529881:web:81c6e3e420bfe6cb7dc188",
+      measurementId: "G-L48WTHMKKZ"
+    };
+
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.firestore();
+    const ridesList = document.getElementById("ridesList");
+
+    // Listen for real-time ride requests
+    db.collection("ride-requests")
+      .where("status", "==", "pending")
+      .onSnapshot((snapshot) => {
+        ridesList.innerHTML = "";
+        if (snapshot.empty) {
+          ridesList.innerHTML = '<p class="no-rides">No ride requests available right now.</p>';
+          return;
+        }
+
+        snapshot.forEach((doc) => {
+          const ride = doc.data();
+          const card = document.createElement("div");
+          card.className = "ride-card";
+
+          card.innerHTML = `
+            <h3 class="text-lg font-semibold text-pink-400">${ride.studentName}</h3>
+            <p class="text-sm text-gray-300 mb-1"><strong>Pickup:</strong> ${ride.pickup}</p>
+            <p class="text-sm text-gray-300 mb-1"><strong>Destination:</strong> ${ride.destination}</p>
+            <p class="text-sm text-gray-300 mb-3"><strong>Fare:</strong> ${ride.fare} ZC</p>
+            <button class="btn accept-btn">Accept Ride</button>
+          `;
+
+          card.querySelector(".accept-btn").addEventListener("click", async () => {
+            try {
+              await db.collection("ride-requests").doc(doc.id).update({
+                status: "accepted",
+                acceptedAt: firebase.firestore.FieldValue.serverTimestamp(),
+              });
+              alert(`Ride accepted successfully!`);
+            } catch (error) {
+              console.error(error);
+              alert("Error accepting ride.");
+            }
+          });
+
+          ridesList.appendChild(card);
+        });
+      });
+  </script>
+</body>
+</html>
