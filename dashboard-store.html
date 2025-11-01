@@ -1,202 +1,163 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ZepShop Marketplace</title>
-<script src="https://cdn.tailwindcss.com"></script>
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ZepShop Marketplace</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    body {
+      background: radial-gradient(circle at top, #05010a 0%, #020006 100%);
+      color: white;
+      font-family: 'Poppins', sans-serif;
+      overflow-x: hidden;
+    }
 
-<style>
-:root {
-  --neon-blue: #00f0ff;
-  --neon-pink: #ff00f0;
-  --glass: rgba(255,255,255,0.05);
-}
+    .neon-text {
+      text-shadow: 0 0 10px #ff00ff, 0 0 20px #00ffff, 0 0 40px #00ffcc;
+    }
 
-body {
-  font-family: 'Poppins', sans-serif;
-  margin: 0;
-  background: radial-gradient(circle at top, #0b0520 0%, #120b2e 100%);
-  color: #fff;
-  min-height: 100vh;
-  padding-bottom: 100px;
-}
+    .neon-border {
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      backdrop-filter: blur(10px);
+      background: rgba(255, 255, 255, 0.05);
+      box-shadow: 0 0 20px rgba(255, 0, 255, 0.4);
+    }
 
-/* HEADER */
-.header {
-  position: fixed;
-  top: 0;
-  width: 100%;
-  padding: 1rem;
-  background: rgba(15,5,32,0.6);
-  backdrop-filter: blur(12px);
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  box-shadow: 0 0 20px rgba(0,240,255,0.3);
-  z-index: 50;
-}
-.header h1 {
-  font-family: 'Orbitron', sans-serif;
-  font-size: 1.4rem;
-  background: linear-gradient(90deg, var(--neon-blue), var(--neon-pink));
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-.header i {
-  color: var(--neon-blue);
-  font-size: 1.4rem;
-  cursor: pointer;
-  transition: 0.3s;
-}
-.header i:hover { color: var(--neon-pink); transform: scale(1.2); }
+    .neon-button {
+      background: linear-gradient(90deg, #ff00cc, #00ffff);
+      color: white;
+      font-weight: 600;
+      border-radius: 9999px;
+      padding: 0.75rem 1.5rem;
+      transition: transform 0.2s ease;
+      text-shadow: 0 0 8px #ff00ff;
+    }
 
-/* LEARN & EARN BANNER */
-.learn-earn {
-  margin: 5.5rem 1rem 1rem 1rem;
-  padding: 1rem;
-  background: rgba(255,255,255,0.05);
-  border: 1px solid var(--neon-blue);
-  border-radius: 1rem;
-  text-align: center;
-  font-weight: 600;
-  font-family: 'Orbitron', sans-serif;
-  color: var(--neon-blue);
-  text-shadow: 0 0 10px #00f0ff;
-  cursor: pointer;
-}
-.learn-earn:hover {
-  background: rgba(0,240,255,0.1);
-}
+    .neon-button:hover {
+      transform: scale(1.05);
+    }
 
-/* PRODUCTS GRID */
-.marketplace {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 0.8rem;
-  margin: 1rem;
-}
-@media (max-width: 640px) {
-  .marketplace { grid-template-columns: 1fr; }
-}
+    .product-card {
+      border-radius: 1rem;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      box-shadow: 0 0 12px rgba(0, 255, 255, 0.3);
+      transition: all 0.3s ease;
+    }
 
-/* PRODUCT CARD */
-.product-card {
-  background: var(--glass);
-  border-radius: 1rem;
-  padding: 0.8rem;
-  text-align: center;
-  backdrop-filter: blur(15px);
-  box-shadow: 0 0 15px rgba(0,240,255,0.2);
-  transition: transform 0.3s, box-shadow 0.3s;
-}
-.product-card:hover {
-  transform: scale(1.03);
-  box-shadow: 0 0 25px var(--neon-blue);
-}
-.product-card img {
-  width: 80px;
-  height: 80px;
-  border-radius: 0.8rem;
-  margin-bottom: 0.5rem;
-  object-fit: cover;
-}
-.product-card h3 {
-  font-family: 'Orbitron', sans-serif;
-  font-size: 0.95rem;
-  margin: 0.3rem 0;
-}
-.product-card .price {
-  font-weight: 700;
-  color: var(--neon-blue);
-  margin: 0.5rem 0;
-}
-.product-card button {
-  background: linear-gradient(90deg,var(--neon-blue),var(--neon-pink));
-  border: none;
-  padding: 0.4rem 0.6rem;
-  border-radius: 0.5rem;
-  color: #fff;
-  cursor: pointer;
-  font-size: 0.85rem;
-  transition: 0.3s;
-}
-.product-card button:hover { transform: scale(1.05); }
+    .product-card:hover {
+      transform: scale(1.03);
+      box-shadow: 0 0 20px rgba(255, 0, 255, 0.4);
+    }
 
-/* FOOTER */
-.footer {
-  position: fixed;
-  bottom: 0; left: 0;
-  width: 100%;
-  display: flex;
-  justify-content: space-around;
-  padding: 0.8rem 0;
-  background: rgba(15,5,32,0.85);
-  backdrop-filter: blur(12px);
-  box-shadow: 0 -2px 20px rgba(0,240,255,0.2);
-}
-.footer a {
-  display: flex; flex-direction: column; align-items: center;
-  color: var(--neon-blue);
-  font-size: 0.8rem; text-decoration: none;
-  transition: 0.3s;
-}
-.footer a:hover, .footer a.active { color: var(--neon-pink); transform: scale(1.2); }
-</style>
+    .footer-icon {
+      color: #9ca3af;
+      transition: 0.3s;
+    }
+
+    .footer-icon:hover {
+      color: #00ffff;
+      text-shadow: 0 0 10px #00ffff;
+    }
+  </style>
 </head>
-<body>
 
-<header class="header">
-  <h1>ZepShop</h1>
-  <i class="fas fa-bell"></i>
-</header>
+<body class="min-h-screen flex flex-col justify-between">
+  <!-- HEADER -->
+  <header class="flex justify-between items-center px-6 py-4 bg-transparent">
+    <h1 class="text-2xl font-bold neon-text">ZEP<span class="text-pink-500">SHOP</span></h1>
+    <button class="neon-button text-sm px-4 py-2">🔥 Deals</button>
+  </header>
 
-<div class="learn-earn" onclick="window.location.href='learn-earn.html'">
-  Earn ZAC by Joining the Learn & Earn Programs!
-</div>
+  <!-- SEARCH BAR -->
+  <div class="px-6 py-3">
+    <input
+      type="text"
+      placeholder="Search for digital products, food, and deals..."
+      class="w-full px-4 py-3 rounded-full text-white placeholder-pink-300 bg-[#0b0b15] border border-pink-500 focus:outline-none focus:ring-2 focus:ring-pink-400"
+    />
+  </div>
 
-<div class="marketplace" id="marketplace"></div>
+  <!-- MAIN CONTENT -->
+  <main class="flex-1 px-6 pb-20">
+    <!-- FEATURED PRODUCTS -->
+    <section class="my-6">
+      <h2 class="text-xl font-semibold mb-3 neon-text">💻 Digital Products</h2>
+      <div class="grid grid-cols-2 gap-4">
+        <div class="product-card p-4 flex flex-col items-center">
+          <img src="https://cdn-icons-png.flaticon.com/512/870/870910.png" alt="Laptop" class="w-20 h-20 mb-3" />
+          <p class="font-medium">Laptop</p>
+          <button class="neon-button text-xs mt-2">Shop Now</button>
+        </div>
 
-<footer class="footer">
-  <a href="dashboard-store.html"><i class="fas fa-store"></i><span>Store</span></a>
-  <a href="dashboard-wallet.html"><i class="fas fa-wallet"></i><span>Wallet</span></a>
-  <a href="product.html" class="active"><i class="fas fa-layer-group"></i><span>Products</span></a>
-  <a href="learn-earn.html"><i class="fas fa-gift"></i><span>Rewards</span></a>
-  <a href="profile.html"><i class="fas fa-user"></i><span>Profile</span></a>
-</footer>
+        <div class="product-card p-4 flex flex-col items-center">
+          <img src="https://cdn-icons-png.flaticon.com/512/860/860784.png" alt="Phone" class="w-20 h-20 mb-3" />
+          <p class="font-medium">Smartphone</p>
+          <button class="neon-button text-xs mt-2">Shop Now</button>
+        </div>
+      </div>
+    </section>
 
-<script>
-// Products array
-const products = [
-  { title: 'Neon NFT', desc: 'Futuristic NFT Art', image: 'https://i.ibb.co/fHBKXx1/neon-nft.png', price: 500, currency: 'ZAC', category: 'digital', link: 'digital-products.html' },
-  { title: 'AI Ebook', desc: 'Learn AI & Blockchain', image: 'https://i.ibb.co/QY2Zx8V/ebook.png', price: 300, currency: 'ZAC', category: 'digital', link: 'digital-products.html' },
-  { title: 'Cafe Latte', desc: 'Fresh Brew Coffee', image: 'https://i.ibb.co/2d4t1Lb/cafe.png', price: 5, currency: 'USDT', category: 'cafe', link: 'vendor-listing.html' },
-  { title: 'Mystery Book', desc: 'Engaging Novel', image: 'https://i.ibb.co/G7Q9PfZ/book.png', price: 12, currency: 'USDT', category: 'books', link: 'vendor-listing.html' },
-];
+    <!-- STATIONERY -->
+    <section class="my-6">
+      <h2 class="text-xl font-semibold mb-3 neon-text">✏️ Stationery</h2>
+      <div class="grid grid-cols-2 gap-4">
+        <div class="product-card p-4 flex flex-col items-center">
+          <img src="https://cdn-icons-png.flaticon.com/512/1043/1043470.png" alt="Notebook" class="w-20 h-20 mb-3" />
+          <p class="font-medium">Notebook</p>
+          <button class="neon-button text-xs mt-2">Shop Now</button>
+        </div>
 
-// Render products
-function renderProducts() {
-  const grid = document.getElementById('marketplace');
-  grid.innerHTML = '';
-  products.forEach(p => {
-    const card = document.createElement('div');
-    card.className = 'product-card';
-    card.innerHTML = `
-      <img src="${p.image}" alt="${p.title}">
-      <h3>${p.title}</h3>
-      <p>${p.desc}</p>
-      <p class="price">${p.price} ${p.currency}</p>
-      <button onclick="window.location.href='${p.link}'">Buy Now</button>
-    `;
-    grid.appendChild(card);
-  });
-}
+        <div class="product-card p-4 flex flex-col items-center">
+          <img src="https://cdn-icons-png.flaticon.com/512/2553/2553626.png" alt="Pen" class="w-20 h-20 mb-3" />
+          <p class="font-medium">Pen Set</p>
+          <button class="neon-button text-xs mt-2">Shop Now</button>
+        </div>
+      </div>
+    </section>
 
-// Init
-renderProducts();
-</script>
+    <!-- FOOD PLACEHOLDER -->
+    <section class="my-6">
+      <h2 class="text-xl font-semibold mb-3 neon-text">🍔 Food Deals</h2>
+      <div class="grid grid-cols-2 gap-4">
+        <div class="product-card p-4 flex flex-col items-center">
+          <img src="https://cdn-icons-png.flaticon.com/512/2921/2921822.png" alt="Burger" class="w-20 h-20 mb-3" />
+          <p class="font-medium">Burger Combo</p>
+          <button class="neon-button text-xs mt-2">Order Now</button>
+        </div>
 
+        <div class="product-card p-4 flex flex-col items-center">
+          <img src="https://cdn-icons-png.flaticon.com/512/3595/3595455.png" alt="Pizza" class="w-20 h-20 mb-3" />
+          <p class="font-medium">Student Pizza</p>
+          <button class="neon-button text-xs mt-2">Order Now</button>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- FOOTER NAVIGATION -->
+  <footer class="fixed bottom-0 w-full bg-[#0b0b15]/90 backdrop-blur-lg py-3 border-t border-pink-500 flex justify-around text-sm">
+    <a href="index.html" class="footer-icon flex flex-col items-center">
+      <span>🏠</span>
+      <p>Home</p>
+    </a>
+    <a href="#" class="footer-icon flex flex-col items-center">
+      <span>🔍</span>
+      <p>Search</p>
+    </a>
+    <a href="#" class="footer-icon flex flex-col items-center">
+      <span>🛒</span>
+      <p>Sell</p>
+    </a>
+    <a href="#" class="footer-icon flex flex-col items-center">
+      <span>🛍️</span>
+      <p>Cart</p>
+    </a>
+    <a href="#" class="footer-icon flex flex-col items-center">
+      <span>👤</span>
+      <p>Profile</p>
+    </a>
+  </footer>
 </body>
 </html>
