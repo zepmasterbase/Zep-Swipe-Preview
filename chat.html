@@ -1,155 +1,480 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ZepChat Futuristic Dashboard</title>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Zep Swipe — Chat</title>
 
-<!-- Tailwind + Fonts + Icons -->
+<!-- Tailwind CDN (for quick layout utilities) -->
 <script src="https://cdn.tailwindcss.com"></script>
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Orbitron:wght@600&display=swap" rel="stylesheet">
 
 <style>
-:root{
-  --bg:#060216;
-  --glass: rgba(255,255,255,0.04);
-  --neon-blue:#00f0ff;
-  --neon-pink:#ff00f0;
-  --neon-mint:#3affc1;
-  --neon-violet:#9b59b6;
-}
+  :root{
+    --bg-1: #06030a;
+    --glass: rgba(255,255,255,0.04);
+    --neon-cyan: #00f0ff;
+    --neon-magenta: #ff00f0;
+    --neon-mint: #3affc1;
+    --neon-violet: #9b59b6;
+  }
+  html,body{height:100%;margin:0;font-family:Inter,system-ui,Segoe UI,Roboto,'Helvetica Neue',Arial;}
+  body{
+    background:
+      radial-gradient(600px 300px at 10% 10%, rgba(0,240,255,0.04), transparent 10%),
+      radial-gradient(600px 300px at 90% 90%, rgba(255,0,240,0.03), transparent 10%),
+      var(--bg-1);
+    color: #e6eefc;
+    -webkit-font-smoothing:antialiased;
+    -moz-osx-font-smoothing:grayscale;
+    min-height:100vh;
+    display:flex;
+    flex-direction:column;
+  }
 
-/* Body & layout */
-html,body{height:100%;margin:0;font-family:'Poppins',sans-serif;background:radial-gradient(circle at top,#0b0420 0%,var(--bg) 100%);color:#fff;}
-.app{display:grid;grid-template-columns:320px 1fr 320px;gap:16px;padding:84px 16px 120px 16px;max-width:1200px;margin:0 auto;}
-@media(max-width:1000px){.app{grid-template-columns:1fr;padding:84px 12px 120px 12px;}}
+  /* Header */
+  .header {
+    position:fixed; top:12px; left:12px; right:12px;
+    height:64px; display:flex; align-items:center; justify-content:space-between;
+    padding:0 18px; border-radius:12px;
+    background: linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01));
+    backdrop-filter: blur(10px);
+    box-shadow: 0 6px 30px rgba(0,0,0,0.6), 0 0 30px rgba(0,240,255,0.03);
+    z-index:40;
+  }
+  .brand { display:flex; align-items:center; gap:12px; }
+  .brand .logo {
+    width:44px; height:44px; border-radius:10px;
+    background:linear-gradient(135deg,var(--neon-cyan),var(--neon-magenta));
+    box-shadow: 0 0 14px rgba(0,240,255,0.14);
+    display:flex; align-items:center; justify-content:center;
+    font-family: 'Orbitron', sans-serif; font-weight:700; color:#04060a;
+    font-size:16px;
+  }
+  .brand h1 { margin:0; font-family: 'Orbitron', sans-serif; font-size:18px; letter-spacing:1px; color:transparent;
+    background: linear-gradient(90deg,var(--neon-cyan),var(--neon-magenta));
+    -webkit-background-clip:text;
+  }
 
-/* Header */
-.header{position:fixed;top:0;left:0;right:0;height:64px;display:flex;align-items:center;justify-content:space-between;padding:0 20px;background:linear-gradient(90deg,rgba(255,255,255,0.03),rgba(255,255,255,0.01));backdrop-filter:blur(8px);z-index:60;box-shadow:0 0 20px rgba(0,255,255,0.1);}
-.header .brand{display:flex;align-items:center;gap:12px;}
-.header .logo{width:44px;height:44px;border-radius:10px;background:linear-gradient(135deg,var(--neon-mint),var(--neon-violet));display:flex;align-items:center;justify-content:center;color:#04020a;font-weight:700;font-family:'Orbitron';}
-.header h1{margin:0;font-family:'Orbitron';font-size:1.05rem;letter-spacing:0.6px;color:transparent;background:linear-gradient(90deg,var(--neon-blue),var(--neon-violet));-webkit-background-clip:text;}
-.header .icons i{color:var(--neon-blue);font-size:18px;cursor:pointer;transition:0.18s;}
-.header .icons i:hover{color:var(--neon-violet);transform:scale(1.15);filter:drop-shadow(0 6px 12px rgba(255,0,240,0.08));}
+  /* Layout */
+  .container { display:flex; gap:18px; margin:88px 18px 120px; flex:1; }
+  .panel { background:var(--glass); border-radius:14px; padding:14px; backdrop-filter:blur(8px); box-shadow: 0 6px 30px rgba(0,0,0,0.6); }
+  .left { width:320px; min-width:260px; max-width:380px; display:flex; flex-direction:column; gap:12px; }
+  .right { flex:1; display:flex; flex-direction:column; gap:12px; min-width:0; }
 
-/* Panel glass */
-.panel{background:var(--glass);border-radius:12px;padding:12px;box-shadow:0 6px 30px rgba(0,0,0,0.6);border:1px solid rgba(255,255,255,0.02);}
+  /* Contacts */
+  .search {
+    display:flex; gap:8px; align-items:center;
+    background:rgba(255,255,255,0.02); border-radius:12px; padding:8px;
+  }
+  .search input{
+    background:transparent; border:0; outline:none; color: #dfefff; flex:1; font-size:14px;
+  }
+  .contacts { overflow:auto; max-height:68vh; padding-right:6px; }
+  .contact {
+    display:flex; align-items:center; gap:12px; padding:10px; border-radius:10px; cursor:pointer; transition:all .18s;
+  }
+  .contact:hover { transform:translateY(-2px); background:linear-gradient(90deg, rgba(0,240,255,0.03), rgba(255,0,240,0.02)); }
+  .avatar { width:48px; height:48px; border-radius:12px; background:linear-gradient(135deg,var(--neon-cyan),var(--neon-magenta)); display:flex; align-items:center; justify-content:center; font-weight:700; color:#04060a; }
+  .contact .meta { flex:1; min-width:0; }
+  .contact .meta .name { font-weight:600; font-size:15px; color:#e6f6ff; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+  .contact .meta .sub { font-size:12px; color:#9fb6d7; margin-top:3px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
 
-/* Left panel: contacts */
-.contacts-list{height:calc(100vh - 220px);overflow:auto;padding:6px;}
-.contact-item{display:flex;gap:12px;align-items:center;padding:10px;border-radius:12px;cursor:pointer;transition:all .18s;margin-bottom:6px;}
-.contact-item:hover{transform:translateY(-3px);box-shadow:0 6px 24px rgba(0,240,255,0.06);}
-.contact-item.active{background: linear-gradient(90deg, rgba(0,240,255,0.05), rgba(255,0,240,0.02)); box-shadow:0 12px 40px rgba(0,240,255,0.03);}
-.avatar{width:48px;height:48px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-weight:700;color:#04020a;background:linear-gradient(90deg,var(--neon-mint),var(--neon-violet));box-shadow:0 0 10px var(--neon-mint),0 0 16px var(--neon-violet);position:relative;}
-.avatar::after{content:'';position:absolute;width:10px;height:10px;border-radius:50%;bottom:0;right:0;background:#3affc1;box-shadow:0 0 6px #3affc1;}
-.contact-meta small{color:rgba(255,255,255,0.7);display:block;font-size:12px;}
+  /* Conversation header */
+  .conv-header { display:flex; align-items:center; gap:12px; padding:10px 12px; border-radius:12px; }
+  .conv-header .title { font-weight:700; font-family: 'Orbitron', sans-serif; color:var(--neon-cyan); }
 
-/* Center chat */
-.chat-window{display:flex;flex-direction:column;height:calc(100vh - 220px);}
-.chat-messages{flex:1;overflow:auto;padding:14px;display:flex;flex-direction:column;gap:10px;}
-.msg{max-width:70%;padding:12px 16px;border-radius:20px;line-height:1.2;box-shadow:0 4px 18px rgba(0,0,0,0.5);opacity:0;transform:translateY(8px);animation:fadeSlide 0.25s forwards;}
-.msg.in{background:linear-gradient(135deg,var(--neon-violet),var(--neon-blue));color:#fff;align-self:flex-start;}
-.msg.out{background:linear-gradient(135deg,var(--neon-mint),var(--neon-blue));color:#04020a;font-weight:600;align-self:flex-end;}
-@keyframes fadeSlide{to{opacity:1;transform:translateY(0);}}
-.input-bar{display:flex;gap:8px;align-items:center;padding:10px;border-radius:12px;margin-top:10px;}
-.input-bar input[type=text]{flex:1;padding:10px 12px;border-radius:999px;border:none;outline:none;background:rgba(255,255,255,0.03);color:#fff;}
-.send-btn{background:linear-gradient(135deg,var(--neon-mint),var(--neon-blue));padding:10px 14px;border-radius:999px;cursor:pointer;color:#04020a;font-weight:700;border:none;transition:all .15s;box-shadow:0 6px 18px var(--neon-mint),0 0 12px var(--neon-blue);}
-.send-btn:hover{transform:scale(1.05);filter:drop-shadow(0 8px 16px var(--neon-blue));}
+  /* Messages area */
+  .messages {
+    flex:1; background:linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.01));
+    border-radius:12px; padding:16px; overflow:auto;
+    display:flex; flex-direction:column; gap:10px;
+  }
+  .msg { max-width:78%; padding:10px 12px; border-radius:12px; font-size:14px; line-height:1.2; }
+  .msg.me { align-self:flex-end; background:linear-gradient(90deg,var(--neon-cyan),var(--neon-mint)); color:#041018; border-bottom-right-radius:6px; animation:popIn .12s ease; }
+  .msg.other { align-self:flex-start; background:rgba(255,255,255,0.03); color:#e6f6ff; border-bottom-left-radius:6px; animation:popIn .12s ease; }
+  .timestamp { font-size:11px; color:#9fb6d7; margin-top:6px; text-align:right; }
 
-/* Right panel: saved contacts / info */
-.info-pane{height:calc(100vh - 220px);overflow:auto;padding:12px;display:flex;flex-direction:column;gap:12px;}
-.info-pane h3{font-family:'Orbitron';color:var(--neon-blue);margin:0;margin-bottom:6px;}
-.saved-list{display:grid;gap:8px;}
+  @keyframes popIn { from { transform: translateY(8px) scale(.98); opacity:0 } to { transform: translateY(0) scale(1); opacity:1 } }
 
-/* Footer */
-.footer{position:fixed;bottom:0;left:0;right:0;height:78px;display:flex;align-items:center;justify-content:center;backdrop-filter:blur(14px);background:rgba(0,0,0,0.35);box-shadow:0 -8px 25px rgba(0,0,0,0.1);z-index:100;}
-.footer-inner{display:flex;gap:16px;align-items:center;width:100%;max-width:900px;justify-content:space-around;}
-.footer-button{display:flex;flex-direction:column;align-items:center;color:var(--neon-blue);font-size:12px;text-decoration:none;transition:0.2s;}
-.footer-button i{font-size:22px;padding:10px;border-radius:50%;background:rgba(0,240,255,0.06);box-shadow:0 4px 12px rgba(0,240,255,0.15);}
-.footer-button:hover{color:var(--neon-violet);transform:translateY(-3px);filter:drop-shadow(0 10px 24px rgba(255,0,240,0.06));}
-.add-contact-btn{position:relative;top:-20px;border:none;background:linear-gradient(90deg,var(--neon-pink),var(--neon-blue));box-shadow:0 0 24px var(--neon-pink),0 0 36px var(--neon-blue);color:#04020a;}
-.add-contact-btn i{font-size:26px;padding:14px;border-radius:50%;}
-.add-contact-btn span{font-size:10px;font-weight:700;margin-top:2px;}
+  /* Input bar */
+  .composer {
+    position:relative; display:flex; gap:8px; align-items:center; padding:10px; border-radius:14px; margin-top:6px;
+    background:linear-gradient(90deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+  }
+  .composer textarea { flex:1; resize:none; background:transparent; border:0; outline:none; color:#e6f6ff; min-height:44px; max-height:120px; padding:8px; font-size:14px; }
+  .btn-send { width:56px; height:44px; display:flex; align-items:center; justify-content:center; border-radius:10px; cursor:pointer;
+    background:linear-gradient(90deg,var(--neon-magenta),var(--neon-cyan)); box-shadow: 0 6px 18px rgba(255,0,240,0.12);
+  }
+  .btn-send svg { filter: drop-shadow(0 4px 12px rgba(0,240,255,0.12)); }
 
-/* Empty placeholder */
-.empty{opacity:0.6;text-align:center;padding:18px;color:rgba(255,255,255,0.6);border-radius:8px;background:rgba(255,255,255,0.02);}
-.badge{background:linear-gradient(90deg,var(--neon-mint),var(--neon-violet));color:#04020a;padding:4px 8px;border-radius:8px;font-weight:700;font-size:12px;}
+  /* Typing indicator */
+  .typing { font-size:13px; color:#9fb6d7; margin-left:8px; }
+
+  /* Footer fixed with neon icon circles (SVG icons) */
+  .bottom-bar {
+    position:fixed; bottom:12px; left:12px; right:12px; height:72px; display:flex; justify-content:space-around; align-items:center;
+    border-radius:14px; background: linear-gradient(90deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01)); padding:10px; backdrop-filter:blur(8px);
+    box-shadow: 0 12px 40px rgba(0,0,0,0.6);
+    z-index:60;
+  }
+  .icon-circle { width:56px; height:56px; border-radius:14px; display:flex; align-items:center; justify-content:center; cursor:pointer;
+    background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01)); border: 1px solid rgba(255,255,255,0.04);
+    transition: transform .18s, box-shadow .18s;
+  }
+  .icon-circle:hover { transform:translateY(-6px); box-shadow: 0 10px 30px rgba(0,240,255,0.06); }
+
+  /* Neon SVG fills */
+  .svg-neon { filter: drop-shadow(0 6px 18px rgba(0,240,255,0.12)); }
+  .svg-glow { transition: all .2s; }
+
+  /* Responsive */
+  @media (max-width:920px) {
+    .container { margin:92px 12px 120px; gap:10px; }
+    .left { display:none; } /* hide contacts on small screens — access via a button */
+    .right { min-width:0; }
+  }
+  @media (max-width:480px) {
+    .header{ left:8px; right:8px; }
+    .bottom-bar{ left:8px; right:8px; height:68px; }
+  }
+
+  /* small utilities */
+  .small { font-size:12px; color:#9fb6d7; }
+  .btn-ghost { padding:6px 10px; border-radius:8px; background:transparent; border:1px solid rgba(255,255,255,0.04); color:#dbeffd; }
+  .accent-pill { background:linear-gradient(90deg,var(--neon-cyan),var(--neon-magenta)); padding:6px 8px; border-radius:999px; color:#03060a; font-weight:700; }
 </style>
 </head>
 <body>
 
-<!-- HEADER -->
-<header class="header">
-  <div class="brand">
-    <div class="logo">ZC</div>
-    <h1>ZepChat</h1>
-  </div>
-  <div class="icons">
-    <i class="fas fa-bell" title="Notifications"></i>
-    <i class="fas fa-cog" title="Settings"></i>
-  </div>
-</header>
-
-<!-- APP GRID -->
-<div class="app">
-  <!-- LEFT: Contacts -->
-  <aside class="panel">
-    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
-      <h3 style="font-family:Orbitron;margin:0">Contacts</h3>
-      <span class="badge" id="savedCount">0</span>
+  <!-- Header -->
+  <div class="header">
+    <div class="brand">
+      <div class="logo">Z</div>
+      <h1>Zep Swipe Chat</h1>
     </div>
-    <input id="quickSearch" type="search" placeholder="Search contacts..." oninput="filterContacts()" class="w-full px-3 py-2 rounded-md bg-[rgba(255,255,255,0.03)] outline-none mb-2"/>
-    <div class="contacts-list" id="contactsList"></div>
-  </aside>
 
-  <!-- CENTER: Chat -->
-  <section class="panel flex flex-col">
-    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px">
-      <div>
-        <div id="activeName" style="font-weight:700;font-family:Orbitron">Select a contact</div>
-        <div id="activeInfo" style="font-size:12px;color:rgba(255,255,255,0.6)"></div>
+    <div style="display:flex;align-items:center;gap:12px">
+      <button class="btn-ghost" id="openContactsBtn" title="Open contacts">Contacts</button>
+      <div class="small">WS: <span id="wsStatus" style="color:#9fb6d7">disconnected</span></div>
+      <div style="width:44px;height:44px;border-radius:10px;background:linear-gradient(135deg,var(--neon-pink),var(--neon-cyan));display:flex;align-items:center;justify-content:center;font-family:Orbitron;font-weight:700;color:#04060a">DP</div>
+    </div>
+  </div>
+
+  <!-- Main -->
+  <div class="container">
+    <!-- Left: Contacts -->
+    <aside class="left panel">
+      <div class="search">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M21 21L15 15" stroke="#9fb6d7" stroke-width="2" stroke-linecap="round"/></svg>
+        <input id="searchInput" placeholder="Search contacts..." />
+        <button class="btn-ghost" id="newChatBtn" title="New chat">New</button>
+      </div>
+
+      <div style="display:flex; align-items:center; gap:10px; justify-content:space-between; margin-top:8px;">
+        <div style="display:flex; gap:8px; align-items:center;">
+          <div class="accent-pill">ZEP</div>
+          <div style="font-weight:700">ZepVibe</div>
+        </div>
+        <div class="small">Active</div>
+      </div>
+
+      <div class="contacts" id="contactsList" aria-live="polite"></div>
+    </aside>
+
+    <!-- Right: Conversation -->
+    <section class="right panel">
+      <div class="conv-header" id="convHeader">
+        <div style="display:flex;align-items:center;gap:12px;">
+          <div class="avatar" id="activeAvatar">A</div>
+          <div>
+            <div class="title" id="activeName">Select a contact</div>
+            <div class="small" id="activeStatus">No conversation selected</div>
+          </div>
+        </div>
+
+        <div style="margin-left:auto;display:flex;gap:8px;align-items:center;">
+          <button class="btn-ghost" id="callBtn" title="Call"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M22 16.92V21a1 1 0 0 1-1.08 1 19 19 0 0 1-8.63-3.16 19 19 0 0 1-6-6A19 19 0 0 1 2 3.08 1 1 0 0 1 3 2h4.09a1 1 0 0 1 1 .75c.12.76.36 1.5.7 2.2a1 1 0 0 1-.24 1L7.7 8.7a13 13 0 0 0 6 6l1.72-1.72a1 1 0 0 1 1-.24c.7.34 1.44.58 2.2.7a1 1 0 0 1 .75 1V22z" stroke="#9fb6d7" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+          <button class="btn-ghost" id="contactInfoBtn" title="Contact info"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M12 12a5 5 0 1 0 0-10 5 5 0 0 0 0 10zM21 21v-1a4 4 0 0 0-4-4H7a4 4 0 0 0-4 4v1" stroke="#9fb6d7" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+        </div>
+      </div>
+
+      <div class="messages" id="messages" role="log" aria-live="polite"></div>
+
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-top:6px;">
+        <div class="typing" id="typingIndicator" style="visibility:hidden">Typing…</div>
+      </div>
+
+      <div class="composer">
+        <textarea id="messageInput" placeholder="Say hi — send text, emojis or links"></textarea>
+        <div style="display:flex;flex-direction:column;gap:8px;">
+          <button class="btn-send" id="sendBtn" title="Send">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M22 2L11 13" stroke="#041018" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M22 2L15 22l-4-9-9-4 20-7z" stroke="#041018" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- Bottom neon footer icons (SVG circles) -->
+  <div class="bottom-bar" role="navigation" aria-label="Footer navigation">
+    <a class="icon-circle" href="index.html" title="Home" id="navHome" aria-label="Home">
+      <!-- Home SVG -->
+      <svg class="svg-glow" width="26" height="26" viewBox="0 0 24 24" fill="none">
+        <path d="M3 11.5L12 4l9 7.5" stroke="url(#g1)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M5 21V11h14v10" stroke="url(#g2)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+        <defs>
+          <linearGradient id="g1" x1="0" x2="1"><stop offset="0" stop-color="#00f0ff"/><stop offset="1" stop-color="#ff00f0"/></linearGradient>
+          <linearGradient id="g2" x1="0" x2="1"><stop offset="0" stop-color="#3affc1"/><stop offset="1" stop-color="#9b59b6"/></linearGradient>
+        </defs>
+      </svg>
+    </a>
+
+    <a class="icon-circle" href="chat.html" title="Chats" id="navChats" aria-label="Chats">
+      <!-- Chats SVG -->
+      <svg class="svg-neon" width="26" height="26" viewBox="0 0 24 24" fill="none">
+        <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" stroke="#00f0ff" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </a>
+
+    <a class="icon-circle" href="calls.html" title="Calls" id="navCalls" aria-label="Calls">
+      <!-- Call SVG -->
+      <svg class="svg-neon" width="26" height="26" viewBox="0 0 24 24" fill="none">
+        <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19 19 0 0 1-8.63-3.16 19 19 0 0 1-6-6A19 19 0 0 1 2.08 4.18 2 2 0 0 1 4 2h3a1 1 0 0 1 1 .75c.12.76.36 1.5.7 2.2a1 1 0 0 1-.24 1L7.7 8.7a13 13 0 0 0 6 6l1.72-1.72a1 1 0 0 1 1-.24c.7.34 1.44.58 2.2.7a1 1 0 0 1 .75 1z" stroke="#ff00f0" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </a>
+
+    <a class="icon-circle" href="ride-hailing.html" title="Ride" id="navRide" aria-label="Ride">
+      <!-- Ride SVG -->
+      <svg class="svg-neon" width="26" height="26" viewBox="0 0 24 24" fill="none">
+        <path d="M3 11l1-4h16l1 4" stroke="#3affc1" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M5 17h14v-4H5z" stroke="#00f0ff" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+        <circle cx="7.5" cy="18.5" r="1" fill="#00f0ff"/>
+        <circle cx="16.5" cy="18.5" r="1" fill="#00f0ff"/>
+      </svg>
+    </a>
+
+    <a class="icon-circle" href="profile.html" title="Profile" id="navProfile" aria-label="Profile">
+      <!-- Profile SVG -->
+      <svg class="svg-neon" width="26" height="26" viewBox="0 0 24 24" fill="none">
+        <path d="M20 21v-2a4 4 0 0 0-3-3.87" stroke="#9b59b6" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M4 21v-2a4 4 0 0 1 3-3.87" stroke="#ff00f0" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+        <circle cx="12" cy="7" r="4" stroke="#00f0ff" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </a>
+  </div>
+
+  <!-- Call Modal -->
+  <div id="callModal" style="display:none;position:fixed;left:0;top:0;right:0;bottom:0;align-items:center;justify-content:center;background:rgba(0,0,0,0.6);z-index:80;">
+    <div style="width:320px;background:linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.02)); padding:18px;border-radius:14px;backdrop-filter:blur(8px);text-align:center;">
+      <h3 style="font-family:Orbitron;color:var(--neon-cyan);margin:0 0 8px">Calling…</h3>
+      <p id="callTo" style="margin:0 0 12px;color:#9fb6d7"></p>
+      <div style="display:flex;gap:10px;justify-content:center">
+        <button class="btn-ghost" onclick="endCall()">End</button>
+        <button class="btn-ghost" onclick="acceptCall()">Accept</button>
       </div>
     </div>
-    <div class="chat-window">
-      <div class="chat-messages" id="messagesArea">
-        <div class="empty" id="noMessages">No chat selected — pick a contact to start messaging.</div>
-      </div>
-      <div class="input-bar" id="chatInputBar" style="display:none">
-        <input type="text" id="messageInput" placeholder="Type a message..." onkeydown="if(event.key==='Enter') sendMessage()" />
-        <button class="send-btn" onclick="sendMessage()"><i class="fas fa-paper-plane"></i></button>
-      </div>
-    </div>
-  </section>
-
-  <!-- RIGHT: Info panel -->
-  <aside class="panel info-pane">
-    <h3>Saved Contacts</h3>
-    <div id="savedContactsList" class="saved-list"></div>
-  </aside>
-</div>
-
-<!-- FOOTER -->
-<footer class="footer">
-  <div class="footer-inner">
-    <a class="footer-button" href="#" onclick="scrollToContacts()"><i class="fas fa-address-book"></i><span>Contacts</span></a>
-    <a class="footer-button" href="#" onclick="initCall()"><i class="fas fa-phone"></i><span>Call</span></a>
-    <a class="footer-button" href="#" onclick="focusChat()"><i class="fas fa-comments"></i><span>Chat</span></a>
-    <button class="footer-button add-contact-btn" title="Add Contact" onclick="document.getElementById('contactUpload').click()">
-      <i class="fas fa-plus"></i><span>Add</span>
-    </button>
   </div>
-</footer>
-
-<input id="contactUpload" type="file" accept=".csv,.vcf,text/*" style="display:none" />
 
 <script>
-/* ---------------------------
-   Local storage for contacts/messages
----------------------------- */
-const STORAGE_KEY='zepchat_savedContacts';
-const MSG_KEY='zepchat_messages';
+/* ------------- Simulated Data & UI Logic ------------- */
+const contacts = [
+  { id: 'alice', name:'Alice K.', last:'Hey — ready for the assignment?', avatar:'AK', bio:'Blockchain student'},
+  { id: 'brian', name:'Brian O.', last:'Sent you the notes', avatar:'BO', bio:'DevOps intern'},
+  { id: 'charlie', name:'Charlie T', last:'Let’s study tonight', avatar:'CT', bio:'Economics major'},
+  { id: 'dee', name:'Dee Y.', last:'On my way!', avatar:'DY', bio:'Campus driver'}
+];
 
-function loadSavedContacts(){return JSON.parse(localStorage.getItem(STORAGE_KEY)||'[]');}
-function saveSavedContacts(list){localStorage.setItem(STORAGE_KEY,JSON.stringify(list));renderContactsList();renderSavedList();}
-function loadMessages(){return
+let activeContactId = null;
+const messagesDB = {}; // local messages store keyed by contact id
+
+// Populate contacts list
+const contactsListEl = document.getElementById('contactsList');
+function renderContacts(filter='') {
+  contactsListEl.innerHTML = '';
+  const f = filter.trim().toLowerCase();
+  contacts.filter(c => c.name.toLowerCase().includes(f) || c.bio.toLowerCase().includes(f)).forEach(c => {
+    const el = document.createElement('div');
+    el.className = 'contact';
+    el.dataset.id = c.id;
+    el.innerHTML = `
+      <div class="avatar" aria-hidden>${c.avatar}</div>
+      <div class="meta">
+        <div class="name">${c.name}</div>
+        <div class="sub">${c.bio} · <span style="color:#9fb6d7">${c.last}</span></div>
+      </div>
+      <div class="small">${new Date().toLocaleTimeString().replace(/:\d+ /,' ')}</div>
+    `;
+    el.onclick = () => openConversation(c.id);
+    contactsListEl.appendChild(el);
+  });
+}
+renderContacts();
+
+// Open conversation
+const messagesEl = document.getElementById('messages');
+const activeNameEl = document.getElementById('activeName');
+const activeAvatarEl = document.getElementById('activeAvatar');
+const activeStatusEl = document.getElementById('activeStatus');
+
+function openConversation(id) {
+  activeContactId = id;
+  const contact = contacts.find(c => c.id === id);
+  activeNameEl.textContent = contact.name;
+  activeAvatarEl.textContent = contact.avatar;
+  activeStatusEl.textContent = contact.bio;
+
+  // ensure message array exists
+  if(!messagesDB[id]) messagesDB[id] = [
+    {from: 'other', text:'Welcome! This chat is simulated.', ts:Date.now()-60000}
+  ];
+  renderMessages();
+}
+
+// Render messages
+function renderMessages() {
+  messagesEl.innerHTML = '';
+  if(!activeContactId) {
+    messagesEl.innerHTML = `<div style="color:#9fb6d7; text-align:center; margin-top:40px">Select a contact to start chat</div>`;
+    return;
+  }
+  const msgs = messagesDB[activeContactId] || [];
+  msgs.forEach(m => {
+    const el = document.createElement('div');
+    el.className = 'msg ' + (m.from==='me' ? 'me' : 'other');
+    el.innerHTML = `<div>${escapeHtml(m.text)}</div><div class="timestamp">${new Date(m.ts).toLocaleTimeString().replace(/:\d+ /,' ')}</div>`;
+    messagesEl.appendChild(el);
+  });
+  messagesEl.scrollTop = messagesEl.scrollHeight;
+}
+
+// Escape helper
+function escapeHtml(s){ return (''+s).replace(/[&<>"]/g, c=>({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c])); }
+
+// Composer send
+const msgInput = document.getElementById('messageInput');
+const sendBtn = document.getElementById('sendBtn');
+
+sendBtn.addEventListener('click', sendMessage);
+msgInput.addEventListener('keydown', (e)=>{ if(e.key==='Enter' && !e.shiftKey){ e.preventDefault(); sendMessage(); } });
+
+function sendMessage(){
+  if(!activeContactId) { alert('Select a contact first.'); return; }
+  const t = msgInput.value.trim();
+  if(!t) return;
+  const msg = { from:'me', text:t, ts:Date.now() };
+  messagesDB[activeContactId] = messagesDB[activeContactId] || [];
+  messagesDB[activeContactId].push(msg);
+  msgInput.value='';
+  renderMessages();
+  simulateReply(activeContactId);
+}
+
+// Simulated reply (imitates real-time socket)
+function simulateReply(id){
+  const typingIndicator = document.getElementById('typingIndicator');
+  typingIndicator.style.visibility = 'visible';
+  setTimeout(()=> {
+    typingIndicator.style.visibility = 'hidden';
+    const reply = { from:'other', text: 'Nice — got your message!', ts:Date.now() };
+    messagesDB[id].push(reply);
+    if(activeContactId === id) renderMessages();
+    // add a small contact preview update
+    const c = contacts.find(x => x.id===id);
+    if(c) c.last = reply.text;
+    renderContacts(document.getElementById('searchInput').value || '');
+  }, 900 + Math.random()*800);
+}
+
+/* Profile Upload */
+const profileDp = document.querySelector('.header [style*="DP"]');
+profileDp && profileDp.addEventListener('click', ()=> {
+  const input = document.createElement('input');
+  input.type='file'; input.accept='image/*';
+  input.onchange = e => {
+    const f = e.target.files[0];
+    if(!f) return;
+    const url = URL.createObjectURL(f);
+    // Replace DP style with img
+    profileDp.style.background = `url('${url}') center/cover no-repeat`;
+    profileDp.textContent = '';
+  };
+  input.click();
+});
+
+/* Search contacts */
+document.getElementById('searchInput').addEventListener('input',(e)=> renderContacts(e.target.value));
+
+/* New chat */
+document.getElementById('newChatBtn').addEventListener('click', ()=>{
+  const name = prompt('Enter contact name (test):','New Student');
+  if(!name) return;
+  const id = 'u'+Math.random().toString(36).slice(2,9);
+  const avatar = name.split(' ').map(s=>s[0]).slice(0,2).join('').toUpperCase();
+  const c = { id, name, last:'Started chat', avatar, bio:'Student' };
+  contacts.unshift(c);
+  messagesDB[id] = [{from:'other', text:'Hello! This is a simulated contact.', ts:Date.now()}];
+  renderContacts(); openConversation(id);
+});
+
+/* Contacts panel open for mobile */
+document.getElementById('openContactsBtn').addEventListener('click',()=>{
+  const left = document.querySelector('.left');
+  if(left.style.display === 'none' || getComputedStyle(left).display==='none'){
+    left.style.display = 'flex';
+    left.style.position = 'fixed';
+    left.style.left = '12px';
+    left.style.top = '88px';
+    left.style.bottom = '100px';
+    left.style.zIndex = 70;
+    left.style.width = '92%';
+    left.style.maxWidth = '420px';
+    left.style.padding = '12px';
+    left.style.background = 'linear-gradient(180deg, rgba(0,0,0,0.6), rgba(0,0,0,0.8))';
+  } else {
+    // hide
+    left.style.display = 'none';
+  }
+});
+
+/* Call modal */
+document.getElementById('callBtn').addEventListener('click', ()=>{
+  if(!activeContactId) return alert('Select contact to call');
+  const contact = contacts.find(c=>c.id===activeContactId);
+  document.getElementById('callTo').textContent = contact.name;
+  document.getElementById('callModal').style.display = 'flex';
+});
+function endCall(){ document.getElementById('callModal').style.display = 'none'; alert('Call ended'); }
+function acceptCall(){ document.getElementById('callModal').style.display = 'none'; alert('Call connected (simulated)'); }
+
+/* ------------- WebSocket placeholder (replace with real WS_URL) ------------- */
+const WS_URL = null; // e.g. 'wss://your-websocket-server'
+const wsStatusEl = document.getElementById('wsStatus');
+let ws = null;
+function connectWS(){
+  if(!WS_URL){ wsStatusEl.textContent = 'local'; wsStatusEl.style.color='#9fb6d7'; return; }
+  ws = new WebSocket(WS_URL);
+  ws.addEventListener('open', ()=>{ wsStatusEl.textContent='connected'; wsStatusEl.style.color='#3affc1'; });
+  ws.addEventListener('close', ()=>{ wsStatusEl.textContent='disconnected'; wsStatusEl.style.color='#ffb3ff'; setTimeout(connectWS,3000); });
+  ws.addEventListener('message', e=> {
+    // expected payload: { from, to, text, ts, contactId }
+    try {
+      const data = JSON.parse(e.data);
+      if(!messagesDB[data.contactId]) messagesDB[data.contactId]=[];
+      messagesDB[data.contactId].push({ from: data.from, text: data.text, ts: data.ts||Date.now() });
+      if(activeContactId === data.contactId) renderMessages();
+    } catch(err){ console.warn('WS message parsing error', err); }
+  });
+}
+connectWS();
+
+/* initial state */
+renderMessages();
+
+/* Keyboard accessibility: focus input on ctrl+k */
+document.addEventListener('keydown', (e)=>{ if((e.ctrlKey || e.metaKey) && e.key.toLowerCase()==='k'){ e.preventDefault(); msgInput.focus(); } });
+</script>
+</body>
+</html>
