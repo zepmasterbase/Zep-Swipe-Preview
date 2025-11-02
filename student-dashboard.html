@@ -21,17 +21,17 @@
       flex-direction: column;
       justify-content: space-between;
       overflow-x: hidden;
-      padding-bottom: 90px; /* prevent footer overlap */
+      padding-bottom: 80px; /* Space for footer */
     }
 
     /* HEADER */
     header {
       background: rgba(255, 255, 255, 0.06);
       border-bottom: 1px solid rgba(255, 255, 255, 0.15);
-      backdrop-filter: blur(12px);
-      box-shadow: 0 0 25px rgba(255, 0, 255, 0.25), 0 0 30px rgba(0, 255, 255, 0.25);
+      backdrop-filter: blur(14px);
+      box-shadow: 0 0 25px rgba(255, 0, 255, 0.3), 0 0 30px rgba(0, 255, 255, 0.25);
       border-radius: 0 0 1rem 1rem;
-      padding: 0.9rem 1.5rem;
+      padding: 1rem 1.5rem;
       position: sticky;
       top: 0;
       z-index: 50;
@@ -39,53 +39,52 @@
 
     .neon-logo {
       font-family: 'Orbitron', sans-serif;
-      font-size: 1.4rem;
+      font-size: 1.5rem;
       background: linear-gradient(90deg, #00f0ff, #ff00f0);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       letter-spacing: 2px;
-      text-shadow: 0 0 18px rgba(0, 255, 255, 0.4);
+      text-shadow: 0 0 15px rgba(0, 255, 255, 0.4);
     }
 
-    .neon-button {
-      border-radius: 9999px;
-      padding: 0.8rem;
-      text-align: center;
-      font-weight: 600;
-      transition: 0.3s;
-    }
-
-    .neon-button.cyan {
-      color: #00f0ff;
-      border: 1px solid #00f0ff55;
-      box-shadow: 0 0 12px #00f0ff77;
-    }
-
-    .neon-button.pink {
-      color: #ff00f0;
-      border: 1px solid #ff00f055;
-      box-shadow: 0 0 12px #ff00f077;
-    }
-
-    .neon-button:hover {
-      transform: scale(1.05);
-    }
-
+    /* CARDS */
     .card {
       background: rgba(255, 255, 255, 0.05);
-      border: 1px solid rgba(255, 255, 255, 0.1);
       border-radius: 1.5rem;
+      border: 1px solid rgba(255, 255, 255, 0.1);
       padding: 1.5rem;
       box-shadow: 0 0 25px rgba(255, 0, 255, 0.08);
     }
 
-    /* TRANSACTION LIST */
+    /* NEON BUTTONS */
+    .neon-button {
+      display: block;
+      text-align: center;
+      padding: 0.8rem;
+      border-radius: 0.8rem;
+      font-weight: 600;
+      transition: 0.3s;
+      color: #0a021f;
+    }
+    .neon-button.cyan {
+      background: linear-gradient(90deg, #00f0ff, #8ef8b8);
+      box-shadow: 0 0 18px #00f0ff88;
+    }
+    .neon-button.pink {
+      background: linear-gradient(90deg, #ff00f0, #ff7efb);
+      box-shadow: 0 0 18px #ff00f088;
+    }
+    .neon-button:hover {
+      transform: scale(1.05);
+    }
+
+    /* TRANSACTIONS */
     .transaction-card {
       background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.08);
       border-radius: 1rem;
       padding: 1rem;
       margin-bottom: 0.8rem;
-      border: 1px solid rgba(255, 255, 255, 0.08);
       display: flex;
       justify-content: space-between;
       align-items: center;
@@ -97,64 +96,41 @@
       box-shadow: 0 0 12px rgba(255, 0, 255, 0.15);
     }
 
-    /* FIXED FOOTER NAV */
+    /* FOOTER ICONS ONLY */
     footer {
       position: fixed;
       bottom: 0;
       left: 0;
       width: 100%;
-      background: rgba(10, 10, 25, 0.7);
-      border-top: 1px solid rgba(255, 255, 255, 0.1);
-      backdrop-filter: blur(14px);
+      background: rgba(10, 10, 25, 0.6);
+      border-top: 1px solid rgba(255, 255, 255, 0.15);
+      backdrop-filter: blur(12px);
       display: flex;
       justify-content: space-around;
       align-items: center;
-      padding: 0.6rem 0;
-      box-shadow: 0 0 25px rgba(255, 0, 255, 0.2);
+      padding: 0.7rem 0;
+      box-shadow: 0 0 25px rgba(255, 0, 255, 0.25);
       z-index: 100;
     }
 
-    footer a {
-      color: #b8faff;
-      text-align: center;
-      font-size: 0.8rem;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      transition: 0.3s;
-    }
-
     footer a i {
-      font-size: 1.3rem;
-      margin-bottom: 0.2rem;
+      font-size: 1.5rem;
+      color: #00f0ff;
+      transition: 0.3s;
       text-shadow: 0 0 10px #00f0ff;
     }
 
     footer a:hover i {
       color: #ff00f0;
-      text-shadow: 0 0 18px #ff00f0;
       transform: scale(1.2);
+      text-shadow: 0 0 20px #ff00f0;
     }
 
-    footer a:hover {
-      color: #ff00f0;
-      transform: scale(1.1);
-    }
-
-    /* Neon Glow Pulse Animation */
+    /* PULSE ANIMATION FOR BALANCE */
     @keyframes glowPulse {
-      0% {
-        box-shadow: 0 0 0px rgba(0, 255, 255, 0.4);
-        text-shadow: 0 0 10px #00f0ff;
-      }
-      50% {
-        box-shadow: 0 0 30px rgba(255, 0, 255, 0.6);
-        text-shadow: 0 0 25px #ff00f0;
-      }
-      100% {
-        box-shadow: 0 0 0px rgba(0, 255, 255, 0.4);
-        text-shadow: 0 0 10px #00f0ff;
-      }
+      0% { text-shadow: 0 0 8px #00f0ff; }
+      50% { text-shadow: 0 0 25px #ff00f0; }
+      100% { text-shadow: 0 0 8px #00f0ff; }
     }
 
     .pulse {
@@ -174,8 +150,8 @@
 
   <!-- MAIN DASHBOARD -->
   <main class="flex flex-col items-center text-center px-6 mt-4 mb-10">
-    <h2 class="text-3xl font-bold text-pink-400 mb-1">Student Dashboard</h2>
-    <p class="text-gray-300 text-sm mb-6">Manage your profile, rewards, and ZepVibe</p>
+    <h2 class="text-3xl font-bold text-pink-400 mb-2">Student Dashboard</h2>
+    <p class="text-gray-300 text-sm mb-6">ZepVibe • Rewards • Wallet Tracker</p>
 
     <!-- PROFILE CARD -->
     <div class="card w-full max-w-xs flex flex-col items-center mb-8">
@@ -183,14 +159,14 @@
         <i class="fa-solid fa-user-graduate"></i>
       </div>
       <h3 class="text-cyan-400 font-semibold text-lg">Jane Doe</h3>
-      <p id="balance" class="text-pink-400 font-bold text-2xl mt-2">₵1560.00</p>
+      <p id="balance" class="text-pink-400 font-bold text-2xl mt-2">$ZAC 450.00</p>
       <p class="text-gray-400 text-xs mt-1">Live Earnings Tracker</p>
     </div>
 
     <!-- ACTION BUTTONS -->
     <div class="w-full max-w-xs space-y-4 mb-8">
-      <a href="learn-earn.html" class="neon-button cyan block">REWARDS</a>
-      <a href="social.html" class="neon-button pink block">ZEPVIBE</a>
+      <a href="learn-earn.html" class="neon-button cyan">REWARDS</a>
+      <a href="social.html" class="neon-button pink">ZEPVIBE</a>
     </div>
 
     <!-- TRANSACTION HISTORY -->
@@ -199,53 +175,53 @@
       <div id="transactionList">
         <div class="transaction-card">
           <span>Ride Payment</span>
-          <span class="text-green-400">+₵15.00</span>
+          <span class="text-green-400">+5 $ZAC</span>
         </div>
         <div class="transaction-card">
           <span>ZepVibe Bonus</span>
-          <span class="text-green-400">+₵10.00</span>
+          <span class="text-green-400">+3 USDT</span>
         </div>
         <div class="transaction-card">
           <span>Marketplace Purchase</span>
-          <span class="text-pink-400">-₵8.00</span>
+          <span class="text-pink-400">-2 $ZAC</span>
         </div>
       </div>
       <a href="dashboard-wallet.html" class="block text-center mt-3 text-sm text-cyan-400 hover:text-pink-400 transition">View full history →</a>
     </div>
   </main>
 
-  <!-- FOOTER -->
+  <!-- FOOTER ICONS ONLY -->
   <footer>
-    <a href="chat.html"><i class="fa-solid fa-comment-dots"></i><span>Chat</span></a>
-    <a href="dashboard-store.html"><i class="fa-solid fa-store"></i><span>Store</span></a>
-    <a href="ride-hailing.html"><i class="fa-solid fa-car"></i><span>Ride</span></a>
-    <a href="dashboard-wallet.html"><i class="fa-solid fa-wallet"></i><span>Wallet</span></a>
-    <a href="profile.html"><i class="fa-solid fa-user"></i><span>Profile</span></a>
+    <a href="chat.html"><i class="fa-solid fa-comment-dots"></i></a>
+    <a href="dashboard-store.html"><i class="fa-solid fa-store"></i></a>
+    <a href="ride-hailing.html"><i class="fa-solid fa-car"></i></a>
+    <a href="dashboard-wallet.html"><i class="fa-solid fa-wallet"></i></a>
+    <a href="profile.html"><i class="fa-solid fa-user"></i></a>
   </footer>
 
   <!-- Font Awesome -->
   <script src="https://kit.fontawesome.com/a2e0e6b6a2.js" crossorigin="anonymous"></script>
 
-  <!-- Live Earnings Tracker -->
+  <!-- Live Earnings Tracker Script -->
   <script>
-    let balance = 1560.00;
+    let balance = 450.00;
     const balanceEl = document.getElementById("balance");
     const transactionList = document.getElementById("transactionList");
 
     const mockTransactions = [
-      { name: "ZepVibe Engagement", amount: +5.00 },
-      { name: "Ride Tip", amount: +3.50 },
-      { name: "Marketplace Fee", amount: -2.00 },
-      { name: "Reward Bonus", amount: +7.00 }
+      { name: "ZepVibe Engagement", amount: +2.5, currency: "$ZAC" },
+      { name: "Ride Tip", amount: +1.5, currency: "USDT" },
+      { name: "Marketplace Fee", amount: -0.8, currency: "$ZAC" },
+      { name: "Reward Bonus", amount: +3, currency: "USDT" }
     ];
 
-    function addTransaction(name, amount) {
+    function addTransaction(name, amount, currency) {
       const card = document.createElement("div");
       card.className = "transaction-card";
       card.innerHTML = `
         <span>${name}</span>
         <span class="${amount > 0 ? 'text-green-400' : 'text-pink-400'}">
-          ${amount > 0 ? '+' : ''}₵${amount.toFixed(2)}
+          ${amount > 0 ? '+' : ''}${amount.toFixed(2)} ${currency}
         </span>
       `;
       transactionList.prepend(card);
@@ -254,16 +230,12 @@
     function updateBalance() {
       const t = mockTransactions[Math.floor(Math.random() * mockTransactions.length)];
       balance += t.amount;
-      balanceEl.textContent = `₵${balance.toFixed(2)}`;
+      balanceEl.textContent = `${t.currency} ${balance.toFixed(2)}`;
       balanceEl.classList.add("pulse");
-
-      // Remove glow pulse class after animation
-      setTimeout(() => balanceEl.classList.remove("pulse"), 1600);
-
-      addTransaction(t.name, t.amount);
+      setTimeout(() => balanceEl.classList.remove("pulse"), 1500);
+      addTransaction(t.name, t.amount, t.currency);
     }
 
-    // Update every 10 seconds
     setInterval(updateBalance, 10000);
   </script>
 </body>
