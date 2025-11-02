@@ -33,7 +33,7 @@
       background: rgba(255, 255, 255, 0.08);
       border-bottom: 1px solid rgba(255, 255, 255, 0.2);
       backdrop-filter: blur(12px);
-      box-shadow: 0 0 25px rgba(255, 0, 255, 0.4), 0 0 20px rgba(0, 255, 255, 0.3);
+      box-shadow: 0 0 30px rgba(255, 0, 255, 0.5), 0 0 25px rgba(0, 255, 255, 0.4);
       border-radius: 0 0 1.5rem 1.5rem;
       position: sticky;
       top: 0;
@@ -46,27 +46,35 @@
       background: linear-gradient(90deg, #00f0ff, #ff00f0);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
-      text-shadow: 0 0 15px rgba(0, 255, 255, 0.6);
+      text-shadow: 0 0 20px rgba(0, 255, 255, 0.8);
     }
 
     .logout-btn {
-      background: linear-gradient(90deg, #ff00f0, #00f0ff);
-      color: #0a021f;
-      border: none;
-      border-radius: 0.6rem;
-      padding: 0.4rem 0.7rem;
-      font-weight: 600;
-      font-size: 0.9rem;
-      box-shadow: 0 0 12px rgba(255, 0, 255, 0.5);
+      background: rgba(255, 0, 50, 0.15);
+      border: 1px solid rgba(255, 0, 0, 0.4);
+      border-radius: 50%;
+      width: 42px;
+      height: 42px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 0 20px rgba(255, 0, 0, 0.5);
       transition: 0.3s;
     }
 
-    .logout-btn:hover {
-      transform: scale(1.1);
-      box-shadow: 0 0 20px rgba(0, 255, 255, 0.6);
+    .logout-btn i {
+      color: #ff0033;
+      font-size: 1.2rem;
+      text-shadow: 0 0 15px #ff0044;
     }
 
-    /* MAIN CARDS */
+    .logout-btn:hover {
+      background: rgba(255, 0, 0, 0.25);
+      box-shadow: 0 0 25px rgba(255, 0, 0, 0.8);
+      transform: scale(1.1);
+    }
+
+    /* MAIN */
     .glass-card {
       background: rgba(255, 255, 255, 0.05);
       border-radius: 1.5rem;
@@ -85,7 +93,6 @@
       text-shadow: 0 0 18px rgba(255, 0, 255, 0.4);
     }
 
-    /* Live pulse */
     @keyframes pulseGlow {
       0% { text-shadow: 0 0 8px #00f0ff; }
       50% { text-shadow: 0 0 25px #ff00f0; }
@@ -93,7 +100,6 @@
     }
     .pulse { animation: pulseGlow 1.5s ease-in-out; }
 
-    /* Buttons */
     .neon-btn {
       width: 100%;
       text-align: center;
@@ -113,7 +119,6 @@
     }
     .neon-btn:hover { transform: scale(1.05); }
 
-    /* Transactions */
     .tx-card {
       background: rgba(255, 255, 255, 0.06);
       border: 1px solid rgba(255, 255, 255, 0.1);
@@ -136,27 +141,45 @@
       bottom: 0;
       left: 0;
       width: 100%;
-      background: rgba(10, 10, 25, 0.7);
+      background: rgba(10, 10, 25, 0.9);
       border-top: 1px solid rgba(255, 255, 255, 0.15);
-      backdrop-filter: blur(14px);
+      backdrop-filter: blur(16px);
       display: flex;
       justify-content: space-around;
       align-items: center;
       padding: 0.8rem 0;
-      box-shadow: 0 0 30px rgba(255, 0, 255, 0.25);
-      z-index: 100;
+      box-shadow: 0 0 35px rgba(255, 0, 255, 0.3);
+      z-index: 200;
+    }
+
+    footer a {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 45px;
+      height: 45px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      box-shadow: 0 0 15px rgba(0, 255, 255, 0.25);
+      transition: all 0.3s ease;
     }
 
     footer a i {
-      font-size: 1.7rem;
+      font-size: 1.4rem;
       color: #00f0ff;
-      transition: 0.3s;
       text-shadow: 0 0 20px #00f0ff;
+      transition: 0.3s;
+    }
+
+    footer a:hover {
+      transform: scale(1.15);
+      box-shadow: 0 0 25px rgba(255, 0, 255, 0.4);
+      background: rgba(255, 255, 255, 0.1);
     }
 
     footer a:hover i {
       color: #ff00f0;
-      transform: scale(1.25);
       text-shadow: 0 0 25px #ff00f0;
     }
   </style>
@@ -166,7 +189,9 @@
   <!-- HEADER -->
   <header>
     <h1 class="zep-logo">ZEP SWIPE</h1>
-    <button class="logout-btn" onclick="window.location.href='index.html'">Logout</button>
+    <button class="logout-btn" onclick="window.location.href='index.html'">
+      <i class="fa-solid fa-power-off"></i>
+    </button>
   </header>
 
   <!-- MAIN -->
@@ -182,13 +207,11 @@
       <p class="text-gray-400 text-xs mt-2">Live Portfolio Tracker</p>
     </div>
 
-    <!-- Buttons -->
     <div class="space-y-4 w-full max-w-sm mb-8">
       <a href="social.html" class="neon-btn btn-pink">ZEPVIBE</a>
       <a href="learn-earn.html" class="neon-btn btn-cyan">REWARDS</a>
     </div>
 
-    <!-- Transactions -->
     <div class="w-full max-w-sm mb-16">
       <h3 class="text-cyan-400 font-semibold text-center mb-3">Transaction History</h3>
       <div id="transactions">
@@ -200,7 +223,7 @@
     </div>
   </main>
 
-  <!-- FOOTER ICONS -->
+  <!-- FOOTER -->
   <footer>
     <a href="chat.html" title="Chat"><i class="fa-solid fa-comments"></i></a>
     <a href="dashboard-store.html" title="Store"><i class="fa-solid fa-store"></i></a>
