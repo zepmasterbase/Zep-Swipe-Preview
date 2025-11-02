@@ -13,62 +13,101 @@
 
   <style>
     body {
-      background: radial-gradient(circle at top left, #0b0020, #000010 70%);
+      background: radial-gradient(circle at 20% 20%, #0b0020, #050012, #000010);
       color: #fff;
       font-family: 'Poppins', sans-serif;
       min-height: 100vh;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
+      overflow-x: hidden;
     }
 
-    .neon-text {
+    .neon-logo {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 1.4rem;
       background: linear-gradient(90deg, #00f0ff, #ff00f0);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
+      letter-spacing: 2px;
+      text-shadow: 0 0 15px rgba(0, 255, 255, 0.3);
     }
 
-    .glow-border {
-      border: 1px solid rgba(255, 255, 255, 0.15);
-      background: rgba(255, 255, 255, 0.03);
-      box-shadow: 0 0 12px rgba(255, 0, 255, 0.2);
-    }
-
-    .btn-glow {
+    .neon-button {
+      border: 1px solid rgba(255, 255, 255, 0.2);
       border-radius: 9999px;
-      text-transform: uppercase;
+      text-align: center;
       padding: 0.8rem;
       font-weight: 600;
-      text-align: center;
-      letter-spacing: 0.05em;
-      box-shadow: 0 0 12px rgba(0, 255, 255, 0.2);
+      letter-spacing: 0.04em;
       transition: 0.3s;
     }
 
-    .btn-glow:hover {
+    .neon-button.cyan {
+      color: #00f0ff;
+      border-color: #00f0ff55;
+      box-shadow: 0 0 10px #00f0ff55;
+    }
+
+    .neon-button.pink {
+      color: #ff00f0;
+      border-color: #ff00f055;
+      box-shadow: 0 0 10px #ff00f055;
+    }
+
+    .neon-button:hover {
       transform: scale(1.05);
-      box-shadow: 0 0 20px rgba(255, 0, 255, 0.3);
+      box-shadow: 0 0 20px rgba(255, 0, 255, 0.5);
+    }
+
+    .card {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 1.5rem;
+      padding: 1.5rem;
+      box-shadow: 0 0 25px rgba(255, 0, 255, 0.08);
+    }
+
+    .transaction-card {
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 1rem;
+      padding: 1rem;
+      margin-bottom: 0.8rem;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      transition: 0.3s;
+    }
+
+    .transaction-card:hover {
+      background: rgba(255, 255, 255, 0.1);
+      box-shadow: 0 0 12px rgba(255, 0, 255, 0.15);
     }
 
     footer {
       background: rgba(255, 255, 255, 0.05);
-      backdrop-filter: blur(8px);
-      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      backdrop-filter: blur(10px);
+      display: flex;
+      justify-content: space-around;
+      padding: 0.6rem 0;
     }
 
     footer a {
-      color: #a0a0ff;
+      color: #a0faff;
       text-align: center;
-      font-size: 0.9rem;
+      font-size: 0.8rem;
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 0.2rem;
+      gap: 0.15rem;
       transition: 0.3s;
     }
 
     footer a:hover {
       color: #ff00f0;
+      transform: scale(1.1);
     }
   </style>
 </head>
@@ -76,56 +115,100 @@
 <body>
   <!-- HEADER -->
   <header class="flex justify-between items-center px-6 py-4">
-    <h1 class="text-xl font-orbitron text-cyan-400 tracking-wider">ZEP SWIPE</h1>
+    <h1 class="neon-logo">ZEP SWIPE</h1>
     <button class="px-4 py-1 rounded-full text-pink-400 border border-pink-400 text-sm hover:bg-pink-500 hover:text-white transition">
       LOGOUT
     </button>
   </header>
 
   <!-- MAIN DASHBOARD -->
-  <main class="flex flex-col items-center text-center px-6 mt-4 flex-grow">
-    <h2 class="text-3xl font-bold neon-text mb-2">Student Dashboard</h2>
-    <p class="text-gray-300 text-sm mb-8">Manage your profile, rewards, and ZepVibe</p>
+  <main class="flex flex-col items-center text-center px-6 mt-2 flex-grow mb-4">
+    <h2 class="text-3xl font-bold text-pink-400 mb-1">Student Dashboard</h2>
+    <p class="text-gray-300 text-sm mb-6">Manage your profile, rewards, and ZepVibe</p>
 
     <!-- PROFILE CARD -->
-    <div class="glow-border rounded-2xl w-full max-w-xs p-6 flex flex-col items-center">
+    <div class="card w-full max-w-xs flex flex-col items-center mb-8">
       <div class="text-pink-500 text-6xl mb-3">
         <i class="fa-solid fa-user-graduate"></i>
       </div>
       <h3 class="text-cyan-400 font-semibold text-lg">Jane Doe</h3>
-      <p class="text-pink-400 font-medium mt-1">💰 1,560</p>
+      <p class="text-pink-400 font-medium mt-1">💰 <span id="balance">1560.00</span></p>
+      <p class="text-gray-400 text-xs mt-1">Live Earnings Tracker</p>
     </div>
 
-    <!-- BUTTONS -->
-    <div class="w-full max-w-xs mt-8 space-y-4">
-      <a href="rewards.html" 
-         class="btn-glow block text-cyan-400 border border-cyan-400 hover:bg-cyan-500 hover:text-white transition">
-         REWARDS
-      </a>
-      <a href="social.html" 
-         class="btn-glow block text-pink-400 border border-pink-400 hover:bg-pink-500 hover:text-white transition">
-         ZEPVIBE
-      </a>
+    <!-- ACTION BUTTONS -->
+    <div class="w-full max-w-xs space-y-4 mb-8">
+      <a href="learn-earn.html" class="neon-button cyan block">REWARDS</a>
+      <a href="social.html" class="neon-button pink block">ZEPVIBE</a>
+    </div>
+
+    <!-- TRANSACTION HISTORY -->
+    <div class="w-full max-w-xs text-left">
+      <h3 class="text-cyan-400 font-semibold mb-3 text-center">Recent Transactions</h3>
+      <div id="transactionList">
+        <div class="transaction-card">
+          <span>Ride Payment</span>
+          <span class="text-green-400">+₵15.00</span>
+        </div>
+        <div class="transaction-card">
+          <span>ZepVibe Bonus</span>
+          <span class="text-green-400">+₵10.00</span>
+        </div>
+        <div class="transaction-card">
+          <span>Marketplace Purchase</span>
+          <span class="text-pink-400">-₵8.00</span>
+        </div>
+      </div>
+      <a href="dashboard-wallet.html" class="block text-center mt-3 text-sm text-cyan-400 hover:text-pink-400 transition">View full history →</a>
     </div>
   </main>
 
-  <!-- FOOTER NAV -->
-  <footer class="flex justify-around py-3">
-    <a href="student-dashboard.html">
-      <i class="fa-solid fa-house text-lg"></i>
-      <span>Home</span>
-    </a>
-    <a href="dashboard-wallet.html">
-      <i class="fa-solid fa-wallet text-lg"></i>
-      <span>Wallet</span>
-    </a>
-    <a href="stats.html">
-      <i class="fa-solid fa-chart-line text-lg"></i>
-      <span>Stats</span>
-    </a>
+  <!-- FOOTER NAVIGATION -->
+  <footer>
+    <a href="chat.html">💬 <span>Chat</span></a>
+    <a href="dashboard-store.html">🏪 <span>Store</span></a>
+    <a href="ride-hailing.html">🚗 <span>Ride</span></a>
+    <a href="dashboard-wallet.html">💰 <span>Wallet</span></a>
+    <a href="profile.html">👤 <span>Profile</span></a>
   </footer>
 
   <!-- Font Awesome -->
   <script src="https://kit.fontawesome.com/a2e0e6b6a2.js" crossorigin="anonymous"></script>
+
+  <!-- Live Earnings Tracker -->
+  <script>
+    let balance = 1560.00;
+    const balanceEl = document.getElementById("balance");
+    const transactionList = document.getElementById("transactionList");
+
+    const mockTransactions = [
+      { name: "ZepVibe Engagement", amount: +5.00 },
+      { name: "Ride Tip", amount: +3.50 },
+      { name: "Marketplace Fee", amount: -2.00 },
+      { name: "Reward Bonus", amount: +7.00 }
+    ];
+
+    function addTransaction(name, amount) {
+      const card = document.createElement("div");
+      card.className = "transaction-card";
+      card.innerHTML = `
+        <span>${name}</span>
+        <span class="${amount > 0 ? 'text-green-400' : 'text-pink-400'}">
+          ${amount > 0 ? '+' : ''}₵${amount.toFixed(2)}
+        </span>
+      `;
+      transactionList.prepend(card);
+    }
+
+    function updateBalance() {
+      const t = mockTransactions[Math.floor(Math.random() * mockTransactions.length)];
+      balance += t.amount;
+      balanceEl.textContent = balance.toFixed(2);
+      addTransaction(t.name, t.amount);
+    }
+
+    // Simulate live earnings every 10 seconds
+    setInterval(updateBalance, 10000);
+  </script>
 </body>
 </html>
