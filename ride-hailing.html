@@ -3,193 +3,216 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Zep Swipe — Ride Hailing</title>
+  <title>Swipe Rides — Zep Swipe</title>
 
+  <!-- Tailwind -->
   <script src="https://cdn.tailwindcss.com"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700&family=Poppins:wght@400;500;600&display=swap" rel="stylesheet" />
-  <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700&family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
 
   <style>
     body {
+      background: radial-gradient(circle at 20% 20%, #0a0015, #010008, #000);
       font-family: 'Poppins', sans-serif;
-      background: radial-gradient(circle at top, #0a051f 0%, #000010 100%);
-      color: white;
+      color: #fff;
       min-height: 100vh;
-      display: flex;
-      flex-direction: column;
+      overflow-x: hidden;
+      padding-bottom: 85px;
     }
 
-    .glass-card {
-      background: rgba(255, 255, 255, 0.08);
-      border: 1px solid rgba(255, 255, 255, 0.15);
-      backdrop-filter: blur(20px);
-      border-radius: 1rem;
-      box-shadow: 0 0 25px rgba(0, 240, 255, 0.2);
+    /* Header */
+    header {
+      text-align: center;
+      padding: 1.2rem;
+      background: rgba(255, 255, 255, 0.06);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+      backdrop-filter: blur(16px);
+      border-radius: 0 0 1.5rem 1.5rem;
+      box-shadow: 0 0 25px rgba(255, 0, 255, 0.4), 0 0 15px rgba(0, 255, 255, 0.2);
+      position: sticky;
+      top: 0;
+      z-index: 50;
     }
 
-    .glow-text {
-      background: linear-gradient(90deg, #00f0ff, #ff00f0, #00ffb3);
+    .ride-title {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 1.8rem;
+      font-weight: 700;
+      background: linear-gradient(90deg, #00f0ff, #ff00f0, #00ff88);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
+      animation: titleGlow 4s linear infinite;
     }
 
-    input, select {
-      background: rgba(255, 255, 255, 0.1);
-      border: none;
-      border-radius: 0.75rem;
-      padding: 0.8rem;
-      color: #fff;
-      width: 100%;
-      margin-bottom: 1rem;
+    @keyframes titleGlow {
+      0% { text-shadow: 0 0 10px #00f0ff; }
+      50% { text-shadow: 0 0 25px #ff00f0; }
+      100% { text-shadow: 0 0 10px #00f0ff; }
     }
 
-    input:focus {
-      outline: none;
-      box-shadow: 0 0 10px #00f0ff;
-    }
-
-    button {
-      width: 100%;
-      background: linear-gradient(90deg, #00f0ff, #ff00f0);
-      border: none;
+    /* Neon Map */
+    .map-container {
+      position: relative;
+      background: repeating-linear-gradient(0deg, rgba(0,255,255,0.08) 0 1px, transparent 1px 20px),
+                  repeating-linear-gradient(90deg, rgba(255,0,255,0.08) 0 1px, transparent 1px 20px);
+      border: 1px solid rgba(255,255,255,0.1);
       border-radius: 1rem;
-      padding: 0.8rem;
-      font-weight: 600;
-      cursor: pointer;
-      color: #0b0520;
-      transition: transform 0.2s;
+      height: 250px;
+      margin-top: 1rem;
+      overflow: hidden;
+      box-shadow: 0 0 20px rgba(255, 0, 255, 0.15);
     }
 
-    button:hover {
+    .car {
+      position: absolute;
+      width: 28px;
+      height: 16px;
+      background: linear-gradient(90deg, #ff00f0, #00f0ff);
+      border-radius: 5px;
+      box-shadow: 0 0 10px #00f0ff, 0 0 15px #ff00f0;
+      animation: moveCar 10s linear infinite alternate;
+    }
+
+    @keyframes moveCar {
+      0% { top: 20%; left: 10%; transform: rotate(0deg); }
+      25% { top: 60%; left: 25%; transform: rotate(20deg); }
+      50% { top: 80%; left: 55%; transform: rotate(-10deg); }
+      75% { top: 45%; left: 75%; transform: rotate(30deg); }
+      100% { top: 15%; left: 85%; transform: rotate(-15deg); }
+    }
+
+    /* Ride Card */
+    .ride-card {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 1.2rem;
+      backdrop-filter: blur(10px);
+      padding: 1rem;
+      margin-top: 1.5rem;
+      box-shadow: 0 0 15px rgba(255, 0, 255, 0.15);
+    }
+
+    .neon-btn {
+      background: linear-gradient(90deg, #00f0ff, #ff00f0);
+      color: #0a021f;
+      border: none;
+      border-radius: 0.8rem;
+      padding: 0.7rem 1rem;
+      font-weight: 600;
+      transition: 0.3s;
+      width: 100%;
+    }
+
+    .neon-btn:hover {
+      box-shadow: 0 0 25px rgba(255, 0, 255, 0.4);
       transform: scale(1.05);
+    }
+
+    /* Footer */
+    footer {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      padding: 0.6rem 0;
+      background: rgba(10, 10, 25, 0.85);
+      backdrop-filter: blur(14px);
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      box-shadow: 0 0 25px rgba(255, 0, 255, 0.3);
+      z-index: 100;
+    }
+
+    footer a svg {
+      width: 30px;
+      height: 30px;
+      fill: #00f0ff;
+      filter: drop-shadow(0 0 10px #00f0ff);
+      transition: 0.3s;
+      animation: iconPulse 3s ease-in-out infinite alternate;
+    }
+
+    footer a:hover svg {
+      fill: #ff00f0;
+      filter: drop-shadow(0 0 15px #ff00f0);
+      transform: scale(1.1);
+    }
+
+    @keyframes iconPulse {
+      0% { filter: drop-shadow(0 0 8px #00f0ff); }
+      50% { filter: drop-shadow(0 0 16px #ff00f0); }
+      100% { filter: drop-shadow(0 0 8px #00f0ff); }
     }
   </style>
 </head>
 
 <body>
-
-  <!-- HEADER -->
-  <header class="fixed top-0 left-0 w-full flex justify-between items-center px-6 py-4 bg-opacity-30 backdrop-blur-lg glass-card z-50">
-    <h1 class="text-xl font-orbitron glow-text font-bold">Zep Swipe Rides</h1>
-    <button onclick="logout()" class="px-3 py-1 text-sm bg-pink-500 hover:bg-pink-600 rounded-full font-semibold">Logout</button>
+  <!-- Header -->
+  <header>
+    <h1 class="ride-title">🚗 SWIPE RIDES</h1>
   </header>
 
-  <!-- MAIN -->
-  <main class="flex-1 mt-28 px-6">
-    <section class="glass-card p-6 text-center">
-      <h2 class="glow-text text-lg font-semibold mb-2">🚘 Request a Ride</h2>
-      <p class="text-gray-300 mb-5 text-sm">Fill in your trip details and nearby student drivers will see your request instantly.</p>
+  <!-- Map Section -->
+  <main class="p-5 max-w-md mx-auto">
+    <div class="map-container">
+      <div class="car"></div>
+    </div>
 
-      <form id="rideForm" class="text-left">
-        <input type="text" id="studentName" placeholder="Your Name" required />
-        <select id="university" required>
-          <option value="">Select Your University</option>
-          <option>University of Ghana</option>
-          <option>University of Nairobi</option>
-          <option>Makerere University (Uganda)</option>
-          <option>University of Lagos</option>
-          <option>University of Cape Town</option>
-          <option>Kigali Tech University</option>
-          <option>University of Zambia</option>
-          <option>Ashesi University</option>
-          <option>Strathmore University</option>
-          <option>Kwame Nkrumah University of Science & Technology</option>
-        </select>
-        <input type="text" id="pickup" placeholder="Pickup Location" required />
-        <input type="text" id="destination" placeholder="Destination" required />
+    <div class="ride-card text-center">
+      <h2 class="text-lg text-cyan-400 font-semibold">Active Ride</h2>
+      <p class="text-gray-400 text-sm mt-2">Driver: <span class="text-pink-400">Ama Kwesi</span></p>
+      <p class="text-gray-400 text-sm">Vehicle: <span class="text-cyan-300">Hyundai i10 — GR-9923-22</span></p>
+      <p class="text-gray-400 text-sm mb-3">ETA: <span id="eta" class="text-green-400">4 mins</span></p>
+      <button class="neon-btn mt-2">Track Ride Live</button>
+    </div>
 
-        <button type="submit">🚀 Request Ride</button>
-      </form>
+    <div class="ride-card">
+      <h2 class="text-lg text-pink-400 font-semibold">Request a Ride</h2>
+      <input type="text" placeholder="Pickup Location" class="w-full mt-3 p-2 rounded-md bg-white/10 text-white border border-white/20 placeholder-gray-400">
+      <input type="text" placeholder="Destination" class="w-full mt-2 p-2 rounded-md bg-white/10 text-white border border-white/20 placeholder-gray-400">
+      <button class="neon-btn mt-4">🚀 Request Ride</button>
+    </div>
 
-      <p id="statusMessage" class="text-sm text-gray-400 mt-4"></p>
-    </section>
-
-    <section class="mt-8 glass-card p-4 text-center">
-      <h3 class="glow-text text-base font-semibold mb-2">🚖 Recent Requests</h3>
-      <div id="recentRides" class="text-left text-sm space-y-2"></div>
-    </section>
+    <p id="ride-updates" class="text-center text-gray-400 text-sm mt-5"></p>
   </main>
 
-  <!-- FOOTER -->
-  <footer class="fixed bottom-0 left-0 w-full bg-opacity-30 backdrop-blur-lg glass-card py-3 flex justify-around text-cyan-400 text-lg">
-    <a href="student-dashboard.html"><i class="fas fa-home"></i></a>
-    <a href="ride-hailing.html" class="text-pink-400"><i class="fas fa-car"></i></a>
-    <a href="driver-dashboard.html"><i class="fas fa-id-card"></i></a>
-    <a href="#"><i class="fas fa-user"></i></a>
+  <!-- Footer -->
+  <footer>
+    <!-- Home -->
+    <a href="students-dashboard.html" title="Home">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 3l9 8h-3v10H6V11H3l9-8z"/></svg>
+    </a>
+    <!-- Activity -->
+    <a href="ride-history.html" title="Ride History">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 3a9 9 0 109 9h-2a7 7 0 11-7-7V3z"/><path d="M12 8v5l4 2"/></svg>
+    </a>
+    <!-- Chat -->
+    <a href="chat.html" title="Chat">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 4h16v12H5.17L4 17.17V4zM2 2v20l4-4h16a2 2 0 002-2V4a2 2 0 00-2-2H2z"/></svg>
+    </a>
+    <!-- Profile -->
+    <a href="profile.html" title="Profile">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 12c2.67 0 8 1.34 8 4v4H4v-4c0-2.66 5.33-4 8-4zm0-2a4 4 0 110-8 4 4 0 010 8z"/></svg>
+    </a>
   </footer>
 
-  <script src="https://kit.fontawesome.com/a2e0e6ad42.js" crossorigin="anonymous"></script>
+  <script>
+    // Live ETA simulation
+    const etaEl = document.getElementById("eta");
+    const updatesEl = document.getElementById("ride-updates");
+    let eta = 4;
 
-  <!-- Firebase Logic -->
-  <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-    import { getFirestore, collection, addDoc, onSnapshot, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
-
-    const firebaseConfig = {
-      apiKey: "AIzaSyBxAQxTvuPCYVAG3eQu4MQfxHRWJB9Q3wI",
-      authDomain: "zep-swipe-6cb53.firebaseapp.com",
-      projectId: "zep-swipe-6cb53",
-      storageBucket: "zep-swipe-6cb53.firebasestorage.app",
-      messagingSenderId: "895701529881",
-      appId: "1:895701529881:web:81c6e3e420bfe6cb7dc188",
-      measurementId: "G-L48WTHMKKZ"
-    };
-
-    const app = initializeApp(firebaseConfig);
-    const db = getFirestore(app);
-
-    const form = document.getElementById("rideForm");
-    const statusMsg = document.getElementById("statusMessage");
-    const recentRidesDiv = document.getElementById("recentRides");
-
-    form.addEventListener("submit", async (e) => {
-      e.preventDefault();
-      const studentName = document.getElementById("studentName").value.trim();
-      const university = document.getElementById("university").value.trim();
-      const pickup = document.getElementById("pickup").value.trim();
-      const destination = document.getElementById("destination").value.trim();
-
-      if (!studentName || !university || !pickup || !destination) {
-        statusMsg.textContent = "⚠️ Please fill in all fields.";
-        return;
+    const interval = setInterval(() => {
+      if (eta > 0) {
+        eta--;
+        etaEl.textContent = `${eta} min${eta === 1 ? '' : 's'}`;
+        updatesEl.textContent = `🚗 Driver approaching... ${eta} min${eta === 1 ? '' : 's'} away`;
+      } else {
+        updatesEl.textContent = "✅ Your ride has arrived!";
+        clearInterval(interval);
       }
-
-      try {
-        await addDoc(collection(db, "ride-requests"), {
-          studentName,
-          university,
-          pickup,
-          destination,
-          status: "pending",
-          timestamp: serverTimestamp()
-        });
-        statusMsg.textContent = "✅ Ride Request Sent Successfully!";
-        form.reset();
-      } catch (error) {
-        statusMsg.textContent = "❌ Error sending request: " + error.message;
-      }
-    });
-
-    // 🔄 Live Feed of Recent Requests
-    onSnapshot(collection(db, "ride-requests"), (snapshot) => {
-      recentRidesDiv.innerHTML = "";
-      snapshot.docs.slice(-5).reverse().forEach((docSnap) => {
-        const ride = docSnap.data();
-        recentRidesDiv.innerHTML += `
-          <div class="p-2 border-b border-gray-700">
-            <p><strong>${ride.studentName}</strong> → ${ride.destination}</p>
-            <p class="text-xs text-gray-400">${ride.university}</p>
-          </div>
-        `;
-      });
-    });
-
-    // 🚪 Logout
-    window.logout = () => {
-      alert("Logged out successfully!");
-      window.location.href = "index.html";
-    };
+    }, 7000);
   </script>
 </body>
 </html>
