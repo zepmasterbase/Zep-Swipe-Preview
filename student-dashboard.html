@@ -21,7 +21,7 @@
       padding-bottom: 95px;
     }
 
-    /* Header */
+    /* HEADER */
     header {
       display: flex;
       justify-content: space-between;
@@ -51,8 +51,8 @@
       background: rgba(255, 0, 50, 0.15);
       border: 1px solid rgba(255, 0, 0, 0.4);
       border-radius: 50%;
-      width: 42px;
-      height: 42px;
+      width: 44px;
+      height: 44px;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -66,13 +66,18 @@
       transform: scale(1.1);
     }
 
-    .logout-btn i {
-      color: #ff0044;
-      font-size: 1.2rem;
-      text-shadow: 0 0 15px #ff0044;
+    .logout-icon {
+      width: 24px;
+      height: 24px;
+      filter: drop-shadow(0 0 10px #ff0044);
+      transition: 0.3s;
     }
 
-    /* Glass Card */
+    .logout-btn:hover .logout-icon {
+      filter: drop-shadow(0 0 18px #ff0044);
+    }
+
+    /* Glass Cards */
     .glass-card {
       background: rgba(255, 255, 255, 0.05);
       border-radius: 1.5rem;
@@ -106,9 +111,7 @@
       100% { text-shadow: 0 0 8px #00f0ff; }
     }
 
-    .pulse {
-      animation: pulseGlow 1.5s ease-in-out;
-    }
+    .pulse { animation: pulseGlow 1.5s ease-in-out infinite; }
 
     .neon-btn {
       width: 100%;
@@ -149,7 +152,7 @@
       box-shadow: 0 0 10px rgba(255, 0, 255, 0.15);
     }
 
-    /* Footer Neon Icons */
+    /* FOOTER */
     footer {
       position: fixed;
       bottom: 0;
@@ -191,8 +194,11 @@
   <!-- HEADER -->
   <header>
     <h1 class="zep-logo">ZEP SWIPE</h1>
-    <button class="logout-btn" onclick="window.location.href='index.html'">
-      <i class="fa-solid fa-power-off"></i>
+    <button class="logout-btn" onclick="window.location.href='index.html'" title="Logout">
+      <!-- SVG Neon Logout Icon -->
+      <svg class="logout-icon" xmlns="http://www.w3.org/2000/svg" fill="#ff0044" viewBox="0 0 24 24">
+        <path d="M16 13v-2H8V8l-5 4 5 4v-3h8zM20 3h-8v2h8v14h-8v2h8a2 2 0 002-2V5a2 2 0 00-2-2z"/>
+      </svg>
     </button>
   </header>
 
@@ -202,22 +208,22 @@
       <i class="fa-solid fa-user-graduate text-5xl text-pink-400 mb-3"></i>
       <h3 class="text-cyan-400 text-lg font-semibold mb-1">Welcome Back, Ama!</h3>
 
-      <!-- Total and Split Balances -->
+      <!-- Portfolio Balances -->
       <div id="portfolio" class="mt-3">
-        <p id="totalBalance" class="total-balance">$570.00</p>
+        <p id="totalBalance" class="total-balance pulse">$570.00</p>
         <p id="zacBalance" class="balance mt-2">$ZAC 450.00</p>
         <p id="usdtBalance" class="balance">USDT 120.00</p>
       </div>
       <p class="text-gray-400 text-xs mt-2">Live Portfolio Tracker</p>
     </div>
 
-    <!-- Main Buttons -->
+    <!-- Feature Buttons -->
     <div class="space-y-4 w-full max-w-sm mb-8">
       <a href="social.html" class="neon-btn btn-pink">ZEPVIBE</a>
       <a href="learn-earn.html" class="neon-btn btn-cyan">REWARDS</a>
     </div>
 
-    <!-- Transactions -->
+    <!-- Transaction History -->
     <div class="w-full max-w-sm mb-16">
       <h3 class="text-cyan-400 font-semibold text-center mb-3">Transaction History</h3>
       <div id="transactions">
@@ -241,7 +247,8 @@
       <svg xmlns="http://www.w3.org/2000/svg" fill="#00f0ff" viewBox="0 0 24 24"><path d="M5 11l1.5-4.5h11L19 11H5zm14 2a2 2 0 012 2v3h-2v2h-2v-2H7v2H5v-2H3v-3a2 2 0 012-2h14zm-11 2a1 1 0 100 2 1 1 0 000-2zm8 0a1 1 0 100 2 1 1 0 000-2z"/></svg>
     </a>
     <a href="dashboard-wallet.html" title="Wallet">
-      <svg xmlns="http://www.w3.org/2000/svg" fill="#00f0ff" viewBox="0 0 24 24"><path d="M21 6H3a2 2 0 00-2 2v12h20V6zM3 8h18v2H3V8zm0 4h18v8H3v-8z"/></svg>
+      <!-- Modern Wallet Icon -->
+      <svg xmlns="http://www.w3.org/2000/svg" fill="#00f0ff" viewBox="0 0 24 24"><path d="M2 6a2 2 0 012-2h16a2 2 0 012 2v12a2 2 0 01-2 2H4a2 2 0 01-2-2V6zm16 0H4v12h14v-2h-5a3 3 0 010-6h5V6zm-3 6a1 1 0 100 2h4v-2h-4z"/></svg>
     </a>
     <a href="profile.html" title="Profile">
       <svg xmlns="http://www.w3.org/2000/svg" fill="#00f0ff" viewBox="0 0 24 24"><path d="M12 12c2.67 0 8 1.34 8 4v4H4v-4c0-2.66 5.33-4 8-4zm0-2a4 4 0 110-8 4 4 0 010 8z"/></svg>
