@@ -5,15 +5,15 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Zep Swipe — Student Dashboard</title>
 
-  <!-- TailwindCSS -->
+  <!-- Tailwind CSS -->
   <script src="https://cdn.tailwindcss.com"></script>
 
-  <!-- Fonts -->
+  <!-- Google Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700&family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
 
   <style>
     body {
-      background: radial-gradient(circle at 20% 20%, #0b0020, #050012, #000010);
+      background: radial-gradient(circle at 20% 20%, #0a0018, #030010, #000);
       color: #fff;
       font-family: 'Poppins', sans-serif;
       min-height: 100vh;
@@ -21,6 +21,20 @@
       flex-direction: column;
       justify-content: space-between;
       overflow-x: hidden;
+      padding-bottom: 90px; /* prevent footer overlap */
+    }
+
+    /* HEADER */
+    header {
+      background: rgba(255, 255, 255, 0.06);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+      backdrop-filter: blur(12px);
+      box-shadow: 0 0 25px rgba(255, 0, 255, 0.25), 0 0 30px rgba(0, 255, 255, 0.25);
+      border-radius: 0 0 1rem 1rem;
+      padding: 0.9rem 1.5rem;
+      position: sticky;
+      top: 0;
+      z-index: 50;
     }
 
     .neon-logo {
@@ -30,34 +44,31 @@
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       letter-spacing: 2px;
-      text-shadow: 0 0 15px rgba(0, 255, 255, 0.3);
+      text-shadow: 0 0 18px rgba(0, 255, 255, 0.4);
     }
 
     .neon-button {
-      border: 1px solid rgba(255, 255, 255, 0.2);
       border-radius: 9999px;
-      text-align: center;
       padding: 0.8rem;
+      text-align: center;
       font-weight: 600;
-      letter-spacing: 0.04em;
       transition: 0.3s;
     }
 
     .neon-button.cyan {
       color: #00f0ff;
-      border-color: #00f0ff55;
-      box-shadow: 0 0 10px #00f0ff55;
+      border: 1px solid #00f0ff55;
+      box-shadow: 0 0 12px #00f0ff77;
     }
 
     .neon-button.pink {
       color: #ff00f0;
-      border-color: #ff00f055;
-      box-shadow: 0 0 10px #ff00f055;
+      border: 1px solid #ff00f055;
+      box-shadow: 0 0 12px #ff00f077;
     }
 
     .neon-button:hover {
       transform: scale(1.05);
-      box-shadow: 0 0 20px rgba(255, 0, 255, 0.5);
     }
 
     .card {
@@ -68,6 +79,7 @@
       box-shadow: 0 0 25px rgba(255, 0, 255, 0.08);
     }
 
+    /* TRANSACTION LIST */
     .transaction-card {
       background: rgba(255, 255, 255, 0.05);
       border-radius: 1rem;
@@ -85,44 +97,83 @@
       box-shadow: 0 0 12px rgba(255, 0, 255, 0.15);
     }
 
+    /* FIXED FOOTER NAV */
     footer {
-      background: rgba(255, 255, 255, 0.05);
-      border-top: 1px solid rgba(255, 255, 255, 0.08);
-      backdrop-filter: blur(10px);
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      background: rgba(10, 10, 25, 0.7);
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(14px);
       display: flex;
       justify-content: space-around;
+      align-items: center;
       padding: 0.6rem 0;
+      box-shadow: 0 0 25px rgba(255, 0, 255, 0.2);
+      z-index: 100;
     }
 
     footer a {
-      color: #a0faff;
+      color: #b8faff;
       text-align: center;
       font-size: 0.8rem;
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 0.15rem;
       transition: 0.3s;
+    }
+
+    footer a i {
+      font-size: 1.3rem;
+      margin-bottom: 0.2rem;
+      text-shadow: 0 0 10px #00f0ff;
+    }
+
+    footer a:hover i {
+      color: #ff00f0;
+      text-shadow: 0 0 18px #ff00f0;
+      transform: scale(1.2);
     }
 
     footer a:hover {
       color: #ff00f0;
       transform: scale(1.1);
     }
+
+    /* Neon Glow Pulse Animation */
+    @keyframes glowPulse {
+      0% {
+        box-shadow: 0 0 0px rgba(0, 255, 255, 0.4);
+        text-shadow: 0 0 10px #00f0ff;
+      }
+      50% {
+        box-shadow: 0 0 30px rgba(255, 0, 255, 0.6);
+        text-shadow: 0 0 25px #ff00f0;
+      }
+      100% {
+        box-shadow: 0 0 0px rgba(0, 255, 255, 0.4);
+        text-shadow: 0 0 10px #00f0ff;
+      }
+    }
+
+    .pulse {
+      animation: glowPulse 1.5s ease-in-out;
+    }
   </style>
 </head>
 
 <body>
   <!-- HEADER -->
-  <header class="flex justify-between items-center px-6 py-4">
+  <header class="flex justify-between items-center">
     <h1 class="neon-logo">ZEP SWIPE</h1>
-    <button class="px-4 py-1 rounded-full text-pink-400 border border-pink-400 text-sm hover:bg-pink-500 hover:text-white transition">
+    <button class="px-4 py-1 rounded-full border border-pink-400 text-pink-400 text-sm hover:bg-pink-500 hover:text-white transition">
       LOGOUT
     </button>
   </header>
 
   <!-- MAIN DASHBOARD -->
-  <main class="flex flex-col items-center text-center px-6 mt-2 flex-grow mb-4">
+  <main class="flex flex-col items-center text-center px-6 mt-4 mb-10">
     <h2 class="text-3xl font-bold text-pink-400 mb-1">Student Dashboard</h2>
     <p class="text-gray-300 text-sm mb-6">Manage your profile, rewards, and ZepVibe</p>
 
@@ -132,7 +183,7 @@
         <i class="fa-solid fa-user-graduate"></i>
       </div>
       <h3 class="text-cyan-400 font-semibold text-lg">Jane Doe</h3>
-      <p class="text-pink-400 font-medium mt-1">💰 <span id="balance">1560.00</span></p>
+      <p id="balance" class="text-pink-400 font-bold text-2xl mt-2">₵1560.00</p>
       <p class="text-gray-400 text-xs mt-1">Live Earnings Tracker</p>
     </div>
 
@@ -143,7 +194,7 @@
     </div>
 
     <!-- TRANSACTION HISTORY -->
-    <div class="w-full max-w-xs text-left">
+    <div class="w-full max-w-xs text-left mb-16">
       <h3 class="text-cyan-400 font-semibold mb-3 text-center">Recent Transactions</h3>
       <div id="transactionList">
         <div class="transaction-card">
@@ -163,13 +214,13 @@
     </div>
   </main>
 
-  <!-- FOOTER NAVIGATION -->
+  <!-- FOOTER -->
   <footer>
-    <a href="chat.html">💬 <span>Chat</span></a>
-    <a href="dashboard-store.html">🏪 <span>Store</span></a>
-    <a href="ride-hailing.html">🚗 <span>Ride</span></a>
-    <a href="dashboard-wallet.html">💰 <span>Wallet</span></a>
-    <a href="profile.html">👤 <span>Profile</span></a>
+    <a href="chat.html"><i class="fa-solid fa-comment-dots"></i><span>Chat</span></a>
+    <a href="dashboard-store.html"><i class="fa-solid fa-store"></i><span>Store</span></a>
+    <a href="ride-hailing.html"><i class="fa-solid fa-car"></i><span>Ride</span></a>
+    <a href="dashboard-wallet.html"><i class="fa-solid fa-wallet"></i><span>Wallet</span></a>
+    <a href="profile.html"><i class="fa-solid fa-user"></i><span>Profile</span></a>
   </footer>
 
   <!-- Font Awesome -->
@@ -203,11 +254,16 @@
     function updateBalance() {
       const t = mockTransactions[Math.floor(Math.random() * mockTransactions.length)];
       balance += t.amount;
-      balanceEl.textContent = balance.toFixed(2);
+      balanceEl.textContent = `₵${balance.toFixed(2)}`;
+      balanceEl.classList.add("pulse");
+
+      // Remove glow pulse class after animation
+      setTimeout(() => balanceEl.classList.remove("pulse"), 1600);
+
       addTransaction(t.name, t.amount);
     }
 
-    // Simulate live earnings every 10 seconds
+    // Update every 10 seconds
     setInterval(updateBalance, 10000);
   </script>
 </body>
