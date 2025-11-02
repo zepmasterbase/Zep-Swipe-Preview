@@ -1,463 +1,65 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>Zep Swipe — Profile Verification</title>
-
-<!-- Tailwind CDN -->
-<script src="https://cdn.tailwindcss.com"></script>
-<link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@600;700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
-
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Profile - StudentVerse</title>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Roboto:wght@400;500&display=swap" rel="stylesheet">
 <style>
-  :root{
-    --bg:#0b0520;
-    --panel: rgba(255,255,255,0.04);
-    --glass: rgba(255,255,255,0.06);
-    --neon-a: #00f0ff;
-    --neon-b: #ff00f0;
-  }
-  body{
-    font-family: 'Poppins', sans-serif;
-    background: radial-gradient(circle at 10% 10%, #15102a 0%, var(--bg) 60%);
-    color: #e6e6ff;
-    margin:0;
-    min-height:100vh;
-    display:flex;
-    flex-direction:column;
-    align-items:center;
-    padding:1rem;
-  }
-
-  .container{
-    width:100%;
-    max-width:920px;
-    margin-top:2.5rem;
-    margin-bottom:3.5rem;
-  }
-
-  header.appbar{
-    width:100%;
-    max-width:920px;
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    padding:0.75rem 1rem;
-    backdrop-filter: blur(6px);
-    background: linear-gradient(90deg, rgba(0,240,255,0.06), rgba(255,0,240,0.03));
-    border-radius:12px;
-    box-shadow:0 6px 30px rgba(0,0,0,0.6), 0 0 30px rgba(0,240,255,0.06);
-  }
-  header .brand{
-    font-family:'Exo 2',sans-serif;
-    font-weight:700;
-    font-size:1.25rem;
-    background: linear-gradient(90deg, var(--neon-a), var(--neon-b));
-    -webkit-background-clip:text;
-    -webkit-text-fill-color:transparent;
-  }
-  header .help{
-    color: #bfc8ff;
-    font-size:0.9rem;
-  }
-
-  .panel{
-    background:var(--panel);
-    border-radius:14px;
-    padding:1rem;
-    margin-top:1rem;
-    box-shadow: 0 8px 30px rgba(0,0,0,0.5), 0 0 20px rgba(0,240,255,0.02);
-    border: 1px solid rgba(124,99,255,0.06);
-  }
-
-  .grid{
-    display:grid;
-    grid-template-columns: 1fr;
-    gap:1rem;
-  }
-  @media(min-width:900px){
-    .grid{ grid-template-columns: 1fr 340px; align-items:start; gap:1.25rem; }
-  }
-
-  label{ display:block; font-size:0.9rem; color:#cfd6ff; margin-bottom:0.35rem; }
-  input[type="text"], select, input[type="file"]{
-    width:100%;
-    padding:0.7rem;
-    border-radius:10px;
-    border:none;
-    background:var(--glass);
-    color:#eaf2ff;
-    outline:none;
-  }
-  .role-toggle{
-    display:flex; gap:0.5rem;
-    background: linear-gradient(90deg, rgba(124,99,255,0.03), rgba(124,99,255,0.02));
-    padding:0.5rem; border-radius:10px;
-  }
-  .role-btn{
-    flex:1;
-    padding:0.5rem;
-    border-radius:8px;
-    background:transparent;
-    border:1px solid rgba(255,255,255,0.04);
-    color:#dfe7ff;
-    cursor:pointer;
-    font-weight:600;
-  }
-  .role-btn.active{
-    background: linear-gradient(90deg,var(--neon-a),var(--neon-b));
-    color: #0b0520;
-    box-shadow:0 8px 24px rgba(0,240,255,0.08), 0 0 8px rgba(255,0,240,0.06);
-  }
-
-  .file-preview{
-    width:100%;
-    height:160px;
-    border-radius:10px;
-    background: linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.02));
-    display:flex; align-items:center; justify-content:center;
-    color:#bfc8ff; font-size:0.95rem;
-    border:1px dashed rgba(255,255,255,0.04);
-  }
-
-  .verify-btn{
-    display:inline-flex;
-    align-items:center;
-    gap:0.5rem;
-    padding:0.75rem 1rem;
-    border-radius:12px;
-    font-weight:700;
-    cursor:pointer;
-    color:#08102a;
-    background: linear-gradient(90deg,var(--neon-a),var(--neon-b));
-    border:none;
-    box-shadow: 0 8px 30px rgba(0,0,0,0.6), 0 0 18px rgba(0,240,255,0.08);
-  }
-
-  .meta{
-    font-size:0.9rem; color:#aeb9ff;
-  }
-
-  .badge{
-    display:inline-flex;
-    gap:0.5rem;
-    align-items:center;
-    padding:0.4rem 0.6rem;
-    border-radius:999px;
-    background: linear-gradient(90deg, rgba(0,240,255,0.06), rgba(255,0,240,0.04));
-    color:#dff8ff;
-    font-weight:700;
-  }
-
-  /* right column card */
-  .profile-card{
-    padding:1rem;
-    border-radius:12px;
-    background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
-    text-align:center;
-    border:1px solid rgba(255,255,255,0.03);
-  }
-  .avatar{
-    width:92px; height:92px; border-radius:18px; background: linear-gradient(90deg,#0b0520,#0b0520);
-    display:inline-flex; align-items:center; justify-content:center; font-weight:700; color:#00f0ff;
-    box-shadow:0 8px 24px rgba(0,240,255,0.04);
-  }
-
-  .small{
-    font-size:0.85rem; color:#bfc8ff;
-  }
-
-  .notice{
-    margin-top:0.6rem; padding:0.6rem; border-radius:10px; background:linear-gradient(90deg, rgba(0,240,255,0.03), rgba(255,0,240,0.03));
-    color:#cfefff; font-size:0.9rem;
-  }
-
-  .hint{ font-size:0.85rem; color:#aeb9ff; margin-top:0.35rem; }
-
-  .actions-row{ display:flex; gap:0.6rem; margin-top:0.75rem; justify-content:center; flex-wrap:wrap; }
-  .muted-btn{
-    padding:0.55rem 0.8rem; border-radius:10px; background:transparent; color:#c7d3ff; border:1px solid rgba(255,255,255,0.035);
-  }
-
-  /* success toast */
-  .toast{
-    position:fixed; left:50%; transform:translateX(-50%); bottom:92px;
-    background:linear-gradient(90deg,var(--neon-a),var(--neon-b)); color:#08102a; padding:0.8rem 1rem; border-radius:999px;
-    box-shadow:0 10px 30px rgba(0,0,0,0.6); display:none; font-weight:700;
-  }
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Roboto',sans-serif;}
+body{background:linear-gradient(135deg,#0f0c29,#302b63,#24243e);color:#fff;}
+.container{max-width:600px;margin:auto;padding:1rem;}
+h1{font-family:'Orbitron',sans-serif;color:#39ff14;margin-bottom:1rem;text-align:center;text-shadow:0 0 10px #39ff14;}
+.profile-pic{width:120px;height:120px;border-radius:50%;object-fit:cover;margin:auto;display:block;margin-bottom:1rem; border:3px solid #39ff14;}
+form{display:flex;flex-direction:column;gap:0.5rem;margin-bottom:2rem;}
+input, button{padding:0.75rem;border-radius:10px;border:none;}
+input{background:rgba(255,255,255,0.05);color:#fff;backdrop-filter:blur(5px);}
+button{background:#8a2be2;color:#fff;cursor:pointer;transition:0.3s;}
+button:hover{background:#b55fff;}
+a{color:#39ff14;text-decoration:none;}
 </style>
 </head>
 <body>
-
 <div class="container">
-  <header class="appbar">
-    <div class="brand">Zep Swipe</div>
-    <div class="help">Profile · Verify Account</div>
-  </header>
-
-  <section class="panel" aria-labelledby="profile-heading">
-    <div class="grid">
-      <!-- LEFT: form -->
-      <div>
-        <h2 id="profile-heading" class="text-2xl font-semibold" style="color:#cfe3ff">Your Profile</h2>
-        <p class="meta">Update your details and verify your account to unlock features.</p>
-
-        <form id="profileForm" class="mt-4 space-y-4" autocomplete="off" novalidate>
-          <!-- Name -->
-          <div>
-            <label for="fullname">Full name</label>
-            <input id="fullname" name="fullname" type="text" placeholder="Jane Doe" required />
-          </div>
-
-          <!-- Role toggle -->
-          <div>
-            <label class="mb-2">Account type</label>
-            <div class="role-toggle" role="tablist" aria-label="Select role">
-              <button type="button" id="roleStudent" class="role-btn active" aria-pressed="true">🧑‍🎓 Student</button>
-              <button type="button" id="roleVendor" class="role-btn" aria-pressed="false">🏬 Vendor</button>
-            </div>
-            <div class="hint">Choose Student to verify with Student ID, or Vendor to verify with business registration.</div>
-          </div>
-
-          <!-- Student fields -->
-          <div id="studentFields">
-            <label for="university">University</label>
-            <input id="university" name="university" type="text" placeholder="University of Lagos" />
-
-            <label class="mt-2">Student ID (photo or PDF)</label>
-            <input id="studentIdFile" type="file" accept="image/*,.pdf" />
-            <div id="studentPreview" class="file-preview mt-2">No file selected.</div>
-          </div>
-
-          <!-- Vendor fields -->
-          <div id="vendorFields" style="display:none;">
-            <label for="businessName">Business / Shop name</label>
-            <input id="businessName" name="businessName" type="text" placeholder="Acme Snacks Ltd" />
-
-            <label class="mt-2">Business registration (photo or PDF)</label>
-            <input id="businessFile" type="file" accept="image/*,.pdf" />
-            <div id="businessPreview" class="file-preview mt-2">No file selected.</div>
-          </div>
-
-          <!-- Location -->
-          <div class="grid" style="grid-template-columns:1fr 1fr; gap:0.6rem;">
-            <div>
-              <label for="country">Country</label>
-              <input id="country" name="country" type="text" placeholder="Nigeria" />
-            </div>
-            <div>
-              <label for="city">City</label>
-              <input id="city" name="city" type="text" placeholder="Lagos" />
-            </div>
-          </div>
-
-          <!-- Buttons -->
-          <div class="flex items-center gap-3">
-            <button type="button" id="verifyBtn" class="verify-btn">Verify Account</button>
-            <button type="button" id="saveBtn" class="muted-btn">Save Draft</button>
-          </div>
-
-          <div class="hint">Once verified, your account will show a verification badge.</div>
-        </form>
-      </div>
-
-      <!-- RIGHT: profile card / status -->
-      <aside class="profile-card">
-        <div class="avatar" id="avatar">Z</div>
-        <div style="height:8px"></div>
-        <div id="displayName" style="font-weight:700; font-size:1.05rem; color:#eaf6ff">— Not set —</div>
-        <div class="small" id="displayRole">Role: Student</div>
-
-        <div class="notice mt-3" id="verificationStatus">
-          <div style="display:flex; justify-content:center; gap:0.5rem; align-items:center;">
-            <span class="badge" id="badge">Unverified</span>
-          </div>
-          <div class="hint mt-2">Complete verification to access payouts, marketplace listing, and more.</div>
-        </div>
-
-        <div class="actions-row">
-          <button class="muted-btn" id="editBtn">Edit</button>
-          <button class="muted-btn" id="logoutBtn">Sign out</button>
-        </div>
-      </aside>
-    </div>
-  </section>
+  <h1>Edit Profile</h1>
+  <img id="profilePic" class="profile-pic" src="https://i.pravatar.cc/120" alt="Profile Picture">
+  <form id="profileForm">
+    <input type="text" id="nameInput" placeholder="Your Name">
+    <input type="url" id="avatarInput" placeholder="Avatar Image URL">
+    <button type="submit">Save Profile</button>
+  </form>
+  <a href="index.html">Back to Feed</a>
 </div>
 
-<div class="toast" id="toast">Profile saved</div>
-
 <script>
-  // Elements
-  const roleStudent = document.getElementById('roleStudent');
-  const roleVendor  = document.getElementById('roleVendor');
-  const studentFields = document.getElementById('studentFields');
-  const vendorFields = document.getElementById('vendorFields');
-  const studentFile = document.getElementById('studentIdFile');
-  const studentPreview = document.getElementById('studentPreview');
-  const businessFile = document.getElementById('businessFile');
-  const businessPreview = document.getElementById('businessPreview');
-  const verifyBtn = document.getElementById('verifyBtn');
-  const saveBtn = document.getElementById('saveBtn');
-  const displayName = document.getElementById('displayName');
-  const displayRole = document.getElementById('displayRole');
-  const avatar = document.getElementById('avatar');
-  const badge = document.getElementById('badge');
-  const toast = document.getElementById('toast');
-  const fullnameInput = document.getElementById('fullname');
+// Load profile
+const profilePic = document.getElementById('profilePic');
+const nameInput = document.getElementById('nameInput');
+const avatarInput = document.getElementById('avatarInput');
+const profileForm = document.getElementById('profileForm');
 
-  let selectedRole = 'student'; // default
+let currentUser = {
+  id: "650b7cbbf0f1d3a8b4c5d1e0",
+  name: "You",
+  avatar: "https://i.pravatar.cc/120"
+};
 
-  // Role toggle handlers
-  roleStudent.addEventListener('click', () => setRole('student'));
-  roleVendor.addEventListener('click', () => setRole('vendor'));
+// Simulate fetching from backend
+function loadProfile() {
+  nameInput.value = currentUser.name;
+  avatarInput.value = currentUser.avatar;
+  profilePic.src = currentUser.avatar;
+}
+profileForm.addEventListener('submit', (e)=>{
+  e.preventDefault();
+  currentUser.name = nameInput.value || "Anonymous";
+  currentUser.avatar = avatarInput.value || "https://i.pravatar.cc/120";
+  profilePic.src = currentUser.avatar;
+  alert("Profile updated!");
+  // Here you would send a PUT/POST request to update backend
+});
 
-  function setRole(role){
-    selectedRole = role;
-    if(role === 'student'){
-      roleStudent.classList.add('active');
-      roleVendor.classList.remove('active');
-      studentFields.style.display = '';
-      vendorFields.style.display = 'none';
-      displayRole.textContent = 'Role: Student';
-    } else {
-      roleVendor.classList.add('active');
-      roleStudent.classList.remove('active');
-      studentFields.style.display = 'none';
-      vendorFields.style.display = '';
-      displayRole.textContent = 'Role: Vendor';
-    }
-  }
-
-  // File preview helpers
-  function previewFile(inputEl, previewEl){
-    const file = inputEl.files && inputEl.files[0];
-    if(!file){ previewEl.textContent = 'No file selected.'; return; }
-    if(file.type.startsWith('image/')){
-      const url = URL.createObjectURL(file);
-      previewEl.innerHTML = `<img src="${url}" style="max-width:100%; max-height:140px; border-radius:8px;" />`;
-    } else {
-      // PDF or other
-      previewEl.innerHTML = `<div style="display:flex;gap:8px;align-items:center;"><i class="fas fa-file-pdf" style="color:#ffb3c6"></i><span style="color:#dfe9ff">${file.name}</span></div>`;
-    }
-  }
-
-  studentFile.addEventListener('change', ()=> previewFile(studentFile, studentPreview));
-  businessFile.addEventListener('change', ()=> previewFile(businessFile, businessPreview));
-
-  // Save draft (to localStorage)
-  saveBtn.addEventListener('click', ()=>{
-    const profile = gatherProfile(false);
-    if(!profile) return;
-    localStorage.setItem('zep_profile', JSON.stringify(profile));
-    showToast('Draft saved locally');
-    populateUI(profile);
-  });
-
-  // Verify simulation
-  verifyBtn.addEventListener('click', ()=>{
-    const profile = gatherProfile(true);
-    if(!profile) return;
-    // basic checks
-    if(selectedRole === 'student' && !profile.studentFileName){
-      alert('Please attach a Student ID to verify.');
-      return;
-    }
-    if(selectedRole === 'vendor' && !profile.businessFileName){
-      alert('Please attach a Business registration to verify.');
-      return;
-    }
-
-    // Simulate verification delay
-    verifyBtn.disabled = true;
-    verifyBtn.textContent = 'Verifying...';
-    setTimeout(()=>{
-      profile.verified = true;
-      localStorage.setItem('zep_profile', JSON.stringify(profile));
-      showToast('Account verified ✅');
-      populateUI(profile);
-      verifyBtn.disabled = false;
-      verifyBtn.textContent = 'Verify Account';
-    }, 1400);
-  });
-
-  function gatherProfile(requireName = false){
-    const fullName = fullnameInput.value.trim();
-    if(requireName && !fullName){
-      alert('Please enter your full name.');
-      return null;
-    }
-    if(!fullName) {
-      // still allow save draft
-    }
-
-    const profile = {
-      fullname: fullName || '',
-      role: selectedRole,
-      university: document.getElementById('university').value.trim() || '',
-      businessName: document.getElementById('businessName') ? document.getElementById('businessName').value.trim() : '',
-      country: document.getElementById('country').value.trim() || '',
-      city: document.getElementById('city').value.trim() || '',
-      studentFileName: studentFile.files[0] ? studentFile.files[0].name : '',
-      businessFileName: businessFile.files[0] ? businessFile.files[0].name : '',
-      verified: false,
-      updatedAt: Date.now()
-    };
-    return profile;
-  }
-
-  // Populate UI from saved data
-  function populateUI(profile){
-    if(!profile) return;
-    displayName.textContent = profile.fullname || '— Not set —';
-    avatar.textContent = profile.fullname ? profile.fullname.split(' ').map(s=>s[0]).slice(0,2).join('') : 'Z';
-    displayRole.textContent = 'Role: ' + (profile.role === 'student' ? 'Student' : 'Vendor');
-    if(profile.verified){
-      badge.innerHTML = '<i class="fas fa-check-circle" style="color:#08102a"></i><span style="background:transparent;color:#08102a;padding-left:0;"> Verified</span>';
-      badge.style.background = 'linear-gradient(90deg,#00f0ff,#ff00f0)';
-      badge.style.color = '#08102a';
-    } else {
-      badge.innerHTML = 'Unverified';
-      badge.style.background = 'linear-gradient(90deg, rgba(0,240,255,0.06), rgba(255,0,240,0.03))';
-      badge.style.color = '#dff8ff';
-    }
-    // fill form inputs
-    fullnameInput.value = profile.fullname || '';
-    if(profile.role === 'vendor') setRole('vendor'); else setRole('student');
-    document.getElementById('university').value = profile.university || '';
-    if(document.getElementById('businessName')) document.getElementById('businessName').value = profile.businessName || '';
-    document.getElementById('country').value = profile.country || '';
-    document.getElementById('city').value = profile.city || '';
-    // show filenames if present
-    studentPreview.textContent = profile.studentFileName || 'No file selected.';
-    businessPreview.textContent = profile.businessFileName || 'No file selected.';
-  }
-
-  // Toast helper
-  function showToast(text='Saved'){
-    toast.textContent = text;
-    toast.style.display = 'block';
-    setTimeout(()=> toast.style.display = 'none', 1800);
-  }
-
-  // load saved profile on startup
-  (function init(){
-    const saved = localStorage.getItem('zep_profile');
-    if(saved){
-      try{ populateUI(JSON.parse(saved)); }catch(e){}
-    }
-  })();
-
-  // small UX: edit/show focus
-  document.getElementById('editBtn').addEventListener('click', ()=> {
-    window.scrollTo({ top: 120, behavior: 'smooth' });
-  });
-  document.getElementById('logoutBtn').addEventListener('click', ()=> {
-    if(confirm('Sign out? This will clear local draft.')){
-      localStorage.removeItem('zep_profile');
-      location.reload();
-    }
-  });
-
+loadProfile();
 </script>
 </body>
 </html>
