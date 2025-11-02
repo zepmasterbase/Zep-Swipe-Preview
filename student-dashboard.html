@@ -21,32 +21,49 @@
       color: white;
       min-height: 100vh;
       overflow-x: hidden;
-      padding-bottom: 85px; /* space for footer */
+      padding-bottom: 85px;
     }
 
     /* HEADER */
     header {
-      background: rgba(255, 255, 255, 0.07);
-      border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 1.5rem;
+      background: rgba(255, 255, 255, 0.08);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.2);
       backdrop-filter: blur(12px);
-      box-shadow: 0 0 30px rgba(255, 0, 255, 0.3), 0 0 25px rgba(0, 255, 255, 0.25);
+      box-shadow: 0 0 25px rgba(255, 0, 255, 0.4), 0 0 20px rgba(0, 255, 255, 0.3);
       border-radius: 0 0 1.5rem 1.5rem;
-      padding: 1.2rem 1.5rem;
-      text-align: center;
       position: sticky;
       top: 0;
-      z-index: 50;
+      z-index: 100;
     }
 
     .zep-logo {
       font-family: 'Orbitron', sans-serif;
-      font-size: 1.7rem;
-      font-weight: 700;
+      font-size: 1.6rem;
       background: linear-gradient(90deg, #00f0ff, #ff00f0);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
-      text-shadow: 0 0 20px rgba(0, 255, 255, 0.5);
-      letter-spacing: 2px;
+      text-shadow: 0 0 15px rgba(0, 255, 255, 0.6);
+    }
+
+    .logout-btn {
+      background: linear-gradient(90deg, #ff00f0, #00f0ff);
+      color: #0a021f;
+      border: none;
+      border-radius: 0.6rem;
+      padding: 0.4rem 0.7rem;
+      font-weight: 600;
+      font-size: 0.9rem;
+      box-shadow: 0 0 12px rgba(255, 0, 255, 0.5);
+      transition: 0.3s;
+    }
+
+    .logout-btn:hover {
+      transform: scale(1.1);
+      box-shadow: 0 0 20px rgba(0, 255, 255, 0.6);
     }
 
     /* MAIN CARDS */
@@ -59,7 +76,6 @@
       padding: 1.5rem;
     }
 
-    /* NEON BALANCE */
     .balance {
       font-family: 'Orbitron', sans-serif;
       font-size: 1.6rem;
@@ -69,18 +85,15 @@
       text-shadow: 0 0 18px rgba(255, 0, 255, 0.4);
     }
 
-    /* Live pulse animation */
+    /* Live pulse */
     @keyframes pulseGlow {
       0% { text-shadow: 0 0 8px #00f0ff; }
       50% { text-shadow: 0 0 25px #ff00f0; }
       100% { text-shadow: 0 0 8px #00f0ff; }
     }
+    .pulse { animation: pulseGlow 1.5s ease-in-out; }
 
-    .pulse {
-      animation: pulseGlow 1.5s ease-in-out;
-    }
-
-    /* ACTION BUTTONS */
+    /* Buttons */
     .neon-btn {
       width: 100%;
       text-align: center;
@@ -90,20 +103,17 @@
       color: #0a021f;
       transition: 0.3s;
     }
-
     .btn-cyan {
       background: linear-gradient(90deg, #00f0ff, #8ef8b8);
       box-shadow: 0 0 20px #00f0ff99;
     }
-
     .btn-pink {
       background: linear-gradient(90deg, #ff00f0, #ff77ff);
       box-shadow: 0 0 20px #ff00f099;
     }
-
     .neon-btn:hover { transform: scale(1.05); }
 
-    /* TRANSACTION CARD */
+    /* Transactions */
     .tx-card {
       background: rgba(255, 255, 255, 0.06);
       border: 1px solid rgba(255, 255, 255, 0.1);
@@ -115,7 +125,6 @@
       margin-bottom: 0.8rem;
       transition: 0.3s;
     }
-
     .tx-card:hover {
       background: rgba(255, 255, 255, 0.1);
       box-shadow: 0 0 10px rgba(255, 0, 255, 0.15);
@@ -129,25 +138,25 @@
       width: 100%;
       background: rgba(10, 10, 25, 0.7);
       border-top: 1px solid rgba(255, 255, 255, 0.15);
-      backdrop-filter: blur(12px);
+      backdrop-filter: blur(14px);
       display: flex;
       justify-content: space-around;
       align-items: center;
-      padding: 0.7rem 0;
-      box-shadow: 0 0 25px rgba(255, 0, 255, 0.25);
+      padding: 0.8rem 0;
+      box-shadow: 0 0 30px rgba(255, 0, 255, 0.25);
       z-index: 100;
     }
 
     footer a i {
-      font-size: 1.6rem;
+      font-size: 1.7rem;
       color: #00f0ff;
       transition: 0.3s;
-      text-shadow: 0 0 15px #00f0ff;
+      text-shadow: 0 0 20px #00f0ff;
     }
 
     footer a:hover i {
       color: #ff00f0;
-      transform: scale(1.2);
+      transform: scale(1.25);
       text-shadow: 0 0 25px #ff00f0;
     }
   </style>
@@ -157,20 +166,19 @@
   <!-- HEADER -->
   <header>
     <h1 class="zep-logo">ZEP SWIPE</h1>
+    <button class="logout-btn" onclick="window.location.href='index.html'">Logout</button>
   </header>
 
-  <!-- MAIN DASHBOARD -->
+  <!-- MAIN -->
   <main class="px-5 pt-6 flex flex-col items-center">
     <div class="glass-card w-full max-w-sm text-center mb-6">
       <i class="fa-solid fa-user-graduate text-5xl text-pink-400 mb-3"></i>
       <h3 class="text-cyan-400 text-lg font-semibold mb-1">Welcome Back, Ama!</h3>
 
-      <!-- Portfolio Balances -->
       <div id="portfolio" class="mt-3">
         <p id="zacBalance" class="balance">$ZAC 450.00</p>
         <p id="usdtBalance" class="balance text-sm mt-1">USDT 120.00</p>
       </div>
-
       <p class="text-gray-400 text-xs mt-2">Live Portfolio Tracker</p>
     </div>
 
@@ -181,7 +189,7 @@
     </div>
 
     <!-- Transactions -->
-    <div class="w-full max-w-sm">
+    <div class="w-full max-w-sm mb-16">
       <h3 class="text-cyan-400 font-semibold text-center mb-3">Transaction History</h3>
       <div id="transactions">
         <div class="tx-card"><span>Ride Payment</span><span class="text-green-400">+5 $ZAC</span></div>
@@ -192,13 +200,13 @@
     </div>
   </main>
 
-  <!-- FOOTER (NEON ICONS) -->
+  <!-- FOOTER ICONS -->
   <footer>
-    <a href="chat.html" title="Chat"><i class="fa-solid fa-comment-dots"></i></a>
+    <a href="chat.html" title="Chat"><i class="fa-solid fa-comments"></i></a>
     <a href="dashboard-store.html" title="Store"><i class="fa-solid fa-store"></i></a>
     <a href="ride-hailing.html" title="Ride"><i class="fa-solid fa-car"></i></a>
     <a href="dashboard-wallet.html" title="Wallet"><i class="fa-solid fa-wallet"></i></a>
-    <a href="profile.html" title="Profile"><i class="fa-solid fa-user"></i></a>
+    <a href="profile.html" title="Profile"><i class="fa-solid fa-user-astronaut"></i></a>
   </footer>
 
   <!-- LIVE PORTFOLIO SCRIPT -->
