@@ -1,278 +1,204 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ZepStudent Futuristic Dashboard</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Zep Swipe — Student Dashboard</title>
 
-<!-- Tailwind + Fonts + Icons -->
-<script src="https://cdn.tailwindcss.com"></script>
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Orbitron:wght@600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <!-- TailwindCSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
 
-<style>
-:root {
-  --neon-blue: #00f0ff;
-  --neon-pink: #ff00f0;
-  --neon-purple: #9b59b6;
-  --neon-green: #3affc1;
-  --glass: rgba(255,255,255,0.05);
-  --bg-gradient: linear-gradient(135deg, #0b0520 0%, #1b0f3a 100%);
-}
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700&family=Poppins:wght@400;500;600&display=swap" rel="stylesheet" />
 
-/* Body */
-body {
-  font-family: 'Poppins', sans-serif;
-  margin: 0;
-  background: var(--bg-gradient);
-  color: #fff;
-  min-height: 100vh;
-  padding-bottom: 120px;
-  overflow-x: hidden;
-}
+  <!-- Icons -->
+  <script src="https://kit.fontawesome.com/a2e0e6b6a2.js" crossorigin="anonymous"></script>
 
-/* HEADER */
-.header {
-  position: fixed;
-  top: 0;
-  width: 100%;
-  padding: 1rem 2rem;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  backdrop-filter: blur(18px);
-  background: rgba(10,10,20,0.8);
-  border-bottom: 1px solid rgba(0,255,255,0.2);
-  z-index: 50;
-}
-.header-left span.logout {
-  font-family: 'Orbitron', sans-serif;
-  color: var(--neon-pink);
-  font-weight: 700;
-  cursor: pointer;
-  transition: 0.3s;
-}
-.header-left span.logout:hover {
-  color: var(--neon-green);
-  transform: scale(1.1);
-}
-.header-right img.logo {
-  width: 50px;
-  height: 50px;
-  border-radius: 12px;
-  border: 2px solid var(--neon-blue);
-  object-fit: cover;
-  box-shadow: 0 0 15px var(--neon-blue), 0 0 30px var(--neon-pink);
-}
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: radial-gradient(circle at 20% 20%, #110022, #060014, #0a011e);
+      color: #fff;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
 
-/* MAIN GRID */
-.main-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-  gap: 1.2rem;
-  margin-top: 6.5rem;
-  padding: 0 1.5rem 1.5rem 1.5rem;
-}
+    header {
+      padding: 1rem 1.5rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: rgba(255, 255, 255, 0.05);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(12px);
+    }
 
-/* GLASS CARD FUTURISTIC */
-.card {
-  position: relative;
-  background: rgba(255,255,255,0.05);
-  backdrop-filter: blur(25px);
-  border-radius: 1.2rem;
-  padding: 2rem 1.5rem;
-  text-align: center;
-  box-shadow: 0 0 20px rgba(0,255,255,0.2);
-  overflow: hidden;
-  transition: transform 0.3s, box-shadow 0.3s;
-}
+    .logo {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 1.6rem;
+      background: linear-gradient(90deg, #00f0ff, #ff00f0, #8ef8b8);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
 
-.card::before {
-  content: '';
-  position: absolute;
-  top: -3px; left: -3px; bottom: -3px; right: -3px;
-  background: linear-gradient(120deg, var(--neon-pink), var(--neon-blue), var(--neon-green), var(--neon-purple));
-  background-size: 400% 400%;
-  z-index: -1;
-  border-radius: 1.2rem;
-  filter: blur(12px);
-  animation: neonAnim 8s ease infinite;
-}
+    .dashboard-container {
+      padding: 2rem 1.5rem;
+      flex-grow: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+    }
 
-.card:hover {
-  transform: translateY(-5px) scale(1.03);
-  box-shadow: 0 0 40px var(--neon-pink), 0 0 35px var(--neon-blue), 0 0 25px var(--neon-green);
-}
+    .card {
+      background: rgba(255, 255, 255, 0.07);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 1rem;
+      padding: 1.2rem;
+      box-shadow: 0 0 15px rgba(255, 0, 255, 0.1);
+      transition: 0.3s;
+    }
 
-@keyframes neonAnim {
-  0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
-}
+    .card:hover {
+      box-shadow: 0 0 25px rgba(0, 255, 255, 0.2);
+      transform: translateY(-3px);
+    }
 
-.card h3 {
-  font-family: 'Orbitron', sans-serif;
-  font-weight: 700;
-  font-size: 1.25rem;
-  color: var(--neon-blue);
-  margin-bottom: 0.6rem;
-}
-.card p {
-  font-size: 0.9rem;
-  opacity: 0.85;
-}
-.card .value {
-  font-family: 'Orbitron', sans-serif;
-  font-size: 1.8rem;
-  font-weight: 700;
-  margin-top: 0.6rem;
-  color: var(--neon-green);
-  text-shadow: 0 0 10px var(--neon-green), 0 0 20px var(--neon-blue);
-}
+    .section-title {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 1.2rem;
+      margin-bottom: 0.8rem;
+      color: #8ef8b8;
+    }
 
-/* ICONS */
-.icon {
-  font-size: 2.2rem;
-  margin-bottom: 0.6rem;
-  color: var(--neon-pink);
-  text-shadow: 0 0 10px var(--neon-pink), 0 0 15px var(--neon-blue);
-}
+    .feature-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      gap: 1rem;
+    }
 
-/* STUDENT PROFILE CARD */
-.profile-card {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 0.8rem;
-}
-.profile-card img {
-  width: 100px;
-  height: 100px;
-  border-radius: 50%;
-  border: 3px solid var(--neon-blue);
-  box-shadow: 0 0 15px var(--neon-blue), 0 0 25px var(--neon-pink);
-  object-fit: cover;
-  transition: transform 0.3s, box-shadow 0.3s;
-}
-.profile-card img:hover {
-  transform: scale(1.1);
-  box-shadow: 0 0 25px var(--neon-pink), 0 0 30px var(--neon-blue), 0 0 20px var(--neon-green);
-}
+    .feature-btn {
+      background: linear-gradient(135deg, #0f0024, #1a0044);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 1rem;
+      padding: 1rem;
+      text-align: center;
+      color: #fff;
+      transition: 0.3s;
+      box-shadow: 0 0 15px rgba(255, 0, 255, 0.1);
+    }
 
-/* FOOTER */
-.footer {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  display: flex;
-  justify-content: space-around;
-  padding: 0.9rem 0;
-  background: rgba(15,5,32,0.85);
-  backdrop-filter: blur(12px);
-  box-shadow: 0 -2px 25px rgba(0,255,255,0.3);
-  z-index: 50;
-}
-.footer a {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  color: var(--neon-blue);
-  font-size: 0.8rem;
-  text-decoration: none;
-  transition: 0.3s;
-}
-.footer a i {
-  font-size: 1.6rem;
-}
-.footer a:hover, .footer a.active {
-  color: var(--neon-pink);
-  transform: scale(1.2);
-}
-</style>
+    .feature-btn:hover {
+      background: linear-gradient(135deg, #1a0044, #310066);
+      box-shadow: 0 0 25px rgba(0, 255, 255, 0.25);
+      transform: scale(1.05);
+    }
+
+    .feature-btn i {
+      font-size: 1.8rem;
+      margin-bottom: 0.4rem;
+      color: #00f0ff;
+    }
+
+    footer {
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      padding: 0.8rem 1rem;
+      background: rgba(255, 255, 255, 0.05);
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(12px);
+    }
+
+    footer a {
+      color: #8ef8b8;
+      font-size: 1.3rem;
+      transition: 0.3s;
+    }
+
+    footer a:hover {
+      color: #ff00f0;
+      transform: scale(1.2);
+    }
+  </style>
 </head>
+
 <body>
+  <!-- Header -->
+  <header>
+    <h1 class="logo">ZepSwipe</h1>
+    <a href="dashboard-wallet.html" class="text-cyan-300 hover:text-pink-400 transition">
+      <i class="fa-solid fa-wallet text-lg"></i>
+    </a>
+  </header>
 
-<!-- HEADER -->
-<header class="header">
-  <div class="header-left">
-    <span class="logout"><i class="fas fa-sign-out-alt"></i> Logout</span>
-  </div>
-  <div class="header-right">
-    <img src="https://via.placeholder.com/50/00f0ff/000000?text=Zep" alt="Zep Swipe Logo" class="logo">
-  </div>
-</header>
+  <!-- Dashboard Content -->
+  <main class="dashboard-container">
+    <!-- Welcome Section -->
+    <div class="card">
+      <h2 class="section-title">Welcome Back 👋</h2>
+      <p class="text-gray-300">Explore your connected student ecosystem — rides, store, and the new ZepVibe community.</p>
+    </div>
 
-<!-- MAIN GRID -->
-<main class="main-grid">
+    <!-- ZepVibe Section -->
+    <div class="card">
+      <h2 class="section-title">ZepVibe — Buzzing Social Home</h2>
+      <p class="text-gray-400 mb-3">
+        Connect, share, and vibe with other African students. Your campus just went digital.
+      </p>
+      <a href="social.html" class="btn-primary block text-center py-2 rounded-lg" 
+         style="background:linear-gradient(90deg,#00f0ff,#ff00f0); color:#0a021f; font-weight:600;">
+        Enter ZepVibe 🚀
+      </a>
+    </div>
 
-  <!-- STUDENT PROFILE CARD -->
-  <div class="card profile-card">
-    <img src="https://via.placeholder.com/100/00f0ff/000000?text=STU" alt="Student Profile">
-    <h3>John Doe</h3>
-    <p>Computer Science Student</p>
-    <div class="value">Year 3</div>
-  </div>
+    <!-- Wallet Transaction History -->
+    <div class="card">
+      <h2 class="section-title">Recent Wallet Activity</h2>
+      <ul class="text-gray-300 space-y-2">
+        <li class="flex justify-between"><span>Ride Payment</span><span class="text-green-400">−₵25.00</span></li>
+        <li class="flex justify-between"><span>Store Purchase</span><span class="text-green-400">−₵80.00</span></li>
+        <li class="flex justify-between"><span>Top-Up</span><span class="text-blue-400">+₵200.00</span></li>
+      </ul>
+      <a href="dashboard-wallet.html" class="text-cyan-400 hover:text-pink-400 mt-3 block text-right text-sm">View All →</a>
+    </div>
 
-  <!-- Learn & Earn -->
-  <div class="card">
-    <i class="fas fa-gift icon"></i>
-    <h3>Learn & Earn</h3>
-    <p>Join courses and earn ZAC rewards!</p>
-    <a href="learn-earn.html" class="text-neon-blue font-semibold hover:underline">Start Now</a>
-  </div>
+    <!-- Quick Access -->
+    <div class="card">
+      <h2 class="section-title">Quick Access</h2>
+      <div class="feature-grid">
+        <a href="chat.html" class="feature-btn">
+          <i class="fa-solid fa-comments"></i>
+          <p>Chat</p>
+        </a>
+        <a href="dashboard-store.html" class="feature-btn">
+          <i class="fa-solid fa-store"></i>
+          <p>Store</p>
+        </a>
+        <a href="ride-hailing.html" class="feature-btn">
+          <i class="fa-solid fa-car"></i>
+          <p>Ride</p>
+        </a>
+        <a href="dashboard-wallet.html" class="feature-btn">
+          <i class="fa-solid fa-wallet"></i>
+          <p>Wallet</p>
+        </a>
+        <a href="profile.html" class="feature-btn">
+          <i class="fa-solid fa-user"></i>
+          <p>Profile</p>
+        </a>
+      </div>
+    </div>
+  </main>
 
-  <!-- Market Overview -->
-  <div class="card">
-    <i class="fas fa-chart-line icon"></i>
-    <h3>Market Overview</h3>
-    <p>Track cross-border trade trends</p>
-    <div class="value">Live</div>
-  </div>
-
-  <!-- ETH Rate -->
-  <div class="card">
-    <i class="fab fa-ethereum icon"></i>
-    <h3>ETH Rate</h3>
-    <p>Live exchange rate</p>
-    <div class="value" id="ethRate">Loading...</div>
-  </div>
-
-  <!-- USDT Rate -->
-  <div class="card">
-    <i class="fas fa-dollar-sign icon"></i>
-    <h3>USDT Rate</h3>
-    <p>Live exchange rate</p>
-    <div class="value" id="usdtRate">Loading...</div>
-  </div>
-
-</main>
-
-<!-- FOOTER -->
-<footer class="footer">
-  <a href="chat.html" class="active"><i class="fas fa-comments"></i><span>Chat</span></a>
-  <a href="dashboard-store.html"><i class="fas fa-store"></i><span>Store</span></a>
-  <a href="ride-hailing.html"><i class="fas fa-car"></i><span>Rides</span></a>
-  <a href="dashboard-wallet.html"><i class="fas fa-wallet"></i><span>Wallet</span></a>
-  <a href="profile.html"><i class="fas fa-user"></i><span>Profile</span></a>
-</footer>
-
-<script>
-// Fetch live ETH and USDT rates
-async function fetchRates() {
-  try {
-    const res = await fetch('https://api.coingecko.com/api/v3/simple/price?ids=ethereum,tether&vs_currencies=usd');
-    const data = await res.json();
-    document.getElementById('ethRate').innerText = `$${data.ethereum.usd.toLocaleString()}`;
-    document.getElementById('usdtRate').innerText = `$${data.tether.usd.toLocaleString()}`;
-  } catch (error) {
-    document.getElementById('ethRate').innerText = 'Error';
-    document.getElementById('usdtRate').innerText = 'Error';
-  }
-}
-fetchRates();
-setInterval(fetchRates, 60000);
-</script>
-
+  <!-- Footer Navigation -->
+  <footer>
+    <a href="chat.html"><i class="fa-solid fa-comments"></i></a>
+    <a href="dashboard-store.html"><i class="fa-solid fa-store"></i></a>
+    <a href="ride-hailing.html"><i class="fa-solid fa-car"></i></a>
+    <a href="dashboard-wallet.html"><i class="fa-solid fa-wallet"></i></a>
+    <a href="profile.html"><i class="fa-solid fa-user"></i></a>
+  </footer>
 </body>
 </html>
