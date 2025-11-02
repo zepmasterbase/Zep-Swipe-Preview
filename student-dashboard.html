@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Zep Swipe — Student Dashboard</title>
 
-  <!-- Tailwind -->
+  <!-- Tailwind CSS -->
   <script src="https://cdn.tailwindcss.com"></script>
 
   <!-- Fonts -->
@@ -21,10 +21,10 @@
       color: white;
       min-height: 100vh;
       overflow-x: hidden;
-      padding-bottom: 85px;
+      padding-bottom: 90px;
     }
 
-    /* HEADER */
+    /* Header */
     header {
       display: flex;
       justify-content: space-between;
@@ -46,7 +46,7 @@
       background: linear-gradient(90deg, #00f0ff, #ff00f0);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
-      text-shadow: 0 0 20px rgba(0, 255, 255, 0.8);
+      text-shadow: 0 0 25px rgba(0, 255, 255, 0.8);
     }
 
     .logout-btn {
@@ -74,7 +74,7 @@
       transform: scale(1.1);
     }
 
-    /* MAIN */
+    /* Glass Cards */
     .glass-card {
       background: rgba(255, 255, 255, 0.05);
       border-radius: 1.5rem;
@@ -84,6 +84,7 @@
       padding: 1.5rem;
     }
 
+    /* Balances */
     .balance {
       font-family: 'Orbitron', sans-serif;
       font-size: 1.6rem;
@@ -98,8 +99,12 @@
       50% { text-shadow: 0 0 25px #ff00f0; }
       100% { text-shadow: 0 0 8px #00f0ff; }
     }
-    .pulse { animation: pulseGlow 1.5s ease-in-out; }
 
+    .pulse {
+      animation: pulseGlow 1.5s ease-in-out;
+    }
+
+    /* Buttons */
     .neon-btn {
       width: 100%;
       text-align: center;
@@ -109,16 +114,22 @@
       color: #0a021f;
       transition: 0.3s;
     }
+
     .btn-cyan {
       background: linear-gradient(90deg, #00f0ff, #8ef8b8);
       box-shadow: 0 0 20px #00f0ff99;
     }
+
     .btn-pink {
       background: linear-gradient(90deg, #ff00f0, #ff77ff);
       box-shadow: 0 0 20px #ff00f099;
     }
-    .neon-btn:hover { transform: scale(1.05); }
 
+    .neon-btn:hover {
+      transform: scale(1.05);
+    }
+
+    /* Transactions */
     .tx-card {
       background: rgba(255, 255, 255, 0.06);
       border: 1px solid rgba(255, 255, 255, 0.1);
@@ -130,12 +141,13 @@
       margin-bottom: 0.8rem;
       transition: 0.3s;
     }
+
     .tx-card:hover {
       background: rgba(255, 255, 255, 0.1);
       box-shadow: 0 0 10px rgba(255, 0, 255, 0.15);
     }
 
-    /* FOOTER */
+    /* Footer */
     footer {
       position: fixed;
       bottom: 0;
@@ -156,31 +168,37 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      width: 45px;
-      height: 45px;
+      width: 50px;
+      height: 50px;
       border-radius: 50%;
       background: rgba(255, 255, 255, 0.05);
       border: 1px solid rgba(255, 255, 255, 0.15);
-      box-shadow: 0 0 15px rgba(0, 255, 255, 0.25);
       transition: all 0.3s ease;
+      animation: neonPulse 3s infinite alternate ease-in-out;
     }
 
     footer a i {
-      font-size: 1.4rem;
+      font-size: 1.5rem;
       color: #00f0ff;
       text-shadow: 0 0 20px #00f0ff;
       transition: 0.3s;
     }
 
-    footer a:hover {
-      transform: scale(1.15);
-      box-shadow: 0 0 25px rgba(255, 0, 255, 0.4);
-      background: rgba(255, 255, 255, 0.1);
-    }
-
     footer a:hover i {
       color: #ff00f0;
       text-shadow: 0 0 25px #ff00f0;
+    }
+
+    @keyframes neonPulse {
+      0% {
+        box-shadow: 0 0 10px rgba(0, 255, 255, 0.5), 0 0 25px rgba(0, 255, 255, 0.4);
+      }
+      50% {
+        box-shadow: 0 0 30px rgba(255, 0, 255, 0.6), 0 0 50px rgba(255, 0, 255, 0.4);
+      }
+      100% {
+        box-shadow: 0 0 15px rgba(0, 255, 255, 0.5), 0 0 35px rgba(0, 255, 255, 0.3);
+      }
     }
   </style>
 </head>
@@ -194,7 +212,7 @@
     </button>
   </header>
 
-  <!-- MAIN -->
+  <!-- MAIN CONTENT -->
   <main class="px-5 pt-6 flex flex-col items-center">
     <div class="glass-card w-full max-w-sm text-center mb-6">
       <i class="fa-solid fa-user-graduate text-5xl text-pink-400 mb-3"></i>
