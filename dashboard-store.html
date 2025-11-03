@@ -5,69 +5,96 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>ZepShop Marketplace</title>
   <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700&family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+
   <style>
     body {
-      background: radial-gradient(circle at top, #05010a 0%, #020006 100%);
+      background: radial-gradient(circle at top, #04000f 0%, #010006 100%);
       color: white;
       font-family: 'Poppins', sans-serif;
       overflow-x: hidden;
     }
 
-    .neon-text {
-      text-shadow: 0 0 10px #ff00ff, 0 0 20px #00ffff, 0 0 40px #00ffcc;
+    /* Neon glass header */
+    header {
+      background: rgba(255, 255, 255, 0.06);
+      border-bottom: 1px solid rgba(255, 0, 255, 0.3);
+      box-shadow: 0 0 25px rgba(255, 0, 255, 0.25);
+      backdrop-filter: blur(15px);
     }
 
-    .neon-border {
-      border: 1px solid rgba(255, 255, 255, 0.2);
-      backdrop-filter: blur(10px);
-      background: rgba(255, 255, 255, 0.05);
-      box-shadow: 0 0 20px rgba(255, 0, 255, 0.4);
+    .neon-logo {
+      font-family: 'Orbitron', sans-serif;
+      font-weight: 700;
+      letter-spacing: 1px;
+      color: #00fff0;
+      text-shadow: 0 0 12px #00fff0, 0 0 25px #ff00ff;
     }
 
-    .neon-button {
-      background: linear-gradient(90deg, #ff00cc, #00ffff);
+    .neon-btn {
+      background: linear-gradient(90deg, #ff00f0, #00fff0);
       color: white;
-      font-weight: 600;
       border-radius: 9999px;
-      padding: 0.75rem 1.5rem;
-      transition: transform 0.2s ease;
-      text-shadow: 0 0 8px #ff00ff;
+      padding: 0.5rem 1.2rem;
+      font-weight: 600;
+      text-shadow: 0 0 8px #00ffff;
+      box-shadow: 0 0 12px rgba(0, 255, 255, 0.6);
+      transition: transform 0.25s;
     }
 
-    .neon-button:hover {
-      transform: scale(1.05);
-    }
+    .neon-btn:hover { transform: scale(1.05); }
 
     .product-card {
       border-radius: 1rem;
-      background: rgba(255, 255, 255, 0.05);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      box-shadow: 0 0 12px rgba(0, 255, 255, 0.3);
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      box-shadow: 0 0 15px rgba(0, 255, 255, 0.15);
       transition: all 0.3s ease;
     }
 
     .product-card:hover {
       transform: scale(1.03);
-      box-shadow: 0 0 20px rgba(255, 0, 255, 0.4);
+      box-shadow: 0 0 25px rgba(255, 0, 255, 0.4);
     }
 
-    .footer-icon {
-      color: #9ca3af;
+    /* Footer icons (SVG neon) */
+    footer {
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+      background: rgba(15, 15, 30, 0.7);
+      backdrop-filter: blur(12px);
+      border-top: 1px solid rgba(255, 255, 255, 0.15);
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      padding: 0.8rem 0;
+      z-index: 50;
+    }
+
+    .footer-icon svg {
+      width: 26px;
+      height: 26px;
+      stroke: #00fff0;
+      filter: drop-shadow(0 0 5px #00fff0);
       transition: 0.3s;
     }
 
-    .footer-icon:hover {
-      color: #00ffff;
-      text-shadow: 0 0 10px #00ffff;
+    .footer-icon:hover svg {
+      stroke: #ff00f0;
+      filter: drop-shadow(0 0 10px #ff00f0);
+      transform: scale(1.1);
     }
   </style>
 </head>
 
 <body class="min-h-screen flex flex-col justify-between">
   <!-- HEADER -->
-  <header class="flex justify-between items-center px-6 py-4 bg-transparent">
-    <h1 class="text-2xl font-bold neon-text">ZEP<span class="text-pink-500">SHOP</span></h1>
-    <button class="neon-button text-sm px-4 py-2">🔥 Deals</button>
+  <header class="flex justify-between items-center px-6 py-4">
+    <h1 class="text-2xl neon-logo">ZEP<span class="text-pink-500">SHOP</span></h1>
+    <button class="neon-btn text-sm">🔥 Deals</button>
   </header>
 
   <!-- SEARCH BAR -->
@@ -75,88 +102,102 @@
     <input
       type="text"
       placeholder="Search for digital products, food, and deals..."
-      class="w-full px-4 py-3 rounded-full text-white placeholder-pink-300 bg-[#0b0b15] border border-pink-500 focus:outline-none focus:ring-2 focus:ring-pink-400"
+      class="w-full px-4 py-3 rounded-full text-white placeholder-pink-300 bg-[#0a0a15] border border-pink-500 focus:outline-none focus:ring-2 focus:ring-pink-400"
     />
   </div>
 
   <!-- MAIN CONTENT -->
-  <main class="flex-1 px-6 pb-20">
-    <!-- FEATURED PRODUCTS -->
+  <main class="flex-1 px-6 pb-24">
+    <!-- DIGITAL PRODUCTS -->
     <section class="my-6">
-      <h2 class="text-xl font-semibold mb-3 neon-text">💻 Digital Products</h2>
+      <h2 class="text-xl font-semibold mb-3 text-cyan-400">💻 Digital Products</h2>
       <div class="grid grid-cols-2 gap-4">
         <div class="product-card p-4 flex flex-col items-center">
           <img src="https://cdn-icons-png.flaticon.com/512/870/870910.png" alt="Laptop" class="w-20 h-20 mb-3" />
           <p class="font-medium">Laptop</p>
-          <button class="neon-button text-xs mt-2">Shop Now</button>
+          <button class="neon-btn text-xs mt-2">Shop Now</button>
         </div>
 
         <div class="product-card p-4 flex flex-col items-center">
           <img src="https://cdn-icons-png.flaticon.com/512/860/860784.png" alt="Phone" class="w-20 h-20 mb-3" />
           <p class="font-medium">Smartphone</p>
-          <button class="neon-button text-xs mt-2">Shop Now</button>
+          <button class="neon-btn text-xs mt-2">Shop Now</button>
         </div>
       </div>
     </section>
 
     <!-- STATIONERY -->
     <section class="my-6">
-      <h2 class="text-xl font-semibold mb-3 neon-text">✏️ Stationery</h2>
+      <h2 class="text-xl font-semibold mb-3 text-pink-400">✏️ Stationery</h2>
       <div class="grid grid-cols-2 gap-4">
         <div class="product-card p-4 flex flex-col items-center">
           <img src="https://cdn-icons-png.flaticon.com/512/1043/1043470.png" alt="Notebook" class="w-20 h-20 mb-3" />
           <p class="font-medium">Notebook</p>
-          <button class="neon-button text-xs mt-2">Shop Now</button>
+          <button class="neon-btn text-xs mt-2">Shop Now</button>
         </div>
 
         <div class="product-card p-4 flex flex-col items-center">
           <img src="https://cdn-icons-png.flaticon.com/512/2553/2553626.png" alt="Pen" class="w-20 h-20 mb-3" />
           <p class="font-medium">Pen Set</p>
-          <button class="neon-button text-xs mt-2">Shop Now</button>
+          <button class="neon-btn text-xs mt-2">Shop Now</button>
         </div>
       </div>
     </section>
 
-    <!-- FOOD PLACEHOLDER -->
+    <!-- FOOD -->
     <section class="my-6">
-      <h2 class="text-xl font-semibold mb-3 neon-text">🍔 Food Deals</h2>
+      <h2 class="text-xl font-semibold mb-3 text-yellow-400">🍔 Food Deals</h2>
       <div class="grid grid-cols-2 gap-4">
         <div class="product-card p-4 flex flex-col items-center">
           <img src="https://cdn-icons-png.flaticon.com/512/2921/2921822.png" alt="Burger" class="w-20 h-20 mb-3" />
           <p class="font-medium">Burger Combo</p>
-          <button class="neon-button text-xs mt-2">Order Now</button>
+          <button class="neon-btn text-xs mt-2">Order Now</button>
         </div>
 
         <div class="product-card p-4 flex flex-col items-center">
           <img src="https://cdn-icons-png.flaticon.com/512/3595/3595455.png" alt="Pizza" class="w-20 h-20 mb-3" />
           <p class="font-medium">Student Pizza</p>
-          <button class="neon-button text-xs mt-2">Order Now</button>
+          <button class="neon-btn text-xs mt-2">Order Now</button>
         </div>
       </div>
     </section>
   </main>
 
-  <!-- FOOTER NAVIGATION -->
-  <footer class="fixed bottom-0 w-full bg-[#0b0b15]/90 backdrop-blur-lg py-3 border-t border-pink-500 flex justify-around text-sm">
-    <a href="index.html" class="footer-icon flex flex-col items-center">
-      <span>🏠</span>
-      <p>Home</p>
+  <!-- FOOTER -->
+  <footer>
+    <!-- Home -->
+    <a href="index.html" class="footer-icon">
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.8">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M3 12l9-9 9 9M4.5 10.5V21h15v-10.5" />
+      </svg>
     </a>
-    <a href="#" class="footer-icon flex flex-col items-center">
-      <span>🔍</span>
-      <p>Search</p>
+
+    <!-- Search -->
+    <a href="search.html" class="footer-icon">
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.8">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-4.35-4.35m1.35-5.65a7 7 0 11-14 0 7 7 0 0114 0z" />
+      </svg>
     </a>
-    <a href="#" class="footer-icon flex flex-col items-center">
-      <span>🛒</span>
-      <p>Sell</p>
+
+    <!-- Sell -->
+    <a href="sell.html" class="footer-icon">
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.8">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v18m9-9H3" />
+      </svg>
     </a>
-    <a href="#" class="footer-icon flex flex-col items-center">
-      <span>🛍️</span>
-      <p>Cart</p>
+
+    <!-- Cart -->
+    <a href="cart.html" class="footer-icon">
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.8">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 7m1.6 6l-.4 2h12m-9 4a1 1 0 100-2 1 1 0 000 2zm8 0a1 1 0 100-2 1 1 0 000 2z" />
+      </svg>
     </a>
-    <a href="#" class="footer-icon flex flex-col items-center">
-      <span>👤</span>
-      <p>Profile</p>
+
+    <!-- Profile -->
+    <a href="profile.html" class="footer-icon">
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.8">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M5.121 17.804A9 9 0 1119.88 17.8M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+      </svg>
     </a>
   </footer>
 </body>
