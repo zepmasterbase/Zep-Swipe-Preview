@@ -3,226 +3,223 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Zep Swipe Wish List</title>
+  <title>Zep Swipe — Sign Up</title>
 
-  <!-- Tailwind + Fonts + Icons -->
+  <!-- Tailwind CSS -->
   <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700&family=Poppins:wght@400;500;600&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
 
-  <!-- Firebase SDK -->
-  <script type="module">
-    // Import Firebase modules
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.5.0/firebase-app.js";
-    import { getDatabase, ref, push } from "https://www.gstatic.com/firebasejs/10.5.0/firebase-database.js";
-
-    // Your Firebase configuration
-    const firebaseConfig = {
-      apiKey: "YOUR_API_KEY",
-      authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
-      databaseURL: "https://YOUR_PROJECT_ID-default-rtdb.firebaseio.com",
-      projectId: "YOUR_PROJECT_ID",
-      storageBucket: "YOUR_PROJECT_ID.appspot.com",
-      messagingSenderId: "YOUR_SENDER_ID",
-      appId: "YOUR_APP_ID"
-    };
-
-    // Initialize Firebase
-    const app = initializeApp(firebaseConfig);
-    const db = getDatabase(app);
-
-    // Submit form
-    window.submitWish = function(event) {
-      event.preventDefault();
-
-      const email = document.getElementById("email").value;
-      const phone = document.getElementById("phone").value;
-      const country = document.getElementById("country").value;
-      const university = document.getElementById("university").value;
-
-      if (!email || !phone || !country || !university) {
-        alert("Please fill all fields!");
-        return;
-      }
-
-      const wishData = {
-        email,
-        phone,
-        country,
-        university,
-        timestamp: Date.now()
-      };
-
-      push(ref(db, 'wishes'), wishData)
-        .then(() => {
-          alert("Your wish has been submitted! ✅");
-          document.getElementById("wishForm").reset();
-        })
-        .catch(err => console.error(err));
-    }
-  </script>
+  <!-- Icons -->
+  <script src="https://kit.fontawesome.com/a2e0e6b6a2.js" crossorigin="anonymous"></script>
 
   <style>
     body {
       font-family: 'Poppins', sans-serif;
-      background: radial-gradient(circle at top, #0a021b 0%, #10062a 100%);
+      background: radial-gradient(circle at 20% 20%, #1b0034, #050012, #0a021f);
       color: #fff;
-      margin: 0;
-      min-height: 100vh;
       display: flex;
-      flex-direction: column;
       align-items: center;
-      overflow-x: hidden;
-    }
-
-    header {
-      width: 100%;
-      position: fixed;
-      top: 0;
-      left: 0;
-      display: flex;
       justify-content: center;
-      align-items: center;
-      padding: 1rem 1.5rem;
-      backdrop-filter: blur(10px);
-      background: rgba(10, 2, 27, 0.8);
-      box-shadow: 0 0 25px rgba(255, 0, 240, 0.3);
-      z-index: 100;
+      min-height: 100vh;
+      padding: 2rem;
     }
 
-    .logo {
-      font-family: 'Orbitron', sans-serif;
-      font-size: 1.8rem;
-      font-weight: 700;
-      background: linear-gradient(90deg, #00ffff, #ff00ff);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      text-shadow: 0 0 15px rgba(0, 255, 255, 0.5);
-    }
-
-    .hero {
-      margin-top: 6rem;
-      text-align: center;
-      padding: 1rem;
+    .glass-card {
+      background: rgba(255, 255, 255, 0.08);
+      border-radius: 1.5rem;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      backdrop-filter: blur(18px);
+      box-shadow: 0 0 30px rgba(255, 0, 255, 0.15);
+      max-width: 420px;
       width: 100%;
-      max-width: 400px;
-    }
-    .hero h1 {
-      font-family: 'Orbitron', sans-serif;
-      font-size: 1.9rem;
-      font-weight: 700;
-      background: linear-gradient(90deg, #ff00ff, #ff66ff, #00ffff);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      text-shadow: 0 0 15px rgba(255, 0, 240, 0.4);
-    }
-    .hero p {
-      margin: 0.5rem 0 2rem;
-      color: #bdbaf9;
-      font-size: 1rem;
+      padding: 2rem;
+      transition: 0.3s ease-in-out;
     }
 
-    form {
-      display: flex;
-      flex-direction: column;
-      gap: 1rem;
+    .glass-card:hover {
+      box-shadow: 0 0 40px rgba(255, 0, 255, 0.3);
+    }
+
+    .glow-title {
+      font-family: 'Orbitron', sans-serif;
+      background: linear-gradient(90deg, #00f0ff, #ff00f0, #8ef8b8);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      font-size: 1.8rem;
+      text-align: center;
+      margin-bottom: 1.2rem;
     }
 
     input, select {
-      padding: 0.7rem 1rem;
-      border-radius: 9999px;
-      border: 1px solid rgba(255, 255, 255, 0.3);
-      background: rgba(255, 255, 255, 0.05);
-      color: #fff;
-      outline: none;
-      font-weight: 500;
-      transition: 0.3s;
-    }
-
-    input:focus, select:focus {
-      border: 1px solid #ff00ff;
-      box-shadow: 0 0 10px #ff00ff;
-    }
-
-    button {
+      width: 100%;
       padding: 0.8rem;
-      border-radius: 9999px;
-      font-weight: 600;
-      font-size: 1rem;
-      background: linear-gradient(90deg, #00ffff, #ff00ff);
-      color: #0b0520;
-      box-shadow: 0 0 20px rgba(255, 0, 240, 0.4);
+      border-radius: 0.8rem;
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      color: #fff;
+      margin-bottom: 1rem;
+      outline: none;
+    }
+
+    ::placeholder { color: #a7faff; }
+
+    .btn {
+      width: 100%;
+      padding: 0.8rem;
+      border-radius: 0.8rem;
+      font-weight: 500;
+      border: none;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+
+    .btn-primary {
+      background: linear-gradient(90deg, #00f0ff, #ff00f0);
+      color: #0a021f;
+    }
+
+    .btn-primary:hover {
+      box-shadow: 0 0 15px rgba(255, 0, 255, 0.4);
+      transform: scale(1.03);
+    }
+
+    .wallet-btn {
+      width: 100%;
+      padding: 0.8rem;
+      border-radius: 0.8rem;
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.6rem;
+      margin-bottom: 1rem;
       transition: 0.3s;
     }
 
-    button:hover {
-      transform: scale(1.05);
-      box-shadow: 0 0 30px rgba(255, 0, 240, 0.6);
+    .wallet-btn:hover {
+      background: linear-gradient(90deg, #00f0ff33, #ff00f033);
+      box-shadow: 0 0 10px rgba(0, 255, 255, 0.25);
     }
 
-    footer {
+    .role-btn {
+      width: 48%;
+      padding: 0.6rem;
+      border-radius: 0.8rem;
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      color: white;
+      transition: 0.3s;
+    }
+
+    .role-btn.active {
+      background: linear-gradient(90deg, #ff00f0, #00f0ff);
+      color: #0a021f;
+    }
+
+    .footer {
       text-align: center;
-      margin-top: auto;
-      padding: 1.5rem 0;
-      color: #bdbaf9;
+      margin-top: 1.5rem;
+      color: #8feaff;
     }
 
-    footer a {
-      margin: 0 0.6rem;
-      color: #00ffff;
+    .footer a {
+      margin: 0 0.5rem;
+      color: #00f0ff;
       transition: 0.3s;
     }
 
-    footer a:hover {
-      color: #ff00ff;
-      transform: scale(1.1);
-    }
+    .footer a:hover { color: #ff00f0; }
   </style>
 </head>
 
 <body>
+  <div class="glass-card">
+    <h1 class="glow-title">Zep Swipe Sign Up</h1>
 
-  <!-- HEADER -->
-  <header>
-    <div class="logo">ZEP SWIPE</div>
-  </header>
+    <!-- Wallet Connect -->
+    <button class="wallet-btn" id="connectMetaMask">
+      <i class="fa-brands fa-ethereum"></i> Connect MetaMask
+    </button>
 
-  <!-- HERO / FORM -->
-  <section class="hero">
-    <h1>Submit Your Wish</h1>
-    <p>Fill in your details and join the Zep Swipe wish list!</p>
+    <button class="wallet-btn" id="connectCoinbase">
+      <i class="fa-brands fa-bitcoin"></i> Connect Coinbase
+    </button>
 
-    <form id="wishForm" onsubmit="submitWish(event)">
-      <input type="email" id="email" placeholder="Email" required />
-      <input type="text" id="phone" placeholder="Phone Number" required />
-      <select id="country" required>
-        <option value="">Select Country</option>
-        <option value="South Africa">South Africa</option>
-        <option value="Ghana">Ghana</option>
-        <option value="Nigeria">Nigeria</option>
-        <option value="Uganda">Uganda</option>
-        <option value="Kenya">Kenya</option>
-        <option value="USA">USA</option>
-        <option value="UK">UK</option>
-        <option value="Germany">Germany</option>
-        <option value="India">India</option>
-        <option value="Canada">Canada</option>
-      </select>
-      <input type="text" id="university" placeholder="University Name" required />
-      <button type="submit">Submit Wish</button>
-    </form>
-  </section>
+    <p class="text-center text-sm text-gray-300 mb-2">or continue with phone</p>
 
-  <!-- FOOTER -->
-  <footer>
-    <div>
-      <a href="https://t.me/zepswipe" target="_blank"><i class="fab fa-telegram fa-lg"></i></a>
-      <a href="https://www.instagram.com/zepswipe?igsh=bXF3anMxODhxZWFs" target="_blank"><i class="fab fa-instagram fa-lg"></i></a>
-      <a href="https://x.com/ZepSwipe?t=r94a0_pgN7ew1xT5L4eOSA&s=09" target="_blank"><i class="fab fa-x-twitter fa-lg"></i></a>
-      <a href="https://x.com/ZepSwipe?t=r94a0_pgN7ew1xT5L4eOSA&s=09" target="_blank"><i class="fab fa-facebook fa-lg"></i></a>
+    <!-- Country dropdown -->
+    <select id="country">
+      <option value="">Select Country</option>
+      <option>Ghana</option>
+      <option>Nigeria</option>
+      <option>Kenya</option>
+      <option>Uganda</option>
+      <option>South Africa</option>
+      <option>Rwanda</option>
+      <option>Tanzania</option>
+      <option>Egypt</option>
+      <option>Morocco</option>
+      <option>Senegal</option>
+    </select>
+
+    <!-- Role -->
+    <div class="flex justify-between mb-3">
+      <button id="studentBtn" class="role-btn" onclick="selectRole('student')">🧑‍🎓 Student</button>
+      <button id="vendorBtn" class="role-btn" onclick="selectRole('vendor')">🛍️ Vendor</button>
     </div>
-    <p class="text-sm mt-2 opacity-70">© 2025 Zep Swipe. All rights reserved.</p>
-  </footer>
 
+    <input type="tel" id="phoneNumber" placeholder="+233 54 000 0000" />
+    <button id="signUpBtn" class="btn btn-primary mb-3" onclick="signupUser()">Sign Up</button>
+
+    <div class="footer">
+      <a href="https://x.com/ZepSwipe?t=r94a0_pgN7ew1xT5L4eOSA&s=09" target="_blank"><i class="fab fa-x-twitter"></i></a>
+      <a href="https://www.instagram.com/zepswipe?igsh=bXF3anMxODhxZWFs" target="_blank"><i class="fab fa-instagram"></i></a>
+      <a href="https://facebook.com/ZepSwipe" target="_blank"><i class="fab fa-facebook"></i></a>
+    </div>
+  </div>
+
+  <!-- Developer Mode Script -->
+  <script>
+    const DEV_MODE = true;
+    let selectedRole = null;
+
+    function selectRole(role) {
+      selectedRole = role;
+      document.getElementById('studentBtn').classList.toggle('active', role === 'student');
+      document.getElementById('vendorBtn').classList.toggle('active', role === 'vendor');
+    }
+
+    // Simulated Wallet Connections
+    document.getElementById("connectMetaMask").addEventListener("click", () => {
+      alert("🦊 MetaMask connected successfully (Developer Mode).");
+    });
+
+    document.getElementById("connectCoinbase").addEventListener("click", () => {
+      alert("💼 Coinbase wallet connected (Developer Mode).");
+    });
+
+    // Developer Signup Simulation
+    function signupUser() {
+      const phone = document.getElementById("phoneNumber").value;
+      if (!phone) return alert("Please enter your phone number.");
+      if (!selectedRole) return alert("Please select your role (Student or Vendor).");
+
+      if (DEV_MODE) {
+        alert("✅ Signup successful (Developer Mode)");
+        if (selectedRole === "student") {
+          window.location.href = "student-dashboard.html";
+        } else if (selectedRole === "vendor") {
+          window.location.href = "vendor-dashboard.html";
+        }
+        return;
+      }
+
+      // Firebase signup logic placeholder for future real-time auth
+    }
+  </script>
 </body>
 </html>
