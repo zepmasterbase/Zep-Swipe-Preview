@@ -1,296 +1,205 @@
+<!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Zep Swipe — Web3 Chat Dashboard</title>
-<script src="https://cdn.tailwindcss.com"></script>
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700&family=Roboto:wght@400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
-<style>
-body {
-  font-family:'Roboto',sans-serif;
-  background:#1b0f3a;
-  color:#fff;
-  margin:0;
-  padding:0;
-  display:flex;
-  flex-direction:column;
-  height:100vh;
-}
-.header {
-  font-family:'Orbitron',sans-serif;
-  font-size:1.75rem;
-  text-align:center;
-  padding:1.5rem;
-  background:linear-gradient(90deg,#00f0ff,#ff00f0);
-  -webkit-background-clip:text;
-  -webkit-text-fill-color:transparent;
-}
-button.gradient-btn {
-  background:linear-gradient(90deg,#00f0ff,#ff00f0);
-  color:#1b0f3a;
-  font-weight:600;
-  border:none;
-  border-radius:0.75rem;
-  padding:0.75rem 1.25rem;
-  cursor:pointer;
-  transition:0.3s;
-}
-button.gradient-btn:hover { opacity:0.9; }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Zep Swipe — Earn. Learn. Get Rewarded.</title>
 
-#contactsList button {
-  background:rgba(124,99,255,0.2);
-  width:100%;
-  border-radius:0.75rem;
-  padding:0.75rem;
-  text-align:left;
-  margin-bottom:0.5rem;
-  transition:0.3s;
-}
-#contactsList button:hover { background:rgba(124,99,255,0.4); }
+  <!-- Tailwind + Fonts + Icons -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700&family=Poppins:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
 
-.chat-container {
-  display:flex;
-  flex-direction:column;
-  flex:1;
-  background:rgba(255,255,255,0.05);
-  margin:1rem;
-  border-radius:1rem;
-  padding:1rem;
-  overflow:hidden;
-}
-#messages {
-  flex:1;
-  overflow-y:auto;
-  padding:0.5rem;
-}
-.message {
-  margin-bottom:0.75rem;
-  padding:0.5rem 0.75rem;
-  border-radius:0.75rem;
-  max-width:70%;
-}
-.sent {
-  background:linear-gradient(90deg,#00f0ff,#ff00f0);
-  color:#1b0f3a;
-  align-self:flex-end;
-}
-.received {
-  background:rgba(124,99,255,0.2);
-  align-self:flex-start;
-}
-.input-container {
-  display:flex;
-  gap:0.5rem;
-  margin-top:0.5rem;
-}
-input[type="text"] {
-  flex:1;
-  padding:0.75rem;
-  border-radius:0.75rem;
-  border:none;
-  outline:none;
-  color:#fff;
-  background:rgba(255,255,255,0.1);
-}
-</style>
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: radial-gradient(circle at top, #0a021b 0%, #10062a 100%);
+      color: #fff;
+      margin: 0;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      overflow-x: hidden;
+    }
+
+    /* Header */
+    header {
+      width: 100%;
+      position: fixed;
+      top: 0;
+      left: 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 1.5rem;
+      backdrop-filter: blur(10px);
+      background: rgba(10, 2, 27, 0.8);
+      box-shadow: 0 0 25px rgba(255, 0, 240, 0.3);
+      z-index: 100;
+    }
+
+    .logo {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 1.5rem;
+      font-weight: 700;
+      background: linear-gradient(90deg, #00ffff, #ff00ff);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      text-shadow: 0 0 15px rgba(0, 255, 255, 0.5);
+    }
+
+    .login-btn {
+      padding: 0.4rem 1rem;
+      border-radius: 9999px;
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      color: #ff00ff;
+      background: rgba(255, 255, 255, 0.05);
+      font-weight: 600;
+      font-size: 0.9rem;
+      transition: 0.3s;
+    }
+    .login-btn:hover {
+      background: linear-gradient(90deg, #ff00ff, #00ffff);
+      color: #0b0520;
+      transform: scale(1.05);
+      box-shadow: 0 0 20px rgba(255, 0, 240, 0.6);
+    }
+
+    /* Hero */
+    .hero {
+      margin-top: 8rem;
+      text-align: center;
+      padding: 1rem;
+    }
+    .hero h1 {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 1.9rem;
+      font-weight: 700;
+      background: linear-gradient(90deg, #ff00ff, #ff66ff, #00ffff);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      text-shadow: 0 0 15px rgba(255, 0, 240, 0.4);
+    }
+    .hero p {
+      max-width: 320px;
+      margin: 0.8rem auto 1.8rem;
+      font-size: 1rem;
+      color: #bdbaf9;
+      line-height: 1.6;
+    }
+
+    /* Neon Circle Image */
+    .neon-circle {
+      width: 180px;
+      height: 180px;
+      margin: 1.5rem auto 2rem;
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: radial-gradient(circle at 30% 30%, rgba(255, 0, 240, 0.2), rgba(0, 255, 255, 0.05));
+      box-shadow: 0 0 20px rgba(255, 0, 240, 0.3), 0 0 40px rgba(0, 255, 255, 0.3);
+      border: 2px solid rgba(255, 255, 255, 0.15);
+    }
+    .neon-circle img {
+      width: 100px;
+      filter: drop-shadow(0 0 15px rgba(255, 0, 240, 0.6));
+    }
+
+    /* Buttons */
+    .btn {
+      display: block;
+      width: 280px;
+      margin: 0.7rem auto;
+      padding: 0.8rem;
+      border-radius: 9999px;
+      text-align: center;
+      font-weight: 600;
+      transition: 0.3s;
+    }
+
+    .btn-primary {
+      background: linear-gradient(90deg, #00ffff, #ff00ff);
+      color: #0b0520;
+      box-shadow: 0 0 20px rgba(255, 0, 240, 0.4);
+    }
+    .btn-primary:hover {
+      background: linear-gradient(90deg, #ff00ff, #00ffcc);
+      transform: scale(1.05);
+      box-shadow: 0 0 30px rgba(255, 0, 240, 0.6);
+    }
+
+    .placeholder {
+      margin: 2rem auto;
+      max-width: 300px;
+      padding: 1rem;
+      text-align: center;
+      border-radius: 1rem;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      background: rgba(255, 255, 255, 0.05);
+      color: #bdbaf9;
+      box-shadow: 0 0 20px rgba(0, 255, 255, 0.2);
+      font-weight: 600;
+      font-family: 'Orbitron', sans-serif;
+      font-size: 0.9rem;
+      line-height: 1.4;
+    }
+
+    /* Footer */
+    footer {
+      text-align: center;
+      margin-top: auto;
+      padding: 1.5rem 0;
+      color: #bdbaf9;
+    }
+
+    footer a {
+      margin: 0 0.6rem;
+      color: #00ffff;
+      transition: 0.3s;
+    }
+
+    footer a:hover {
+      color: #ff00ff;
+      transform: scale(1.1);
+    }
+  </style>
 </head>
+
 <body>
 
-<h1 class="header">Zep Swipe Web3 Chat</h1>
+  <!-- HEADER -->
+  <header>
+    <div class="logo">ZEP SWIPE</div>
+    <a href="login.html" class="login-btn">LOGIN</a>
+  </header>
 
-<!-- LOGIN SCREEN -->
-<section id="loginScreen" class="flex flex-col items-center justify-center flex-1">
-  <p class="text-[#c0bdf4] mb-4 text-center max-w-xs">
-    Connect your in-app wallet to access Zep Swipe Chat Dashboard.
-  </p>
-  <button id="connectWalletBtn" class="gradient-btn">Connect Wallet</button>
-  <p id="walletStatus" class="mt-3 text-sm text-[#9f9fe0]"></p>
-</section>
+  <!-- HERO -->
+  <section class="hero">
+    <h1>Earn. Learn. Get Rewarded.</h1>
+    <p>Join our early access program — build your profile, earn tokens, and get ready for our upcoming marketplace.</p>
 
-<!-- DASHBOARD -->
-<section id="chatDashboard" class="hidden flex-col flex-1">
-  <div class="flex justify-between items-center px-4">
-    <p id="connectedUser" class="text-sm text-[#b8b8ff]"></p>
-    <button id="logoutBtn" class="text-[#ff00f0] text-sm">Logout</button>
-  </div>
+    <div class="neon-circle">
+      <img src="https://cdn-icons-png.flaticon.com/512/706/706830.png" alt="Student Neon Icon" />
+    </div>
 
-  <!-- Upload contacts -->
-  <div class="px-4 mb-4 text-center">
-    <label class="block mb-2 text-sm text-[#c0bdf4]">Upload Contacts (.csv or .vcf)</label>
-    <input type="file" id="contactUpload" accept=".csv,.vcf"
-      class="text-sm text-white bg-[#2a1d50] border border-[#7c63ff] rounded-lg p-2 w-full max-w-xs"/>
-  </div>
+    <a href="signup.html" class="btn btn-primary">JOIN THE BETA</a>
 
-  <!-- Contacts List -->
-  <div id="contactsList" class="px-4"></div>
-</section>
+    <div class="placeholder">
+      ZEP SHOP MARKETPLACE<br>COMING SOON
+    </div>
+  </section>
 
-<!-- CHAT SECTION -->
-<section id="chatSection" class="chat-container hidden">
-  <div class="flex justify-between items-center mb-2">
-    <h2 id="chatWith" class="text-lg font-semibold text-[#ff00f0]"></h2>
-    <button id="backBtn" class="text-[#00f0ff] text-sm"><i class="fa fa-arrow-left mr-1"></i>Back</button>
-  </div>
-  <div id="messages"></div>
-  <div class="input-container">
-    <input type="text" id="messageInput" placeholder="Type a message...">
-    <button class="gradient-btn" id="sendMessageBtn">Send</button>
-  </div>
-</section>
-
-<script type="module">
-// --- IMPORTS ---
-import { ethers } from "https://cdn.jsdelivr.net/npm/ethers@5.7.2/dist/ethers.esm.min.js";
-import * as XMTP from "https://esm.sh/@xmtp/xmtp-js@11.3.0";
-
-// --- GLOBALS ---
-let signer, xmtpClient, currentUser, currentContact;
-
-// --- ELEMENTS ---
-const loginScreen = document.getElementById("loginScreen");
-const chatDashboard = document.getElementById("chatDashboard");
-const chatSection = document.getElementById("chatSection");
-const connectWalletBtn = document.getElementById("connectWalletBtn");
-const walletStatus = document.getElementById("walletStatus");
-const connectedUser = document.getElementById("connectedUser");
-const logoutBtn = document.getElementById("logoutBtn");
-const backBtn = document.getElementById("backBtn");
-
-// --- AUTHENTICATION FLOW ---
-connectWalletBtn.onclick = async () => {
-  if (!window.ethereum) return alert("Please install MetaMask or use Base/Coinbase Wallet.");
-  try {
-    const provider = new ethers.providers.Web3Provider(window.ethereum);
-    await provider.send("eth_requestAccounts", []);
-    signer = provider.getSigner();
-    const address = await signer.getAddress();
-
-    walletStatus.textContent = "Wallet connected: " + address.substring(0, 10) + "...";
-    connectWalletBtn.textContent = "Authenticating...";
-
-    // Wallet-based "login" via signing message
-    const nonce = "ZepSwipeLogin-" + Date.now();
-    const signature = await signer.signMessage(nonce);
-    if (!signature) throw new Error("Signature rejected.");
-
-    // Initialize XMTP client
-    xmtpClient = await XMTP.Client.create(signer);
-    currentUser = address;
-    connectedUser.textContent = "Connected as: " + address;
-
-    // Switch screens
-    loginScreen.classList.add("hidden");
-    chatDashboard.classList.remove("hidden");
-
-  } catch (err) {
-    console.error(err);
-    walletStatus.textContent = "Connection failed.";
-  }
-};
-
-// Logout
-logoutBtn.onclick = () => {
-  signer = null;
-  xmtpClient = null;
-  loginScreen.classList.remove("hidden");
-  chatDashboard.classList.add("hidden");
-  chatSection.classList.add("hidden");
-  walletStatus.textContent = "";
-  connectWalletBtn.textContent = "Connect Wallet";
-};
-
-// --- CONTACTS ---
-document.getElementById("contactUpload").addEventListener("change", function(e) {
-  const file = e.target.files[0];
-  if (!file) return;
-  const reader = new FileReader();
-  reader.onload = evt => {
-    const text = evt.target.result;
-    const contacts = parseContacts(text);
-    renderContacts(contacts);
-  };
-  reader.readAsText(file);
-});
-
-function parseContacts(text) {
-  const contacts = [];
-  if (text.includes("BEGIN:VCARD")) {
-    const matches = text.match(/FN:(.+)/g);
-    matches?.forEach((line, i) => contacts.push({ name: line.replace("FN:", "").trim(), id: i }));
-  } else {
-    const lines = text.split("\n");
-    lines.forEach((line, i) => {
-      const [name, wallet] = line.split(",");
-      if (name && wallet) contacts.push({ name: name.trim(), wallet: wallet.trim(), id: i });
-    });
-  }
-  return contacts;
-}
-
-function renderContacts(contacts) {
-  const list = document.getElementById("contactsList");
-  list.innerHTML = "";
-  contacts.forEach(c => {
-    const btn = document.createElement("button");
-    btn.textContent = `${c.name} (${c.wallet || "no wallet"})`;
-    btn.onclick = () => openChat(c);
-    list.appendChild(btn);
-  });
-}
-
-// --- CHAT ---
-async function openChat(contact) {
-  currentContact = contact;
-  chatDashboard.classList.add("hidden");
-  chatSection.classList.remove("hidden");
-  document.getElementById("chatWith").textContent = `Chat with ${contact.name}`;
-  await loadMessages(contact);
-}
-
-backBtn.onclick = () => {
-  chatSection.classList.add("hidden");
-  chatDashboard.classList.remove("hidden");
-};
-
-async function loadMessages(contact) {
-  const container = document.getElementById("messages");
-  container.innerHTML = "<p class='text-sm text-[#aaa]'>Loading messages...</p>";
-  if (!contact.wallet) {
-    container.innerHTML = "<p class='text-sm text-[#f39]'>No wallet found for this contact.</p>";
-    return;
-  }
-  const conv = await xmtpClient.conversations.newConversation(contact.wallet);
-  const messages = await conv.messages();
-  container.innerHTML = "";
-  messages.forEach(m => {
-    const div = document.createElement("div");
-    div.className = "message " + (m.senderAddress === xmtpClient.address ? "sent" : "received");
-    div.textContent = m.content;
-    container.appendChild(div);
-  });
-  container.scrollTop = container.scrollHeight;
-
-  // Stream new messages
-  for await (const msg of await conv.streamMessages()) {
-    const div = document.createElement("div");
-    div.className = "message received";
-    div.textContent = msg.content;
-    container.appendChild(div);
-    container.scrollTop = container.scrollHeight;
-  }
-}
-
-document.getElementById("sendMessageBtn").onclick = async () => {
-  const input = document.getElementById("messageInput");
-  const text = input.value.trim();
-  if (!text || !currentContact?.wallet) return;
-  const conv = await xmtpClient.conversations.newConversation(currentContact.wallet);
-  await conv.send(text);
-  input.value = "";
-  await loadMessages(currentContact);
-};
-</script>
+  <!-- FOOTER -->
+  <footer>
+    <div>
+      <a href="https://x.com/ZepSwipe?t=r94a0_pgN7ew1xT5L4eOSA&s=09" target="_blank"><i class="fab fa-x-twitter fa-lg"></i></a>
+      <a href="https://www.instagram.com/zepswipe?igsh=bXF3anMxODhxZWFs" target="_blank"><i class="fab fa-instagram fa-lg"></i></a>
+      <a href="https://facebook.com/ZepSwipe" target="_blank"><i class="fab fa-facebook fa-lg"></i></a>
+    </div>
+    <p class="text-sm mt-2 opacity-70">© 2025 Zep Swipe. All rights reserved.</p>
+  </footer>
 
 </body>
 </html>
