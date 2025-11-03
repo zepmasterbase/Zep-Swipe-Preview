@@ -1,153 +1,144 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Learn & Earn — Zep Students</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>The Zep Gamer Test</title>
   <script src="https://cdn.tailwindcss.com"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Orbitron:wght@600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700&family=Poppins:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+
   <style>
-    /* Add your custom styles here */
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: radial-gradient(circle at top, #0a021b 0%, #10062a 100%);
+      color: #fff;
+      min-height: 100vh;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    header {
+      text-align: center;
+      padding: 2rem 1rem 1rem;
+    }
+
+    h1 {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 1.9rem;
+      font-weight: 700;
+      background: linear-gradient(90deg, #00ffff, #ff00ff);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      text-shadow: 0 0 20px rgba(255, 0, 240, 0.5);
+    }
+
+    .levels {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1.5rem;
+      padding: 2rem;
+      justify-items: center;
+    }
+
+    .level-card {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.15);
+      box-shadow: 0 0 20px rgba(255,0,240,0.25);
+      border-radius: 1rem;
+      text-align: center;
+      padding: 2rem 1rem;
+      transition: 0.3s;
+      cursor: pointer;
+      width: 220px;
+    }
+
+    .level-card:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 30px rgba(0,255,255,0.4);
+    }
+
+    .level-title {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 1.3rem;
+      color: #00ffff;
+      margin-bottom: 0.5rem;
+    }
+
+    .coming-soon {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    footer {
+      text-align: center;
+      padding: 1rem 0;
+      background: rgba(10,2,27,0.8);
+      box-shadow: 0 0 25px rgba(255, 0, 240, 0.3);
+    }
+
+    footer a {
+      margin: 0 0.6rem;
+      color: #00ffff;
+      transition: 0.3s;
+    }
+
+    footer a:hover {
+      color: #ff00ff;
+      transform: scale(1.1);
+    }
+
+    footer p {
+      margin-top: 0.5rem;
+      font-size: 0.8rem;
+      color: #bdbaf9;
+    }
   </style>
 </head>
-<body class="bg-gradient-to-t from-[#0b0520] to-[#120b2e] text-white font-poppins min-h-screen pb-24">
-  <header class="fixed top-0 w-full p-4 bg-[#0f0520] bg-opacity-85 backdrop-blur-lg flex justify-between items-center z-50">
-    <h1 class="text-2xl font-orbitron text-transparent bg-clip-text bg-gradient-to-r from-[#00f0ff] to-[#ff00f0]">Level 3: The Trader — Learn & Earn</h1>
-    <i class="fas fa-bell text-[#00f0ff] text-xl cursor-pointer hover:text-[#ff00f0] transform hover:scale-110 transition duration-300"></i>
+<body>
+
+  <header>
+    <h1>🎮 The Zep Gamer Test</h1>
+    <p class="text-[#bdbaf9] mt-2">Complete levels to unlock your Learn & Earn rewards!</p>
   </header>
 
-  <main id="quizContainer" class="mt-24 p-4 space-y-4"></main>
+  <section class="levels">
+    <!-- Level 1 -->
+    <a href="https://docs.google.com/forms/d/1eQ2bAQThhaThczSLHnLUpKROfwwQE2JYkeTFsqZCodU/edit?pli=1#responses" target="_blank" class="level-card">
+      <div class="level-title">Level 1</div>
+      <p class="text-sm text-[#bdbaf9]">Zep Foundations Test</p>
+    </a>
 
-  <button id="submitBtn" class="w-full py-3 mt-4 bg-gradient-to-r from-[#00f0ff] to-[#ff00f0] text-white font-semibold rounded-lg shadow-lg transform hover:scale-105 transition duration-300">Submit & Claim Reward</button>
+    <!-- Level 2 -->
+    <a href="https://docs.google.com/forms/d/e/1FAIpQLSfBjWItPmUzfEDcz4FrOS8-9vnuLC31q6cfxQKihW-FmhCO_Q/viewform" target="_blank" class="level-card">
+      <div class="level-title">Level 2</div>
+      <p class="text-sm text-[#bdbaf9]">Intermediate Challenge</p>
+    </a>
 
-  <div id="rewardModal" class="fixed inset-0 bg-black bg-opacity-70 backdrop-blur-lg flex items-center justify-center z-200 hidden">
-    <div class="bg-[#0f0520] p-6 rounded-lg shadow-lg text-center">
-      <span class="absolute top-2 right-2 text-[#ff00f0] cursor-pointer text-xl" onclick="closeModal()">&times;</span>
-      <h3 class="text-2xl font-orbitron text-[#00f0ff] mb-4">🎉 Congratulations!</h3>
-      <p id="rewardText">50 ZAC sent to your wallet!</p>
+    <!-- Level 3 -->
+    <a href="learn-earn.html" class="level-card">
+      <div class="level-title">Level 3</div>
+      <p class="text-sm text-[#bdbaf9]">The Learner Test — Earn $ZAC</p>
+    </a>
+
+    <!-- Level 4 (Coming Soon) -->
+    <div class="level-card coming-soon">
+      <div class="level-title">Level 4</div>
+      <p class="text-sm text-[#bdbaf9]">Coming Soon 🔒</p>
     </div>
-  </div>
+  </section>
 
-  <footer class="fixed bottom-0 w-full p-4 bg-[#0f0520] bg-opacity-85 backdrop-blur-lg flex justify-around items-center z-100">
-    <a href="dashboard-store.html" class="text-[#00f0ff] text-sm text-center hover:text-[#ff00f0] transform hover:scale-110 transition duration-300">
-      <i class="fas fa-store text-xl"></i>
-      <span>Store</span>
-    </a>
-    <a href="dashboard-wallet.html" class="text-[#00f0ff] text-sm text-center hover:text-[#ff00f0] transform hover:scale-110 transition duration-300">
-      <i class="fas fa-wallet text-xl"></i>
-      <span>Wallet</span>
-    </a>
-    <a href="learn-earn.html" class="text-[#00f0ff] text-sm text-center hover:text-[#ff00f0] transform hover:scale-110 transition duration-300">
-      <i class="fas fa-gift text-xl"></i>
-      <span>Rewards</span>
-    </a>
-    <a href="profile.html" class="text-[#00f0ff] text-sm text-center hover:text-[#ff00f0] transform hover:scale-110 transition duration-300">
-      <i class="fas fa-user text-xl"></i>
-      <span>Profile</span>
-    </a>
+  <footer>
+    <div>
+      <a href="https://t.me/zepswipe" target="_blank"><i class="fab fa-telegram fa-lg"></i></a>
+      <a href="https://www.instagram.com/zepswipe?igsh=bXF3anMxODhxZWFs" target="_blank"><i class="fab fa-instagram fa-lg"></i></a>
+      <a href="https://x.com/ZepSwipe?t=r94a0_pgN7ew1xT5L4eOSA&s=09" target="_blank"><i class="fab fa-x-twitter fa-lg"></i></a>
+      <a href="https://facebook.com/ZepSwipe" target="_blank"><i class="fab fa-facebook fa-lg"></i></a>
+    </div>
+    <p>© 2025 Zep Swipe. All rights reserved.</p>
   </footer>
 
-  <script>
-    document.addEventListener("DOMContentLoaded", function() {
-      const quizData = [
-        { q: "What is a “wallet” in Web3?", a: "B", options: ["A) A place to store your email", "B) A digital tool to store cryptocurrencies and NFTs", "C) A type of decentralized exchange", "D) A smart contract"] },
-        { q: "Which of the following is a decentralized exchange (DEX)?", a: "B", options: ["A) Coinbase", "B) Uniswap", "C) PayPal", "D) Robinhood"] },
-        { q: "In crypto trading, what does “liquidity” mean?", a: "A", options: ["A) Ease of converting asset to cash", "B) Total tokens in circulation", "C) Wallet sending speed", "D) Gas fee"] },
-        { q: "Primary function of token on blockchain?", a: "A", options: ["A) Represent ownership/access/currency", "B) Store passwords", "C) Secure email", "D) Increase internet speed"] },
-        { q: "Centralized (CEX) vs Decentralized (DEX)?", a: "A", options: ["A) CEX requires ID, DEX does not", "B) CEX faster", "C) CEX only Bitcoin, DEX only ETH", "D) CEX website, DEX app"] },
-        { q: "What is “slippage” in trading?", a: "B", options: ["A) Fee for swap", "B) Difference between expected and executed price", "C) Wallet type", "D) Blockchain bug"] },
-        { q: "Which is smart contract platform?", a: "A", options: ["A) Ethereum", "B) Bitcoin", "C) Dogecoin", "D) PayPal"] },
-        { q: "Purpose of gas fee in Ethereum?", a: "A", options: ["A) Pay for transaction processing", "B) Buy NFTs", "C) Increase token supply", "D) Stake tokens"] },
-        { q: "What is staking?", a: "A", options: ["A) Hold crypto to earn rewards", "B) Send crypto", "C) Buy NFTs", "D) Convert to fiat"] },
-        { q: "Why diversify crypto portfolio?", a: "A", options: ["A) Reduce risk by spreading investments", "B) Pay more fees", "C) Faster transactions", "D) Avoid wallets"] }
-      ];
-
-      const quizContainer = document.getElementById("quizContainer");
-      const submitBtn = document.getElementById("submitBtn");
-      const rewardModal = document.getElementById("rewardModal");
-      const rewardText = document.getElementById("rewardText");
-
-      let userAnswers = {};
-      let rewardedCount = 0;
-
-      quizData.forEach((q, idx) => {
-        const card = document.createElement("div");
-        card.classList.add("quiz-card", "bg-[#1a1a1a]", "p-4", "rounded-lg", "shadow-lg");
-        const question = document.createElement("h3");
-        question.classList.add("text-lg", "font-semibold", "text-[#00f0ff]", "mb-2");
-        question.textContent = `Q${idx + 1}: ${q.q}`;
-        card.appendChild(question);
-
-        q.options.forEach(opt => {
-          const optDiv = document.createElement("div");
-          optDiv.classList.add("option", "bg-[#2a2a2a]", "p-2", "rounded-md", "mb-2", "cursor-pointer", "hover:bg-[#ff00f0]", "hover:text-[#120b2e]", "transition", "duration-300");
-          optDiv.textContent = opt;
-          optDiv.onclick = () => {
-            userAnswers[idx] = opt[0];
-            Array.from(card.querySelectorAll(".option")).forEach(o => o.classList.remove("border", "border-[#ff00f0]"));
-            optDiv.classList.add("border", "border-[#ff00f0]");
-          };
-          card.appendChild(optDiv);
-        });
-
-        quizContainer.appendChild(card);
-      });
-
-      submitBtn.addEventListener("click", function() {
-        let score = 0;
-        quizData.forEach((q, idx) => {
-          if (userAnswers[idx] === q.a) score++;
-        });
-
-        if (score < 7) {
-          alert(`You scored ${score}/${quizData.length}. Need 7+ correct to earn ZAC.`);
-          return;
-        }
-
-        if (rewardedCount >= 1000) {
-          alert("Reward limit reached for first 1000 students.");
-          return;
-        }
-
-        rewardedCount++;
-
-        const studentWallet = prompt("Enter your ZAC wallet address to receive reward:");
-        if (studentWallet) {
-          fetch("https://www.zacwallet.com/api/send", {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json"
-            },
-            body: JSON.stringify({
-              from: "0x1054a0EeAe6C4Bf07A17658267C6a67ce3599888",
-              to: studentWallet,
-              amount: 50
-            })
-          })
-          .then(response => response.json())
-          .then(data => {
-            console.log("Reward sent:", data);
-            rewardText.textContent = `50 ZAC sent to ${studentWallet}`;
-            showModal();
-          })
-          .catch(error => {
-            console.error("Error sending reward:", error);
-            alert("Error sending reward. Please try again.");
-          });
-        } else {
-          alert("Reward not sent: wallet address required.");
-        }
-      });
-
-      function showModal() {
-        rewardModal.classList.remove("hidden");
-      }
-
-      function closeModal() {
-        rewardModal.classList.add("hidden");
-      }
-    });
-  </script>
 </body>
 </html>
