@@ -1,134 +1,138 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Zep Swipe — Student Dashboard</title>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Zep Student Dashboard</title>
 
+<!-- Tailwind -->
 <script src="https://cdn.tailwindcss.com"></script>
+
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&family=Orbitron:wght@700&display=swap" rel="stylesheet">
 
 <style>
 :root {
-  --neon-blue: #00eaff;
-  --neon-pink: #ff00f0;
+  --neon: #00eaff;
   --glass: rgba(255,255,255,0.07);
 }
 
 body {
-  background: radial-gradient(circle at top, #09031a 0%, #0d0626 100%);
+  background: radial-gradient(circle at top, #0a021f 0%, #0f082b 100%);
   color: white;
   font-family: "Poppins", sans-serif;
   padding-bottom: 100px;
 }
 
-/* HEADER GLASS */
+/* HEADER */
 .header {
   position: fixed; top:0; width:100%;
-  background: rgba(15,5,35,0.85); backdrop-filter: blur(20px);
-  padding: 1rem 1.4rem; display:flex; justify-content:space-between; align-items:center;
-  border-bottom: 1px solid rgba(0,255,255,0.25);
+  background: rgba(14,6,40,0.8); backdrop-filter: blur(14px);
+  border-bottom: 1px solid rgba(0,234,255,0.25);
+  padding: 1rem 1.4rem;
+  display:flex; justify-content:space-between; align-items:center;
   z-index: 999;
 }
 .header h1 {
   font-family: "Orbitron", sans-serif;
-  color: var(--neon-blue);
   font-size: 1.45rem;
-  text-shadow: 0 0 14px var(--neon-blue);
+  color: var(--neon);
+  text-shadow: 0 0 14px var(--neon);
 }
-.logout-btn { width:30px; cursor:pointer; filter: drop-shadow(0 0 9px #ff0058); }
-
-/* BALANCE CARD */
-.balance-card {
-  margin-top: 5.5rem;
-  background: var(--glass);
-  border-radius: 1.3rem;
-  backdrop-filter: blur(18px);
-  padding:1.8rem 1.4rem;
-  text-align:center;
-  box-shadow: 0 0 25px rgba(0,255,255,0.25);
-}
-.balance-card .amount {
-  font-size: 2.3rem;
-  font-weight:700;
-  background: linear-gradient(90deg,var(--neon-blue),var(--neon-pink));
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+.logout {
+  width: 30px;
+  filter: drop-shadow(0 0 12px #ff0066);
+  cursor:pointer;
 }
 
-/* MAIN MENU */
+/* GLASS MENU CARD */
 .menu-grid {
-  display:grid; grid-template-columns:repeat(2,1fr); gap:1.2rem; margin-top:2rem;
+  margin-top: 6.5rem;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.3rem;
+  padding: 0 1.4rem;
 }
-.menu-btn {
+.feature-card {
   background: var(--glass);
-  padding:1.4rem;
-  border-radius:1.2rem;
-  text-align:center;
-  box-shadow: 0 0 18px rgba(0,255,255,0.25);
-  transition:0.35s;
+  border-radius: 1.2rem;
+  text-align: center;
+  padding: 1.6rem 1.2rem;
+  transition: .35s;
+  box-shadow: 0 0 25px rgba(0,234,255,0.2);
+  backdrop-filter: blur(14px);
 }
-.menu-btn:hover { transform:scale(1.06); }
-.menu-btn img { width:43px; filter: drop-shadow(0 0 10px var(--neon-blue)); }
+.feature-card:hover { transform: scale(1.07); }
+.feature-card img {
+  width: 45px;
+  filter: drop-shadow(0 0 12px var(--neon));
+  margin-bottom: .5rem;
+}
 
 /* STUDY BUDDY MODAL */
 #studyBuddyModal {
-  position:fixed; top:0; left:0; width:100%; height:100%;
-  background:rgba(0,0,0,0.75); backdrop-filter: blur(10px);
-  display:none; justify-content:center; align-items:center;
-  z-index:1100;
+  position: fixed; top:0; left:0; width:100%; height:100%;
+  background: rgba(0,0,0,0.75); backdrop-filter: blur(10px);
+  display: none; justify-content:center; align-items:center;
+  z-index: 1000;
 }
 .modal-box {
-  width:86%;
-  background:var(--glass); padding:1.6rem;
-  border-radius:1rem; text-align:center;
-  box-shadow:0 0 22px rgba(0,255,255,0.45);
+  background: var(--glass);
+  border-radius: 1.2rem;
+  padding: 1.6rem;
+  width: 82%;
+  text-align:center;
+  box-shadow:0 0 25px rgba(0,234,255,0.35);
 }
 
 /* FOOTER NAV */
 .footer {
-  position:fixed; bottom:0; left:0; width:100%;
-  background:rgba(10,4,30,0.8); backdrop-filter: blur(14px);
-  padding:0.75rem 0; display:flex; justify-content:space-around;
-  border-top:1px solid rgba(0,255,255,0.25);
+  position: fixed; bottom:0; width:100%;
+  background: rgba(10,5,30,0.85); backdrop-filter: blur(12px);
+  border-top: 1px solid rgba(0,234,255,0.25);
+  padding: .8rem 0;
+  display:flex; justify-content:space-around;
 }
 .footer a img {
-  width:30px; transition:0.3s;
-  filter: drop-shadow(0 0 8px var(--neon-blue));
+  width: 28px;
+  transition: 0.3s;
+  filter: drop-shadow(0 0 6px var(--neon));
 }
 .footer a:hover img,
 .footer a.active img {
-  transform:scale(1.25);
-  filter: drop-shadow(0 0 13px var(--neon-pink));
+  transform: scale(1.22);
+  filter: drop-shadow(0 0 12px #ff00f9);
 }
 </style>
 </head>
 <body>
 
 <header class="header">
-  <h1>ZEP SWIPE</h1>
-  <img src="icons/logout-neon.svg" class="logout-btn" onclick="signOut()">
+  <h1>ZEP DASHBOARD</h1>
+  <img src="icons/logout-neon.svg" class="logout" onclick="signOut()">
 </header>
 
-<main class="px-4">
-
-<div class="balance-card">
-  <h3 class="text-sm opacity-75">Total Portfolio</h3>
-  <div class="amount" id="totalBalance">$0.00</div>
-</div>
+<main>
 
 <div class="menu-grid">
 
-  <div class="menu-btn" onclick="openStudyBuddy()">
-    <img src="icons/ai-neon.svg"><p class="mt-1">Zep Study Buddy</p>
+  <div class="feature-card" onclick="openStudyBuddy()">
+    <img src="icons/ai-neon.svg">
+    <p>Zep Study Buddy</p>
   </div>
 
-  <a class="menu-btn" href="delivery.html">
-    <img src="icons/parcels-neon.svg"><p class="mt-1">ParcelOn</p>
+  <a class="feature-card" href="delivery.html">
+    <img src="icons/parcel-neon.svg">
+    <p>ParcelOn Delivery</p>
   </a>
 
-  <a class="menu-btn" href="learn-earn.html">
-    <img src="icons/rewards-neon.svg"><p class="mt-1">Earn</p>
+  <a class="feature-card" href="learn-earn.html">
+    <img src="icons/rewards-neon.svg">
+    <p>Earn</p>
+  </a>
+
+  <a class="feature-card" href="community.html">
+    <img src="icons/network-neon.svg">
+    <p>Community</p>
   </a>
 
 </div>
@@ -139,13 +143,15 @@ body {
 <div id="studyBuddyModal">
   <div class="modal-box">
     <h2 class="text-xl text-[#00eaff] font-semibold">Zep Study Buddy</h2>
-    <p class="text-sm opacity-85 mt-2">AI homework help, explainers & revision assistance.</p>
-    <button onclick="window.location.href='study-buddy.html'" class="mt-4 bg-[#00eaff] text-black font-semibold px-4 py-2 rounded-lg">Open Assistant</button>
+    <p class="text-sm opacity-85 mt-2">AI help for homework, notes, and explanations.</p>
+    <button onclick="window.location.href='study-buddy.html'" class="mt-4 bg-[#00eaff] text-black font-semibold px-4 py-2 rounded-lg">
+      Open Assistant
+    </button>
     <p class="mt-4 text-xs opacity-70 cursor-pointer" onclick="closeStudyBuddy()">Close</p>
   </div>
 </div>
 
-<!-- FOOTER -->
+<!-- FOOTER NAV -->
 <footer class="footer">
   <a href="dashboard.html" class="active"><img src="icons/home-neon.svg"></a>
   <a href="chat.html"><img src="icons/chat-neon.svg"></a>
@@ -155,19 +161,12 @@ body {
 </footer>
 
 <script>
-// Load balances from wallet
-let zac = localStorage.getItem("zacBalance") || 0;
-let usdt = localStorage.getItem("usdtBalance") || 0;
-document.getElementById("totalBalance").innerText = `$${(Number(zac)+Number(usdt)).toLocaleString()}`;
+function openStudyBuddy(){ document.getElementById("studyBuddyModal").style.display="flex"; }
+function closeStudyBuddy(){ document.getElementById("studyBuddyModal").style.display="none"; }
 
-// Modal
-function openStudyBuddy(){ document.getElementById('studyBuddyModal').style.display='flex'; }
-function closeStudyBuddy(){ document.getElementById('studyBuddyModal').style.display='none'; }
-
-// Logout
 function signOut(){
   localStorage.clear();
-  window.location.href = "login.html";
+  window.location.href="login.html";
 }
 </script>
 
