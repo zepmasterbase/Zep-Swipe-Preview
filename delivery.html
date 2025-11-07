@@ -37,6 +37,7 @@ body{
   border-bottom-left-radius:16px;
   border-bottom-right-radius:16px;
   box-shadow:0 8px 32px rgba(0,0,0,0.55);
+  gap:10px;
 }
 
 /* Logo */
@@ -76,6 +77,7 @@ body{
 .badge-delivery{ background: rgba(255,0,240,0.10); color: var(--neon-pink);}
 
 /* Buttons */
+.actions { display:flex; gap:8px; }
 .action-btn{
   display:flex; justify-center; align-items:center; gap:8px;
   padding:12px; border-radius:14px;
@@ -83,8 +85,8 @@ body{
   transition: all .18s ease;
 }
 .action-btn:hover{ transform:translateY(-3px); box-shadow:0 6px 18px rgba(0,0,0,0.35); }
-.btn-send{ background: linear-gradient(90deg,var(--neon-lime),#a6ff77); color:#050014; }
-.btn-track{ background: linear-gradient(90deg,var(--neon-blue),var(--neon-pink)); color:#050014; }
+.btn-send{ background: linear-gradient(90deg,var(--neon-lime),#a6ff77); color:#050014; flex:1; justify-content:center; }
+.btn-track{ background: linear-gradient(90deg,var(--neon-blue),var(--neon-pink)); color:#050014; flex:1; justify-content:center; }
 
 /* Modal */
 .modal-backdrop{
@@ -130,18 +132,32 @@ body{
   100%{ transform: scale(1); opacity:0.85; }
 }
 
-/* Responsive */
-@media(min-width:768px){
-  .container{ max-width:720px; margin:18px auto; }
-  .actions{ grid-template-columns: repeat(2,1fr); }
+/* Footer SVG neon */
+footer{
+  position:fixed; bottom:16px; left:50%; transform:translateX(-50%);
+  background: rgba(8,8,16,0.75);
+  backdrop-filter: blur(12px);
+  border-radius:999px; padding:8px 16px; display:flex; gap:12px; align-items:center;
+  box-shadow:0 6px 20px rgba(0,0,0,0.6);
 }
+.fbtn{
+  width:52px; height:52px; border-radius:50%; display:flex; align-items:center; justify-content:center;
+  background: rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.08);
+  transition: all .2s ease; cursor:pointer;
+}
+.fbtn svg{ width:26px; height:26px; filter: drop-shadow(0 0 8px var(--neon-blue)); transition: all .2s ease;}
+.fbtn:hover{ transform:translateY(-3px); background: rgba(255,255,255,0.06);}
+.fbtn:hover svg{ filter: drop-shadow(0 0 18px var(--neon-lime)); }
 </style>
 </head>
 <body>
 
 <header class="header">
   <div class="logo"><h1>Parcel On</h1></div>
-  <button onclick="openModal()" class="action-btn btn-send">Send & Track</button>
+  <div class="actions">
+    <a href="send-parcel.html" class="action-btn btn-send">Send Parcel</a>
+    <a href="track-parcel.html" class="action-btn btn-track">Track Parcel</a>
+  </div>
 </header>
 
 <div class="container px-4 mt-4">
@@ -164,25 +180,20 @@ body{
   </div>
 </div>
 
-<!-- Modal -->
-<div class="modal-backdrop" id="trackModal">
-  <div class="modal-card">
-    <div class="flex justify-between items-center mb-4">
-      <h3>Send & Track Parcel</h3>
-      <button onclick="closeModal()" style="background:none;border:none;color:#ff99cc;font-weight:700;font-size:24px;cursor:pointer">×</button>
-    </div>
-    <input type="text" id="parcelId" placeholder="Enter Parcel ID" class="w-full p-3 rounded-lg mb-4 bg-[rgba(255,255,255,0.03)] border border-[rgba(255,255,255,0.05)] text-white placeholder:text-neon-lime">
-    <button onclick="trackParcel()" class="action-btn btn-track w-full">Track Parcel</button>
-    <div id="trackResult" class="mt-4"></div>
-  </div>
-</div>
-
 <!-- Footer -->
-<footer class="fixed bottom-4 left-1/2 transform -translate-x-1/2 bg-[rgba(8,8,16,0.75)] backdrop-blur-md rounded-full px-4 py-2 flex gap-4">
-  <div class="fbtn">🏠</div>
-  <div class="fbtn">📦</div>
-  <div class="fbtn">🚚</div>
-  <div class="fbtn">📊</div>
+<footer>
+  <a href="students-dashboard.html" class="fbtn" title="Home">
+    <svg viewBox="0 0 24 24" fill="#00f0ff"><path d="M12 3l10 9h-3v9h-6v-6H11v6H5v-9H2z"/></svg>
+  </a>
+  <div class="fbtn" title="Deliveries">
+    <svg viewBox="0 0 24 24" fill="#00f0ff"><path d="M3 12h18v2H3z"/></svg>
+  </div>
+  <div class="fbtn" title="Vehicles">
+    <svg viewBox="0 0 24 24" fill="#00f0ff"><path d="M5 11l1.5-4.5h11L19 11H5zm14 2a2 2 0 012 2v3h-2v2h-2v-2H7v2H5v-2H3v-3a2 2 0 012-2h14z"/></svg>
+  </div>
+  <div class="fbtn" title="Stats">
+    <svg viewBox="0 0 24 24" fill="#00f0ff"><path d="M3 3h2v18H3zm6 6h2v12h-2zm6-9h2v21h-2zm6 12h2v9h-2z"/></svg>
+  </div>
 </footer>
 
 <!-- Chart.js -->
@@ -227,37 +238,21 @@ deliveries.forEach(d=>{
   deliveryList.appendChild(div);
 });
 
-// Modal
-function openModal(){ document.getElementById('trackModal').style.display='flex'; document.getElementById('parcelId').value=''; document.getElementById('trackResult').innerHTML=''; }
-function closeModal(){ document.getElementById('trackModal').style.display='none'; }
-function trackParcel(){
-  const id = document.getElementById('parcelId').value.trim();
-  const out = document.getElementById('trackResult');
-  if(!id){ out.innerHTML='<p style="color:#ff77ff">Enter Parcel ID!</p>'; return; }
-  out.innerHTML=`<p style="color:#00f0ff">Tracking ${id}...</p>`;
-  setTimeout(()=> out.innerHTML=`<p style="color:#a6ff00">Parcel ${id} is currently in transit. ETA: 30 mins</p>`,1200);
-}
-
 // Map animation
 const mapCanvas = document.getElementById('mapCanvas');
 const mapWidth = mapCanvas.offsetWidth;
 const mapHeight = mapCanvas.offsetHeight;
-
-// Simulated paths
 const paths = [
   [{x:20,y:40},{x:150,y:60},{x:300,y:120},{x:mapWidth-50,y:mapHeight-50}],
   [{x:50,y:200},{x:200,y:180},{x:400,y:220},{x:mapWidth-80,y:mapHeight-70}]
 ];
-
 const icons = [];
-
 paths.forEach((path,i)=>{
   const icon = document.createElement('div');
   icon.className='delivery-icon';
   mapCanvas.appendChild(icon);
   icons.push({el:icon,path: path, progress:0, speed:0.002+Math.random()*0.003});
 });
-
 function animate(){
   icons.forEach(icon=>{
     icon.progress += icon.speed;
