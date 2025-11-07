@@ -30,25 +30,33 @@ body{
 
 /* Header */
 .header {
-  position: sticky; top:0; z-index:60;
-  display:flex; justify-content:space-between; align-items:center;
-  padding:14px 18px;
-  background: rgba(255,255,255,0.05);
+  position: sticky;
+  top:0;
+  z-index:60;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:14px 16px;
+  background: rgba(255,255,255,0.06);
   backdrop-filter: blur(20px) saturate(180%);
   box-shadow:0 8px 32px rgba(0,0,0,0.55);
-  border-bottom-left-radius:16px; border-bottom-right-radius:16px;
+  border-bottom-left-radius:16px;
+  border-bottom-right-radius:16px;
 }
 
 /* Logo */
-.logo { display:flex; align-items:center; gap:12px; }
+.logo { display:flex; align-items:center; gap:10px; }
 .logo h1{
   font-family:'Orbitron',sans-serif;
-  font-size:28px; font-weight:700; margin:0;
-  background: linear-gradient(90deg,var(--neon-blue),var(--neon-pink),var(--neon-green),var(--neon-lime));
-  -webkit-background-clip:text; -webkit-text-fill-color:transparent;
-  letter-spacing:2px;
+  font-size:24px; font-weight:700; margin:0;
+  background: linear-gradient(90deg,var(--neon-blue),var(--neon-pink),var(--neon-lime));
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+  letter-spacing:1px;
 }
-.logo small { font-size:11px; color: #b9eaff; opacity:0.8; margin-top:-2px; }
+.logo small{
+  font-size:11px; color: #b9eaff; opacity:0.8; margin-top:-2px;
+}
 
 /* Profile Avatar */
 .profile-avatar{
@@ -56,7 +64,7 @@ body{
   border-radius:50%;
   background: radial-gradient(circle at center, var(--neon-blue), var(--neon-pink));
   display:flex; align-items:center; justify-content:center;
-  box-shadow:0 0 4px var(--neon-blue),0 0 8px var(--neon-pink);
+  box-shadow:0 0 4px var(--neon-blue),0 0 6px var(--neon-pink);
 }
 .profile-avatar svg { width:20px; height:20px; fill:#050014; }
 
@@ -75,17 +83,19 @@ body{
 /* Total Balance Neon */
 .total-balance{
   font-family:'Orbitron',sans-serif;
-  font-size:30px; font-weight:700;
-  background: linear-gradient(90deg,var(--neon-blue),var(--neon-pink),var(--neon-lime));
+  font-size:28px; font-weight:700;
+  background: linear-gradient(90deg,var(--neon-blue),var(--neon-lime));
   -webkit-background-clip:text; -webkit-text-fill-color:transparent;
-  text-shadow: 0 0 4px var(--neon-lime),0 0 8px var(--neon-blue);
+  text-shadow: 0 0 2px var(--neon-lime);
   transition: all 0.3s ease;
 }
 
 /* Sub Balance */
-.sub-bal{ display:flex; gap:10px; margin-top:12px; }
+.sub-bal{ display:flex; gap:10px; margin-top:12px; flex-wrap:wrap; }
 .sub-bal .item{
-  flex:1; background: rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.08);
+  flex:1; min-width:100px;
+  background: rgba(255,255,255,0.04);
+  border:1px solid rgba(255,255,255,0.08);
   padding:12px; border-radius:12px; text-align:center;
   transition: background 0.25s ease, transform 0.2s ease;
 }
@@ -115,13 +125,13 @@ body{
   padding:12px; border-radius:14px;
   transition: background 0.25s ease, transform 0.2s ease;
 }
-.tx:hover{ background: rgba(255,255,255,0.1); transform:translateY(-2px); }
+.tx:hover{ background: rgba(255,255,255,0.08); transform:translateY(-1px); }
 .tx .badge{
   font-weight:700; font-size:12px; padding:4px 8px; border-radius:999px;
-  transition: all 0.6s ease;
+  animation: pulse 1.5s infinite alternate;
 }
-.tx .badge-green{ background: rgba(0,240,255,0.12); color:var(--neon-blue); animation: pulse 1.5s infinite alternate; }
-.tx .badge-pink{ background: rgba(255,0,240,0.10); color:var(--neon-pink); animation: pulse 1.5s infinite alternate; }
+.tx .badge-green{ background: rgba(0,240,255,0.12); color:var(--neon-blue); }
+.tx .badge-pink{ background: rgba(255,0,240,0.10); color:var(--neon-pink); }
 
 /* Footer */
 footer{
@@ -139,7 +149,7 @@ footer{
   animation: footerPulse 2.5s infinite alternate;
 }
 .fbtn svg{ width:26px; height:26px; filter: drop-shadow(0 0 4px var(--neon-lime)); transition: all 0.2s ease; }
-.fbtn:hover{ transform:translateY(-4px); box-shadow:0 10px 26px rgba(0,0,0,0.55); }
+.fbtn:hover{ transform:translateY(-4px); box-shadow:0 10px 28px rgba(0,0,0,0.55); }
 .fbtn:hover svg{ filter: drop-shadow(0 0 12px var(--neon-lime)); transform: scale(1.1); }
 
 /* Animations */
@@ -168,17 +178,17 @@ footer{
     <h1>ZEP SWIPE</h1>
     <small>ZepVibe · Student Hub</small>
   </div>
-  <div style="display:flex;align-items:center;gap:12px">
-    <a class="glass" href="profile.html" style="display:inline-flex;align-items:center;gap:10px;padding:8px 10px;border-radius:999px;text-decoration:none;color:#dffbff">
+  <div class="flex items-center gap-3">
+    <a class="glass flex items-center gap-2 p-2 rounded-full text-dffbff" href="profile.html">
       <div class="profile-avatar">
         <svg viewBox="0 0 24 24"><path d="M12 12c2.67 0 8 1.34 8 4v4H4v-4c0-2.66 5.33-4 8-4zm0-2a4 4 0 110-8 4 4 0 010 8z"/></svg>
       </div>
-      <div style="text-align:left">
-        <div style="font-size:13px;font-weight:700">Ama</div>
-        <div style="font-size:11px;color:#bfefff">Student ID: #S-1024</div>
+      <div class="text-left">
+        <div class="text-[13px] font-semibold">Ama</div>
+        <div class="text-[11px] text-[#bfefff]">Student ID: #S-1024</div>
       </div>
     </a>
-    <button id="logout" title="Logout" style="margin-left:6px;background:linear-gradient(90deg,#ff6fb0,#ff0044);border-radius:999px;padding:8px 10px;border:none;cursor:pointer;box-shadow:0 6px 18px rgba(255,0,80,0.12)">
+    <button id="logout" class="bg-gradient-to-r from-pink-500 to-red-600 rounded-full p-2 shadow-md" title="Logout">
       <svg width="16" height="16" viewBox="0 0 24 24" fill="#050014"><path d="M13 2v10h-2V2h2zm-1 20a9 9 0 110-18 9 9 0 010 18z"/></svg>
     </button>
   </div>
@@ -186,14 +196,14 @@ footer{
 
 <div class="container px-4 mt-4">
   <div class="glass">
-    <div style="display:flex;justify-content:space-between;align-items:center">
+    <div class="flex justify-between items-center">
       <div>
-        <div style="font-size:12px;color:#bfefff;font-weight:700">Total Portfolio</div>
+        <div class="text-[12px] text-[#bfefff] font-semibold">Total Portfolio</div>
         <p id="totalBalance" class="total-balance">$0.00</p>
       </div>
-      <div style="text-align:right">
-        <div style="font-size:12px;color:#bfefff">Updated</div>
-        <div style="font-size:12px;color:#9fdfff" id="lastUpdated">—</div>
+      <div class="text-right">
+        <div class="text-[12px] text-[#bfefff]">Updated</div>
+        <div class="text-[12px] text-[#9fdfff]" id="lastUpdated">—</div>
       </div>
     </div>
     <div class="sub-bal">
@@ -209,7 +219,7 @@ footer{
   </div>
 
   <div>
-    <h3 style="color:var(--neon-blue);font-family:Orbitron;margin-bottom:8px">Transaction History</h3>
+    <h3 class="text-[#00f0ff] font-orbitron mb-2">Transaction History</h3>
     <div class="glass">
       <div class="tx-list" id="txList"></div>
     </div>
@@ -243,7 +253,7 @@ function renderBalances(){
   document.getElementById('lastUpdated').innerText = new Date().toLocaleTimeString();
 }
 
-// Push transaction
+// Push demo transactions
 function pushTransaction(title, amountText, positive=true){
   const txList = document.getElementById('txList');
   const wrapper = document.createElement('div');
@@ -251,8 +261,6 @@ function pushTransaction(title, amountText, positive=true){
   wrapper.innerHTML = `<div class="meta"><strong>${title}</strong></div><div><span class="badge ${positive?'badge-green':'badge-pink'}">${amountText}</span></div>`;
   txList.prepend(wrapper);
 }
-
-// Simulate demo transactions
 pushTransaction('Ride Payment','+5 ZAC',true);
 pushTransaction('Study Reward','+2 USDT',true);
 pushTransaction('Marketplace','-2 ZAC',false);
@@ -261,5 +269,6 @@ document.getElementById('logout').addEventListener('click',()=>window.location.h
 
 renderBalances();
 </script>
+
 </body>
 </html>
