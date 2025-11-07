@@ -14,7 +14,7 @@
   --neon-blue:#00f0ff;
   --neon-pink:#ff00f0;
   --neon-green:#3affc1;
-  --neon-yellow:#f9ff00;
+  --neon-lime:#a6ff00;
   --glass: rgba(255,255,255,0.05);
 }
 
@@ -40,65 +40,53 @@ body{
 }
 
 /* Logo */
-.logo {
-  display:flex; align-items:center; gap:12px;
-  text-shadow: 0 0 4px var(--neon-blue),0 0 8px var(--neon-pink),0 0 12px var(--neon-green),0 0 16px var(--neon-yellow);
-}
+.logo { display:flex; align-items:center; gap:12px; }
 .logo h1{
   font-family:'Orbitron',sans-serif;
-  font-size:28px;
-  font-weight:700;
-  margin:0;
-  background: linear-gradient(90deg,var(--neon-blue),var(--neon-pink),var(--neon-green),var(--neon-yellow));
+  font-size:28px; font-weight:700; margin:0;
+  background: linear-gradient(90deg,var(--neon-blue),var(--neon-pink),var(--neon-green),var(--neon-lime));
   -webkit-background-clip:text; -webkit-text-fill-color:transparent;
   letter-spacing:2px;
 }
-.logo small {
-  font-size:11px; color: #b9eaff; opacity:0.8; margin-top:-2px;
-  text-shadow:0 0 6px var(--neon-blue);
-}
+.logo small { font-size:11px; color: #b9eaff; opacity:0.8; margin-top:-2px; }
 
 /* Profile Avatar */
-.profile-avatar {
+.profile-avatar{
   width:36px; height:36px;
   border-radius:50%;
   background: radial-gradient(circle at center, var(--neon-blue), var(--neon-pink));
   display:flex; align-items:center; justify-content:center;
-  box-shadow:0 0 6px var(--neon-blue),0 0 12px var(--neon-pink),0 0 18px var(--neon-blue);
+  box-shadow:0 0 4px var(--neon-blue),0 0 8px var(--neon-pink);
 }
 .profile-avatar svg { width:20px; height:20px; fill:#050014; }
 
 /* Glass Cards */
-.glass {
+.glass{
   background: var(--glass);
   border-radius: 16px;
   border: 1px solid rgba(255,255,255,0.12);
   padding: 16px;
   backdrop-filter: blur(18px) saturate(140%);
-  box-shadow: 0 6px 30px rgba(0,0,0,0.55);
-  transition: all 0.25s ease;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.5);
   margin-bottom:12px;
+  transition: all 0.25s ease;
 }
 
 /* Total Balance Neon */
 .total-balance{
   font-family:'Orbitron',sans-serif;
-  font-size:30px;
-  font-weight:700;
-  background: linear-gradient(90deg,var(--neon-blue),var(--neon-pink),var(--neon-green),var(--neon-yellow));
+  font-size:30px; font-weight:700;
+  background: linear-gradient(90deg,var(--neon-blue),var(--neon-pink),var(--neon-lime));
   -webkit-background-clip:text; -webkit-text-fill-color:transparent;
-  text-shadow: 0 0 6px var(--neon-blue),0 0 12px var(--neon-pink);
+  text-shadow: 0 0 4px var(--neon-lime),0 0 8px var(--neon-blue);
+  transition: all 0.3s ease;
 }
 
 /* Sub Balance */
-.sub-bal { display:flex; gap:10px; margin-top:12px; }
+.sub-bal{ display:flex; gap:10px; margin-top:12px; }
 .sub-bal .item{
-  flex:1;
-  background: rgba(255,255,255,0.04);
-  border:1px solid rgba(255,255,255,0.08);
-  padding:12px;
-  border-radius:12px;
-  text-align:center;
+  flex:1; background: rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.08);
+  padding:12px; border-radius:12px; text-align:center;
   transition: background 0.25s ease, transform 0.2s ease;
 }
 .sub-bal .item:hover{ background: rgba(255,255,255,0.08); transform:translateY(-2px); }
@@ -106,20 +94,20 @@ body{
 .sub-bal p{ font-weight:700; margin-top:6px; }
 
 /* Buttons */
-.actions { display:grid; grid-template-columns:repeat(2,1fr); gap:12px; margin-top:14px; }
+.actions{ display:grid; grid-template-columns:repeat(2,1fr); gap:12px; margin-top:14px; }
 .action-btn{
   display:flex; justify-content:center; align-items:center; gap:8px;
   padding:12px; border-radius:14px;
   font-weight:600;
   transition: all .18s ease;
 }
-.action-btn:hover{ transform:translateY(-3px); box-shadow:0 6px 20px rgba(0,0,0,0.4); }
+.action-btn:hover{ transform:translateY(-3px); box-shadow:0 6px 18px rgba(0,0,0,0.35); }
 .pink{ background:linear-gradient(90deg,var(--neon-pink),#ff77ff); }
 .cyan{ background:linear-gradient(90deg,var(--neon-blue),#8ef8b8); }
 .neon-ghost{ background:transparent; border:1px solid rgba(255,255,255,0.12); color:#d7faff; }
 
 /* Transactions */
-.tx-list { display:flex; flex-direction:column; gap:12px; margin-top:12px; }
+.tx-list{ display:flex; flex-direction:column; gap:12px; margin-top:12px; }
 .tx{
   display:flex; justify-content:space-between; align-items:center;
   background: rgba(255,255,255,0.04);
@@ -128,14 +116,17 @@ body{
   transition: background 0.25s ease, transform 0.2s ease;
 }
 .tx:hover{ background: rgba(255,255,255,0.1); transform:translateY(-2px); }
-.tx .badge-green{ background: rgba(0,240,255,0.12); color:var(--neon-blue); }
-.tx .badge-pink{ background: rgba(255,0,240,0.10); color:var(--neon-pink); }
+.tx .badge{
+  font-weight:700; font-size:12px; padding:4px 8px; border-radius:999px;
+  transition: all 0.6s ease;
+}
+.tx .badge-green{ background: rgba(0,240,255,0.12); color:var(--neon-blue); animation: pulse 1.5s infinite alternate; }
+.tx .badge-pink{ background: rgba(255,0,240,0.10); color:var(--neon-pink); animation: pulse 1.5s infinite alternate; }
 
 /* Footer */
 footer{
   position:fixed; bottom:10px; left:50%; transform:translateX(-50%);
-  background: rgba(8,8,16,0.75);
-  border-radius:999px; padding:10px 14px;
+  background: rgba(8,8,16,0.75); border-radius:999px; padding:10px 14px;
   border:1px solid rgba(255,255,255,0.08); z-index:100;
   display:flex; gap:12px; align-items:center;
   backdrop-filter: blur(16px) saturate(160%);
@@ -145,10 +136,23 @@ footer{
   background: rgba(255,255,255,0.06);
   border:1px solid rgba(255,255,255,0.1);
   transition: transform .18s, box-shadow .18s, filter .18s;
+  animation: footerPulse 2.5s infinite alternate;
 }
-.fbtn svg{ width:26px; height:26px; filter: drop-shadow(0 0 6px var(--neon-blue)); transition: all 0.2s ease; }
+.fbtn svg{ width:26px; height:26px; filter: drop-shadow(0 0 4px var(--neon-lime)); transition: all 0.2s ease; }
 .fbtn:hover{ transform:translateY(-4px); box-shadow:0 10px 26px rgba(0,0,0,0.55); }
-.fbtn:hover svg{ filter: drop-shadow(0 0 12px var(--neon-pink)); transform: scale(1.1); }
+.fbtn:hover svg{ filter: drop-shadow(0 0 12px var(--neon-lime)); transform: scale(1.1); }
+
+/* Animations */
+@keyframes pulse{
+  0%{ transform: scale(1); opacity:0.85; }
+  50%{ transform: scale(1.05); opacity:1; }
+  100%{ transform: scale(1); opacity:0.85; }
+}
+@keyframes footerPulse{
+  0%{ transform: scale(1); box-shadow:0 6px 18px rgba(0,0,0,0.5); }
+  50%{ transform: scale(1.03); box-shadow:0 10px 28px rgba(0,0,0,0.55); }
+  100%{ transform: scale(1); box-shadow:0 6px 18px rgba(0,0,0,0.5); }
+}
 
 /* Responsive */
 @media (min-width:768px){
@@ -159,19 +163,15 @@ footer{
 </head>
 <body>
 
-<!-- HEADER -->
 <header class="header">
   <div class="logo">
     <h1>ZEP SWIPE</h1>
     <small>ZepVibe · Student Hub</small>
   </div>
-
   <div style="display:flex;align-items:center;gap:12px">
     <a class="glass" href="profile.html" style="display:inline-flex;align-items:center;gap:10px;padding:8px 10px;border-radius:999px;text-decoration:none;color:#dffbff">
       <div class="profile-avatar">
-        <svg viewBox="0 0 24 24">
-          <path d="M12 12c2.67 0 8 1.34 8 4v4H4v-4c0-2.66 5.33-4 8-4zm0-2a4 4 0 110-8 4 4 0 010 8z"/>
-        </svg>
+        <svg viewBox="0 0 24 24"><path d="M12 12c2.67 0 8 1.34 8 4v4H4v-4c0-2.66 5.33-4 8-4zm0-2a4 4 0 110-8 4 4 0 010 8z"/></svg>
       </div>
       <div style="text-align:left">
         <div style="font-size:13px;font-weight:700">Ama</div>
@@ -179,15 +179,12 @@ footer{
       </div>
     </a>
     <button id="logout" title="Logout" style="margin-left:6px;background:linear-gradient(90deg,#ff6fb0,#ff0044);border-radius:999px;padding:8px 10px;border:none;cursor:pointer;box-shadow:0 6px 18px rgba(255,0,80,0.12)">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="#050014">
-        <path d="M13 2v10h-2V2h2zm-1 20a9 9 0 110-18 9 9 0 010 18z"/>
-      </svg>
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="#050014"><path d="M13 2v10h-2V2h2zm-1 20a9 9 0 110-18 9 9 0 010 18z"/></svg>
     </button>
   </div>
 </header>
 
 <div class="container px-4 mt-4">
-  <!-- Portfolio Card -->
   <div class="glass">
     <div style="display:flex;justify-content:space-between;align-items:center">
       <div>
@@ -199,58 +196,35 @@ footer{
         <div style="font-size:12px;color:#9fdfff" id="lastUpdated">—</div>
       </div>
     </div>
-
     <div class="sub-bal">
-      <div class="item">
-        <h4>ZAC</h4>
-        <p id="zacBalance">0.00</p>
-      </div>
-      <div class="item">
-        <h4>USDT</h4>
-        <p id="usdtBalance">0.00</p>
-      </div>
+      <div class="item"><h4>ZAC</h4><p id="zacBalance">0.00</p></div>
+      <div class="item"><h4>USDT</h4><p id="usdtBalance">0.00</p></div>
     </div>
-
     <div class="actions">
-      <button class="action-btn pink" onclick="location.href='social.html'">ZepVibe</button>
+      <button class="action-btn pink" onclick="location.href='ride-hailing.html'">Swipe Rides</button>
       <button class="action-btn cyan" onclick="location.href='learn-earn.html'">Rewards</button>
       <button class="action-btn neon-ghost" onclick="location.href='delivery.html'">ParcelOn</button>
       <button class="action-btn neon-ghost" onclick="openStudyBuddy()">Ask Zep AI 🤖</button>
     </div>
   </div>
 
-  <!-- Transaction History -->
   <div>
     <h3 style="color:var(--neon-blue);font-family:Orbitron;margin-bottom:8px">Transaction History</h3>
     <div class="glass">
-      <div class="tx-list" id="txList">
-        <!-- Transactions injected by JS -->
-      </div>
+      <div class="tx-list" id="txList"></div>
     </div>
   </div>
 </div>
 
-<!-- Footer -->
 <footer>
-  <a class="fbtn" href="chat.html" title="Chat">
-    <svg viewBox="0 0 24 24"><path d="M4 4h16v10H7l-3 3V4z"/></svg>
-  </a>
-  <a class="fbtn" href="dashboard-store.html" title="Store">
-    <svg viewBox="0 0 24 24"><path d="M3 9l1-5h16l1 5H3zm0 2h18v11H3V11zm6 2v7h6v-7H9z"/></svg>
-  </a>
-  <a class="fbtn" href="ride-hailing.html" title="Ride">
-    <svg viewBox="0 0 24 24"><path d="M5 11l1.5-4.5h11L19 11H5zm14 2a2 2 0 012 2v3h-2v2h-2v-2H7v2H5v-2H3v-3a2 2 0 012-2h14zm-11 2a1 1 0 100 2 1 1 0 000-2z"/></svg>
-  </a>
-  <a class="fbtn" href="dashboard-wallet.html" title="Wallet">
-    <svg viewBox="0 0 24 24"><path d="M2 6a2 2 0 012-2h16a2 2 0 012 2v12a2 2 0 01-2 2H4a2 2 0 01-2-2V6zm16 0H4v12h14v-2h-5a3 3 0 010-6h5V6z"/></svg>
-  </a>
-  <a class="fbtn" href="profile.html" title="Profile">
-    <svg viewBox="0 0 24 24"><path d="M12 12c2.67 0 8 1.34 8 4v4H4v-4c0-2.66 5.33-4 8-4zm0-2a4 4 0 110-8 4 4 0 010 8z"/></svg>
-  </a>
+  <a class="fbtn" href="chat.html" title="Chat"><svg viewBox="0 0 24 24"><path d="M4 4h16v10H7l-3 3V4z"/></svg></a>
+  <a class="fbtn" href="dashboard-store.html" title="Store"><svg viewBox="0 0 24 24"><path d="M3 9l1-5h16l1 5H3zm0 2h18v11H3V11zm6 2v7h6v-7H9z"/></svg></a>
+  <a class="fbtn" href="ride-hailing.html" title="Ride"><svg viewBox="0 0 24 24"><path d="M5 11l1.5-4.5h11L19 11H5zm14 2a2 2 0 012 2v3h-2v2h-2v-2H7v2H5v-2H3v-3a2 2 0 012-2h14zm-11 2a1 1 0 100 2 1 1 0 000-2z"/></svg></a>
+  <a class="fbtn" href="dashboard-wallet.html" title="Wallet"><svg viewBox="0 0 24 24"><path d="M2 6a2 2 0 012-2h16a2 2 0 012 2v12a2 2 0 01-2 2H4a2 2 0 01-2-2V6zm16 0H4v12h14v-2h-5a3 3 0 010-6h5V6z"/></svg></a>
+  <a class="fbtn" href="profile.html" title="Profile"><svg viewBox="0 0 24 24"><path d="M12 12c2.67 0 8 1.34 8 4v4H4v-4c0-2.66 5.33-4 8-4zm0-2a4 4 0 110-8 4 4 0 010 8z"/></svg></a>
 </footer>
 
 <script>
-// Dashboard balances & transactions demo
 const DEFAULT_ZAC = 450.00;
 const DEFAULT_USDT = 120.00;
 
@@ -278,11 +252,11 @@ function pushTransaction(title, amountText, positive=true){
   txList.prepend(wrapper);
 }
 
-// Simulate initial transactions
+// Simulate demo transactions
 pushTransaction('Ride Payment','+5 ZAC',true);
-pushTransaction('ZepVibe Reward','+2 USDT',true);
+pushTransaction('Study Reward','+2 USDT',true);
+pushTransaction('Marketplace','-2 ZAC',false);
 
-// Logout
 document.getElementById('logout').addEventListener('click',()=>window.location.href='index.html');
 
 renderBalances();
