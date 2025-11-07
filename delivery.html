@@ -110,19 +110,19 @@ body{
   width:100%; height:300px; border-radius:12px; margin-top:12px; background: rgba(255,255,255,0.02); position:relative;
 }
 
-/* Delivery icon */
-.delivery-icon{
-  width:24px; height:24px; border-radius:50%;
-  background: var(--neon-lime);
+/* Vehicle icon */
+.vehicle-icon{
+  width:28px; height:28px;
+  background: url('https://cdn-icons-png.flaticon.com/512/743/743131.png') no-repeat center/contain;
   position:absolute; top:0; left:0;
-  box-shadow: 0 0 12px var(--neon-lime);
   animation: glowPulse 2s infinite alternate;
+  filter: drop-shadow(0 0 12px var(--neon-lime));
 }
 
 @keyframes glowPulse{
-  0%{ transform: scale(1); box-shadow: 0 0 8px var(--neon-lime);}
-  50%{ transform: scale(1.2); box-shadow: 0 0 18px var(--neon-lime);}
-  100%{ transform: scale(1); box-shadow: 0 0 8px var(--neon-lime);}
+  0%{ transform: scale(1); filter: drop-shadow(0 0 8px var(--neon-lime));}
+  50%{ transform: scale(1.2); filter: drop-shadow(0 0 18px var(--neon-lime));}
+  100%{ transform: scale(1); filter: drop-shadow(0 0 8px var(--neon-lime));}
 }
 
 /* Animations */
@@ -173,7 +173,7 @@ footer{
     <div class="delivery-list" id="deliveryList"></div>
   </div>
 
-  <!-- Map with moving icons -->
+  <!-- Map with moving vehicles -->
   <div class="glass">
     <h3 class="text-[#00f0ff] font-orbitron mb-2">Live Map</h3>
     <div id="mapCanvas"></div>
@@ -182,18 +182,12 @@ footer{
 
 <!-- Footer -->
 <footer>
-  <a href="students-dashboard.html" class="fbtn" title="Home">
+  <a href="student-dashboard.html" class="fbtn" title="Home">
     <svg viewBox="0 0 24 24" fill="#00f0ff"><path d="M12 3l10 9h-3v9h-6v-6H11v6H5v-9H2z"/></svg>
   </a>
-  <div class="fbtn" title="Deliveries">
-    <svg viewBox="0 0 24 24" fill="#00f0ff"><path d="M3 12h18v2H3z"/></svg>
-  </div>
-  <div class="fbtn" title="Vehicles">
+  <a href="ride-hailing.html" class="fbtn" title="Vehicles">
     <svg viewBox="0 0 24 24" fill="#00f0ff"><path d="M5 11l1.5-4.5h11L19 11H5zm14 2a2 2 0 012 2v3h-2v2h-2v-2H7v2H5v-2H3v-3a2 2 0 012-2h14z"/></svg>
-  </div>
-  <div class="fbtn" title="Stats">
-    <svg viewBox="0 0 24 24" fill="#00f0ff"><path d="M3 3h2v18H3zm6 6h2v12h-2zm6-9h2v21h-2zm6 12h2v9h-2z"/></svg>
-  </div>
+  </a>
 </footer>
 
 <!-- Chart.js -->
@@ -249,7 +243,7 @@ const paths = [
 const icons = [];
 paths.forEach((path,i)=>{
   const icon = document.createElement('div');
-  icon.className='delivery-icon';
+  icon.className='vehicle-icon';
   mapCanvas.appendChild(icon);
   icons.push({el:icon,path: path, progress:0, speed:0.002+Math.random()*0.003});
 });
