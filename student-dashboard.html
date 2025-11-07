@@ -1,274 +1,602 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Zep Swipe — Student Dashboard</title>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Zep Swipe — Student Dashboard</title>
 
-  <!-- Tailwind -->
-  <script src="https://cdn.tailwindcss.com"></script>
+<!-- Tailwind -->
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700&family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
 
-  <!-- Fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700&family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --neon-blue: #00f0ff;
+    --neon-pink: #ff00f0;
+    --neon-green: #3affc1;
+    --glass: rgba(255,255,255,0.04);
+  }
+  body {
+    font-family: 'Poppins', sans-serif;
+    background: radial-gradient(circle at 20% 15%, #060017 0%, #000004 100%);
+    color: #fff;
+    margin: 0;
+    min-height: 100vh;
+    padding-bottom: 110px; /* footer */
+  }
 
-  <style>
-    body {
-      background: radial-gradient(circle at 20% 20%, #0b0016, #02000a, #000);
-      font-family: 'Poppins', sans-serif;
-      color: white;
-      min-height: 100vh;
-      overflow-x: hidden;
-      padding-bottom: 95px;
-    }
+  /* Header */
+  header {
+    position: sticky; top: 0; z-index: 40;
+    display:flex; justify-content:space-between; align-items:center;
+    padding: 1rem;
+    backdrop-filter: blur(12px);
+    background: rgba(15,5,32,0.6);
+    border-bottom-left-radius: 14px;
+    border-bottom-right-radius: 14px;
+    box-shadow: 0 6px 30px rgba(0,240,255,0.06);
+  }
+  .logo{
+    font-family: 'Orbitron', sans-serif;
+    font-weight:700;
+    font-size:1.4rem;
+    background: linear-gradient(90deg,var(--neon-blue),var(--neon-pink));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    letter-spacing:1px;
+    text-shadow: 0 0 18px rgba(0,240,255,0.08);
+  }
+  .header-actions { display:flex; gap:0.6rem; align-items:center; }
 
-    /* HEADER */
-    header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 1rem 1.5rem;
-      background: rgba(255, 255, 255, 0.07);
-      border-bottom: 1px solid rgba(255, 255, 255, 0.2);
-      backdrop-filter: blur(14px);
-      box-shadow: 0 0 30px rgba(255, 0, 255, 0.5), 0 0 25px rgba(0, 255, 255, 0.3);
-      border-radius: 0 0 1.5rem 1.5rem;
-      position: sticky;
-      top: 0;
-      z-index: 50;
-    }
+  /* Card styles */
+  .card {
+    background: var(--glass);
+    border-radius: 14px;
+    border: 1px solid rgba(255,255,255,0.06);
+    backdrop-filter: blur(10px);
+    padding: 1rem;
+    box-shadow: 0 6px 22px rgba(0,0,0,0.5);
+  }
 
-    .zep-logo {
-      font-family: 'Orbitron', sans-serif;
-      font-size: 1.6rem;
-      background: linear-gradient(90deg, #00f0ff, #ff00f0);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      text-shadow: 0 0 25px rgba(0, 255, 255, 0.8);
-      letter-spacing: 2px;
-    }
+  .total-balance {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 1.9rem;
+    background: linear-gradient(90deg,var(--neon-blue),var(--neon-pink));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    text-shadow: 0 0 18px rgba(0,240,255,0.1);
+    animation: pulse 2.2s ease-in-out infinite;
+  }
+  @keyframes pulse {
+    0% { text-shadow: 0 0 8px rgba(0,240,255,0.08); }
+    50% { text-shadow: 0 0 22px rgba(255,0,240,0.12); }
+    100% { text-shadow: 0 0 8px rgba(0,240,255,0.08); }
+  }
 
-    .logout-btn {
-      background: rgba(255, 0, 50, 0.15);
-      border: 1px solid rgba(255, 0, 0, 0.4);
-      border-radius: 50%;
-      width: 44px;
-      height: 44px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      box-shadow: 0 0 20px rgba(255, 0, 0, 0.5);
-      transition: 0.3s;
-    }
+  /* Grid and layout */
+  .container { padding: 1rem; max-width:1000px; margin: 0 auto; display:grid; gap:1rem; grid-template-columns: 1fr; }
+  @media(min-width:900px){ .container{ grid-template-columns: 360px 1fr; } }
 
-    .logout-btn:hover {
-      background: rgba(255, 0, 0, 0.25);
-      box-shadow: 0 0 25px rgba(255, 0, 0, 0.8);
-      transform: scale(1.1);
-    }
+  /* study rooms and timetable layout */
+  .side-stack { display:flex; flex-direction:column; gap:1rem; }
+  .feature-btn { width:100%; padding:.7rem; border-radius:10px; font-weight:600; color:#081; cursor:pointer; border:none; }
+  .btn-pink { background: linear-gradient(90deg,var(--neon-pink), #ff77ff); color:#050007; }
+  .btn-cyan { background: linear-gradient(90deg,var(--neon-blue), #96ffd9); color:#050007; }
+  .small{ padding:.45rem; font-size:.9rem; }
 
-    .logout-icon {
-      width: 24px;
-      height: 24px;
-      filter: drop-shadow(0 0 10px #ff0044);
-      transition: 0.3s;
-    }
+  /* feed / main column */
+  .main { display:flex; flex-direction:column; gap:1rem; }
 
-    .logout-btn:hover .logout-icon {
-      filter: drop-shadow(0 0 18px #ff0044);
-    }
+  .tx {
+    display:flex; justify-content:space-between; align-items:center; padding:.7rem; border-radius:10px;
+    background: rgba(255,255,255,0.02); border:1px solid rgba(255,255,255,0.03);
+  }
 
-    /* Glass Cards */
-    .glass-card {
-      background: rgba(255, 255, 255, 0.05);
-      border-radius: 1.5rem;
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      backdrop-filter: blur(14px);
-      box-shadow: 0 0 25px rgba(255, 0, 255, 0.1);
-      padding: 1.5rem;
-      text-align: center;
-    }
+  /* study room list */
+  .room { display:flex; justify-content:space-between; gap:8px; padding:.6rem; border-radius:8px; align-items:center; }
+  .room:hover{ box-shadow: 0 6px 20px rgba(0,0,0,0.6); }
 
-    .balance, .total-balance {
-      font-family: 'Orbitron', sans-serif;
-      background: linear-gradient(90deg, #00f0ff, #ff00f0);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-    }
+  /* bottom footer */
+  footer {
+    position: fixed; left:0; right:0; bottom:0; height:72px;
+    background: rgba(8,6,16,0.9); display:flex; justify-content:space-around; align-items:center;
+    border-top: 1px solid rgba(255,255,255,0.04); z-index:60;
+  }
+  footer a { display:flex; align-items:center; justify-content:center; width:56px; height:56px; border-radius:999px; text-decoration:none; }
+  footer a svg { width:28px; height:28px; filter: drop-shadow(0 0 10px rgba(0,240,255,0.12)); transition: transform .18s ease; }
+  footer a:hover svg { transform:scale(1.12); filter: drop-shadow(0 0 18px rgba(255,0,240,0.25)); }
 
-    .total-balance {
-      font-size: 2rem;
-      text-shadow: 0 0 25px rgba(0, 255, 255, 0.5);
-    }
+  /* chat modal & forms */
+  .modal-bg { position:fixed; inset:0; display:none; align-items:center; justify-content:center; background:rgba(0,0,0,0.6); z-index:80; padding:1rem; }
+  .modal { width:100%; max-width:560px; background:var(--glass); padding:1rem; border-radius:12px; }
+  .input, textarea { width:100%; padding:.65rem; border-radius:8px; background:rgba(255,255,255,0.04); color:#fff; border:1px solid rgba(255,255,255,0.06); margin-top:.5rem; outline:none; }
 
-    .balance {
-      font-size: 1rem;
-      text-shadow: 0 0 15px rgba(255, 0, 255, 0.4);
-    }
+  .notice { position:fixed; top:84px; right:16px; z-index:90; }
 
-    @keyframes pulseGlow {
-      0% { text-shadow: 0 0 8px #00f0ff; }
-      50% { text-shadow: 0 0 25px #ff00f0; }
-      100% { text-shadow: 0 0 8px #00f0ff; }
-    }
-
-    .pulse { animation: pulseGlow 1.5s ease-in-out infinite; }
-
-    .neon-btn {
-      width: 100%;
-      padding: 0.8rem;
-      border-radius: 0.8rem;
-      font-weight: 600;
-      color: #0a021f;
-      text-align: center;
-      transition: 0.3s;
-    }
-
-    .btn-cyan {
-      background: linear-gradient(90deg, #00f0ff, #8ef8b8);
-      box-shadow: 0 0 20px #00f0ff99;
-    }
-
-    .btn-pink {
-      background: linear-gradient(90deg, #ff00f0, #ff77ff);
-      box-shadow: 0 0 20px #ff00f099;
-    }
-
-    .neon-btn:hover { transform: scale(1.05); }
-
-    .tx-card {
-      background: rgba(255, 255, 255, 0.06);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      border-radius: 1rem;
-      padding: 0.9rem 1rem;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 0.8rem;
-      transition: 0.3s;
-    }
-
-    .tx-card:hover {
-      background: rgba(255, 255, 255, 0.1);
-      box-shadow: 0 0 10px rgba(255, 0, 255, 0.15);
-    }
-
-    /* FOOTER */
-    footer {
-      position: fixed;
-      bottom: 0;
-      left: 0;
-      width: 100%;
-      background: rgba(10, 10, 25, 0.8);
-      backdrop-filter: blur(16px);
-      border-top: 1px solid rgba(255, 255, 255, 0.15);
-      display: flex;
-      justify-content: space-around;
-      align-items: center;
-      padding: 0.7rem 0;
-      box-shadow: 0 0 25px rgba(255, 0, 255, 0.3);
-      z-index: 200;
-    }
-
-    footer a svg {
-      width: 30px;
-      height: 30px;
-      filter: drop-shadow(0 0 8px #00f0ff);
-      transition: 0.3s;
-      animation: iconGlow 3s ease-in-out infinite alternate;
-    }
-
-    footer a:hover svg {
-      filter: drop-shadow(0 0 15px #ff00f0);
-      transform: scale(1.15);
-    }
-
-    @keyframes iconGlow {
-      0% { filter: drop-shadow(0 0 8px #00f0ff); }
-      50% { filter: drop-shadow(0 0 18px #ff00f0); }
-      100% { filter: drop-shadow(0 0 8px #00f0ff); }
-    }
-  </style>
+  /* small helpers */
+  .muted { color:#bfc7d6; opacity:.85; font-size: .95rem; }
+  .tiny { font-size:.82rem; color:#bdbdbd; }
+</style>
 </head>
-
 <body>
-  <!-- HEADER -->
-  <header>
-    <h1 class="zep-logo">ZEP SWIPE</h1>
-    <button class="logout-btn" onclick="window.location.href='index.html'" title="Logout">
-      <!-- SVG Neon Logout Icon -->
-      <svg class="logout-icon" xmlns="http://www.w3.org/2000/svg" fill="#ff0044" viewBox="0 0 24 24">
-        <path d="M16 13v-2H8V8l-5 4 5 4v-3h8zM20 3h-8v2h8v14h-8v2h8a2 2 0 002-2V5a2 2 0 00-2-2z"/>
-      </svg>
+
+<!-- HEADER -->
+<header>
+  <div class="logo">ZEP SWIPE</div>
+  <div class="header-actions">
+    <button id="logoutBtn" title="Logout" class="card small" onclick="location.href='index.html'">
+      <!-- SVG power icon -->
+      <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="#ff0044"><path d="M13 3h-2v10h2V3zm5.657 3.343l-1.414 1.414C18.89 9.515 20 11.574 20 14c0 3.866-3.134 7-7 7s-7-3.134-7-7c0-2.426 1.11-4.485 2.757-6.243L6.343 6.343C4.221 8.464 3 11.144 3 14c0 5.523 4.477 10 10 10s10-4.477 10-10c0-2.856-1.221-5.536-3.343-7.657z"/></svg>
     </button>
-  </header>
+  </div>
+</header>
 
-  <!-- MAIN CONTENT -->
-  <main class="px-5 pt-6 flex flex-col items-center">
-    <div class="glass-card w-full max-w-sm mb-6">
-      <i class="fa-solid fa-user-graduate text-5xl text-pink-400 mb-3"></i>
-      <h3 class="text-cyan-400 text-lg font-semibold mb-1">Welcome Back, Ama!</h3>
+<!-- PAGE CONTAINER -->
+<div class="container">
 
-      <!-- Portfolio Balances -->
-      <div id="portfolio" class="mt-3">
-        <p id="totalBalance" class="total-balance pulse">$570.00</p>
-        <p id="zacBalance" class="balance mt-2">$ZAC 450.00</p>
-        <p id="usdtBalance" class="balance">USDT 120.00</p>
+  <!-- LEFT / SIDE COLUMN -->
+  <aside class="side-stack">
+    <!-- BALANCE CARD -->
+    <div class="card">
+      <div class="flex items-center justify-between">
+        <div>
+          <div class="tiny muted">Portfolio</div>
+          <div id="totalBalance" class="total-balance">$0.00</div>
+        </div>
       </div>
-      <p class="text-gray-400 text-xs mt-2">Live Portfolio Tracker</p>
-    </div>
-
-    <!-- Feature Buttons -->
-    <div class="space-y-4 w-full max-w-sm mb-8">
-      <a href="social.html" class="neon-btn btn-pink">ZEPVIBE</a>
-      <a href="learn-earn.html" class="neon-btn btn-cyan">REWARDS</a>
-    </div>
-
-    <!-- Transaction History -->
-    <div class="w-full max-w-sm mb-16">
-      <h3 class="text-cyan-400 font-semibold text-center mb-3">Transaction History</h3>
-      <div id="transactions">
-        <div class="tx-card"><span>Ride Payment</span><span class="text-green-400">+5 $ZAC</span></div>
-        <div class="tx-card"><span>ZepVibe Reward</span><span class="text-green-400">+2 USDT</span></div>
-        <div class="tx-card"><span>Marketplace Purchase</span><span class="text-pink-400">-1.5 $ZAC</span></div>
+      <div class="mt-3 grid grid-cols-2 gap-2">
+        <div class="card text-left small">
+          <div class="tiny">ZAC</div>
+          <div id="zacVal" class="font-semibold">$ZAC 0.00</div>
+        </div>
+        <div class="card text-left small">
+          <div class="tiny">USDT</div>
+          <div id="usdtVal" class="font-semibold">USDT 0.00</div>
+        </div>
       </div>
-      <a href="dashboard-wallet.html" class="block text-center text-sm mt-3 text-cyan-400 hover:text-pink-400 transition">View Full Wallet →</a>
     </div>
-  </main>
 
-  <!-- FOOTER -->
-  <footer>
-    <a href="chat.html" title="Chat">
-      <svg xmlns="http://www.w3.org/2000/svg" fill="#00f0ff" viewBox="0 0 24 24"><path d="M4 4h16v12H5.17L4 17.17V4zm0-2a2 2 0 00-2 2v20l4-4h14a2 2 0 002-2V4a2 2 0 00-2-2H4z"/></svg>
-    </a>
-    <a href="dashboard-store.html" title="Store">
-      <svg xmlns="http://www.w3.org/2000/svg" fill="#00f0ff" viewBox="0 0 24 24"><path d="M3 9l1-5h16l1 5H3zm0 2h18v11H3V11zm6 2v7h6v-7H9z"/></svg>
-    </a>
-    <a href="ride-hailing.html" title="Ride">
-      <svg xmlns="http://www.w3.org/2000/svg" fill="#00f0ff" viewBox="0 0 24 24"><path d="M5 11l1.5-4.5h11L19 11H5zm14 2a2 2 0 012 2v3h-2v2h-2v-2H7v2H5v-2H3v-3a2 2 0 012-2h14zm-11 2a1 1 0 100 2 1 1 0 000-2zm8 0a1 1 0 100 2 1 1 0 000-2z"/></svg>
-    </a>
-    <a href="dashboard-wallet.html" title="Wallet">
-      <!-- Modern Wallet Icon -->
-      <svg xmlns="http://www.w3.org/2000/svg" fill="#00f0ff" viewBox="0 0 24 24"><path d="M2 6a2 2 0 012-2h16a2 2 0 012 2v12a2 2 0 01-2 2H4a2 2 0 01-2-2V6zm16 0H4v12h14v-2h-5a3 3 0 010-6h5V6zm-3 6a1 1 0 100 2h4v-2h-4z"/></svg>
-    </a>
-    <a href="profile.html" title="Profile">
-      <svg xmlns="http://www.w3.org/2000/svg" fill="#00f0ff" viewBox="0 0 24 24"><path d="M12 12c2.67 0 8 1.34 8 4v4H4v-4c0-2.66 5.33-4 8-4zm0-2a4 4 0 110-8 4 4 0 010 8z"/></svg>
-    </a>
-  </footer>
+    <!-- STUDY ROOMS -->
+    <div class="card">
+      <div class="flex justify-between items-center mb-2">
+        <h4 class="font-semibold">Study Rooms</h4>
+        <button class="small" id="openCreateRoom">+ Create</button>
+      </div>
+      <div id="roomsList" class="flex flex-col gap-2" style="max-height:260px; overflow:auto;"></div>
+    </div>
 
-  <!-- BALANCE SCRIPT -->
-  <script>
-    let zac = 450.00;
-    let usdt = 120.00;
-    const totalEl = document.getElementById('totalBalance');
-    const zacEl = document.getElementById('zacBalance');
-    const usdtEl = document.getElementById('usdtBalance');
+    <!-- TIMETABLE -->
+    <div class="card">
+      <div class="flex justify-between items-center mb-2">
+        <h4 class="font-semibold">Timetable</h4>
+        <button class="small" id="openAddClass">+ Add</button>
+      </div>
+      <div id="timetableList" style="max-height:260px; overflow:auto;" class="flex flex-col gap-2"></div>
+    </div>
 
-    function updateTotals() {
-      const total = zac + usdt;
-      totalEl.textContent = `$${total.toFixed(2)}`;
-    }
+  </aside>
 
-    updateTotals();
-  </script>
+  <!-- RIGHT / MAIN COLUMN -->
+  <section class="main">
+
+    <!-- Top quick actions -->
+    <div class="card flex gap-2 flex-wrap">
+      <button class="feature-btn btn-pink" onclick="location.href='delivery.html'">🚚 ParcelOn</button>
+      <button class="feature-btn btn-cyan" onclick="openAI()">🤖 Ask Zep AI</button>
+      <button class="feature-btn small" onclick="openScanner()">📸 Homework Scanner</button>
+      <button class="feature-btn small" onclick="openRooms()">💬 Join Room</button>
+    </div>
+
+    <!-- TRANSACTION HISTORY -->
+    <div class="card">
+      <div class="flex justify-between items-center mb-3">
+        <h3 class="font-semibold">Transaction History</h3>
+        <span class="tiny muted">Recent activity</span>
+      </div>
+      <div id="txFeed">
+        <!-- dynamic tx -->
+      </div>
+      <div class="mt-3 text-center">
+        <a href="dashboard-wallet.html" class="tiny text-cyan-300">View full wallet →</a>
+      </div>
+    </div>
+
+    <!-- Study Room Chat area (joined room) -->
+    <div id="chatArea" class="card hidden">
+      <div class="flex justify-between items-center mb-2">
+        <div><strong id="chatRoomTitle">Room</strong><div class="tiny muted" id="chatRoomTopic"></div></div>
+        <div class="tiny muted">Players online: <span id="channelPeers">1</span></div>
+      </div>
+
+      <div id="chatMessages" style="height:260px; overflow:auto; padding:6px; border-radius:8px; background:rgba(0,0,0,0.15); margin-bottom:8px;"></div>
+
+      <div class="flex gap-2">
+        <input id="chatInput" placeholder="Say something..." class="input" />
+        <button id="sendChat" class="feature-btn small">Send</button>
+        <button id="leaveRoom" class="feature-btn small">Leave</button>
+      </div>
+    </div>
+
+  </section>
+</div>
+
+<!-- Modals -->
+<div id="modalBG" class="modal-bg">
+  <div class="modal" role="dialog">
+    <div id="modalInner"></div>
+    <div class="mt-3 text-right">
+      <button id="closeModal" class="small" style="background:transparent;border:1px solid rgba(255,255,255,0.06);border-radius:8px;padding:.5rem .8rem;">Close</button>
+    </div>
+  </div>
+</div>
+
+<!-- notification area -->
+<div id="noticeRoot" class="notice"></div>
+
+<!-- FOOTER (neon SVG icons) -->
+<footer>
+  <a href="chat.html" title="Chat" aria-label="Chat">
+    <svg viewBox="0 0 24 24" fill="#00f0ff"><path d="M4 4h16v12H5l-3 3z"/></svg>
+  </a>
+
+  <a href="dashboard-store.html" title="Store" aria-label="Store">
+    <svg viewBox="0 0 24 24" fill="#ff00f0"><path d="M3 9l1-5h16l1 5H3z M3 11h18v10H3z"/></svg>
+  </a>
+
+  <a href="ride-hailing.html" title="Ride" aria-label="Ride">
+    <svg viewBox="0 0 24 24" fill="#3affc1"><path d="M5 11l1.5-4.5h11L19 11z"/></svg>
+  </a>
+
+  <a href="dashboard-wallet.html" title="Wallet" aria-label="Wallet">
+    <svg viewBox="0 0 24 24" fill="#00fff0"><path d="M2 6h20v12H2z"/></svg>
+  </a>
+
+  <a href="profile.html" title="Profile" aria-label="Profile">
+    <svg viewBox="0 0 24 24" fill="#ffffff"><path d="M12 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8z"/></svg>
+  </a>
+</footer>
+
+<!-- Scripts -->
+<script>
+/* -------------------------
+  Demo data + persistence
+--------------------------*/
+const LS_KEYS = { ROOMS: 'zep_rooms_v1', TIMETABLE: 'zep_timetable_v1', TX: 'zep_tx_v1', BAL: 'zep_bal_v1' };
+
+/* demo balances */
+let store = JSON.parse(localStorage.getItem(LS_KEYS.BAL)) || { ZAC: 450.00, USDT: 120.00 };
+function saveBalances(){ localStorage.setItem(LS_KEYS.BAL, JSON.stringify(store)); }
+
+/* transactions */
+let txs = JSON.parse(localStorage.getItem(LS_KEYS.TX)) || [
+  {id:Date.now()-60000, title:'Welcome Bonus', amount:+5, currency:'$ZAC'},
+  {id:Date.now()-30000, title:'Marketplace Purchase', amount:-1.5, currency:'$ZAC'}
+];
+
+/* rooms */
+let rooms = JSON.parse(localStorage.getItem(LS_KEYS.ROOMS)) || [
+  {id: 'room-1', name:'DeFi Study', topic:'AMAs & Liquidity'},
+  {id: 'room-2', name:'Web3 Project', topic:'Smart contract workshop'}
+];
+
+/* timetable */
+let timetable = JSON.parse(localStorage.getItem(LS_KEYS.TIMETABLE)) || [
+  // sample entry: {id, title, datetimeISO, reminderMinutes}
+];
+
+function persistAll(){
+  localStorage.setItem(LS_KEYS.ROOMS, JSON.stringify(rooms));
+  localStorage.setItem(LS_KEYS.TIMETABLE, JSON.stringify(timetable));
+  localStorage.setItem(LS_KEYS.TX, JSON.stringify(txs));
+  saveBalances();
+}
+
+/* -------------------------
+  render helpers
+--------------------------*/
+function renderBalances(){
+  document.getElementById('zacVal').textContent = `ZAC ${store.ZAC.toFixed(2)}`;
+  document.getElementById('usdtVal').textContent = `USDT ${store.USDT.toFixed(2)}`;
+  document.getElementById('totalBalance').textContent = `$${(store.ZAC + store.USDT).toFixed(2)}`;
+}
+
+function renderTX(){
+  const feed = document.getElementById('txFeed'); feed.innerHTML='';
+  txs.slice().reverse().forEach(t=>{
+    const el = document.createElement('div'); el.className='tx';
+    el.innerHTML = `<div><strong class="tiny">${t.title}</strong><div class="tiny muted">${new Date(t.id).toLocaleString()}</div></div><div class="${t.amount>0?'text-green-400':'text-pink-400'}">${t.amount>0?'+':''}${t.amount} ${t.currency}</div>`;
+    feed.appendChild(el);
+  });
+}
+
+function renderRooms(){
+  const out = document.getElementById('roomsList'); out.innerHTML='';
+  rooms.forEach(r=>{
+    const el = document.createElement('div'); el.className='room';
+    el.innerHTML = `<div><strong>${r.name}</strong><div class="tiny muted">${r.topic}</div></div>
+      <div style="display:flex;gap:6px"><button class="small" onclick="joinRoom('${r.id}')">Join</button>
+      <button class="small" onclick="deleteRoom('${r.id}')">Del</button></div>`;
+    out.appendChild(el);
+  });
+}
+
+function renderTimetable(){
+  const out = document.getElementById('timetableList'); out.innerHTML='';
+  timetable.sort((a,b)=> new Date(a.datetimeISO)-new Date(b.datetimeISO)).forEach(c=>{
+    const dt = new Date(c.datetimeISO);
+    const el = document.createElement('div'); el.className='room';
+    el.innerHTML = `<div><strong>${c.title}</strong><div class="tiny muted">${dt.toLocaleString()}</div></div>
+      <div style="display:flex;gap:6px"><button class="small" onclick="removeClass('${c.id}')">Remove</button></div>`;
+    out.appendChild(el);
+  });
+}
+
+/* -------------------------
+  CRUD + UI actions
+--------------------------*/
+renderBalances(); renderTX(); renderRooms(); renderTimetable();
+
+/* Create Room modal */
+document.getElementById('openCreateRoom').addEventListener('click', ()=> {
+  openModalHTML(`<h3 class="font-semibold">Create Study Room</h3>
+    <input id="roomName" class="input" placeholder="Room name (e.g. DeFi 101)">
+    <input id="roomTopic" class="input" placeholder="Topic (e.g. AMAs)">
+    <div class="mt-2" style="display:flex;gap:8px"><button class="feature-btn btn-cyan" onclick="createRoom()">Create</button></div>
+  `);
+});
+
+/* Add class modal */
+document.getElementById('openAddClass').addEventListener('click', ()=> {
+  openModalHTML(`<h3 class="font-semibold">Add Class / Event</h3>
+    <input id="classTitle" class="input" placeholder="Class title, e.g. Web3 Lecture">
+    <label class="tiny muted">Date & Time</label>
+    <input id="classDate" type="datetime-local" class="input">
+    <input id="classReminder" class="input" placeholder="Reminder minutes before (e.g. 15)">
+    <div class="mt-2" style="display:flex;gap:8px"><button class="feature-btn btn-pink" onclick="addClass()">Save</button></div>
+  `);
+});
+
+/* modal utilities */
+function openModalHTML(html){
+  document.getElementById('modalInner').innerHTML = html;
+  document.getElementById('modalBG').style.display = 'flex';
+}
+document.getElementById('closeModal').addEventListener('click', ()=> document.getElementById('modalBG').style.display='none');
+
+/* create room */
+function createRoom(){
+  const name = document.getElementById('roomName').value?.trim();
+  const topic = document.getElementById('roomTopic').value?.trim();
+  if(!name) return alert('Name required');
+  const id = 'room-' + Date.now();
+  rooms.push({id,name,topic});
+  persistAll(); renderRooms();
+  document.getElementById('modalBG').style.display='none';
+  notify(`Room "${name}" created`);
+}
+
+/* delete room */
+function deleteRoom(id){
+  if(!confirm('Delete room?')) return;
+  rooms = rooms.filter(r=>r.id!==id);
+  persistAll(); renderRooms();
+}
+
+/* join room — opens chat area and sets up BroadcastChannel for demo realtime */
+let currentChannel = null;
+let bc = null;
+function joinRoom(id){
+  const r = rooms.find(x=>x.id===id); if(!r) return;
+  document.getElementById('chatArea').classList.remove('hidden');
+  document.getElementById('chatRoomTitle').textContent = r.name;
+  document.getElementById('chatRoomTopic').textContent = r.topic || '';
+  document.getElementById('chatMessages').innerHTML = '';
+  // close old channel
+  if(bc) { try{ bc.close(); }catch(e){} bc=null; }
+  const channelName = `zep_room_${r.id}`;
+  bc = new BroadcastChannel(channelName);
+  bc.onmessage = (ev)=> {
+    appendMessage(ev.data.from, ev.data.text, ev.data.ts);
+    updatePeers();
+  };
+  // announce join
+  const me = localName();
+  bc.postMessage({from:me, text:`joined the room`, ts:Date.now(), sys:true});
+  updatePeers();
+  // wire send
+  document.getElementById('sendChat').onclick = sendChat;
+  document.getElementById('leaveRoom').onclick = leaveRoom;
+}
+
+/* send chat */
+function sendChat(){
+  const txt = document.getElementById('chatInput').value.trim(); if(!txt) return;
+  const payload = { from: localName(), text: txt, ts: Date.now() };
+  if(bc) bc.postMessage(payload);
+  appendMessage(payload.from, payload.text, payload.ts, true);
+  document.getElementById('chatInput').value = '';
+  addTx(`Chat: ${payload.text.slice(0,28)}`, 0, '$ZAC'); // example small tx if desired
+}
+
+/* append message */
+function appendMessage(from, text, ts, local=false){
+  const box = document.getElementById('chatMessages');
+  const el = document.createElement('div');
+  el.style.marginBottom='8px';
+  el.innerHTML = `<div class="tiny muted">${from} • ${new Date(ts).toLocaleTimeString()}</div><div style="padding:.5rem;border-radius:8px;background:${local?'linear-gradient(90deg,#00f0ff22,#ff00f022)':'rgba(255,255,255,0.02)'}">${escapeHtml(text)}</div>`;
+  box.appendChild(el);
+  box.scrollTop = box.scrollHeight;
+}
+
+/* leave room */
+function leaveRoom(){
+  if(bc) { try{ bc.postMessage({from: localName(), text:'left the room', ts:Date.now(), sys:true}); bc.close(); }catch(e){} bc=null; }
+  document.getElementById('chatArea').classList.add('hidden');
+}
+
+/* count peers (approximate: we can't reliably know peers without server, but track recent messages) */
+function updatePeers(){ // display 1 for local demo
+  document.getElementById('channelPeers').textContent = '1';
+}
+
+/* local username helper */
+function localName(){
+  let name = localStorage.getItem('zep_user_name') || '';
+  if(!name){
+    name = prompt('Enter display name for chat (dev mode)') || ('Student' + Math.floor(Math.random()*999));
+    localStorage.setItem('zep_user_name', name);
+  }
+  return name;
+}
+
+/* notify small UI */
+function notify(msg){
+  const root = document.getElementById('noticeRoot');
+  const el = document.createElement('div'); el.className='card'; el.style.marginBottom='8px';
+  el.textContent = msg; root.appendChild(el);
+  setTimeout(()=> el.remove(), 4500);
+  // browser notification
+  if(Notification && Notification.permission==='granted'){
+    new Notification('Zep Swipe', { body: msg });
+  }
+}
+
+/* add transaction example */
+function addTx(title, amount, currency){
+  const item = { id: Date.now(), title, amount, currency };
+  txs.push(item); localStorage.setItem(LS_KEYS.TX, JSON.stringify(txs)); renderTX();
+  notify(`${title} ${amount>0?'+':''}${amount} ${currency}`);
+}
+
+/* -------------------------
+  Timetable + reminders
+--------------------------*/
+function addClass(){
+  const title = document.getElementById('classTitle').value?.trim();
+  const dt = document.getElementById('classDate').value;
+  const rem = parseInt(document.getElementById('classReminder').value || '0',10);
+  if(!title || !dt) return alert('Provide title and date/time');
+  const id = 'cls-' + Date.now();
+  timetable.push({id, title, datetimeISO: dt, reminderMinutes: rem});
+  persistAll(); renderTimetable();
+  document.getElementById('modalBG').style.display='none';
+  scheduleReminder(id, dt, rem, title);
+  notify('Class scheduled: ' + title);
+}
+
+/* schedule existing timetable reminders on load */
+function scheduleAllReminders(){
+  timetable.forEach(c=>{
+    scheduleReminder(c.id, c.datetimeISO, c.reminderMinutes, c.title);
+  });
+}
+
+/* schedule single reminder; uses setTimeout (works while page is open) */
+function scheduleReminder(id, iso, minutesBefore, title){
+  const when = new Date(iso).getTime();
+  let notifyAt = when;
+  if(minutesBefore && !isNaN(minutesBefore)) notifyAt = when - minutesBefore*60000;
+  const now = Date.now();
+  const delay = notifyAt - now;
+  if(delay <= 0){
+    // if past or immediate, fire immediately
+    fireReminder(id,title);
+    return;
+  }
+  setTimeout(()=> fireReminder(id,title), delay);
+}
+
+/* fire */
+function fireReminder(id, title){
+  notify(`Reminder: ${title}`);
+}
+
+/* remove class */
+function removeClass(id){
+  timetable = timetable.filter(c=>c.id!==id); persistAll(); renderTimetable();
+}
+
+/* init reminders on load */
+scheduleAllReminders();
+
+/* -------------------------
+  Homework scanner + Ask AI (placeholder)
+  - the real model calls require a backend to safely hold keys.
+  - here we show UI and a simple simulated response.
+--------------------------*/
+async function openAI(){
+  const q = prompt('Ask Zep AI — quick help:');
+  if(!q) return;
+  // simulate network call & response
+  notify('Sending to Zep AI...');
+  setTimeout(()=>{
+    const explanation = `Short explanation for: "${q}".`;
+    const example = `Real-world example: Use this concept like ...`;
+    const quiz = `Quick quiz: 1) True/False? 2) What is ...?`;
+    alert(`${explanation}\n\n${example}\n\n${quiz}`);
+  }, 900);
+}
+
+/* open scanner: file input -> simulate OCR */
+function openScanner(){
+  const f = document.createElement('input'); f.type='file'; f.accept='image/*';
+  f.onchange = async ()=> {
+    const file = f.files[0]; if(!file) return;
+    notify('Scanning image (simulated)...');
+    setTimeout(()=> {
+      alert('Scanner result (simulated):\nSolution steps: 1) Identify variables 2) Apply formula 3) Example => ...');
+    }, 1100);
+  };
+  f.click();
+}
+
+/* join rooms UI helper */
+function openRooms(){
+  openModalHTML(`<h3 class="font-semibold">Join a Study Room</h3><div id="modalRooms"></div>`);
+  const container = document.getElementById('modalRooms');
+  container.innerHTML = rooms.map(r=>`<div style="display:flex;justify-content:space-between;align-items:center;padding:.5rem;border-radius:8px;margin-top:.5rem;background:rgba(0,0,0,0.15)"><div><strong>${r.name}</strong><div class="tiny muted">${r.topic||''}</div></div><div><button class="small" onclick="joinRoom('${r.id}');document.getElementById('modalBG').style.display='none';">Join</button></div></div>`).join('');
+}
+
+/* -------------------------
+  Broadcast demo: close on unload
+--------------------------*/
+window.addEventListener('beforeunload', ()=> { if(bc) try{ bc.close(); }catch(e){} });
+
+/* -------------------------
+  Notifications permission prompt on first interaction
+--------------------------*/
+if("Notification" in window && Notification.permission !== 'granted' && Notification.permission !== 'denied'){
+  setTimeout(()=> {
+    Notification.requestPermission().then(p=>{
+      if(p==='granted') notify('Desktop notifications enabled');
+    });
+  }, 2000);
+}
+
+/* -------------------------
+  Developer helpers
+--------------------------*/
+function escapeHtml(s){ return s.replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;'); }
+
+/* -------------------------
+  Initial render done above; update UI every few seconds with simulation
+--------------------------*/
+setInterval(()=> {
+  // simulate small random earnings occasionally
+  if(Math.random() < 0.25){
+    const delta = (Math.random()*3).toFixed(2);
+    if(Math.random()<0.6){ store.ZAC += +delta; addTx('ZepVibe Earn', +parseFloat(delta), '$ZAC'); }
+    else { store.USDT += +parseFloat((Math.random()*1.5).toFixed(2)); addTx('Referral', +0.5, 'USDT'); }
+    saveBalances(); renderBalances();
+  }
+}, 12000);
+
+/* expose some funcs for console / debug */
+window.createRoom = createRoom;
+window.joinRoom = joinRoom;
+window.openModalHTML = openModalHTML;
+window.addClass = addClass;
+window.removeClass = removeClass;
+window.localName = localName;
+</script>
 </body>
 </html>
