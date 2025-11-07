@@ -1,279 +1,278 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Zep POS Dashboard</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zep POS – Futuristic POS Wallet Concept</title>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        /* Base Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-<!-- Tailwind CSS + Fonts + Icons + QR Code -->
-<script src="https://cdn.tailwindcss.com"></script>
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Orbitron:wght@600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/qrious/4.0.2/qrious.min.js"></script>
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #0d0d0d;
+            color: #fff;
+            line-height: 1.6;
+        }
 
-<style>
-:root {
-  --neon-blue: #00f0ff;
-  --neon-pink: #ff00f0;
-  --glass: rgba(255,255,255,0.05);
-}
+        /* Neon Accent Colors */
+        :root {
+            --neon-blue: #00ffff;
+            --neon-pink: #ff00ff;
+            --neon-green: #39ff14;
+            --neon-yellow: #faff00;
+        }
 
-body {
-  font-family: 'Poppins', sans-serif;
-  margin: 0;
-  background: radial-gradient(circle at top, #0b0520 0%, #120b2e 100%);
-  color: #fff;
-  min-height: 100vh;
-  padding-bottom: 100px; /* space for footer */
-}
+        /* Global Styles */
+        h1, h2, h3 {
+            color: var(--neon-blue);
+            text-shadow: 0 0 5px var(--neon-blue), 0 0 10px var(--neon-blue);
+        }
 
-/* HEADER */
-.header {
-  position: fixed;
-  top: 0;
-  width: 100%;
-  padding: 1rem 1.5rem;
-  background: rgba(15,5,32,0.85);
-  backdrop-filter: blur(12px);
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  z-index: 50;
-}
-.header h1 {
-  font-family: 'Orbitron', sans-serif;
-  font-size: 1.5rem;
-  background: linear-gradient(90deg, var(--neon-blue), var(--neon-pink));
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-.header i {
-  color: var(--neon-blue);
-  font-size: 1.3rem;
-  cursor: pointer;
-  transition: 0.3s;
-}
-.header i:hover {
-  color: var(--neon-pink);
-  transform: scale(1.2);
-}
+        h1 {
+            font-size: 3rem;
+            text-align: center;
+            margin: 2rem 0;
+        }
 
-/* POS Container */
-.pos-container {
-  margin-top: 6rem;
-  padding: 1rem;
-  display: flex;
-  flex-direction: column;
-  gap: 1.5rem;
-}
+        h2 {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
 
-/* Input Card */
-.input-card {
-  background: var(--glass);
-  backdrop-filter: blur(20px);
-  border-radius: 1rem;
-  padding: 1.5rem;
-  box-shadow: 0 0 20px rgba(0,240,255,0.3);
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-}
-.input-card label {
-  font-weight: 600;
-  color: var(--neon-blue);
-}
-.input-card input, .input-card select {
-  padding: 0.8rem;
-  border-radius: 0.5rem;
-  border: none;
-  background: rgba(255,255,255,0.08);
-  color: #fff;
-  font-size: 1rem;
-  outline: none;
-}
-.input-card button {
-  margin-top: 0.5rem;
-  background: linear-gradient(90deg,var(--neon-blue),var(--neon-pink));
-  color: #fff;
-  border: none;
-  padding: 0.8rem;
-  border-radius: 0.6rem;
-  font-weight: 600;
-  cursor: pointer;
-  transition: 0.3s;
-}
-.input-card button:hover {
-  transform: scale(1.05);
-  box-shadow: 0 0 15px var(--neon-blue);
-}
+        h3 {
+            font-size: 1.5rem;
+            margin-top: 1rem;
+        }
 
-/* QR CODE */
-.qr-container {
-  background: var(--glass);
-  padding: 1rem;
-  border-radius: 1rem;
-  text-align: center;
-  box-shadow: 0 0 20px rgba(0,240,255,0.3);
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-}
-.qr-container h3 {
-  font-family: 'Orbitron', sans-serif;
-  margin-bottom: 0.5rem;
-  color: var(--neon-blue);
-}
-.qr-container canvas {
-  margin: auto;
-  display: block;
-}
+        p, li {
+            font-size: 1rem;
+            margin-bottom: 0.5rem;
+        }
 
-/* PAYMENT CONFIRMATION */
-.confirmation {
-  font-weight: 600;
-  font-size: 1rem;
-  color: #0f0;
-  animation: flash 1s ease-in-out 3;
-}
-@keyframes flash {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.3; }
-}
+        ul {
+            list-style: none;
+            padding-left: 1rem;
+        }
 
-/* TRANSACTION LOG */
-.tx-log {
-  margin-top: 1rem;
-  max-height: 200px;
-  overflow-y: auto;
-}
-.tx-log h4 {
-  font-family: 'Orbitron', sans-serif;
-  color: var(--neon-pink);
-  margin-bottom: 0.5rem;
-}
-.tx-item {
-  background: rgba(255,255,255,0.05);
-  padding: 0.6rem;
-  border-radius: 0.5rem;
-  margin-bottom: 0.4rem;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  font-size: 0.9rem;
-}
-.tx-item .amount-positive { color: #0f0; font-weight: 600; }
-.tx-item .amount-negative { color: #f0f; font-weight: 600; }
+        li::before {
+            content: '• ';
+            color: var(--neon-pink);
+        }
 
-/* FOOTER */
-.footer {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  background: rgba(15,5,32,0.85);
-  backdrop-filter: blur(12px);
-  display: flex;
-  justify-content: space-around;
-  padding: 0.8rem 0;
-  box-shadow: 0 -2px 20px rgba(0,255,255,0.2);
-  z-index: 100;
-}
-.footer a {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  color: var(--neon-blue);
-  font-size: 0.8rem;
-  text-decoration: none;
-  transition: 0.3s;
-}
-.footer a i { font-size: 1.5rem; }
-.footer a:hover, .footer a.active { color: var(--neon-pink); transform: scale(1.2); }
-</style>
+        section {
+            padding: 2rem 1rem;
+            border-bottom: 1px solid #222;
+        }
+
+        .tagline {
+            text-align: center;
+            font-size: 1.5rem;
+            color: var(--neon-green);
+            text-shadow: 0 0 5px var(--neon-green);
+            margin-bottom: 3rem;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* Feature Cards */
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .feature-card {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 1.5rem;
+            border-radius: 12px;
+            border: 1px solid rgba(0,255,255,0.3);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 0 15px var(--neon-blue);
+        }
+
+        /* Optional Features */
+        .optional {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .optional-item {
+            flex: 1 1 250px;
+            background: rgba(255,255,255,0.05);
+            padding: 1rem;
+            border-radius: 8px;
+            border: 1px solid rgba(255,0,255,0.3);
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 2rem;
+            color: var(--neon-yellow);
+            text-shadow: 0 0 5px var(--neon-yellow);
+        }
+
+        /* Animations */
+        .fade-in {
+            animation: fadeIn 1.5s ease-in;
+        }
+
+        @keyframes fadeIn {
+            from {opacity: 0;}
+            to {opacity: 1;}
+        }
+    </style>
 </head>
 <body>
+    <header>
+        <h1 class="fade-in">Zep POS</h1>
+        <div class="tagline fade-in">Payments simplified. Requests amplified.</div>
+    </header>
 
-<header class="header">
-  <h1>Zep POS</h1>
-  <i class="fas fa-store"></i>
-</header>
+    <main class="container">
+        <!-- Core Features -->
+        <section>
+            <h2>Core Features</h2>
+            
+            <h3>1. Payment Handling</h3>
+            <ul class="features">
+                <li class="feature-card">
+                    <strong>QR Code Payments:</strong>
+                    <p>Generate dynamic QR codes and scan for instant payments.</p>
+                </li>
+                <li class="feature-card">
+                    <strong>Request Payment Links:</strong>
+                    <p>Send auto-expiring payment links via SMS, email, WhatsApp, or social apps.</p>
+                </li>
+                <li class="feature-card">
+                    <strong>Split Payments:</strong>
+                    <p>Split bills among multiple payers and track partial payments in real time.</p>
+                </li>
+            </ul>
 
-<main class="pos-container">
-  <!-- Input Amount & Payment Type -->
-  <div class="input-card">
-    <label for="amount">Enter Amount</label>
-    <input type="number" id="amount" placeholder="0.00" min="0">
+            <h3>2. Wallet & Account Management</h3>
+            <ul class="features">
+                <li class="feature-card">
+                    <strong>Multi-Currency Wallet:</strong>
+                    <p>Hold multiple currencies including crypto.</p>
+                </li>
+                <li class="feature-card">
+                    <strong>Instant Transfers:</strong>
+                    <p>Send/receive money instantly to bank accounts or other Zep POS users.</p>
+                </li>
+                <li class="feature-card">
+                    <strong>Transaction History & Analytics:</strong>
+                    <p>Visual dashboards with real-time stats and trends.</p>
+                </li>
+            </ul>
 
-    <label for="currency">Select Payment Method</label>
-    <select id="currency">
-      <option value="ZAC">ZAC</option>
-      <option value="USDT">USDT</option>
-      <option value="ETH">ETH</option>
-    </select>
+            <h3>3. POS Features</h3>
+            <ul class="features">
+                <li class="feature-card">
+                    <strong>Inventory Management:</strong>
+                    <p>Sync stock levels automatically with sales.</p>
+                </li>
+                <li class="feature-card">
+                    <strong>Invoicing & Receipts:</strong>
+                    <p>Generate digital receipts instantly and share via QR code or email.</p>
+                </li>
+                <li class="feature-card">
+                    <strong>Loyalty Programs:</strong>
+                    <p>Track points, rewards, and discounts automatically.</p>
+                </li>
+                <li class="feature-card">
+                    <strong>Offline Mode:</strong>
+                    <p>Accept payments without internet; syncs later.</p>
+                </li>
+            </ul>
 
-    <button onclick="generateQR()">Generate QR Code</button>
-  </div>
+            <h3>4. Security & Compliance</h3>
+            <ul class="features">
+                <li class="feature-card">
+                    <strong>End-to-End Encryption:</strong>
+                    <p>All transactions and payment links are encrypted for security.</p>
+                </li>
+                <li class="feature-card">
+                    <strong>Biometric Authentication:</strong>
+                    <p>Authorize transactions with fingerprint or facial recognition.</p>
+                </li>
+                <li class="feature-card">
+                    <strong>Fraud Detection AI:</strong>
+                    <p>Real-time monitoring for suspicious transactions.</p>
+                </li>
+            </ul>
+        </section>
 
-  <!-- QR Code Display -->
-  <div class="qr-container" id="qrContainer" style="display:none;">
-    <h3>Scan to Pay</h3>
-    <canvas id="qrCode"></canvas>
-    <div id="paymentConfirmation" class="confirmation" style="display:none;">Payment Received ✅</div>
-    <div class="tx-log" id="txLog">
-      <h4>Transactions</h4>
-    </div>
-  </div>
-</main>
+        <!-- Futuristic Design & UX -->
+        <section>
+            <h2>Futuristic Design & UX</h2>
+            <ul class="features">
+                <li class="feature-card">
+                    <strong>AI-Powered Dashboard:</strong>
+                    <p>Predictive sales insights and suggested actions.</p>
+                </li>
+                <li class="feature-card">
+                    <strong>Minimalist, Neon-Inspired Interface:</strong>
+                    <p>Dark mode with neon accents and fluid transitions.</p>
+                </li>
+                <li class="feature-card">
+                    <strong>Voice Commands:</strong>
+                    <p>Request payments instantly via voice commands.</p>
+                </li>
+                <li class="feature-card">
+                    <strong>Smart Notifications:</strong>
+                    <p>Receive payment reminders, low stock alerts, and customer highlights.</p>
+                </li>
+            </ul>
+        </section>
 
-<!-- FOOTER -->
-<footer class="footer">
-  <a href="wallet-pos.html" class="active"><i class="fas fa-cash-register"></i><span>POS</span></a>
-  <a href="chat.html"><i class="fas fa-comments"></i><span>Chat</span></a>
-  <a href="dashboard-store.html"><i class="fas fa-store"></i><span>Store</span></a>
-  <a href="profile.html"><i class="fas fa-user"></i><span>Profile</span></a>
-</footer>
+        <!-- Optional Advanced Features -->
+        <section>
+            <h2>Optional Advanced Features</h2>
+            <div class="optional">
+                <div class="optional-item">
+                    <strong>AR/VR Integration:</strong>
+                    <p>Visualize sales analytics in an AR dashboard.</p>
+                </div>
+                <div class="optional-item">
+                    <strong>Crypto Payments & NFTs:</strong>
+                    <p>Accept crypto or NFT-based vouchers.</p>
+                </div>
+                <div class="optional-item">
+                    <strong>Merchant Marketplace:</strong>
+                    <p>Promote products and link to payment directly through Zep POS.</p>
+                </div>
+            </div>
+        </section>
 
-<script>
-// Generate QR code
-function generateQR() {
-  const amount = parseFloat(document.getElementById('amount').value).toFixed(2);
-  const currency = document.getElementById('currency').value;
+        <!-- Taglines / Slogans -->
+        <section>
+            <h2>Taglines & Slogans</h2>
+            <ul>
+                <li>“Zep POS – Payment, Simplified.”</li>
+                <li>“Your Wallet. Your Point-of-Sale. One App.”</li>
+                <li>“Request, Receive, Repeat – Seamlessly.”</li>
+            </ul>
+        </section>
+    </main>
 
-  if(amount <= 0 || isNaN(amount)) {
-    alert("Enter a valid amount!");
-    return;
-  }
-
-  const paymentData = `${currency}:${amount}`;
-
-  new QRious({
-    element: document.getElementById('qrCode'),
-    value: paymentData,
-    size: 250,
-    background: 'white',
-    foreground: '#00f0ff',
-    level: 'H'
-  });
-
-  document.getElementById('qrContainer').style.display = 'flex';
-
-  // Simulate payment received after 3 seconds
-  setTimeout(() => {
-    const confirmation = document.getElementById('paymentConfirmation');
-    confirmation.style.display = 'block';
-
-    // Add transaction to log
-    const txLog = document.getElementById('txLog');
-    const txItem = document.createElement('div');
-    txItem.classList.add('tx-item');
-    txItem.innerHTML = `<span>${currency} Payment</span><span class="amount-positive">+ ${amount}</span>`;
-    txLog.appendChild(txItem);
-
-    // Clear input
-    document.getElementById('amount').value = '';
-  }, 3000);
-}
-</script>
-
+    <footer>
+        &copy; 2025 Zep POS. All Rights Reserved.
+    </footer>
 </body>
 </html>
