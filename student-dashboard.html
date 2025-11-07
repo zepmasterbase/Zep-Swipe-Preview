@@ -10,297 +10,275 @@
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700&family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
 
 <style>
-  :root{
-    --neon-blue:#00f0ff;
-    --neon-pink:#ff00f0;
-    --neon-green:#3affc1;
-    --glass: rgba(255,255,255,0.04);
-  }
-  body{
-    font-family:'Poppins',sans-serif;
-    margin:0;
-    background: radial-gradient(circle at 10% 10%, #070018 0%, #02000a 100%);
-    color:#fff;
-    -webkit-font-smoothing:antialiased;
-    -moz-osx-font-smoothing:grayscale;
-    padding-bottom:90px; /* footer space */
-  }
+:root{
+  --neon-blue:#00f0ff;
+  --neon-pink:#ff00f0;
+  --neon-green:#3affc1;
+  --glass: rgba(255,255,255,0.05);
+}
 
-  /* header glass */
-  .header {
-    position:sticky; top:0; z-index:60;
-    display:flex; align-items:center; justify-content:space-between;
-    gap:1rem; padding:14px 16px;
-    background: linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.015));
-    border-bottom-left-radius:14px; border-bottom-right-radius:14px;
-    backdrop-filter: blur(12px);
-    box-shadow: 0 6px 30px rgba(0,240,255,0.05), 0 4px 18px rgba(255,0,240,0.03);
-  }
-  .logo {
-    display:flex; align-items:center; gap:12px;
-  }
-  .logo h1{
-    font-family:'Orbitron',sans-serif;
-    font-weight:700; font-size:20px;
-    background: linear-gradient(90deg,var(--neon-blue),var(--neon-pink));
-    -webkit-background-clip:text; -webkit-text-fill-color:transparent;
-    text-shadow:0 0 18px rgba(0,240,255,0.08);
-    letter-spacing:1px;
-    margin:0;
-  }
-  .logo small { display:block; font-size:11px; color:#b9eaff; opacity:0.8; margin-top:-2px; }
+body{
+  font-family:'Poppins',sans-serif;
+  margin:0;
+  background: radial-gradient(circle at 30% 10%, #09001c 0%, #02000a 100%);
+  color:#fff;
+  -webkit-font-smoothing:antialiased;
+  padding-bottom:90px;
+}
 
-  /* glass card */
-  .glass {
-    background:var(--glass);
-    border-radius:14px;
-    border:1px solid rgba(255,255,255,0.06);
-    padding:14px;
-    backdrop-filter: blur(12px);
-    box-shadow: 0 6px 18px rgba(0,0,0,0.4);
-  }
+/* Header */
+.header {
+  position:sticky; top:0; z-index:60;
+  display:flex; justify-content:space-between; align-items:center;
+  padding:14px 18px;
+  background: rgba(255,255,255,0.06);
+  border-bottom-left-radius:14px; border-bottom-right-radius:14px;
+  backdrop-filter: blur(16px) saturate(160%);
+  box-shadow:0 8px 32px rgba(0,0,0,0.45);
+}
 
-  /* balance */
-  .total-balance{
-    font-family:'Orbitron',sans-serif;
-    font-size:28px;
-    margin:0;
-    background: linear-gradient(90deg,var(--neon-blue),var(--neon-pink));
-    -webkit-background-clip:text; -webkit-text-fill-color:transparent;
-    text-shadow: 0 0 14px rgba(0,240,255,0.12);
-  }
-  .sub-bal {
-    display:flex; gap:8px; margin-top:10px;
-  }
-  .sub-bal .item{
-    flex:1;
-    background: rgba(255,255,255,0.02);
-    padding:10px; border-radius:10px; text-align:center;
-    border:1px solid rgba(255,255,255,0.03);
-  }
-  .sub-bal h4{ margin:0; color:var(--neon-blue); font-size:12px; font-weight:600; }
-  .sub-bal p{ margin:6px 0 0; font-weight:700; }
+.logo {
+  display:flex; align-items:center; gap:12px;
+}
+.logo h1{
+  font-family:'Orbitron',sans-serif;
+  font-size:20px; margin:0;
+  background: linear-gradient(90deg,var(--neon-blue),var(--neon-pink));
+  -webkit-background-clip:text; -webkit-text-fill-color:transparent;
+  letter-spacing:1.4px;
+}
+.logo small { display:block; font-size:11px; color:#b9eaff; opacity:0.8; margin-top:-2px; }
 
-  /* buttons */
-  .actions { display:grid; grid-template-columns:repeat(2,1fr); gap:10px; margin-top:14px; }
-  .action-btn {
-    display:flex; align-items:center; gap:10px; justify-content:center;
-    padding:11px; border-radius:12px; font-weight:700; color:#050014; cursor:pointer;
-    box-shadow: 0 6px 18px rgba(0,0,0,0.35);
-  }
-  .pink { background: linear-gradient(90deg,var(--neon-pink),#ff77ff); }
-  .cyan { background: linear-gradient(90deg,var(--neon-blue),#8ef8b8); }
-  .neon-ghost { background: transparent; border:1px solid rgba(255,255,255,0.06); color:#cfefff; }
+/* Glass Card */
+.glass {
+  background: var(--glass);
+  border-radius: 14px;
+  border: 1px solid rgba(255,255,255,0.12);
+  padding: 16px;
+  backdrop-filter: blur(16px) saturate(120%);
+  box-shadow: 0 4px 26px rgba(0,0,0,0.45);
+}
 
-  /* transactions */
-  .tx-list { margin-top:12px; display:flex; flex-direction:column; gap:8px; }
-  .tx { display:flex; justify-content:space-between; padding:10px; border-radius:10px; background: rgba(255,255,255,0.02); border:1px solid rgba(255,255,255,0.03); align-items:center; }
-  .tx .meta{ display:flex; gap:10px; align-items:center; }
-  .tx .badge { padding:4px 8px; border-radius:999px; font-weight:700; font-size:12px; }
-  .badge-green{ background: rgba(0,240,255,0.12); color:var(--neon-blue); }
-  .badge-pink{ background: rgba(255,0,240,0.10); color:var(--neon-pink); }
+/* Total Balance */
+.total-balance{
+  font-family:'Orbitron',sans-serif;
+  font-size:29px;
+  background: linear-gradient(90deg,var(--neon-blue),var(--neon-pink));
+  -webkit-background-clip:text; -webkit-text-fill-color:transparent;
+}
 
-  /* study buddy modal */
-  .modal-backdrop { position:fixed; inset:0; display:none; align-items:center; justify-content:center; z-index:90; background:rgba(5,7,14,0.7); }
-  .modal-card { width:92%; max-width:520px; padding:18px; border-radius:12px; background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01)); border:1px solid rgba(255,255,255,0.04); box-shadow:0 8px 40px rgba(0,0,0,0.6); }
-  .modal-card h3{ font-family:'Orbitron',sans-serif; margin:0 0 8px 0; color:var(--neon-blue); }
+/* Sub Balance */
+.sub-bal {
+  display:flex; gap:8px; margin-top:10px;
+}
+.sub-bal .item{
+  flex:1;
+  background: rgba(255,255,255,0.04);
+  padding:10px; border-radius:12px; text-align:center;
+  border:1px solid rgba(255,255,255,0.08);
+  transition: background .25s ease;
+}
+.sub-bal .item:hover{
+  background: rgba(255,255,255,0.08);
+}
+.sub-bal h4{ margin:0; color:var(--neon-blue); font-size:12px; font-weight:600; }
+.sub-bal p{ margin:6px 0 0; font-weight:700; }
 
-  /* footer neon icons (SVG in circles) */
-  footer {
-    position:fixed; bottom:10px; left:50%; transform:translateX(-50%);
-    background: linear-gradient(180deg, rgba(10,10,14,0.8), rgba(4,4,8,0.7));
-    border-radius:999px; padding:8px;
-    border:1px solid rgba(255,255,255,0.04); z-index:100;
-    display:flex; gap:12px; align-items:center; box-shadow:0 8px 30px rgba(0,0,0,0.6);
-  }
-  .fbtn {
-    width:56px; height:56px; border-radius:999px; display:flex; align-items:center; justify-content:center;
-    background: rgba(255,255,255,0.02); border:1px solid rgba(255,255,255,0.03);
-    transition: transform .18s ease, box-shadow .18s ease;
-    box-shadow: 0 6px 18px rgba(0,0,0,0.5);
-  }
-  .fbtn svg{ width:26px; height:26px; filter: drop-shadow(0 0 8px rgba(0,240,255,0.08)); transition: filter .18s ease, transform .18s ease; }
-  .fbtn:hover { transform:translateY(-4px); box-shadow:0 14px 30px rgba(0,0,0,0.6); }
-  .fbtn:hover svg { filter: drop-shadow(0 0 18px rgba(255,0,240,0.18)); transform:scale(1.08); }
+/* Buttons */
+.actions { display:grid; grid-template-columns:repeat(2,1fr); gap:10px; margin-top:14px; }
+.action-btn{
+  display:flex; align-items:center; gap:10px; justify-content:center;
+  padding:12px; border-radius:12px; font-weight:600; color:#050014; cursor:pointer;
+  transition: transform .18s, box-shadow .18s;
+}
+.action-btn:hover{ transform:translateY(-3px); }
 
-  /* responsive layout tweaks */
-  @media (min-width:768px){
-    .container { max-width:720px; margin:18px auto; }
-    .actions { grid-template-columns: repeat(3,1fr); }
-  }
+.pink{ background:linear-gradient(90deg,var(--neon-pink),#ff6af5); }
+.cyan{ background:linear-gradient(90deg,var(--neon-blue),#7affdb); }
+.neon-ghost{ background: transparent; border:1px solid rgba(255,255,255,0.12); color:#d7faff; }
+
+/* Transactions */
+.tx-list { margin-top:12px; display:flex; flex-direction:column; gap:8px; }
+.tx{
+  display:flex; justify-content:space-between; padding:10px; border-radius:12px;
+  background: rgba(255,255,255,0.04);
+  border:1px solid rgba(255,255,255,0.08);
+  align-items:center; transition: background .25s ease;
+}
+.tx:hover{ background: rgba(255,255,255,0.1); }
+.tx .meta{ display:flex; gap:10px; align-items:center; }
+.tx .badge { padding:4px 8px; border-radius:999px; font-weight:700; font-size:12px; }
+.badge-green{ background: rgba(0,240,255,0.12); color:var(--neon-blue); }
+.badge-pink{ background: rgba(255,0,240,0.10); color:var(--neon-pink); }
+
+/* Study Buddy Modal */
+.modal-backdrop { position:fixed; inset:0; display:none; align-items:center; justify-content:center; z-index:90; background:rgba(5,7,14,0.7); }
+.modal-card { width:92%; max-width:520px; padding:18px; border-radius:12px; background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01)); border:1px solid rgba(255,255,255,0.04); box-shadow:0 8px 40px rgba(0,0,0,0.6); }
+.modal-card h3{ font-family:'Orbitron',sans-serif; margin:0 0 8px 0; color:var(--neon-blue); }
+
+/* Footer Buttons */
+footer{
+  position:fixed; bottom:10px; left:50%; transform:translateX(-50%);
+  background: rgba(8,8,16,0.75);
+  border-radius:999px; padding:10px 14px;
+  border:1px solid rgba(255,255,255,0.08); z-index:100;
+  display:flex; gap:12px; align-items:center; backdrop-filter: blur(14px) saturate(160%);
+}
+.fbtn{
+  width:54px; height:54px; border-radius:999px; display:flex; align-items:center; justify-content:center;
+  background: rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.1);
+  transition: transform .18s, box-shadow .18s;
+}
+.fbtn:hover{
+  transform:translateY(-4px); box-shadow:0 10px 26px rgba(0,0,0,0.55);
+}
+
+/* Responsive Tweaks */
+@media (min-width:768px){
+  .container { max-width:720px; margin:18px auto; }
+  .actions { grid-template-columns: repeat(3,1fr); }
+}
 </style>
 </head>
 <body>
 
-  <!-- HEADER -->
-  <header class="header">
-    <div class="logo">
-      <!-- neon circle / small avatar -->
-      <svg width="40" height="40" viewBox="0 0 64 64" fill="none" aria-hidden>
-        <defs>
-          <radialGradient id="g" cx="50%" cy="30%">
-            <stop offset="0" stop-color="#9b59b6"/><stop offset="1" stop-color="#00f0ff"/>
-          </radialGradient>
-        </defs>
-        <circle cx="32" cy="32" r="30" stroke="rgba(255,255,255,0.06)" fill="url(#g)"/>
-        <text x="32" y="37" text-anchor="middle" font-family="Orbitron" font-weight="700" font-size="18" fill="#050014">Z</text>
+<!-- HEADER -->
+<header class="header">
+  <div class="logo">
+    <svg width="40" height="40" viewBox="0 0 64 64" fill="none" aria-hidden>
+      <defs>
+        <radialGradient id="g" cx="50%" cy="30%">
+          <stop offset="0" stop-color="#9b59b6"/><stop offset="1" stop-color="#00f0ff"/>
+        </radialGradient>
+      </defs>
+      <circle cx="32" cy="32" r="30" stroke="rgba(255,255,255,0.06)" fill="url(#g)"/>
+      <text x="32" y="37" text-anchor="middle" font-family="Orbitron" font-weight="700" font-size="18" fill="#050014">Z</text>
+    </svg>
+    <div>
+      <h1>ZEP SWIPE</h1>
+      <small>ZepVibe · Student Hub</small>
+    </div>
+  </div>
+
+  <div style="display:flex;align-items:center;gap:12px">
+    <a class="glass" href="profile.html" style="display:inline-flex;align-items:center;gap:10px;padding:8px 10px;border-radius:999px;text-decoration:none;color:#dffbff">
+      <img id="miniAvatar" src="https://via.placeholder.com/34/00f0ff/000000?text=A" alt="avatar" style="width:34px;height:34px;border-radius:50%;border:2px solid rgba(255,255,255,0.06);object-fit:cover">
+      <div style="text-align:left">
+        <div style="font-size:13px;font-weight:700">Ama</div>
+        <div style="font-size:11px;color:#bfefff">Student ID: #S-1024</div>
+      </div>
+    </a>
+
+    <button id="logout" title="Logout" style="margin-left:6px;background:linear-gradient(90deg,#ff6fb0,#ff0044);border-radius:999px;padding:8px 10px;border:none;cursor:pointer;box-shadow:0 6px 18px rgba(255,0,80,0.12)">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="#050014" aria-hidden>
+        <path d="M13 2v10h-2V2h2zm-1 20a9 9 0 110-18 9 9 0 010 18z"/>
       </svg>
+    </button>
+  </div>
+</header>
 
+<!-- CONTENT -->
+<div class="container px-4 mt-4">
+  <div class="glass" style="display:flex;flex-direction:column;gap:8px">
+    <div style="display:flex;justify-content:space-between;align-items:center">
       <div>
-        <h1>ZEP SWIPE</h1>
-        <small>ZepVibe · Student Hub</small>
+        <div style="font-size:12px;color:#bfefff;font-weight:700">Total Portfolio</div>
+        <p id="totalBalance" class="total-balance">$0.00</p>
+      </div>
+      <div style="text-align:right">
+        <div style="font-size:12px;color:#bfefff">Updated</div>
+        <div style="font-size:12px;color:#9fdfff" id="lastUpdated">—</div>
       </div>
     </div>
 
-    <div style="display:flex;align-items:center;gap:12px">
-      <a class="glass" href="profile.html" style="display:inline-flex;align-items:center;gap:10px;padding:8px 10px;border-radius:999px;text-decoration:none;color:#dffbff">
-        <img id="miniAvatar" src="https://via.placeholder.com/34/00f0ff/000000?text=A" alt="avatar" style="width:34px;height:34px;border-radius:50%;border:2px solid rgba(255,255,255,0.06);object-fit:cover">
-        <div style="text-align:left">
-          <div style="font-size:13px;font-weight:700">Ama</div>
-          <div style="font-size:11px;color:#bfefff">Student ID: #S-1024</div>
-        </div>
-      </a>
-
-      <!-- logout -->
-      <button id="logout" title="Logout" style="margin-left:6px;background:linear-gradient(90deg,#ff6fb0,#ff0044);border-radius:999px;padding:8px 10px;border:none;cursor:pointer;box-shadow:0 6px 18px rgba(255,0,80,0.12)">
-        <!-- simple power icon -->
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="#050014" aria-hidden>
-          <path d="M13 2v10h-2V2h2zm-1 20a9 9 0 110-18 9 9 0 010 18z"/>
-        </svg>
-      </button>
-    </div>
-  </header>
-
-  <!-- CONTENT -->
-  <div class="container px-4 mt-4">
-    <!-- portfolio card -->
-    <div class="glass" style="display:flex;flex-direction:column;gap:8px">
-      <div style="display:flex;justify-content:space-between;align-items:center">
-        <div>
-          <div style="font-size:12px;color:#bfefff;font-weight:700">Total Portfolio</div>
-          <p id="totalBalance" class="total-balance">$0.00</p>
-        </div>
-        <div style="text-align:right">
-          <div style="font-size:12px;color:#bfefff">Updated</div>
-          <div style="font-size:12px;color:#9fdfff" id="lastUpdated">—</div>
-        </div>
+    <div class="sub-bal" role="group" aria-label="sub balances">
+      <div class="item">
+        <h4>ZAC</h4>
+        <p id="zacBalance">0.00</p>
       </div>
-
-      <div class="sub-bal" role="group" aria-label="sub balances">
-        <div class="item">
-          <h4>ZAC</h4>
-          <p id="zacBalance">0.00</p>
-        </div>
-        <div class="item">
-          <h4>USDT</h4>
-          <p id="usdtBalance">0.00</p>
-        </div>
-      </div>
-
-      <div class="actions">
-        <button class="action-btn pink" id="zepvibeBtn" onclick="location.href='social.html'">ZepVibe</button>
-        <button class="action-btn cyan" id="rewardsBtn" onclick="location.href='learn-earn.html'">Rewards</button>
-        <button class="action-btn neon-ghost" id="parcelBtn" onclick="location.href='delivery.html'">ParcelOn</button>
-        <button class="action-btn neon-ghost" id="studyBuddyBtn" onclick="openStudyBuddy()">Ask Zep AI 🤖</button>
-      </div>
-
-    </div>
-
-    <!-- live earning tracker / small list -->
-    <div class="glass" style="margin-top:12px">
-      <div style="display:flex;justify-content:space-between;align-items:center">
-        <strong style="color:var(--neon-blue)">Live Earnings</strong>
-        <small style="color:#bfefff" id="liveStatus">Idle</small>
-      </div>
-      <div style="margin-top:10px" id="liveFeed">
-        <div style="font-size:13px;color:#cfefff">No live events yet.</div>
+      <div class="item">
+        <h4>USDT</h4>
+        <p id="usdtBalance">0.00</p>
       </div>
     </div>
 
-    <!-- Transaction history -->
-    <div style="margin-top:12px">
-      <h3 style="color:var(--neon-blue);font-family:Orbitron;margin-bottom:8px">Transaction History</h3>
-      <div class="glass" id="txContainer">
-        <div class="tx-list" id="txList">
-          <div class="tx">
-            <div class="meta"><strong>Ride Payment</strong></div>
-            <div><span class="badge badge-green">+5 ZAC</span></div>
-          </div>
-          <div class="tx">
-            <div class="meta"><strong>ZepVibe Reward</strong></div>
-            <div><span class="badge badge-green">+2 USDT</span></div>
-          </div>
-        </div>
-
-        <a href="dashboard-wallet.html" style="display:block;text-align:center;margin-top:10px;color:#9fefff;font-weight:600">View Full Wallet →</a>
-      </div>
-    </div>
-
-  </div>
-
-  <!-- Study Buddy Modal (in-page) -->
-  <div class="modal-backdrop" id="studyModal">
-    <div class="modal-card">
-      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">
-        <h3>Zep Study Buddy</h3>
-        <button onclick="closeStudyBuddy()" style="background:transparent;border:none;color:#ff99cc;font-weight:700;font-size:20px;cursor:pointer">×</button>
-      </div>
-
-      <p style="margin:0 0 8px;color:#d8f7ff;font-size:13px">Ask Zep anything about crypto, trading, or your study material. (Demo mode)</p>
-
-      <textarea id="studyQuestion" rows="4" placeholder="Type your question..." style="width:100%;padding:10px;border-radius:8px;background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.04);color:#e7fbff"></textarea>
-
-      <div style="display:flex;gap:8px;margin-top:10px">
-        <button class="action-btn cyan" style="flex:1" onclick="askZep()">Ask</button>
-        <button class="action-btn neon-ghost" style="flex:1" onclick="location.href='studybuddy.html'">Open Full →</button>
-      </div>
-
-      <div id="studyResult" style="margin-top:12px"></div>
+    <div class="actions">
+      <button class="action-btn pink" id="zepvibeBtn" onclick="location.href='social.html'">ZepVibe</button>
+      <button class="action-btn cyan" id="rewardsBtn" onclick="location.href='learn-earn.html'">Rewards</button>
+      <button class="action-btn neon-ghost" id="parcelBtn" onclick="location.href='delivery.html'">ParcelOn</button>
+      <button class="action-btn neon-ghost" id="studyBuddyBtn" onclick="openStudyBuddy()">Ask Zep AI 🤖</button>
     </div>
   </div>
 
-  <!-- FOOTER NEON ICONS (SVG circles) -->
-  <footer role="navigation" aria-label="main navigation">
-    <a class="fbtn" href="chat.html" title="Chat (ZepVibe)">
-      <!-- chat svg -->
-      <svg viewBox="0 0 24 24" fill="#00f0ff" xmlns="http://www.w3.org/2000/svg"><path d="M4 4h16v10H7l-3 3V4z"/></svg>
-    </a>
+  <div class="glass" style="margin-top:12px">
+    <div style="display:flex;justify-content:space-between;align-items:center">
+      <strong style="color:var(--neon-blue)">Live Earnings</strong>
+      <small style="color:#bfefff" id="liveStatus">Idle</small>
+    </div>
+    <div style="margin-top:10px" id="liveFeed">
+      <div style="font-size:13px;color:#cfefff">No live events yet.</div>
+    </div>
+  </div>
 
-    <a class="fbtn" href="dashboard-store.html" title="Store">
-      <!-- store svg -->
-      <svg viewBox="0 0 24 24" fill="#00f0ff" xmlns="http://www.w3.org/2000/svg"><path d="M3 9l1-5h16l1 5H3zm0 2h18v11H3V11zm6 2v7h6v-7H9z"/></svg>
-    </a>
+  <div style="margin-top:12px">
+    <h3 style="color:var(--neon-blue);font-family:Orbitron;margin-bottom:8px">Transaction History</h3>
+    <div class="glass" id="txContainer">
+      <div class="tx-list" id="txList">
+        <div class="tx">
+          <div class="meta"><strong>Ride Payment</strong></div>
+          <div><span class="badge badge-green">+5 ZAC</span></div>
+        </div>
+        <div class="tx">
+          <div class="meta"><strong>ZepVibe Reward</strong></div>
+          <div><span class="badge badge-green">+2 USDT</span></div>
+        </div>
+      </div>
+      <a href="dashboard-wallet.html" style="display:block;text-align:center;margin-top:10px;color:#9fefff;font-weight:600">View Full Wallet →</a>
+    </div>
+  </div>
+</div>
 
-    <a class="fbtn" href="ride-hailing.html" title="Ride">
-      <!-- car svg -->
-      <svg viewBox="0 0 24 24" fill="#00f0ff" xmlns="http://www.w3.org/2000/svg"><path d="M5 11l1.5-4.5h11L19 11H5zm14 2a2 2 0 012 2v3h-2v2h-2v-2H7v2H5v-2H3v-3a2 2 0 012-2h14zm-11 2a1 1 0 100 2 1 1 0 000-2z"/></svg>
-    </a>
+<!-- Study Buddy Modal -->
+<div class="modal-backdrop" id="studyModal">
+  <div class="modal-card">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">
+      <h3>Zep Study Buddy</h3>
+      <button onclick="closeStudyBuddy()" style="background:transparent;border:none;color:#ff99cc;font-weight:700;font-size:20px;cursor:pointer">×</button>
+    </div>
+    <p style="margin:0 0 8px;color:#d8f7ff;font-size:13px">Ask Zep anything about crypto, trading, or your study material. (Demo mode)</p>
+    <textarea id="studyQuestion" rows="4" placeholder="Type your question..." style="width:100%;padding:10px;border-radius:8px;background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.04);color:#e7fbff"></textarea>
+    <div style="display:flex;gap:8px;margin-top:10px">
+      <button class="action-btn cyan" style="flex:1" onclick="askZep()">Ask</button>
+      <button class="action-btn neon-ghost" style="flex:1" onclick="location.href='studybuddy.html'">Open Full →</button>
+    </div>
+    <div id="studyResult" style="margin-top:12px"></div>
+  </div>
+</div>
 
-    <a class="fbtn" href="dashboard-wallet.html" title="Wallet">
-      <!-- modern wallet svg -->
-      <svg viewBox="0 0 24 24" fill="#00f0ff" xmlns="http://www.w3.org/2000/svg"><path d="M2 6a2 2 0 012-2h16a2 2 0 012 2v12a2 2 0 01-2 2H4a2 2 0 01-2-2V6zm16 0H4v12h14v-2h-5a3 3 0 010-6h5V6z"/></svg>
-    </a>
-
-    <a class="fbtn" href="profile.html" title="Profile">
-      <!-- profile svg -->
-      <svg viewBox="0 0 24 24" fill="#00f0ff" xmlns="http://www.w3.org/2000/svg"><path d="M12 12c2.67 0 8 1.34 8 4v4H4v-4c0-2.66 5.33-4 8-4zm0-2a4 4 0 110-8 4 4 0 010 8z"/></svg>
-    </a>
-  </footer>
+<!-- Footer -->
+<footer role="navigation" aria-label="main navigation">
+  <a class="fbtn" href="chat.html" title="Chat (ZepVibe)">
+    <svg viewBox="0 0 24 24" fill="#00f0ff" xmlns="http://www.w3.org/2000/svg"><path d="M4 4h16v10H7l-3 3V4z"/></svg>
+  </a>
+  <a class="fbtn" href="dashboard-store.html" title="Store">
+    <svg viewBox="0 0 24 24" fill="#00f0ff" xmlns="http://www.w3.org/2000/svg"><path d="M3 9l1-5h16l1 5H3zm0 2h18v11H3V11zm6 2v7h6v-7H9z"/></svg>
+  </a>
+  <a class="fbtn" href="ride-hailing.html" title="Ride">
+    <svg viewBox="0 0 24 24" fill="#00f0ff" xmlns="http://www.w3.org/2000/svg"><path d="M5 11l1.5-4.5h11L19 11H5zm14 2a2 2 0 012 2v3h-2v2h-2v-2H7v2H5v-2H3v-3a2 2 0 012-2h14zm-11 2a1 1 0 100 2 1 1 0 000-2z"/></svg>
+  </a>
+  <a class="fbtn" href="dashboard-wallet.html" title="Wallet">
+    <svg viewBox="0 0 24 24" fill="#00f0ff" xmlns="http://www.w3.org/2000/svg"><path d="M2 6a2 2 0 012-2h16a2 2 0 012 2v12a2 2 0 01-2 2H4a2 2 0 01-2-2V6zm16 0H4v12h14v-2h-5a3 3 0 010-6h5V6z"/></svg>
+  </a>
+  <a class="fbtn" href="profile.html" title="Profile">
+    <svg viewBox="0 0 24 24" fill="#00f0ff" xmlns="http://www.w3.org/2000/svg"><path d="M12 12c2.67 0 8 1.34 8 4v4H4v-4c0-2.66 5.33-4 8-4zm0-2a4 4 0 110-8 4 4 0 010 8z"/></svg>
+  </a>
+</footer>
 
 <script>
-/*
-  Dashboard behavior:
-   - Uses localStorage keys: walletZAC, walletUSDT (numbers)
-   - If those exist, use them to compute total; otherwise use defaults
-   - Provides simulated live updates every 12s to show pulse & new tx
-   - Study Buddy: demo stub. Replace askZep() to call your real AI endpoint.
-*/
-
-// default balances (used if nothing in localStorage)
+// Dashboard behavior (balances, live events, study buddy)
 const DEFAULT_ZAC = 450.00;
 const DEFAULT_USDT = 120.00;
 
-// read balances from localStorage (other pages can write these keys)
 function readBalances(){
   const zac = parseFloat(localStorage.getItem('walletZAC')) || DEFAULT_ZAC;
   const usdt = parseFloat(localStorage.getItem('walletUSDT')) || DEFAULT_USDT;
@@ -310,113 +288,4 @@ function readBalances(){
 function renderBalances(){
   const { zac, usdt } = readBalances();
   const total = zac + usdt;
-  document.getElementById('zacBalance').innerText = `ZAC ${zac.toFixed(2)}`;
-  document.getElementById('usdtBalance').innerText = `USDT ${usdt.toFixed(2)}`;
-  const totalEl = document.getElementById('totalBalance');
-  totalEl.innerText = `$${total.toFixed(2)}`;
-  document.getElementById('lastUpdated').innerText = new Date().toLocaleTimeString();
-}
-
-// Add a new transaction into list (prepends)
-function pushTransaction(title, amountText, positive=true){
-  const txList = document.getElementById('txList');
-  const wrapper = document.createElement('div');
-  wrapper.className = 'tx';
-  const badgeClass = positive ? 'badge-green' : 'badge-pink';
-  wrapper.innerHTML = `<div class="meta"><strong>${title}</strong></div><div><span class="badge ${badgeClass}">${amountText}</span></div>`;
-  txList.prepend(wrapper);
-}
-
-// simulate live update feed
-const liveEvents = [
-  {title:'Referral Bonus', val:'+3 ZAC', type:'zac'},
-  {title:'Study Reward', val:'+1.5 ZAC', type:'zac'},
-  {title:'Ride Cashback', val:'+0.5 USDT', type:'usdt'},
-  {title:'Marketplace Purchase', val:'-2 ZAC', type:'zac', neg:true}
-];
-
-function simulateLive(){
-  const ev = liveEvents[Math.floor(Math.random()*liveEvents.length)];
-  const liveFeed = document.getElementById('liveFeed');
-  liveFeed.innerHTML = `<div style="padding:8px;border-radius:8px;background:rgba(255,255,255,0.02);font-size:13px"><strong>${ev.title}</strong> — ${ev.val}</div>`;
-  // adjust balances in localStorage
-  const { zac, usdt } = readBalances();
-  if(ev.type==='zac'){
-    const delta = parseFloat(ev.val.replace(/[^\d\.-]/g,'')) * (ev.neg? -1 : 1);
-    localStorage.setItem('walletZAC', (zac + delta).toFixed(6));
-  } else {
-    const delta = parseFloat(ev.val.replace(/[^\d\.-]/g,'')) * (ev.neg? -1 : 1);
-    localStorage.setItem('walletUSDT', (usdt + delta).toFixed(6));
-  }
-  renderBalances();
-  pushTransaction(ev.title, ev.val, !ev.neg);
-  document.getElementById('liveStatus').innerText = 'Updated';
-  // animate pulse
-  const el = document.getElementById(ev.type==='zac' ? 'zacBalance' : 'usdtBalance');
-  el.classList.add('pulse');
-  setTimeout(()=> el.classList.remove('pulse'), 1600);
-}
-
-// Study Buddy (demo stub)
-function openStudyBuddy(){
-  document.getElementById('studyModal').style.display = 'flex';
-  document.getElementById('studyQuestion').value = '';
-  document.getElementById('studyResult').innerHTML = '';
-}
-function closeStudyBuddy(){ document.getElementById('studyModal').style.display='none'; }
-
-// askZep: demo -> replace fetch URL with your AI endpoint and include auth header
-async function askZep(){
-  const q = document.getElementById('studyQuestion').value.trim();
-  const out = document.getElementById('studyResult');
-  if(!q){ out.innerHTML = `<div style="color:#ffd6e8">Type a question first.</div>`; return; }
-  out.innerHTML = `<div style="color:#bfefff">Thinking…</div>`;
-
-  // Demo response generator (replace with real API call)
-  await new Promise(r => setTimeout(r,900)); // simulate latency
-  // Sample structured response
-  const explanation = `Simple explanation for: "${q}" — (demo) A wallet stores crypto and keys.`;
-  const example = `Real-world example: Alice uses MetaMask to pay for a course and the smart contract verifies payment.`;
-  const quiz = [
-    {q:'What stores private keys?', a:'A wallet'},
-    {q:'Which network charges gas?', a:'Ethereum'}
-  ];
-
-  out.innerHTML = `
-    <div style="background:rgba(255,255,255,0.02);padding:10px;border-radius:8px">
-      <strong style="color:var(--neon-blue)">Explanation</strong>
-      <p style="margin:6px 0 10px;color:#dffbff">${explanation}</p>
-      <strong style="color:var(--neon-blue)">Example</strong>
-      <p style="margin:6px 0 10px;color:#dffbff">${example}</p>
-      <strong style="color:var(--neon-blue)">Quick Quiz</strong>
-      <ol style="margin:6px 0 0 18px;color:#dffbff">
-        <li>${quiz[0].q}</li>
-        <li>${quiz[1].q}</li>
-      </ol>
-    </div>
-  `;
-
-  // Optionally you may want to create a transaction reward for asking: simulate small reward
-  pushTransaction('Zep Study Bonus', '+0.5 ZAC', true);
-  // add to balances
-  const { zac } = readBalances();
-  localStorage.setItem('walletZAC', (zac + 0.5).toFixed(6));
-  renderBalances();
-}
-
-// logout – returns to landing
-document.getElementById('logout').addEventListener('click', ()=> {
-  // clear session keys if any (developer may customize)
-  // localStorage.clear();
-  window.location.href = 'index.html';
-});
-
-// initialize UI
-renderBalances();
-// simulate occasional live events
-setInterval(simulateLive, 12000);
-
-// if other pages set balances in localStorage, you can call renderBalances() after update
-</script>
-</body>
-</html>
+  document.get
