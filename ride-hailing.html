@@ -1,218 +1,250 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Swipe Rides — Zep Swipe</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Ride Hailing — Dashboard</title>
 
-  <!-- Tailwind -->
-  <script src="https://cdn.tailwindcss.com"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700&family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700&family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
 
-  <style>
-    body {
-      background: radial-gradient(circle at 20% 20%, #0a0015, #010008, #000);
-      font-family: 'Poppins', sans-serif;
-      color: #fff;
-      min-height: 100vh;
-      overflow-x: hidden;
-      padding-bottom: 85px;
-    }
+<style>
+:root{
+  --neon-blue:#00f0ff;
+  --neon-pink:#ff00f0;
+  --neon-lime:#a6ff00;
+  --glass: rgba(255,255,255,0.05);
+}
 
-    /* Header */
-    header {
-      text-align: center;
-      padding: 1.2rem;
-      background: rgba(255, 255, 255, 0.06);
-      border-bottom: 1px solid rgba(255, 255, 255, 0.2);
-      backdrop-filter: blur(16px);
-      border-radius: 0 0 1.5rem 1.5rem;
-      box-shadow: 0 0 25px rgba(255, 0, 255, 0.4), 0 0 15px rgba(0, 255, 255, 0.2);
-      position: sticky;
-      top: 0;
-      z-index: 50;
-    }
+body{
+  font-family:'Poppins',sans-serif;
+  margin:0;
+  background: radial-gradient(circle at 20% 10%, #09001c 0%, #02000a 100%);
+  color:#fff;
+  -webkit-font-smoothing:antialiased;
+  padding-bottom:90px;
+}
 
-    .ride-title {
-      font-family: 'Orbitron', sans-serif;
-      font-size: 1.8rem;
-      font-weight: 700;
-      background: linear-gradient(90deg, #00f0ff, #ff00f0, #00ff88);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      animation: titleGlow 4s linear infinite;
-    }
+/* Header */
+.header {
+  position: sticky; top:0; z-index:60;
+  display:flex; justify-content:space-between; align-items:center;
+  padding:14px 16px;
+  background: rgba(255,255,255,0.06);
+  backdrop-filter: blur(20px) saturate(180%);
+  border-bottom-left-radius:16px;
+  border-bottom-right-radius:16px;
+  box-shadow:0 8px 32px rgba(0,0,0,0.55);
+  gap:10px;
+}
+.header h1{
+  font-family:'Orbitron',sans-serif;
+  font-weight:700; font-size:24px;
+  background: linear-gradient(90deg,var(--neon-blue),var(--neon-pink),var(--neon-lime));
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+}
 
-    @keyframes titleGlow {
-      0% { text-shadow: 0 0 10px #00f0ff; }
-      50% { text-shadow: 0 0 25px #ff00f0; }
-      100% { text-shadow: 0 0 10px #00f0ff; }
-    }
+/* Glass cards */
+.glass{
+  background: var(--glass);
+  border-radius: 16px;
+  border:1px solid rgba(255,255,255,0.12);
+  padding:16px;
+  backdrop-filter: blur(18px) saturate(140%);
+  box-shadow:0 6px 20px rgba(0,0,0,0.5);
+  margin-bottom:12px;
+  transition: all 0.25s ease;
+}
 
-    /* Neon Map */
-    .map-container {
-      position: relative;
-      background: repeating-linear-gradient(0deg, rgba(0,255,255,0.08) 0 1px, transparent 1px 20px),
-                  repeating-linear-gradient(90deg, rgba(255,0,255,0.08) 0 1px, transparent 1px 20px);
-      border: 1px solid rgba(255,255,255,0.1);
-      border-radius: 1rem;
-      height: 250px;
-      margin-top: 1rem;
-      overflow: hidden;
-      box-shadow: 0 0 20px rgba(255, 0, 255, 0.15);
-    }
+/* Wallet */
+.wallet h3{ color:var(--neon-blue); font-family:Orbitron; font-size:18px; }
+.wallet p{ font-size:22px; font-family:Orbitron; font-weight:700; background: linear-gradient(90deg,var(--neon-blue),var(--neon-lime)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
 
-    .car {
-      position: absolute;
-      width: 28px;
-      height: 16px;
-      background: linear-gradient(90deg, #ff00f0, #00f0ff);
-      border-radius: 5px;
-      box-shadow: 0 0 10px #00f0ff, 0 0 15px #ff00f0;
-      animation: moveCar 10s linear infinite alternate;
-    }
+/* Ride history */
+.ride-list{ display:flex; flex-direction:column; gap:12px; margin-top:12px; }
+.ride-item{
+  display:flex; justify-content:space-between; align-items:center;
+  background: rgba(255,255,255,0.04);
+  border:1px solid rgba(255,255,255,0.08);
+  padding:12px; border-radius:14px;
+  transition: background 0.25s ease, transform 0.2s ease;
+}
+.ride-item:hover{ background: rgba(255,255,255,0.08); transform:translateY(-1px); }
+.badge{
+  font-weight:700; font-size:12px; padding:4px 8px; border-radius:999px;
+  animation: pulse 1.5s infinite alternate;
+}
+.badge-fare{ background: rgba(0,240,255,0.12); color: var(--neon-blue);}
 
-    @keyframes moveCar {
-      0% { top: 20%; left: 10%; transform: rotate(0deg); }
-      25% { top: 60%; left: 25%; transform: rotate(20deg); }
-      50% { top: 80%; left: 55%; transform: rotate(-10deg); }
-      75% { top: 45%; left: 75%; transform: rotate(30deg); }
-      100% { top: 15%; left: 85%; transform: rotate(-15deg); }
-    }
+/* Map */
+#mapCanvas{
+  width:100%; height:300px; border-radius:12px; margin-top:12px; background: rgba(255,255,255,0.02); position:relative;
+}
 
-    /* Ride Card */
-    .ride-card {
-      background: rgba(255, 255, 255, 0.05);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      border-radius: 1.2rem;
-      backdrop-filter: blur(10px);
-      padding: 1rem;
-      margin-top: 1.5rem;
-      box-shadow: 0 0 15px rgba(255, 0, 255, 0.15);
-    }
+/* Vehicle icon */
+.vehicle-icon{
+  width:28px; height:28px;
+  background: url('https://cdn-icons-png.flaticon.com/512/743/743131.png') no-repeat center/contain;
+  position:absolute; top:0; left:0;
+  animation: glowPulse 2s infinite alternate;
+  filter: drop-shadow(0 0 12px var(--neon-lime));
+}
 
-    .neon-btn {
-      background: linear-gradient(90deg, #00f0ff, #ff00f0);
-      color: #0a021f;
-      border: none;
-      border-radius: 0.8rem;
-      padding: 0.7rem 1rem;
-      font-weight: 600;
-      transition: 0.3s;
-      width: 100%;
-    }
+@keyframes glowPulse{
+  0%{ transform: scale(1); filter: drop-shadow(0 0 8px var(--neon-lime));}
+  50%{ transform: scale(1.2); filter: drop-shadow(0 0 18px var(--neon-lime));}
+  100%{ transform: scale(1); filter: drop-shadow(0 0 8px var(--neon-lime));}
+}
 
-    .neon-btn:hover {
-      box-shadow: 0 0 25px rgba(255, 0, 255, 0.4);
-      transform: scale(1.05);
-    }
+/* Request ride form */
+.request-ride{
+  display:flex; flex-direction:column; gap:10px; margin-top:12px;
+}
+.request-ride input, .request-ride button{
+  padding:10px; border-radius:10px; border:none; outline:none; font-size:14px;
+  background: rgba(255,255,255,0.02); color:#e7fbff; backdrop-filter: blur(10px);
+}
+.request-ride button{
+  font-weight:700; background: linear-gradient(90deg,var(--neon-lime),var(--neon-blue)); color:#050014;
+  cursor:pointer; transition: all 0.2s ease;
+}
+.request-ride button:hover{ transform:translateY(-2px); }
 
-    /* Footer */
-    footer {
-      position: fixed;
-      bottom: 0;
-      left: 0;
-      width: 100%;
-      display: flex;
-      justify-content: space-around;
-      align-items: center;
-      padding: 0.6rem 0;
-      background: rgba(10, 10, 25, 0.85);
-      backdrop-filter: blur(14px);
-      border-top: 1px solid rgba(255, 255, 255, 0.1);
-      box-shadow: 0 0 25px rgba(255, 0, 255, 0.3);
-      z-index: 100;
-    }
+/* Animations */
+@keyframes pulse{
+  0%{ transform: scale(1); opacity:0.85; }
+  50%{ transform: scale(1.05); opacity:1; }
+  100%{ transform: scale(1); opacity:0.85; }
+}
 
-    footer a svg {
-      width: 30px;
-      height: 30px;
-      fill: #00f0ff;
-      filter: drop-shadow(0 0 10px #00f0ff);
-      transition: 0.3s;
-      animation: iconPulse 3s ease-in-out infinite alternate;
-    }
-
-    footer a:hover svg {
-      fill: #ff00f0;
-      filter: drop-shadow(0 0 15px #ff00f0);
-      transform: scale(1.1);
-    }
-
-    @keyframes iconPulse {
-      0% { filter: drop-shadow(0 0 8px #00f0ff); }
-      50% { filter: drop-shadow(0 0 16px #ff00f0); }
-      100% { filter: drop-shadow(0 0 8px #00f0ff); }
-    }
-  </style>
+/* Footer */
+footer{
+  position:fixed; bottom:16px; left:50%; transform:translateX(-50%);
+  background: rgba(8,8,16,0.75);
+  backdrop-filter: blur(12px);
+  border-radius:999px; padding:8px 16px; display:flex; gap:12px; align-items:center;
+  box-shadow:0 6px 20px rgba(0,0,0,0.6);
+}
+.fbtn{
+  width:52px; height:52px; border-radius:50%; display:flex; align-items:center; justify-content:center;
+  background: rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.08);
+  transition: all .2s ease; cursor:pointer;
+}
+.fbtn svg{ width:26px; height:26px; filter: drop-shadow(0 0 8px var(--neon-blue)); transition: all .2s ease;}
+.fbtn:hover{ transform:translateY(-3px); background: rgba(255,255,255,0.06);}
+.fbtn:hover svg{ filter: drop-shadow(0 0 18px var(--neon-lime)); }
+</style>
 </head>
-
 <body>
-  <!-- Header -->
-  <header>
-    <h1 class="ride-title">🚗 SWIPE RIDES</h1>
-  </header>
 
-  <!-- Map Section -->
-  <main class="p-5 max-w-md mx-auto">
-    <div class="map-container">
-      <div class="car"></div>
+<header class="header">
+  <h1>RideHail</h1>
+</header>
+
+<div class="container px-4 mt-4">
+
+  <!-- Wallet -->
+  <div class="glass wallet">
+    <h3>Wallet Balance</h3>
+    <p id="walletBalance">$120.00</p>
+  </div>
+
+  <!-- Request Ride -->
+  <div class="glass">
+    <h3 class="text-[#00f0ff] font-orbitron mb-2">Request a Ride</h3>
+    <div class="request-ride">
+      <input type="text" id="pickup" placeholder="Pickup Location">
+      <input type="text" id="dropoff" placeholder="Dropoff Location">
+      <button id="requestRideBtn">Request Ride</button>
     </div>
+  </div>
 
-    <div class="ride-card text-center">
-      <h2 class="text-lg text-cyan-400 font-semibold">Active Ride</h2>
-      <p class="text-gray-400 text-sm mt-2">Driver: <span class="text-pink-400">Ama Kwesi</span></p>
-      <p class="text-gray-400 text-sm">Vehicle: <span class="text-cyan-300">Hyundai i10 — GR-9923-22</span></p>
-      <p class="text-gray-400 text-sm mb-3">ETA: <span id="eta" class="text-green-400">4 mins</span></p>
-      <button class="neon-btn mt-2">Track Ride Live</button>
-    </div>
+  <!-- Ride History -->
+  <div class="glass">
+    <h3 class="text-[#00f0ff] font-orbitron mb-2">Ride History</h3>
+    <div class="ride-list" id="rideList"></div>
+  </div>
 
-    <div class="ride-card">
-      <h2 class="text-lg text-pink-400 font-semibold">Request a Ride</h2>
-      <input type="text" placeholder="Pickup Location" class="w-full mt-3 p-2 rounded-md bg-white/10 text-white border border-white/20 placeholder-gray-400">
-      <input type="text" placeholder="Destination" class="w-full mt-2 p-2 rounded-md bg-white/10 text-white border border-white/20 placeholder-gray-400">
-      <button class="neon-btn mt-4">🚀 Request Ride</button>
-    </div>
+  <!-- Map with vehicles -->
+  <div class="glass">
+    <h3 class="text-[#00f0ff] font-orbitron mb-2">Available Rides</h3>
+    <div id="mapCanvas"></div>
+  </div>
 
-    <p id="ride-updates" class="text-center text-gray-400 text-sm mt-5"></p>
-  </main>
+</div>
 
-  <!-- Footer -->
-  <footer>
-    <!-- Home -->
-    <a href="students-dashboard.html" title="Home">
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 3l9 8h-3v10H6V11H3l9-8z"/></svg>
-    </a>
-    <!-- Activity -->
-    <a href="ride-history.html" title="Ride History">
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 3a9 9 0 109 9h-2a7 7 0 11-7-7V3z"/><path d="M12 8v5l4 2"/></svg>
-    </a>
-    <!-- Chat -->
-    <a href="chat.html" title="Chat">
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 4h16v12H5.17L4 17.17V4zM2 2v20l4-4h16a2 2 0 002-2V4a2 2 0 00-2-2H2z"/></svg>
-    </a>
-    <!-- Profile -->
-    <a href="profile.html" title="Profile">
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 12c2.67 0 8 1.34 8 4v4H4v-4c0-2.66 5.33-4 8-4zm0-2a4 4 0 110-8 4 4 0 010 8z"/></svg>
-    </a>
-  </footer>
+<footer>
+  <a href="student-dashboard.html" class="fbtn" title="Home">
+    <svg viewBox="0 0 24 24" fill="#00f0ff"><path d="M12 3l10 9h-3v9h-6v-6H11v6H5v-9H2z"/></svg>
+  </a>
+  <a href="ride-hailing.html" class="fbtn" title="Vehicles">
+    <svg viewBox="0 0 24 24" fill="#00f0ff"><path d="M5 11l1.5-4.5h11L19 11H5zm14 2a2 2 0 012 2v3h-2v2h-2v-2H7v2H5v-2H3v-3a2 2 0 012-2h14z"/></svg>
+  </a>
+</footer>
 
-  <script>
-    // Live ETA simulation
-    const etaEl = document.getElementById("eta");
-    const updatesEl = document.getElementById("ride-updates");
-    let eta = 4;
+<script>
+// Ride History
+const rideList = document.getElementById('rideList');
+let rides = [
+  {id:'R-1024', from:'Downtown', to:'Airport', fare:'$12.50'},
+  {id:'R-2048', from:'Mall', to:'University', fare:'$8.20'}
+];
+function renderRides(){
+  rideList.innerHTML='';
+  rides.forEach(r=>{
+    const div = document.createElement('div');
+    div.className='ride-item';
+    div.innerHTML=`<span>${r.from} → ${r.to}</span><span class="badge badge-fare">${r.fare}</span>`;
+    rideList.appendChild(div);
+  });
+}
+renderRides();
 
-    const interval = setInterval(() => {
-      if (eta > 0) {
-        eta--;
-        etaEl.textContent = `${eta} min${eta === 1 ? '' : 's'}`;
-        updatesEl.textContent = `🚗 Driver approaching... ${eta} min${eta === 1 ? '' : 's'} away`;
-      } else {
-        updatesEl.textContent = "✅ Your ride has arrived!";
-        clearInterval(interval);
-      }
-    }, 7000);
-  </script>
+// Map Vehicle Animation
+const mapCanvas = document.getElementById('mapCanvas');
+const mapWidth = mapCanvas.offsetWidth;
+const mapHeight = mapCanvas.offsetHeight;
+const paths = [
+  [{x:20,y:40},{x:150,y:60},{x:300,y:120},{x:mapWidth-50,y:mapHeight-50}],
+  [{x:50,y:200},{x:200,y:180},{x:400,y:220},{x:mapWidth-80,y:mapHeight-70}]
+];
+const icons = [];
+paths.forEach(path=>{
+  const icon = document.createElement('div');
+  icon.className='vehicle-icon';
+  mapCanvas.appendChild(icon);
+  icons.push({el:icon,path:path,progress:0,speed:0.002+Math.random()*0.003});
+});
+function animate(){
+  icons.forEach(icon=>{
+    icon.progress += icon.speed;
+    if(icon.progress>1) icon.progress=0;
+    const idx = Math.floor(icon.progress*(icon.path.length-1));
+    const start = icon.path[idx];
+    const end = icon.path[idx+1]||icon.path[idx];
+    const t = (icon.progress*(icon.path.length-1))%1;
+    const x = start.x + (end.x-start.x)*t;
+    const y = start.y + (end.y-start.y)*t;
+    icon.el.style.left=x+'px';
+    icon.el.style.top=y+'px';
+  });
+  requestAnimationFrame(animate);
+}
+animate();
+
+// Request Ride functionality
+document.getElementById('requestRideBtn').addEventListener('click',()=>{
+  const pickup = document.getElementById('pickup').value.trim();
+  const dropoff = document.getElementById('dropoff').value.trim();
+  if(!pickup || !dropoff){ alert('Enter pickup and dropoff'); return;}
+  const fare = `$${(Math.random()*15+5).toFixed(2)}`;
+  const rideId = 'R-'+Math.floor(Math.random()*9000+1000);
+  rides.unshift({id:rideId, from:pickup, to:dropoff, fare});
+  renderRides();
+  alert(`Ride Requested: ${pickup} → ${dropoff}, Fare: ${fare}`);
+});
+</script>
 </body>
 </html>
