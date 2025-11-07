@@ -5,133 +5,130 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Zep Swipe — Student Dashboard</title>
 
-<!-- Tailwind -->
 <script src="https://cdn.tailwindcss.com"></script>
-
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&family=Orbitron:wght@600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&family=Orbitron:wght@700&display=swap" rel="stylesheet">
 
 <style>
 :root {
-  --neon-blue: #00f0ff;
+  --neon-blue: #00eaff;
   --neon-pink: #ff00f0;
-  --glass: rgba(255,255,255,0.06);
+  --glass: rgba(255,255,255,0.07);
 }
 
-/* Background */
 body {
-  background: radial-gradient(circle at top, #0a021d 0%, #0f082a 100%);
-  color: #fff;
-  font-family: 'Poppins', sans-serif;
-  padding-bottom: 90px;
+  background: radial-gradient(circle at top, #09031a 0%, #0d0626 100%);
+  color: white;
+  font-family: "Poppins", sans-serif;
+  padding-bottom: 100px;
 }
 
-/* Header */
+/* HEADER GLASS */
 .header {
-  position: fixed; top:0; width:100%; padding: 1rem 1.5rem;
-  background: rgba(15,5,32,0.85); backdrop-filter: blur(18px);
-  display:flex; justify-content:space-between; align-items:center;
-  z-index: 50;
+  position: fixed; top:0; width:100%;
+  background: rgba(15,5,35,0.85); backdrop-filter: blur(20px);
+  padding: 1rem 1.4rem; display:flex; justify-content:space-between; align-items:center;
+  border-bottom: 1px solid rgba(0,255,255,0.25);
+  z-index: 999;
 }
 .header h1 {
-  font-family: 'Orbitron', sans-serif;
-  font-size: 1.4rem;
+  font-family: "Orbitron", sans-serif;
   color: var(--neon-blue);
-  text-shadow: 0 0 10px var(--neon-blue);
+  font-size: 1.45rem;
+  text-shadow: 0 0 14px var(--neon-blue);
 }
+.logout-btn { width:30px; cursor:pointer; filter: drop-shadow(0 0 9px #ff0058); }
 
-/* Balance Card */
+/* BALANCE CARD */
 .balance-card {
   margin-top: 5.5rem;
   background: var(--glass);
+  border-radius: 1.3rem;
   backdrop-filter: blur(18px);
-  border-radius: 1.2rem;
-  padding: 1.7rem 1.3rem;
+  padding:1.8rem 1.4rem;
   text-align:center;
   box-shadow: 0 0 25px rgba(0,255,255,0.25);
 }
 .balance-card .amount {
-  font-size: 2rem;
+  font-size: 2.3rem;
   font-weight:700;
   background: linear-gradient(90deg,var(--neon-blue),var(--neon-pink));
-  -webkit-background-clip:text; -webkit-text-fill-color:transparent;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
-/* Quick Buttons */
+/* MAIN MENU */
 .menu-grid {
-  display:grid; grid-template-columns:repeat(2,1fr);
-  gap:1rem; margin-top:1.5rem;
+  display:grid; grid-template-columns:repeat(2,1fr); gap:1.2rem; margin-top:2rem;
 }
 .menu-btn {
   background: var(--glass);
-  border-radius:1rem;
-  padding:1.3rem;
+  padding:1.4rem;
+  border-radius:1.2rem;
   text-align:center;
   box-shadow: 0 0 18px rgba(0,255,255,0.25);
-  transition:0.3s;
+  transition:0.35s;
 }
-.menu-btn:hover { transform:scale(1.05); }
+.menu-btn:hover { transform:scale(1.06); }
+.menu-btn img { width:43px; filter: drop-shadow(0 0 10px var(--neon-blue)); }
 
-.menu-btn img { width:40px; filter: drop-shadow(0 0 8px var(--neon-blue)); }
-
-/* Study Buddy Modal */
+/* STUDY BUDDY MODAL */
 #studyBuddyModal {
   position:fixed; top:0; left:0; width:100%; height:100%;
-  background:rgba(0,0,0,0.8); backdrop-filter:blur(10px);
+  background:rgba(0,0,0,0.75); backdrop-filter: blur(10px);
   display:none; justify-content:center; align-items:center;
-  z-index:200;
+  z-index:1100;
 }
 .modal-box {
-  background:var(--glass); border-radius:1rem; padding:1.5rem; width:85%;
-  text-align:center; box-shadow:0 0 20px rgba(0,255,255,0.4);
+  width:86%;
+  background:var(--glass); padding:1.6rem;
+  border-radius:1rem; text-align:center;
+  box-shadow:0 0 22px rgba(0,255,255,0.45);
 }
 
-/* Footer */
+/* FOOTER NAV */
 .footer {
   position:fixed; bottom:0; left:0; width:100%;
-  background:rgba(10,5,25,0.85); backdrop-filter:blur(14px);
-  display:flex; justify-content:space-around; padding:0.8rem 0;
-  border-top:1px solid rgba(0,255,255,0.3);
+  background:rgba(10,4,30,0.8); backdrop-filter: blur(14px);
+  padding:0.75rem 0; display:flex; justify-content:space-around;
+  border-top:1px solid rgba(0,255,255,0.25);
 }
 .footer a img {
-  width:26px;
+  width:30px; transition:0.3s;
   filter: drop-shadow(0 0 8px var(--neon-blue));
-  transition:0.3s;
 }
 .footer a:hover img,
-.footer a.active img { filter: drop-shadow(0 0 10px var(--neon-pink)); transform:scale(1.2); }
+.footer a.active img {
+  transform:scale(1.25);
+  filter: drop-shadow(0 0 13px var(--neon-pink));
+}
 </style>
 </head>
 <body>
 
 <header class="header">
-  <h1>Zep Swipe</h1>
-  <img src="icons/logout-neon.svg" style="width:28px;filter:drop-shadow(0 0 8px #ff004c);cursor:pointer;">
+  <h1>ZEP SWIPE</h1>
+  <img src="icons/logout-neon.svg" class="logout-btn" onclick="signOut()">
 </header>
 
 <main class="px-4">
 
 <div class="balance-card">
-  <h3>Total Portfolio</h3>
+  <h3 class="text-sm opacity-75">Total Portfolio</h3>
   <div class="amount" id="totalBalance">$0.00</div>
 </div>
 
 <div class="menu-grid">
 
   <div class="menu-btn" onclick="openStudyBuddy()">
-    <img src="icons/ai-neon.svg">
-    <p>Zep Study Buddy</p>
+    <img src="icons/ai-neon.svg"><p class="mt-1">Zep Study Buddy</p>
   </div>
 
-  <a class="menu-btn" href="social.html">
-    <img src="icons/vibe.svg"><p>ZepVibe</p>
+  <a class="menu-btn" href="delivery.html">
+    <img src="icons/parcels-neon.svg"><p class="mt-1">ParcelOn</p>
   </a>
 
   <a class="menu-btn" href="learn-earn.html">
-    <img src="icons/rewards.svg"><p>Rewards</p>
-  </a>
-
-  <a class="menu-btn" href="dashboard-wallet.html">
-    <img src="icons/wallet.svg"><p>Wallet</p>
+    <img src="icons/rewards-neon.svg"><p class="mt-1">Earn</p>
   </a>
 
 </div>
@@ -141,32 +138,37 @@ body {
 <!-- STUDY BUDDY MODAL -->
 <div id="studyBuddyModal">
   <div class="modal-box">
-    <h2 class="text-xl mb-3 text-[#00f0ff]">Zep Study Buddy</h2>
-    <p>AI-powered homework, explanations, and learning help.</p>
-    <button onclick="window.location.href='study-buddy.html'" class="mt-4 bg-[#00f0ff] text-black px-4 py-2 rounded-lg font-semibold">Open Full Assistant</button>
-    <br><br>
-    <button onclick="closeStudyBuddy()" class="text-sm opacity-70">Close</button>
+    <h2 class="text-xl text-[#00eaff] font-semibold">Zep Study Buddy</h2>
+    <p class="text-sm opacity-85 mt-2">AI homework help, explainers & revision assistance.</p>
+    <button onclick="window.location.href='study-buddy.html'" class="mt-4 bg-[#00eaff] text-black font-semibold px-4 py-2 rounded-lg">Open Assistant</button>
+    <p class="mt-4 text-xs opacity-70 cursor-pointer" onclick="closeStudyBuddy()">Close</p>
   </div>
 </div>
 
 <!-- FOOTER -->
 <footer class="footer">
-  <a href="dashboard.html" class="active"><img src="icons/home.svg"></a>
-  <a href="chat.html"><img src="icons/chat.svg"></a>
-  <a href="dashboard-store.html"><img src="icons/store.svg"></a>
-  <a href="ride-hailing.html"><img src="icons/ride.svg"></a>
-  <a href="profile.html"><img src="icons/profile.svg"></a>
+  <a href="dashboard.html" class="active"><img src="icons/home-neon.svg"></a>
+  <a href="chat.html"><img src="icons/chat-neon.svg"></a>
+  <a href="dashboard-store.html"><img src="icons/store-neon.svg"></a>
+  <a href="ride-hailing.html"><img src="icons/car-neon.svg"></a>
+  <a href="profile.html"><img src="icons/profile-neon.svg"></a>
 </footer>
 
 <script>
-// Pull balances (must match wallet page IDs)
-let zac = localStorage.getItem("zacBalance") || 1200;
-let usdt = localStorage.getItem("usdtBalance") || 400;
+// Load balances from wallet
+let zac = localStorage.getItem("zacBalance") || 0;
+let usdt = localStorage.getItem("usdtBalance") || 0;
 document.getElementById("totalBalance").innerText = `$${(Number(zac)+Number(usdt)).toLocaleString()}`;
 
-// Modal Control
-function openStudyBuddy(){ document.getElementById("studyBuddyModal").style.display = "flex"; }
-function closeStudyBuddy(){ document.getElementById("studyBuddyModal").style.display = "none"; }
+// Modal
+function openStudyBuddy(){ document.getElementById('studyBuddyModal').style.display='flex'; }
+function closeStudyBuddy(){ document.getElementById('studyBuddyModal').style.display='none'; }
+
+// Logout
+function signOut(){
+  localStorage.clear();
+  window.location.href = "login.html";
+}
 </script>
 
 </body>
