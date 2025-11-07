@@ -133,6 +133,9 @@ body{
 .tx .badge-green{ background: rgba(0,240,255,0.12); color:var(--neon-blue); }
 .tx .badge-pink{ background: rgba(255,0,240,0.10); color:var(--neon-pink); }
 
+/* Study Buddy Textarea placeholder */
+textarea::placeholder{ color: var(--neon-lime); opacity:0.8; font-weight:500; }
+
 /* Footer */
 footer{
   position:fixed; bottom:10px; left:50%; transform:translateX(-50%);
@@ -179,7 +182,7 @@ footer{
     <small>ZepVibe · Student Hub</small>
   </div>
   <div class="flex items-center gap-3">
-    <a class="glass flex items-center gap-2 p-2 rounded-full text-dffbff" href="profile.html">
+    <a class="glass flex items-center gap-2 p-2 rounded-full" href="profile.html">
       <div class="profile-avatar">
         <svg viewBox="0 0 24 24"><path d="M12 12c2.67 0 8 1.34 8 4v4H4v-4c0-2.66 5.33-4 8-4zm0-2a4 4 0 110-8 4 4 0 010 8z"/></svg>
       </div>
