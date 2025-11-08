@@ -1,231 +1,580 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Neon Wallet</title>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Orbitron:wght@600;800&display=swap" rel="stylesheet">
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Neon Wallet — Student Dashboard</title>
+
+<!-- Tailwind (CDN for quick utilities) -->
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
 <style>
-:root{
-  --bg:#05030d;
-  --glass:rgba(255,255,255,0.06);
-  --blue:#00eaff;
-  --pink:#ff4df9;
-  --lime:#7bffb7;
-}
-body{
-  margin:0; padding:0;
-  background:radial-gradient(circle at 10% 10%, #090516, #05030d 80%);
-  font-family:'Inter', sans-serif;
-  color:white;
-}
+  :root{
+    --neon-blue:#00f0ff;
+    --neon-pink:#ff00f0;
+    --neon-lime:#a6ff00;
+    --glass: rgba(255,255,255,0.04);
+    --muted: #cfefff;
+    --card-radius:14px;
+  }
+  *{box-sizing:border-box}
+  body{
+    margin:0;
+    font-family:'Poppins',sans-serif;
+    background: radial-gradient(circle at 10% 10%, #070018 0%, #02000a 100%);
+    color:#eaffff;
+    -webkit-font-smoothing:antialiased;
+    -moz-osx-font-smoothing:grayscale;
+    padding-bottom:110px; /* footer space */
+  }
 
-/* Header */
-header{
-  padding:18px 20px;
-  display:flex;
-  justify-content:center;
-  backdrop-filter:blur(14px);
-}
-.brand{
-  font-family:'Orbitron', sans-serif;
-  font-size:26px;
-  background:linear-gradient(90deg,var(--blue),var(--lime),var(--pink));
-  -webkit-background-clip:text;
-  -webkit-text-fill-color:transparent;
-  letter-spacing:1.2px;
-}
+  /* wrapper */
+  .container { max-width:1100px; margin:18px auto; padding:12px; display:grid; grid-template-columns: 1fr; gap:14px; }
 
-/* Portfolio Glowing Pill */
-.portfolio-pill{
-  margin:20px auto 0;
-  width:90%;
-  padding:22px;
-  text-align:center;
-  border-radius:26px;
-  background:var(--glass);
-  border:1px solid rgba(255,255,255,0.12);
-  backdrop-filter:blur(18px);
-  animation:breath 3s infinite alternate ease-in-out;
-  box-shadow:0 0 26px rgba(0,255,255,0.18);
-}
-@keyframes breath{
-  from{ box-shadow:0 0 16px rgba(0,255,255,0.12); }
-  to{ box-shadow:0 0 32px rgba(0,255,255,0.55); }
-}
-.portfolio-value{
-  font-size:34px;
-  font-weight:700;
-}
+  /* header */
+  .header {
+    display:flex; align-items:center; justify-content:space-between;
+    gap:12px; padding:14px 16px;
+    background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+    border-radius: 12px;
+    border:1px solid rgba(255,255,255,0.04);
+    backdrop-filter: blur(10px);
+    box-shadow: 0 8px 30px rgba(0,0,0,0.6);
+  }
+  .brand {
+    display:flex; gap:12px; align-items:center;
+  }
+  .brand .logo {
+    font-family:'Orbitron',sans-serif; font-weight:700; font-size:20px;
+    background: linear-gradient(90deg,var(--neon-blue),var(--neon-pink),var(--neon-lime));
+    -webkit-background-clip:text; -webkit-text-fill-color:transparent;
+  }
+  .header .right { display:flex; gap:12px; align-items:center; }
 
-/* Currency mini-cards */
-.currency-wrap{
-  margin:18px auto;
-  display:flex;
-  gap:12px;
-  justify-content:center;
-}
-.cur-card{
-  flex:1;
-  padding:14px;
-  border-radius:14px;
-  background:var(--glass);
-  border:1px solid rgba(255,255,255,0.08);
-  backdrop-filter:blur(14px);
-  text-align:center;
-}
-.cur-title{font-size:12px; opacity:.75;}
+  .logout-btn {
+    background: linear-gradient(90deg,#ff6fb0,#ff0044);
+    color:#050014; border:none; padding:8px 12px; border-radius:999px; cursor:pointer;
+    font-weight:700; box-shadow:0 8px 24px rgba(255,0,80,0.08);
+  }
 
-/* Action Buttons */
-.action-grid{
-  width:90%; margin:28px auto;
-  display:grid; grid-template-columns:1fr 1fr;
-  gap:14px;
-}
-.action-btn{
-  padding:14px;
-  border-radius:14px;
-  text-align:center;
-  font-weight:600;
-  font-size:14px;
-  cursor:pointer;
-  transition:.18s ease;
-}
-.action-btn:hover{transform:translateY(-3px);}
-.blue{background:linear-gradient(90deg,var(--blue),#6cf6ff); color:#031216;}
-.pink{background:linear-gradient(90deg,var(--pink),#ff9dfc); color:#160313;}
-.lime{background:linear-gradient(90deg,var(--lime),#c6ffe8); color:#031611;}
-.silver{border:1px solid rgba(255,255,255,0.12); background:var(--glass); color:#fff;}
+  /* glass boxes */
+  .glass {
+    background: var(--glass);
+    border-radius: var(--card-radius);
+    border:1px solid rgba(255,255,255,0.06);
+    padding:14px;
+    backdrop-filter: blur(12px);
+    box-shadow: 0 8px 30px rgba(0,0,0,0.6);
+  }
 
-/* Transactions */
-.section-title{
-  width:90%; margin:0 auto;
-  margin-top:30px;
-  font-size:15px;
-  opacity:.75;
-}
-.tx-list{
-  width:90%; margin:12px auto;
-  display:flex; flex-direction:column; gap:10px;
-}
-.tx-row{
-  background:var(--glass); backdrop-filter:blur(10px);
-  padding:14px 16px;
-  border-radius:12px;
-  border:1px solid rgba(255,255,255,0.08);
-  display:flex; justify-content:space-between;
-  font-size:14px;
-}
-.badge-plus{color:var(--lime); font-weight:700;}
-.badge-minus{color:var(--pink); font-weight:700;}
+  /* top summary */
+  .summary {
+    display:flex; gap:12px; flex-direction:column;
+  }
+  @media(min-width:900px){
+    .summary { flex-direction:row; align-items:stretch; }
+  }
+  .portfolio {
+    flex:1;
+    display:flex; flex-direction:column; justify-content:space-between;
+    gap:8px;
+  }
+  .portfolio .title { color:var(--neon-blue); font-weight:700; font-size:13px; }
+  .portfolio .amount {
+    font-family:'Orbitron',sans-serif; font-size:34px; font-weight:700;
+    background: linear-gradient(90deg,var(--neon-blue),var(--neon-lime));
+    -webkit-background-clip:text; -webkit-text-fill-color:transparent;
+    text-shadow:0 0 14px rgba(0,240,255,0.06);
+  }
+  .sub-bal { display:flex; gap:8px; margin-top:8px; }
+  .sub-bal .item {
+    flex:1; background: rgba(255,255,255,0.02); padding:10px; border-radius:10px; text-align:center; border:1px solid rgba(255,255,255,0.03);
+  }
+  .sub-bal h4 { margin:0; color:var(--neon-blue); font-size:12px; font-weight:700; }
+  .sub-bal p { margin:6px 0 0; font-weight:700; color:#e9ffff; }
 
-/* Footer Dock */
-footer{
-  position:fixed; bottom:18px; left:50%; transform:translateX(-50%);
-  width:88%;
-  padding:12px;
-  border-radius:26px;
-  background:rgba(10,10,18,0.45);
-  display:flex; justify-content:space-around;
-  border:1px solid rgba(255,255,255,0.09);
-  backdrop-filter:blur(18px);
-}
-.ficon{
-  width:46px; height:46px;
-  display:flex; align-items:center; justify-content:center;
-  border-radius:14px;
-  background:var(--glass);
-  border:1px solid rgba(255,255,255,0.08);
-  cursor:pointer;
-  transition:.2s;
-}
-.ficon:hover{transform:translateY(-4px);}
-.active{box-shadow:0 0 14px var(--blue); border-color:var(--blue);}
+  /* actions */
+  .actions { display:grid; grid-template-columns: repeat(2,1fr); gap:10px; margin-top:10px; }
+  @media(min-width:900px){ .actions { grid-template-columns: repeat(4,1fr); } }
+  .action-btn {
+    display:flex; align-items:center; justify-content:center; gap:10px; padding:12px; border-radius:12px; font-weight:800;
+    cursor:pointer; color:#050014; border:none; box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+  }
+  .btn-zac { background: linear-gradient(90deg,#ffd166,#ff77ff); }
+  .btn-usdt { background: linear-gradient(90deg,var(--neon-blue),#8ef8b8); }
+  .btn-ghost { background: transparent; border:1px solid rgba(255,255,255,0.06); color:var(--muted); font-weight:700; }
+
+  /* pulsing placeholders */
+  .pulse {
+    animation: pulseGlow 1.8s ease-in-out infinite;
+  }
+  @keyframes pulseGlow {
+    0% { box-shadow: 0 6px 20px rgba(0,240,255,0.03); transform: translateY(0); }
+    50% { box-shadow: 0 18px 40px rgba(0,240,255,0.06); transform: translateY(-3px); }
+    100% { box-shadow: 0 6px 20px rgba(0,240,255,0.03); transform: translateY(0); }
+  }
+
+  /* transactions */
+  .tx-list { margin-top:12px; display:flex; flex-direction:column; gap:8px; max-height:320px; overflow:auto; }
+  .tx { display:flex; justify-content:space-between; padding:10px; border-radius:10px; background: rgba(255,255,255,0.02); border:1px solid rgba(255,255,255,0.03); align-items:center; gap:8px; }
+  .meta { display:flex; gap:8px; align-items:center; min-width:0; }
+  .tx strong { display:block; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; max-width:200px; }
+  .badge { padding:6px 10px; border-radius:999px; font-weight:800; font-size:12px; }
+  .badge-zac { background: rgba(255,209,102,0.08); color:#ffd166; border:1px solid rgba(255,209,102,0.06); }
+  .badge-usdt { background: rgba(0,240,255,0.06); color:var(--neon-blue); border:1px solid rgba(0,240,255,0.06); }
+  .sale-badge { background: linear-gradient(90deg,var(--neon-lime),var(--neon-blue)); color:#061018; font-weight:900; padding:6px 8px; border-radius:8px; box-shadow:0 8px 24px rgba(166,255,0,0.06); }
+
+  /* sales badge tiny */
+  .tx .right { display:flex; gap:8px; align-items:center; }
+
+  /* footer neon icons */
+  footer {
+    position:fixed; bottom:10px; left:50%; transform:translateX(-50%);
+    background: linear-gradient(180deg, rgba(10,10,14,0.8), rgba(4,4,8,0.7));
+    border-radius:999px; padding:8px;
+    border:1px solid rgba(255,255,255,0.04); z-index:100;
+    display:flex; gap:12px; align-items:center; box-shadow:0 8px 30px rgba(0,0,0,0.6);
+  }
+  .fbtn {
+    width:56px; height:56px; border-radius:999px; display:flex; align-items:center; justify-content:center;
+    background: rgba(255,255,255,0.02); border:1px solid rgba(255,255,255,0.03);
+    transition: transform .18s ease, box-shadow .18s ease;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.5);
+  }
+  .fbtn svg{ width:26px; height:26px; filter: drop-shadow(0 0 8px rgba(0,240,255,0.08)); transition: filter .18s ease, transform .18s ease; fill: var(--neon-blue); }
+  .fbtn:hover { transform:translateY(-4px); box-shadow:0 14px 30px rgba(0,0,0,0.6); }
+  .fbtn:hover svg { filter: drop-shadow(0 0 18px rgba(255,0,240,0.18)); transform:scale(1.08); }
+
+  /* store area (ebook sale) */
+  .store-card { display:flex; gap:12px; align-items:center; }
+  .ebook-thumb { width:88px; height:88px; border-radius:10px; background:linear-gradient(90deg,var(--neon-pink),var(--neon-lime)); display:flex; align-items:center; justify-content:center; font-weight:900; color:#061018; }
+
+  /* AI modal */
+  .modal-backdrop { position:fixed; inset:0; display:none; align-items:center; justify-content:center; z-index:220; background:rgba(2,4,10,0.8); }
+  .modal-card { width:92%; max-width:720px; padding:18px; border-radius:12px; background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01)); border:1px solid rgba(255,255,255,0.04); box-shadow:0 8px 40px rgba(0,0,0,0.6); color:var(--muted); }
+  .ai-actions { display:flex; gap:8px; margin-top:8px; flex-wrap:wrap; }
+  .ai-suggestion { background: rgba(255,255,255,0.02); padding:8px 10px; border-radius:10px; cursor:pointer; border:1px solid rgba(255,255,255,0.03); }
+  .ai-response { margin-top:12px; background: rgba(255,255,255,0.02); padding:10px; border-radius:10px; border:1px solid rgba(255,255,255,0.03); }
+
+  /* responsive tweaks */
+  @media (min-width:900px){
+    .container { grid-template-columns: 1fr 420px; align-items:start; }
+    .right-col { position:sticky; top:18px; height:calc(100vh - 36px); overflow:auto; }
+  }
+  @media (max-width:899px){
+    .actions { grid-template-columns: repeat(2,1fr); }
+  }
 </style>
 </head>
-
 <body>
 
-<header><div class="brand">NEON WALLET</div></header>
+  <!-- HEADER -->
+  <header class="header container glass" role="banner">
+    <div class="brand">
+      <!-- neon circle -->
+      <svg width="44" height="44" viewBox="0 0 64 64" fill="none" aria-hidden>
+        <defs>
+          <radialGradient id="g2" cx="50%" cy="30%">
+            <stop offset="0" stop-color="#9b59b6"/><stop offset="1" stop-color="#00f0ff"/>
+          </radialGradient>
+        </defs>
+        <circle cx="32" cy="32" r="30" stroke="rgba(255,255,255,0.06)" fill="url(#g2)"/>
+        <text x="32" y="37" text-anchor="middle" font-family="Orbitron" font-weight="700" font-size="18" fill="#050014">N</text>
+      </svg>
+      <div>
+        <div class="logo">NEON WALLET</div>
+        <small style="color:#bfefff;opacity:0.8">Student · Wallet & Sales</small>
+      </div>
+    </div>
 
-<div class="portfolio-pill">
-  <div class="portfolio-value" id="totalBalance">$0.00</div>
-  <div style="font-size:13px; opacity:.7;">Total Portfolio Value</div>
-</div>
+    <div class="right">
+      <button id="openAi" class="action-btn btn-ghost" title="Neon AI Tool" style="padding:8px 10px">Neon AI</button>
+      <button id="logout" class="logout-btn" title="Logout">Logout</button>
+    </div>
+  </header>
 
-<div class="currency-wrap">
-  <div class="cur-card">
-    <div class="cur-title">ZAC</div>
-    <div id="zacBalance">0.00</div>
+  <!-- MAIN -->
+  <main class="container" style="margin-top:8px;">
+
+    <!-- LEFT / MAIN content -->
+    <section class="glass portfolio">
+      <div>
+        <div style="display:flex;justify-content:space-between;align-items:center">
+          <div>
+            <div class="title">Total Portfolio</div>
+            <div id="portfolioAmount" class="amount">—</div>
+            <div style="font-size:12px;color:#bfefff;margin-top:6px">Updated: <span id="lastUpdated">—</span></div>
+          </div>
+
+          <div style="text-align:right">
+            <div style="font-size:12px;color:#bfefff">Quick actions</div>
+            <div style="display:flex;flex-direction:column;gap:8px;margin-top:8px">
+              <button class="action-btn btn-zac pulse" id="sendZacBtn" onclick="location.href='send-cash.html'">Send ZAC</button>
+              <button class="action-btn btn-usdt pulse" id="sendUsdtBtn" onclick="location.href='send-cash.html'">Send USDT</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="sub-bal" role="group" aria-label="sub balances" style="margin-top:14px">
+          <div class="item">
+            <h4>ZAC</h4>
+            <p id="zacBalance">0.00</p>
+          </div>
+          <div class="item">
+            <h4>USDT</h4>
+            <p id="usdtBalance">0.00</p>
+          </div>
+        </div>
+
+        <div class="actions" style="margin-top:12px">
+          <button class="action-btn btn-zac pulse" onclick="location.href='send-cash.html'">Send (ZAC)</button>
+          <button class="action-btn btn-usdt pulse" onclick="location.href='send-cash.html'">Send (USDT)</button>
+          <button class="action-btn btn-zac pulse" onclick="location.href='cash-request.html'">Request (ZAC)</button>
+          <button class="action-btn btn-usdt pulse" onclick="location.href='cash-request.html'">Request (USDT)</button>
+
+          <button class="action-btn btn-zac pulse" onclick="location.href='top-up.html'">Buy (ZAC)</button>
+          <button class="action-btn btn-usdt pulse" onclick="location.href='top-up.html'">Buy (USDT)</button>
+          <button class="action-btn btn-zac pulse" onclick="location.href='withdrawal.html'">Withdraw (ZAC)</button>
+          <button class="action-btn btn-usdt pulse" onclick="location.href='withdrawal.html'">Withdraw (USDT)</button>
+        </div>
+      </div>
+
+      <!-- live earnings / AI assistant summary -->
+      <div class="glass" style="margin-top:12px">
+        <div style="display:flex;justify-content:space-between;align-items:center">
+          <strong style="color:var(--neon-blue)">Live Sales</strong>
+          <small style="color:#bfefff" id="liveStatus">Idle</small>
+        </div>
+        <div style="margin-top:10px" id="liveFeed">
+          <div style="font-size:13px;color:#cfefff">No live events yet.</div>
+        </div>
+      </div>
+
+      <!-- ebook sale / store card -->
+      <div class="glass" style="margin-top:12px">
+        <div style="display:flex;justify-content:space-between;align-items:center">
+          <div style="display:flex;gap:12px;align-items:center">
+            <div class="ebook-thumb">eB</div>
+            <div>
+              <div style="font-weight:700">Intro to Neon UX — eBook</div>
+              <div style="font-size:13px;color:#bfefff">Modern design for fintech</div>
+            </div>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:8px;align-items:flex-end">
+            <div class="sale-badge">SALE</div>
+            <a href="dashboard-store.html" class="btn-ghost" style="padding:8px 10px">Open Store</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- transactions -->
+      <div style="margin-top:12px">
+        <h3 style="color:var(--neon-blue);font-family:Orbitron;margin-bottom:8px">Transaction History</h3>
+        <div class="glass" id="txContainer">
+          <div class="tx-list" id="txList" aria-live="polite"></div>
+          <a href="dashboard-wallet.html" style="display:block;text-align:center;margin-top:10px;color:#9fefff;font-weight:600">View Full Wallet →</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- RIGHT column (summary & AI) -->
+    <aside class="right-col glass" style="padding:14px">
+      <div style="display:flex;justify-content:space-between;align-items:center">
+        <div style="font-weight:800">Account Summary</div>
+        <div style="font-size:13px;color:#bfefff">ID: <span id="userId">—</span></div>
+      </div>
+
+      <div style="margin-top:12px" class="glass">
+        <div style="display:flex;justify-content:space-between;align-items:center">
+          <div style="font-weight:700">Monthly Insights</div>
+          <small style="color:#bfefff">Feb</small>
+        </div>
+        <div style="margin-top:10px;color:#dffbff">Revenue: <strong id="monthlyRevenue">—</strong></div>
+        <div style="margin-top:8px;color:#dffbff">Top seller: <strong id="topSeller">—</strong></div>
+      </div>
+
+      <div style="margin-top:12px" class="glass">
+        <div style="display:flex;justify-content:space-between;align-items:center">
+          <div style="font-weight:700">AI Funds Manager</div>
+          <button id="openAi2" class="btn-ghost">Open</button>
+        </div>
+        <div style="margin-top:10px;color:#dffbff;font-size:13px">Use Neon AI to suggest optimizations, forecast sales, or create payment requests.</div>
+        <div style="margin-top:12px;display:flex;gap:8px">
+          <button id="aiOptimize" class="ai-suggestion">Optimize Portfolio</button>
+          <button id="aiForecast" class="ai-suggestion">Forecast Sales</button>
+        </div>
+      </div>
+
+      <div style="margin-top:12px" class="glass">
+        <div style="font-weight:700;color:var(--neon-blue)">Shortcuts</div>
+        <div style="margin-top:8px;display:flex;flex-direction:column;gap:8px">
+          <a href="send-cash.html" class="btn-ghost" style="text-align:center">Send Money</a>
+          <a href="cash-request.html" class="btn-ghost" style="text-align:center">Request Money</a>
+          <a href="top-up.html" class="btn-ghost" style="text-align:center">Top Up</a>
+        </div>
+      </div>
+    </aside>
+
+  </main>
+
+  <!-- FOOTER NEON ICONS -->
+  <footer role="navigation" aria-label="main navigation">
+    <a class="fbtn pulse" href="student-dashboard.html" title="Home" aria-label="Home">
+      <!-- home svg -->
+      <svg viewBox="0 0 24 24"><path d="M12 3l9 8h-3v8h-4v-5h-4v5H6v-8H3z"></path></svg>
+    </a>
+
+    <a class="fbtn" href="dashboard-store.html" title="Store" aria-label="Store">
+      <!-- store svg -->
+      <svg viewBox="0 0 24 24"><path d="M3 9l1-5h16l1 5H3zm0 2h18v11H3V11zm6 2v7h6v-7H9z"/></svg>
+    </a>
+
+    <a class="fbtn" href="dashboard-wallet.html" title="Wallet" aria-label="Wallet">
+      <!-- wallet svg -->
+      <svg viewBox="0 0 24 24"><path d="M2 6a2 2 0 012-2h16a2 2 0 012 2v12a2 2 0 01-2 2H4a2 2 0 01-2-2V6zm16 0H4v12h14v-2h-5a3 3 0 010-6h5V6z"/></svg>
+    </a>
+
+    <a class="fbtn" href="profile.html" title="Profile" aria-label="Profile">
+      <!-- profile svg -->
+      <svg viewBox="0 0 24 24"><path d="M12 12c2.67 0 8 1.34 8 4v4H4v-4c0-2.66 5.33-4 8-4zm0-2a4 4 0 110-8 4 4 0 010 8z"/></svg>
+    </a>
+  </footer>
+
+  <!-- Neon AI Modal -->
+  <div class="modal-backdrop" id="aiModal">
+    <div class="modal-card">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">
+        <h3 style="font-family:'Orbitron';margin:0;color:var(--neon-blue)">Neon AI — Funds Manager</h3>
+        <button onclick="closeAi()" style="background:transparent;border:none;color:#ff99cc;font-weight:700;font-size:22px;cursor:pointer">×</button>
+      </div>
+
+      <p style="margin:0 0 8px;color:#d8f7ff;font-size:13px">Ask Neon AI to analyze your balances, forecast sales, or create payment requests. (Demo AI)</p>
+
+      <textarea id="aiPrompt" rows="4" placeholder="E.g. Optimize my portfolio to reduce risk and keep 30% liquidity." style="width:100%;padding:10px;border-radius:8px;background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.04);color:#e7fbff"></textarea>
+
+      <div class="ai-actions">
+        <button class="ai-suggestion" onclick="aiSuggest('Optimize portfolio to keep 30% liquidity')">Optimize Portfolio</button>
+        <button class="ai-suggestion" onclick="aiSuggest('Forecast sales for next 7 days')">Forecast Sales</button>
+        <button class="ai-suggestion" onclick="aiSuggest('Create a $10 payment request to Alice')">Create Request</button>
+        <button class="ai-suggestion" onclick="aiSuggest('Allocate 20% to savings')">Allocate Savings</button>
+      </div>
+
+      <div style="display:flex;gap:8px;margin-top:10px">
+        <button id="runAi" class="btn-primary">Run AI</button>
+        <button class="btn-ghost" onclick="closeAi()">Close</button>
+      </div>
+
+      <div id="aiResult" class="ai-response" style="display:none"></div>
+    </div>
   </div>
-  <div class="cur-card">
-    <div class="cur-title">USDT</div>
-    <div id="usdtBalance">0.00</div>
-  </div>
-</div>
-
-<div class="action-grid">
-  <a href="send-cash.html" class="action-btn blue">Send</a>
-  <a href="cash-request.html" class="action-btn pink">Request</a>
-  <a href="top-up.html" class="action-btn lime">Buy</a>
-  <a href="withdrawal.html" class="action-btn silver">Withdraw</a>
-</div>
-
-<div class="section-title">Recent Transactions</div>
-<div id="txList" class="tx-list"></div>
-
-<footer>
-  <a href="student-dashboard.html" class="ficon">
-    <!-- Home Icon -->
-    <svg width="24" height="24" fill="var(--blue)" viewBox="0 0 24 24">
-      <path d="M12 3l9 8h-3v9H6v-9H3z"/>
-    </svg>
-  </a>
-
-  <div class="ficon active">
-    <!-- Wallet Icon -->
-    <svg width="24" height="24" fill="var(--lime)" viewBox="0 0 24 24">
-      <path d="M2 7a4 4 0 014-4h12a4 4 0 014 4v10a4 4 0 01-4 4H6a4 4 0 01-4-4V7z"/>
-    </svg>
-  </div>
-
-  <div class="ficon">
-    <!-- Profile Icon -->
-    <svg width="24" height="24" fill="var(--pink)" viewBox="0 0 24 24">
-      <path d="M12 12a5 5 0 100-10 5 5 0 000 10zm-9 9a9 9 0 1118 0H3z"/>
-    </svg>
-  </div>
-</footer>
 
 <script>
+/*
+  Neon Wallet — Full front-end demo.
+  - Balances stored in localStorage keys: walletZAC, walletUSDT
+  - Transactions stored in localStorage key: neon_tx_v1
+  - AI tool is a demo: simulated responses, can create sample transactions or recommendations
+  - Links: send-cash.html, cash-request.html, top-up.html, withdrawal.html (created as navigations)
+*/
+
 const DEFAULT_ZAC = 450.00;
 const DEFAULT_USDT = 120.00;
+const TX_KEY = 'neon_tx_v1';
 
-function loadBalances(){
-  const zac = parseFloat(localStorage.getItem("walletZAC")) || DEFAULT_ZAC;
-  const usdt = parseFloat(localStorage.getItem("walletUSDT")) || DEFAULT_USDT;
-
-  document.getElementById("zacBalance").innerText = zac.toFixed(2);
-  document.getElementById("usdtBalance").innerText = usdt.toFixed(2);
-  document.getElementById("totalBalance").innerText = "$" + (zac+usdt).toFixed(2);
+// helper read balances
+function readBalances(){
+  const zac = parseFloat(localStorage.getItem('walletZAC')) || DEFAULT_ZAC;
+  const usdt = parseFloat(localStorage.getItem('walletUSDT')) || DEFAULT_USDT;
+  return { zac, usdt };
 }
 
-const txData=[
-  {title:"POS Sale", amt:"+5.00 ZAC"},
-  {title:"Vendor Payment", amt:"-2.00 USDT"},
-  {title:"QR Receive", amt:"+9.50 ZAC"},
-];
+function renderBalances(){
+  const { zac, usdt } = readBalances();
+  const total = zac + usdt;
+  document.getElementById('zacBalance').innerText = `${zac.toFixed(2)} ZAC`;
+  document.getElementById('usdtBalance').innerText = `${usdt.toFixed(2)} USDT`;
+  document.getElementById('portfolioAmount').innerText = `$${total.toFixed(2)}`;
+  document.getElementById('lastUpdated').innerText = new Date().toLocaleString();
+}
 
-function loadTx(){
-  const c=document.getElementById("txList");
-  txData.forEach(t=>{
-    c.innerHTML+=`<div class="tx-row"><span>${t.title}</span><span class="${t.amt.startsWith('+')?'badge-plus':'badge-minus'}">${t.amt}</span></div>`;
+// seed sample transactions if none
+function seedTx(){
+  const raw = localStorage.getItem(TX_KEY);
+  if(raw) return;
+  const sample = [
+    { id:'t1', title:'Ebook Sale', type:'zac', amount:+25, sale:true, time: Date.now()-3600*1000*6 },
+    { id:'t2', title:'Ride Cashback', type:'usdt', amount:+0.5, sale:false, time: Date.now()-3600*1000*4 },
+    { id:'t3', title:'Study Reward', type:'zac', amount:+2, sale:false, time: Date.now()-3600*1000*2 }
+  ];
+  localStorage.setItem(TX_KEY, JSON.stringify(sample));
+}
+
+// list transactions
+function getTx(){
+  const raw = localStorage.getItem(TX_KEY) || '[]';
+  try { return JSON.parse(raw); } catch(e){ return []; }
+}
+
+function pushTransaction(title, amount, type='zac', sale=false){
+  const tx = getTx();
+  const item = { id: 't' + Math.random().toString(36).slice(2,9), title, type, amount, sale, time: Date.now() };
+  tx.unshift(item);
+  localStorage.setItem(TX_KEY, JSON.stringify(tx));
+  renderTx();
+}
+
+// render transactions
+function renderTx(){
+  const list = getTx();
+  const el = document.getElementById('txList');
+  el.innerHTML = '';
+  if(list.length === 0){
+    el.innerHTML = '<div style="color:#cfefff;padding:10px">No transactions yet.</div>';
+    return;
+  }
+  list.forEach(tx => {
+    const div = document.createElement('div');
+    div.className = 'tx';
+    const left = document.createElement('div');
+    left.className='meta';
+    left.innerHTML = `<div style="display:flex;flex-direction:column">
+      <strong>${tx.title}</strong>
+      <small style="color:rgba(190,239,255,0.6);margin-top:6px">${new Date(tx.time).toLocaleString()}</small>
+    </div>`;
+    const right = document.createElement('div');
+    right.className='right';
+    const badge = document.createElement('div');
+    badge.className = 'badge ' + (tx.type==='usdt' ? 'badge-usdt' : 'badge-zac');
+    badge.innerText = (tx.amount>0?'+':'') + tx.amount + (tx.type==='usdt' ? ' USDT' : ' ZAC');
+    right.appendChild(badge);
+    if(tx.sale){
+      const s = document.createElement('div');
+      s.className = 'sale-badge';
+      s.innerText = 'SALE';
+      s.style.marginLeft = '8px';
+      right.appendChild(s);
+    }
+    div.appendChild(left);
+    div.appendChild(right);
+    el.appendChild(div);
   });
 }
 
-loadBalances();
-loadTx();
-</script>
+// LIVE feed simulation
+const liveEvents = [
+  { title:'Ebook Sale', val:'+25 ZAC', type:'zac', sale:true },
+  { title:'Referral Bonus', val:'+3 ZAC', type:'zac' },
+  { title:'Top-up', val:'+50 USDT', type:'usdt' },
+  { title:'Withdrawal', val:'-10 USDT', type:'usdt' }
+];
 
+function simulateLive(){
+  const ev = liveEvents[Math.floor(Math.random()*liveEvents.length)];
+  const liveFeed = document.getElementById('liveFeed');
+  liveFeed.innerHTML = `<div style="padding:8px;border-radius:8px;background:rgba(255,255,255,0.02);font-size:13px"><strong>${ev.title}</strong> — ${ev.val}</div>`;
+  // update balances & tx
+  const { zac, usdt } = readBalances();
+  const delta = parseFloat(ev.val.replace(/[^\d\.-]/g,'')) * (ev.val.startsWith('-') ? -1 : 1);
+  if(ev.type === 'zac'){
+    localStorage.setItem('walletZAC', (zac + delta).toFixed(6));
+  } else {
+    localStorage.setItem('walletUSDT', (usdt + delta).toFixed(6));
+  }
+  pushTransaction(ev.title, delta, ev.type, !!ev.sale);
+  renderBalances();
+  document.getElementById('liveStatus').innerText = 'Updated';
+}
+
+// AI demo functions
+function openAi(){
+  document.getElementById('aiModal').style.display = 'flex';
+  document.getElementById('aiResult').style.display = 'none';
+  document.getElementById('aiPrompt').value = '';
+}
+function closeAi(){
+  document.getElementById('aiModal').style.display = 'none';
+}
+
+function aiSuggest(msg){
+  document.getElementById('aiPrompt').value = msg;
+  runAi();
+}
+
+document.getElementById('openAi')?.addEventListener('click', openAi);
+document.getElementById('openAi2')?.addEventListener('click', openAi);
+document.getElementById('aiOptimize')?.addEventListener('click', ()=> aiSuggest('Optimize portfolio to keep 30% cash liquidity and reduce risk'));
+document.getElementById('aiForecast')?.addEventListener('click', ()=> aiSuggest('Forecast sales for next 7 days'));
+
+document.getElementById('runAi')?.addEventListener('click', runAi);
+
+async function runAi(){
+  const prompt = document.getElementById('aiPrompt').value.trim();
+  const out = document.getElementById('aiResult');
+  out.style.display = 'block';
+  out.innerHTML = '<div style="color:#bfefff">Analyzing…</div>';
+  // Demo latency
+  await new Promise(r => setTimeout(r, 900));
+
+  // Simple demo logic: parse some keywords and return simulated suggestions
+  const { zac, usdt } = readBalances();
+  let response = '';
+  if(!prompt){
+    response = 'Tell Neon AI what you want — e.g. "Optimize portfolio" or "Create a $10 request for Ama".';
+  } else if(prompt.toLowerCase().includes('optimiz')){
+    const target = zac + usdt;
+    response = `<strong>Optimization:</strong> Keep 30% liquidity (~$${(0.3* (zac+usdt)).toFixed(2)}). Suggest moving 10% of ZAC to savings and converting small USDT reserve to stable yield.`;
+    // simulate a local change: create a suggested tx (demo only)
+  } else if(prompt.toLowerCase().includes('forecast')){
+    response = `<strong>Forecast (7 days):</strong> Expected sales: 3–7 ebook sales/day. Peak demand on Fridays. Recommend promoting with a 10% discount.`;
+  } else if(prompt.toLowerCase().match(/create.*request.*\$(\d+)/i)){
+    const amt = prompt.match(/create.*request.*\$(\d+)/i)[1];
+    response = `<strong>Payment Request Created:</strong> A request for $${amt} was prepared. Use the Request page to send it.`;
+    // Optionally create a demo request tx record (not an actual receipt)
+    pushTransaction('AI Payment Request', parseFloat(amt), 'usdt', false);
+  } else if(prompt.toLowerCase().includes('allocate')){
+    response = `<strong>Allocation:</strong> Allocated 20% of current portfolio to savings instruments (demo).`;
+  } else {
+    response = `<strong>Suggestion:</strong> ${prompt} — (demo) Consider rebalancing small ZAC positions into USDT stable reserve.`;
+  }
+
+  // show response
+  out.innerHTML = `<div style="color:#dffbff">${response}</div>`;
+
+  // small optional reward: AI gives a tiny bonus for using it (demo)
+  if(prompt.toLowerCase().includes('optimiz')){
+    // award 0.5 ZAC
+    const b = 0.5;
+    const balances = readBalances();
+    localStorage.setItem('walletZAC', (balances.zac + b).toFixed(6));
+    pushTransaction('Neon AI Bonus', b, 'zac', false);
+    renderBalances();
+  }
+}
+
+// logout
+document.getElementById('logout').addEventListener('click', ()=> {
+  // demo: clear session (you may customize)
+  // localStorage.clear();
+  window.location.href = 'index.html';
+});
+
+// initialize
+seedTx();
+renderBalances();
+renderTx();
+
+// simulate live updates occasionally (demo)
+setInterval(simulateLive, 16000);
+
+// small UX: clicking AI open button
+document.getElementById('aiOptimize').addEventListener('click', ()=> aiSuggest('Optimize portfolio to keep 30% liquidity'));
+
+// expose functions to global for buttons with inline onclick
+window.openAi = openAi;
+window.closeAi = closeAi;
+window.pushTransaction = pushTransaction;
+
+</script>
 </body>
 </html>
