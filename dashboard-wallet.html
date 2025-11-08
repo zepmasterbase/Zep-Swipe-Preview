@@ -4,197 +4,227 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Neon Wallet</title>
-<link href="https://cdn.jsdelivr.net/npm/tailwindcss@3.3.3/dist/tailwind.min.css" rel="stylesheet">
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700&family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
-
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Orbitron:wght@600;800&display=swap" rel="stylesheet">
 <style>
-:root {
-  --blue:#00f0ff;
-  --pink:#ff00c8;
-  --lime:#6bffb3;
-  --glass:rgba(255,255,255,0.05);
+:root{
+  --bg:#05030d;
+  --glass:rgba(255,255,255,0.06);
+  --blue:#00eaff;
+  --pink:#ff4df9;
+  --lime:#7bffb7;
 }
-body {
-  background: radial-gradient(circle at 20% 20%, #070018, #02000a 90%);
-  font-family:'Poppins', sans-serif;
-  color:#fff;
+body{
+  margin:0; padding:0;
+  background:radial-gradient(circle at 10% 10%, #090516, #05030d 80%);
+  font-family:'Inter', sans-serif;
+  color:white;
 }
 
-/* Glass Card */
-.glass {
-  background:var(--glass);
-  border:1px solid rgba(255,255,255,0.07);
-  border-radius:14px;
+/* Header */
+header{
+  padding:18px 20px;
+  display:flex;
+  justify-content:center;
   backdrop-filter:blur(14px);
-  box-shadow:0 8px 24px rgba(0,0,0,0.5);
 }
-
-/* Logo */
-.logo-text{
+.brand{
   font-family:'Orbitron', sans-serif;
-  font-size:24px;
+  font-size:26px;
   background:linear-gradient(90deg,var(--blue),var(--lime),var(--pink));
   -webkit-background-clip:text;
   -webkit-text-fill-color:transparent;
-  letter-spacing:1px;
+  letter-spacing:1.2px;
 }
 
-/* Neon Buttons */
-.action-btn {
-  padding:12px;
-  border-radius:12px;
-  font-weight:700;
+/* Portfolio Glowing Pill */
+.portfolio-pill{
+  margin:20px auto 0;
+  width:90%;
+  padding:22px;
   text-align:center;
+  border-radius:26px;
+  background:var(--glass);
+  border:1px solid rgba(255,255,255,0.12);
+  backdrop-filter:blur(18px);
+  animation:breath 3s infinite alternate ease-in-out;
+  box-shadow:0 0 26px rgba(0,255,255,0.18);
+}
+@keyframes breath{
+  from{ box-shadow:0 0 16px rgba(0,255,255,0.12); }
+  to{ box-shadow:0 0 32px rgba(0,255,255,0.55); }
+}
+.portfolio-value{
+  font-size:34px;
+  font-weight:700;
+}
+
+/* Currency mini-cards */
+.currency-wrap{
+  margin:18px auto;
+  display:flex;
+  gap:12px;
+  justify-content:center;
+}
+.cur-card{
+  flex:1;
+  padding:14px;
+  border-radius:14px;
+  background:var(--glass);
+  border:1px solid rgba(255,255,255,0.08);
+  backdrop-filter:blur(14px);
+  text-align:center;
+}
+.cur-title{font-size:12px; opacity:.75;}
+
+/* Action Buttons */
+.action-grid{
+  width:90%; margin:28px auto;
+  display:grid; grid-template-columns:1fr 1fr;
+  gap:14px;
+}
+.action-btn{
+  padding:14px;
+  border-radius:14px;
+  text-align:center;
+  font-weight:600;
+  font-size:14px;
   cursor:pointer;
   transition:.18s ease;
 }
-.action-btn:hover { transform:translateY(-3px); }
+.action-btn:hover{transform:translateY(-3px);}
+.blue{background:linear-gradient(90deg,var(--blue),#6cf6ff); color:#031216;}
+.pink{background:linear-gradient(90deg,var(--pink),#ff9dfc); color:#160313;}
+.lime{background:linear-gradient(90deg,var(--lime),#c6ffe8); color:#031611;}
+.silver{border:1px solid rgba(255,255,255,0.12); background:var(--glass); color:#fff;}
 
-/* Variants */
-.pink { background:linear-gradient(90deg,var(--pink),#ff6fe0); color:#050014; }
-.blue { background:linear-gradient(90deg,var(--blue),#80faff); color:#050014; }
-.lime { background:linear-gradient(90deg,var(--lime),#b4ffe0); color:#050014; }
-.ghost { border:1px solid rgba(255,255,255,0.09); background:transparent; color:#dff; }
-
-/* Pulsing Placeholder */
-.pulse {
-  animation:pulseAnim 1.4s infinite alternate;
+/* Transactions */
+.section-title{
+  width:90%; margin:0 auto;
+  margin-top:30px;
+  font-size:15px;
+  opacity:.75;
 }
-@keyframes pulseAnim {
-  from { opacity:.55; } to { opacity:1; }
+.tx-list{
+  width:90%; margin:12px auto;
+  display:flex; flex-direction:column; gap:10px;
 }
-
-/* Footer */
-footer {
-  position:fixed; bottom:16px; left:50%; transform:translateX(-50%);
-  display:flex; gap:14px;
-  padding:10px 14px;
-  background:rgba(10,10,18,0.65);
-  border-radius:999px;
-  border:1px solid rgba(255,255,255,0.07);
-  backdrop-filter:blur(14px);
-}
-.fbtn {
-  width:52px; height:52px;
-  display:flex; align-items:center; justify-content:center;
-  background:rgba(255,255,255,0.04);
-  border-radius:999px;
+.tx-row{
+  background:var(--glass); backdrop-filter:blur(10px);
+  padding:14px 16px;
+  border-radius:12px;
   border:1px solid rgba(255,255,255,0.08);
-  transition:.18s ease;
+  display:flex; justify-content:space-between;
+  font-size:14px;
 }
-.fbtn:hover { transform:translateY(-4px); }
+.badge-plus{color:var(--lime); font-weight:700;}
+.badge-minus{color:var(--pink); font-weight:700;}
 
-/* TX Badges */
-.badge-plus { color:var(--lime); font-weight:700; }
-.badge-minus { color:var(--pink); font-weight:700; }
+/* Footer Dock */
+footer{
+  position:fixed; bottom:18px; left:50%; transform:translateX(-50%);
+  width:88%;
+  padding:12px;
+  border-radius:26px;
+  background:rgba(10,10,18,0.45);
+  display:flex; justify-content:space-around;
+  border:1px solid rgba(255,255,255,0.09);
+  backdrop-filter:blur(18px);
+}
+.ficon{
+  width:46px; height:46px;
+  display:flex; align-items:center; justify-content:center;
+  border-radius:14px;
+  background:var(--glass);
+  border:1px solid rgba(255,255,255,0.08);
+  cursor:pointer;
+  transition:.2s;
+}
+.ficon:hover{transform:translateY(-4px);}
+.active{box-shadow:0 0 14px var(--blue); border-color:var(--blue);}
 </style>
 </head>
 
-<body class="pb-28">
+<body>
 
-<!-- HEADER -->
-<header class="glass flex justify-between items-center p-4 sticky top-0 z-50">
-  <div class="logo-text">NEON WALLET</div>
-  <button onclick="openAI()" class="text-xs text-[var(--blue)] underline">AI Funds Manager</button>
-</header>
+<header><div class="brand">NEON WALLET</div></header>
 
-<!-- CONTENT -->
-<div class="container mx-auto px-4 mt-5 max-w-md">
-
-  <!-- PORTFOLIO -->
-  <div class="glass p-4">
-    <div class="text-sm text-blue-100">Total Portfolio</div>
-    <div id="totalBalance" class="text-3xl font-bold pulse"></div>
-
-    <div class="flex gap-3 mt-4">
-      <div class="glass flex-1 p-3 text-center">
-        <div class="text-xs text-[var(--blue)]">ZAC</div>
-        <div id="zacBalance" class="font-semibold"></div>
-      </div>
-      <div class="glass flex-1 p-3 text-center">
-        <div class="text-xs text-[var(--lime)]">USDT</div>
-        <div id="usdtBalance" class="font-semibold"></div>
-      </div>
-    </div>
-  </div>
-
-  <!-- ACTIONS -->
-  <div class="grid grid-cols-2 gap-3 mt-4">
-    <a href="send-cash.html" class="action-btn blue">Send</a>
-    <a href="cash-request.html" class="action-btn pink">Request</a>
-    <a href="top-up.html" class="action-btn lime">Buy</a>
-    <a href="withdrawal.html" class="action-btn ghost">Withdraw</a>
-  </div>
-
-  <!-- TRANSACTIONS -->
-  <h3 class="mt-6 mb-2 text-[var(--blue)] font-semibold">Recent Transactions</h3>
-  <div id="txList" class="flex flex-col gap-2"></div>
-
+<div class="portfolio-pill">
+  <div class="portfolio-value" id="totalBalance">$0.00</div>
+  <div style="font-size:13px; opacity:.7;">Total Portfolio Value</div>
 </div>
 
-<!-- FOOTER -->
+<div class="currency-wrap">
+  <div class="cur-card">
+    <div class="cur-title">ZAC</div>
+    <div id="zacBalance">0.00</div>
+  </div>
+  <div class="cur-card">
+    <div class="cur-title">USDT</div>
+    <div id="usdtBalance">0.00</div>
+  </div>
+</div>
+
+<div class="action-grid">
+  <a href="send-cash.html" class="action-btn blue">Send</a>
+  <a href="cash-request.html" class="action-btn pink">Request</a>
+  <a href="top-up.html" class="action-btn lime">Buy</a>
+  <a href="withdrawal.html" class="action-btn silver">Withdraw</a>
+</div>
+
+<div class="section-title">Recent Transactions</div>
+<div id="txList" class="tx-list"></div>
+
 <footer>
-  <a href="students-dashboard.html" class="fbtn">
-    <svg width="26" height="26" viewBox="0 0 24 24" fill="var(--blue)">
+  <a href="student-dashboard.html" class="ficon">
+    <!-- Home Icon -->
+    <svg width="24" height="24" fill="var(--blue)" viewBox="0 0 24 24">
       <path d="M12 3l9 8h-3v9H6v-9H3z"/>
     </svg>
   </a>
-  <a href="send-cash.html" class="fbtn">
-    <svg width="26" height="26" viewBox="0 0 24 24" fill="var(--pink)">
-      <path d="M5 12h14m-7-7v14"/>
+
+  <div class="ficon active">
+    <!-- Wallet Icon -->
+    <svg width="24" height="24" fill="var(--lime)" viewBox="0 0 24 24">
+      <path d="M2 7a4 4 0 014-4h12a4 4 0 014 4v10a4 4 0 01-4 4H6a4 4 0 01-4-4V7z"/>
     </svg>
-  </a>
-  <a href="cash-request.html" class="fbtn">
-    <svg width="26" height="26" viewBox="0 0 24 24" fill="var(--lime)">
-      <path d="M17 8l4 4-4 4M3 12h18"/>
+  </div>
+
+  <div class="ficon">
+    <!-- Profile Icon -->
+    <svg width="24" height="24" fill="var(--pink)" viewBox="0 0 24 24">
+      <path d="M12 12a5 5 0 100-10 5 5 0 000 10zm-9 9a9 9 0 1118 0H3z"/>
     </svg>
-  </a>
+  </div>
 </footer>
 
 <script>
-// Default values
-const DEFAULT_ZAC = 450;
-const DEFAULT_USDT = 120;
+const DEFAULT_ZAC = 450.00;
+const DEFAULT_USDT = 120.00;
 
-function readBalances(){
-  return {
-    zac: parseFloat(localStorage.getItem("walletZAC")) || DEFAULT_ZAC,
-    usdt: parseFloat(localStorage.getItem("walletUSDT")) || DEFAULT_USDT
-  };
-}
-function renderBalances(){
-  const {zac, usdt} = readBalances();
-  document.getElementById("zacBalance").textContent = `${zac.toFixed(2)}`;
-  document.getElementById("usdtBalance").textContent = `${usdt.toFixed(2)}`;
-  document.getElementById("totalBalance").textContent = `$${(zac+usdt).toFixed(2)}`;
+function loadBalances(){
+  const zac = parseFloat(localStorage.getItem("walletZAC")) || DEFAULT_ZAC;
+  const usdt = parseFloat(localStorage.getItem("walletUSDT")) || DEFAULT_USDT;
+
+  document.getElementById("zacBalance").innerText = zac.toFixed(2);
+  document.getElementById("usdtBalance").innerText = usdt.toFixed(2);
+  document.getElementById("totalBalance").innerText = "$" + (zac+usdt).toFixed(2);
 }
 
-// Example transaction list
-const transactions = [
-  {label:"POS Sale", amt:"+5 ZAC"},
-  {label:"QR Receive", amt:"+12 USDT"},
-  {label:"Payment Sent", amt:"-3 ZAC"},
+const txData=[
+  {title:"POS Sale", amt:"+5.00 ZAC"},
+  {title:"Vendor Payment", amt:"-2.00 USDT"},
+  {title:"QR Receive", amt:"+9.50 ZAC"},
 ];
 
-function renderTransactions(){
-  const txList = document.getElementById("txList");
-  txList.innerHTML = "";
-  transactions.forEach(t=>{
-    const isPlus = t.amt.startsWith("+");
-    txList.innerHTML += `
-      <div class="glass p-3 flex justify-between text-sm">
-        <span>${t.label}</span>
-        <span class="${isPlus?'badge-plus':'badge-minus'}">${t.amt}</span>
-      </div>`;
+function loadTx(){
+  const c=document.getElementById("txList");
+  txData.forEach(t=>{
+    c.innerHTML+=`<div class="tx-row"><span>${t.title}</span><span class="${t.amt.startsWith('+')?'badge-plus':'badge-minus'}">${t.amt}</span></div>`;
   });
 }
 
-function openAI(){
-  alert("AI Funds Manager Coming Soon (UI Only)");
-}
-
-renderBalances();
-renderTransactions();
+loadBalances();
+loadTx();
 </script>
 
 </body>
