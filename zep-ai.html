@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Zep Study Buddy</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&family=Orbitron:wght@700&display=swap" rel="stylesheet">
+
+<style>
+body { background: #060015; color: white; font-family: Poppins, sans-serif; padding-bottom:120px; }
+header{padding:18px;text-align:center;font-family:Orbitron;font-size:22px;
+background:linear-gradient(90deg,#00faff,#ff4bcd,#43ff9b);
+-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+.card{background:rgba(255,255,255,0.07);backdrop-filter:blur(14px);
+border:1px solid rgba(255,255,255,0.12);padding:16px;border-radius:16px;margin-top:16px;}
+input,textarea{
+width:100%;padding:14px;border-radius:12px;margin-top:8px;
+background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.12);color:white;
+}
+button{
+width:100%;padding:14px;margin-top:14px;border-radius:12px;font-weight:600;
+background:linear-gradient(90deg,#00faff,#43ff9b);color:#000;
+}
+#aiResponse{white-space:pre-wrap;font-size:15px;margin-top:12px;}
+.preview-img{max-width:100%;border-radius:12px;margin-top:12px;}
+footer{position:fixed;bottom:0;width:100%;padding:14px 0;
+background:rgba(8,0,20,0.95);backdrop-filter:blur(18px);
+display:flex;justify-content:space-around;border-top:1px solid rgba(255,255,255,0.1);}
+footer a svg{width:32px;height:32px;fill:#00faff;filter:drop-shadow(0 0 8px #00faff);transition:.3s;}
+footer a:hover svg{fill:#43ff9b;filter:drop-shadow(0 0 16px #43ff9b);transform:translateY(-3px);}
+</style>
+</head>
+
+<body>
+
+<header>Zep Study Buddy</header>
+
+<div class="px-4">
+
+<div class="card">
+<h2 class="font-semibold text-lg">Ask Anything</h2>
+<textarea id="textInput" placeholder="Ask your study question here..."></textarea>
+<button onclick="askText()">Ask Zep Buddy</button>
+<div id="aiResponse"></div>
+</div>
+
+<div class="card">
+<h2 class="font-semibold text-lg">Homework Photo Help</h2>
+<input type="file" id="imageInput" accept="image/*" onchange="previewImage()"/>
+<img id="preview" class="preview-img" style="display:none;"/>
+<button onclick="askImage()">Explain This Homework</button>
+</div>
+
+<div class="card">
+<h2 class="font-semibold text-lg">Web3 Learning Hub</h2>
+<p style="opacity:.8;">Short lessons, quizzes & beginner guides.</p>
+<button onclick="location.href='web3-lessons.html'">Start Learning</button>
+</div>
+
+<div class="card">
+<h2 class="font-semibold text-lg">Finance Growth Coach</h2>
+<p style="opacity:.8;">Helps you manage spending & grow savings.</p>
+<button onclick="location.href='finance-coach.html'">Open Finance Coach</button>
+</div>
+
+</div>
+
+<footer>
+<a href="student-dashboard.html"><svg viewBox="0 0 24 24"><path d="M3 10l9-7 9 7v10H3z"/></svg></a>
+<a href="neon-wallet.html"><svg viewBox="0 0 24 24"><rect x="3" y="6" width="18" height="12" rx="2"/></svg></a>
+<a href="#"><svg viewBox="0 0 24 24"><circle cx="12" cy="7" r="4"/><path d="M4 20c0-4 4-6 8-6s8 2 8 6"/></svg></a>
+</footer>
+
+<script>
+async function askText(){
+  const question=document.getElementById("textInput").value;
+  const res=await fetch("/zep-ai",{
+    method:"POST",
+    headers:{ "Content-Type":"application/json" },
+    body:JSON.stringify({question})
+  });
+  document.getElementById("aiResponse").innerText = await res.text();
+}
+
+function previewImage(){
+  const file=document.getElementById("imageInput").files[0];
+  const preview=document.getElementById("preview");
+  preview.src=URL.createObjectURL(file);
+  preview.style.display="block";
+}
+
+async function askImage(){
+  const file=document.getElementById("imageInput").files[0];
+  const formData=new FormData();
+  formData.append("image",file);
+
+  const res=await fetch("/zep-ai-photo",{method:"POST",body:formData});
+  document.getElementById("aiResponse").innerText = await res.text();
+}
+</script>
+
+</body>
+</html>
