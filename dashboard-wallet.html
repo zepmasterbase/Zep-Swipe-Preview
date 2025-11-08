@@ -12,12 +12,13 @@
   --violet:#6b23ff;
   --cyan:#00faff;
   --lime:#43ff9b;
+  --pink:#ff4bcd;
   --bg:#05000d;
-  --glass:rgba(255,255,255,0.08);
+  --glass:rgba(255,255,255,0.09);
 }
 
 body{
-  background:radial-gradient(circle at 30% 20%, #120028, #05000d 60%);
+  background:radial-gradient(circle at 30% 20%, #1a0036, #05000d 60%);
   font-family:'Poppins',sans-serif;
   color:white;
   margin:0;
@@ -29,29 +30,25 @@ header{
   position:sticky;top:0;z-index:50;
   display:flex;justify-content:space-between;align-items:center;
   padding:14px 16px;background:#070014;
-  border-bottom:1px solid rgba(255,255,255,0.08);
+  border-bottom:1px solid rgba(255,255,255,0.09);
 }
 .logo{
   font-family:'Orbitron',sans-serif;font-size:21px;font-weight:700;
-  background:linear-gradient(90deg,var(--cyan),var(--lime));
+  background:linear-gradient(90deg,var(--cyan),var(--pink),var(--lime));
   -webkit-background-clip:text;-webkit-text-fill-color:transparent;
 }
-.logout-btn{
-  background:transparent;border:none;cursor:pointer;
-  padding:6px;display:flex;align-items:center;justify-content:center;
-}
 .logout-btn svg{
-  width:26px;height:26px;fill:var(--cyan);
-  filter:drop-shadow(0 0 10px var(--cyan));
-  transition:.25s;
+  width:28px;height:28px;fill:var(--pink);
+  filter:drop-shadow(0 0 10px var(--pink));
+  transition:.3s;
 }
 .logout-btn:hover svg{
   fill:var(--lime);
   filter:drop-shadow(0 0 16px var(--lime));
-  transform:scale(1.12);
+  transform:scale(1.15);
 }
 
-/* Wallet Glass */
+/* Glass Panels */
 .glass{
   background:var(--glass);
   backdrop-filter:blur(14px);
@@ -60,103 +57,108 @@ header{
   padding:16px;
 }
 
-/* Breathing Portfolio */
+/* Portfolio */
 .balance{
-  font-family:'Orbitron',sans-serif;font-size:40px;margin-top:4px;
-  background:linear-gradient(90deg,var(--cyan),var(--lime));
+  font-family:'Orbitron',sans-serif;font-size:40px;
+  background:linear-gradient(90deg,var(--cyan),var(--pink),var(--lime));
   -webkit-background-clip:text;-webkit-text-fill-color:transparent;
-  animation:glow 2.4s infinite alternate;
+  animation:breath 2.8s infinite alternate;
 }
-@keyframes glow{
-  from{text-shadow:0 0 8px var(--cyan);}
-  to{text-shadow:0 0 18px var(--lime);}
+@keyframes breath{
+  from{filter:drop-shadow(0 0 8px var(--cyan));}
+  to{filter:drop-shadow(0 0 16px var(--pink));}
 }
 
 /* Buttons */
-.action-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-top:12px;}
-.action-btn{
-  padding:14px 0;text-align:center;font-weight:600;border-radius:12px;color:#020009;
-}
-.cyan{background:linear-gradient(90deg,var(--cyan),#b2fff8);}
-.lime{background:linear-gradient(90deg,var(--lime),#d4ffea);}
-.violet{background:linear-gradient(90deg,var(--violet),#caa6ff);}
-.ghost{background:transparent;border:1px solid rgba(255,255,255,0.12);color:#e0ffff;}
+.action-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;}
+.btn{padding:14px 0;text-align:center;font-weight:600;border-radius:12px;}
+
+.cyan{background:linear-gradient(90deg,var(--cyan),#d9ffff);color:#000;}
+.lime{background:linear-gradient(90deg,var(--lime),#d2ffe9);color:#001;}
+.violet{background:linear-gradient(90deg,var(--violet),#d7bdff);color:#11001c;}
+.ghost{border:1px solid rgba(255,255,255,0.12);color:#e7ffff;}
 
 /* History */
 .tx-row{display:flex;justify-content:space-between;align-items:center;
   padding:10px 4px;border-bottom:1px solid rgba(255,255,255,0.06);}
 .badge{padding:6px 12px;border-radius:999px;font-size:12px;font-weight:600;}
 .sale{background:rgba(0,255,180,0.2);color:var(--lime);}
-.refund{background:rgba(255,0,180,0.2);color:#ff74e3;}
+.refund{background:rgba(255,0,180,0.25);color:var(--pink);}
 
 /* Zep AI Insights */
-.insight-box{
-  margin-top:18px;text-align:center;
-  background:rgba(255,255,255,0.05);
+.ai-box{
+  margin-top:18px;background:rgba(255,255,255,0.05);
+  border:1px solid rgba(255,255,255,0.07);
   border-radius:14px;padding:14px;
-  border:1px solid rgba(255,255,255,0.08);
 }
-.insight-number{
-  font-family:'Orbitron',sans-serif;font-size:24px;
-  background:linear-gradient(90deg,var(--lime),var(--cyan));
+.ai-title{opacity:.8;font-size:13px;text-align:center;}
+.ai-value{
+  font-family:Orbitron;font-size:23px;text-align:center;
+  background:linear-gradient(90deg,var(--lime),var(--pink),var(--cyan));
   -webkit-background-clip:text;-webkit-text-fill-color:transparent;
 }
 
 /* Footer */
 footer{
-  position:fixed;bottom:0;left:0;width:100%;
-  background:#090014;backdrop-filter:blur(20px);
+  position:fixed;bottom:0;width:100%;padding:14px 0;
+  background:rgba(8,0,20,0.96);backdrop-filter:blur(18px);
   border-top:1px solid rgba(255,255,255,0.1);
-  display:flex;justify-content:space-around;padding:14px 0;
+  display:flex;justify-content:space-around;
 }
-.fbtn{width:56px;height:56px;border-radius:16px;display:flex;align-items:center;justify-content:center;transition:.25s;}
-.fbtn svg{width:30px;height:30px;fill:var(--cyan);filter:drop-shadow(0 0 6px var(--cyan));}
-.fbtn:hover{transform:translateY(-6px);filter:drop-shadow(0 0 16px var(--lime));}
-.fbtn:hover svg{fill:var(--lime);}
+.fbtn svg{
+  width:30px;height:30px;
+  fill:var(--cyan);
+  filter:drop-shadow(0 0 7px var(--cyan));
+  transition:.3s;
+}
+.fbtn:hover svg{
+  fill:var(--lime);
+  filter:drop-shadow(0 0 18px var(--lime));
+  transform:translateY(-4px);
+}
 </style>
 </head>
+
 <body>
 
 <header>
   <div class="logo">NEON WALLET</div>
   <button class="logout-btn" onclick="location.href='index.html'">
-    <svg viewBox="0 0 24 24"><path d="M13 2v2h-2V2h2zm-1 4a7 7 0 100 14 7 7 0 000-14zm1 4v4h-2v-4h2z"/></svg>
+    <svg viewBox="0 0 24 24"><path d="M7 4v2h6v12H7v2h8V4H7zm-3 8l4-4v3h8v2H8v3l-4-4z"/></svg>
   </button>
 </header>
 
 <div class="px-4 mt-4">
 
   <div class="glass">
-    <div style="opacity:.8;font-size:14px;">Portfolio Balance</div>
+    <div style="opacity:.7;font-size:14px;">Total Portfolio</div>
     <div id="totalPortfolio" class="balance">$0.00</div>
 
-    <div style="display:flex;gap:12px;margin-top:14px;">
-      <div class="glass" style="padding:10px;flex:1;text-align:center;">
+    <div class="mt-4 flex gap-3">
+      <div class="glass flex-1 text-center py-2">
         <div style="opacity:.7;font-size:12px;">ZAC</div>
         <div id="zacBal" style="font-size:17px;font-weight:600;"></div>
       </div>
-      <div class="glass" style="padding:10px;flex:1;text-align:center;">
+      <div class="glass flex-1 text-center py-2">
         <div style="opacity:.7;font-size:12px;">USDT</div>
         <div id="usdtBal" style="font-size:17px;font-weight:600;"></div>
       </div>
     </div>
 
-    <div class="action-grid">
-      <a href="send-cash.html" class="action-btn cyan">Send</a>
-      <a href="cash-request.html" class="action-btn lime">Request</a>
-      <a href="top-up.html" class="action-btn violet">Buy</a>
-      <a href="withdrawal.html" class="action-btn ghost">Withdraw</a>
+    <div class="action-grid mt-4">
+      <a href="send-cash.html" class="btn cyan">Send</a>
+      <a href="cash-request.html" class="btn lime">Request</a>
+      <a href="top-up.html" class="btn violet">Buy</a>
+      <a href="withdrawal.html" class="btn ghost">Withdraw</a>
     </div>
-
   </div>
 
-  <!-- AI Insights -->
-  <div class="insight-box">
-    <div style="opacity:.8;font-size:13px;">Projected Weekly Portfolio Growth</div>
-    <div id="aiProjection" class="insight-number">+0.00%</div>
+  <div class="ai-box">
+    <div class="ai-title">Zep AI Portfolio Growth Forecast</div>
+    <div id="aiValue" class="ai-value">+0.00%</div>
   </div>
 
-  <h3 style="margin-top:24px;font-family:Orbitron;color:var(--cyan);letter-spacing:1px;">Recent Activity</h3>
+  <h3 class="mt-6 font-orbitron" style="color:var(--cyan);">Recent Activity</h3>
   <div class="glass">
     <div class="tx-row"><span>E-Book Sale</span><span class="badge sale">+5 ZAC</span></div>
     <div class="tx-row"><span>Refund</span><span class="badge refund">-2 ZAC</span></div>
@@ -166,23 +168,19 @@ footer{
 
 <footer>
   <a class="fbtn" href="student-dashboard.html"><svg viewBox="0 0 24 24"><path d="M3 10l9-7 9 7v10H3z"/></svg></a>
-  <a class="fbtn" href="dashboard-store.html"><svg viewBox="0 0 24 24"><path d="M4 7h16l-1 13H5z M4 7L6 3h12l2 4"/></svg></a>
-  <a class="fbtn" href="ride-hailing.html"><svg viewBox="0 0 24 24"><path d="M5 12l2-5h10l2 5z"/></svg></a>
+  <a class="fbtn" href="dashboard-store.html"><svg viewBox="0 0 24 24"><path d="M4 7h16l-2 13H6z M4 7l2-4h12l2 4"/></svg></a>
+  <a class="fbtn" href="ride-hailing.html"><svg viewBox="0 0 24 24"><path d="M5 12l2-5h10l2 5zM6 17a2 2 0 104 0 2 2 0 00-4 0zm8 0a2 2 0 104 0 2 2 0 00-4 0z"/></svg></a>
   <a class="fbtn" href="neon-wallet.html"><svg viewBox="0 0 24 24"><rect x="3" y="6" width="18" height="12" rx="2"/></svg></a>
   <a class="fbtn" href="profile.html"><svg viewBox="0 0 24 24"><circle cx="12" cy="7" r="4"/><path d="M4 20c0-4 4-6 8-6s8 2 8 6"/></svg></a>
 </footer>
 
 <script>
-// Read Balances
 const zac=(+localStorage.getItem('walletZAC')||450);
 const usdt=(+localStorage.getItem('walletUSDT')||120);
 document.getElementById('zacBal').innerText=zac.toFixed(2);
 document.getElementById('usdtBal').innerText=usdt.toFixed(2);
 document.getElementById('totalPortfolio').innerText='$'+(zac+usdt).toFixed(2);
-
-// Simple Zep AI Projection Logic
-const growth=((zac+usdt)*0.025).toFixed(2);
-document.getElementById('aiProjection').innerText=`+${growth}%`;
+document.getElementById('aiValue').innerText=`+${((zac+usdt)*0.021).toFixed(2)}%`;
 </script>
 
 </body>
