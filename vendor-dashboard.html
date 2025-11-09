@@ -3,15 +3,15 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ZepSwipe — Vendor Dashboard</title>
+<title>Campus Vendor — Dashboard</title>
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700&family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
 <script src="https://kit.fontawesome.com/a2e0d6da3c.js" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 <style>
 :root {
-  --zep-blue: #00f0ff;
-  --zep-violet: #9c4dff;
+  --campus-blue: #00f0ff;
+  --campus-violet: #9c4dff;
   --glass: rgba(255,255,255,0.06);
   --bg: radial-gradient(circle at 25% 10%, #050018 0%, #000010 90%);
 }
@@ -22,9 +22,9 @@ body {
   background: var(--bg);
   color: #fff;
   overflow-x: hidden;
+  min-height: 100vh;
   display: flex;
   flex-direction: column;
-  min-height: 100vh;
 }
 
 /* HEADER */
@@ -33,25 +33,26 @@ header {
   justify-content: space-between;
   align-items: center;
   padding: 14px 18px;
-  background: rgba(15,10,30,0.8);
-  backdrop-filter: blur(18px);
+  background: rgba(15, 10, 30, 0.75);
+  backdrop-filter: blur(20px);
   border-bottom: 1px solid rgba(255,255,255,0.1);
-  animation: headerPulse 3s infinite alternate ease-in-out;
+  animation: headerGlow 3s infinite alternate ease-in-out;
 }
-@keyframes headerPulse {
-  0% { box-shadow: 0 0 10px rgba(0,240,255,0.2); }
+@keyframes headerGlow {
+  0% { box-shadow: 0 0 10px rgba(0,240,255,0.3); }
   100% { box-shadow: 0 0 30px rgba(156,77,255,0.4); }
 }
 .logo {
   font-family: 'Orbitron', sans-serif;
   font-size: 1.5rem;
-  background: linear-gradient(90deg, var(--zep-blue), var(--zep-violet));
+  font-weight: 700;
+  background: linear-gradient(90deg, var(--campus-blue), var(--campus-violet));
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   text-shadow: 0 0 15px rgba(0,240,255,0.5);
 }
 .logout-btn {
-  background: linear-gradient(90deg, var(--zep-violet), var(--zep-blue));
+  background: linear-gradient(90deg, var(--campus-violet), var(--campus-blue));
   border: none;
   border-radius: 10px;
   padding: 8px 14px;
@@ -72,7 +73,26 @@ main {
   padding: 1rem 1.2rem 6rem;
 }
 
-/* GLASS CARDS */
+/* MINI DEALS BUTTON */
+.deals-mini {
+  background: linear-gradient(90deg, var(--campus-blue), var(--campus-violet));
+  border: none;
+  border-radius: 9999px;
+  padding: 6px 14px;
+  font-family: 'Orbitron';
+  color: #fff;
+  font-size: 0.85rem;
+  cursor: pointer;
+  box-shadow: 0 0 15px rgba(0,240,255,0.3);
+  transition: 0.3s;
+  margin-bottom: 10px;
+}
+.deals-mini:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 25px rgba(156,77,255,0.5);
+}
+
+/* GLASS SECTIONS */
 .glass {
   background: var(--glass);
   border: 1px solid rgba(255,255,255,0.08);
@@ -80,30 +100,31 @@ main {
   padding: 1.2rem;
   backdrop-filter: blur(16px);
   box-shadow: 0 0 20px rgba(0,240,255,0.15);
-  animation: cardPulse 3s infinite alternate ease-in-out;
+  animation: glassPulse 3s infinite alternate ease-in-out;
   margin-bottom: 1.2rem;
 }
-@keyframes cardPulse {
+@keyframes glassPulse {
   0% { box-shadow: 0 0 10px rgba(0,240,255,0.15); }
   100% { box-shadow: 0 0 25px rgba(156,77,255,0.35); }
 }
+
 h2 {
   font-family: 'Orbitron', sans-serif;
   font-size: 1.1rem;
-  background: linear-gradient(90deg, var(--zep-blue), var(--zep-violet));
+  background: linear-gradient(90deg, var(--campus-blue), var(--campus-violet));
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   margin-bottom: 0.8rem;
 }
 
-/* ANALYTICS GRID */
+/* STAT CARDS */
 .stats-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
   gap: 1rem;
 }
 .stat-card {
-  background: rgba(255,255,255,0.04);
+  background: rgba(255,255,255,0.05);
   border-radius: 12px;
   padding: 14px;
   text-align: center;
@@ -118,45 +139,22 @@ h2 {
   font-family: 'Orbitron';
   font-size: 0.9rem;
   margin: 0.3rem 0;
-  color: var(--zep-blue);
+  color: var(--campus-blue);
 }
 .stat-card p {
   font-weight: 700;
   font-family: 'Orbitron';
   font-size: 1.1rem;
-  background: linear-gradient(90deg, var(--zep-blue), var(--zep-violet));
+  background: linear-gradient(90deg, var(--campus-blue), var(--campus-violet));
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 
-/* SALES GRAPH */
+/* CHART */
 canvas {
   width: 100% !important;
   height: 240px !important;
   border-radius: 12px;
-}
-
-/* ORDER TABLE */
-.orders {
-  background: rgba(255,255,255,0.03);
-  border: 1px solid rgba(255,255,255,0.08);
-  border-radius: 14px;
-  overflow: hidden;
-  margin-top: 1rem;
-}
-.orders table {
-  width: 100%;
-  border-collapse: collapse;
-}
-.orders th, .orders td {
-  padding: 10px;
-  text-align: left;
-  border-bottom: 1px solid rgba(255,255,255,0.05);
-}
-.orders th {
-  color: var(--zep-blue);
-  font-weight: 600;
-  font-family: 'Orbitron';
 }
 
 /* FOOTER */
@@ -189,7 +187,7 @@ footer {
 .fbtn svg {
   width: 26px;
   height: 26px;
-  stroke: var(--zep-blue);
+  stroke: var(--campus-blue);
   transition: 0.3s;
 }
 .fbtn:hover {
@@ -197,82 +195,58 @@ footer {
   background: rgba(255,255,255,0.1);
 }
 .fbtn:hover svg {
-  stroke: var(--zep-violet);
-  filter: drop-shadow(0 0 10px var(--zep-blue));
-}
-
-/* RESPONSIVE */
-@media (max-width: 480px) {
-  header { flex-direction: column; gap: 0.5rem; }
-  .logo { font-size: 1.3rem; }
-  .stats-grid { grid-template-columns: repeat(2, 1fr); }
+  stroke: var(--campus-violet);
+  filter: drop-shadow(0 0 10px var(--campus-blue));
 }
 </style>
 </head>
 
 <body>
 <header>
-  <div class="logo">ZEP<span style="color:var(--zep-violet)">SWIPE</span> Vendor</div>
+  <div class="logo">CAMPUS <span style="color:var(--campus-violet)">VENDOR</span></div>
   <button class="logout-btn"><i class="fas fa-sign-out-alt"></i> Logout</button>
 </header>
 
 <main>
-  <!-- ANALYTICS SECTION -->
+  <!-- MINI DEALS -->
+  <button class="deals-mini">🔥 Deals</button>
+
+  <!-- ANALYTICS -->
   <div class="glass">
     <h2>📊 Store Analytics</h2>
     <div class="stats-grid">
       <div class="stat-card">
         <h3>Total Orders</h3>
-        <p>128</p>
+        <p>132</p>
       </div>
       <div class="stat-card">
         <h3>Pending</h3>
-        <p>12</p>
+        <p>10</p>
       </div>
       <div class="stat-card">
-        <h3>Completed</h3>
-        <p>116</p>
+        <h3>Delivered</h3>
+        <p>122</p>
       </div>
       <div class="stat-card">
         <h3>Revenue</h3>
-        <p>$2,540</p>
+        <p>$3,480</p>
       </div>
     </div>
   </div>
 
   <!-- SALES GRAPH -->
   <div class="glass">
-    <h2>📈 Sales Overview</h2>
+    <h2>📈 Weekly Sales</h2>
     <canvas id="salesChart"></canvas>
-  </div>
-
-  <!-- RECENT ORDERS -->
-  <div class="glass">
-    <h2>🛍 Recent Orders</h2>
-    <div class="orders">
-      <table>
-        <thead>
-          <tr><th>Order ID</th><th>Product</th><th>Status</th><th>Amount</th></tr>
-        </thead>
-        <tbody>
-          <tr><td>#1024</td><td>Wireless Headset</td><td style="color:var(--zep-blue)">Delivered</td><td>$45</td></tr>
-          <tr><td>#1025</td><td>Smart Watch S2</td><td style="color:var(--zep-violet)">Pending</td><td>$60</td></tr>
-          <tr><td>#1026</td><td>Laptop Pro X</td><td style="color:var(--zep-blue)">Delivered</td><td>$420</td></tr>
-        </tbody>
-      </table>
-    </div>
   </div>
 </main>
 
-<!-- FOOTER NAV -->
+<!-- FOOTER -->
 <footer>
-  <a href="vendor-dashboard.html" class="fbtn" title="Home">
-    <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke-width="1.8" viewBox="0 0 24 24"><path d="M3 12l9-9 9 9v9H3z"/></svg>
-  </a>
   <a href="dashboard-wallet.html" class="fbtn" title="Wallet">
     <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke-width="1.8" viewBox="0 0 24 24"><path d="M2 7h20v10H2zM16 12h4"/></svg>
   </a>
-  <a href="add-product.html" class="fbtn" title="Add Product">
+  <a href="add-product.html" class="fbtn" title="Sell">
     <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke-width="1.8" viewBox="0 0 24 24"><path d="M12 3v18m9-9H3"/></svg>
   </a>
   <a href="store.html" class="fbtn" title="Store">
@@ -283,7 +257,7 @@ footer {
   </a>
 </footer>
 
-<!-- SALES CHART SCRIPT -->
+<!-- SALES GRAPH -->
 <script>
 const ctx = document.getElementById('salesChart');
 const gradient = ctx.getContext('2d').createLinearGradient(0, 0, 0, 300);
@@ -296,7 +270,7 @@ const salesChart = new Chart(ctx, {
     labels: ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'],
     datasets: [{
       label: 'Sales ($)',
-      data: [120, 190, 150, 210, 260, 310, 400],
+      data: [120, 180, 210, 240, 280, 320, 400],
       fill: true,
       borderColor: '#00f0ff',
       backgroundColor: gradient,
