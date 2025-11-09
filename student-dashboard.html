@@ -1,299 +1,237 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Zep Swipe — Student Dashboard</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Zep Swipe</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Poppins', sans-serif;
+      background-color: #0B1022;
+      color: white;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
 
-<script src="https://cdn.tailwindcss.com"></script>
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700&family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+    .phone {
+      width: 375px;
+      height: 812px;
+      background-color: #0B1022;
+      border-radius: 40px;
+      box-shadow: 0 0 20px rgba(0,0,0,0.4);
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      border: 2px solid #1E2A4A;
+      position: relative;
+    }
 
-<style>
-:root {
-  --zep-blue: #00f0ff;
-  --zep-pink: #ff00f0;
-  --zep-purple: #9c4dff;
-  --glass: rgba(255,255,255,0.05);
-}
+    .header {
+      text-align: center;
+      padding: 25px 0 10px 0;
+      font-weight: 600;
+      font-size: 20px;
+      color: #ffffff;
+    }
 
-/* Global */
-body {
-  font-family: 'Poppins', sans-serif;
-  background: radial-gradient(circle at 30% 10%, #0a0018 0%, #05000c 90%);
-  color: #fff;
-  margin: 0;
-  padding-bottom: 90px;
-  animation: breathe 8s ease-in-out infinite;
-}
+    .balance-card {
+      background-color: #141C3B;
+      margin: 20px;
+      padding: 25px;
+      border-radius: 20px;
+      text-align: center;
+    }
 
-@keyframes breathe {
-  0%,100% { background: radial-gradient(circle at 30% 10%, #0a0018 0%, #05000c 90%); }
-  50% { background: radial-gradient(circle at 35% 15%, #120028 0%, #070010 90%); }
-}
+    .balance-card h3 {
+      font-size: 14px;
+      color: #AAB2D5;
+      margin-bottom: 8px;
+    }
 
-/* Header */
-.header {
-  position: sticky;
-  top: 0;
-  z-index: 60;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 14px 16px;
-  background: rgba(30, 0, 50, 0.75);
-  backdrop-filter: blur(22px);
-  box-shadow: 0 0 20px rgba(156,77,255,0.25);
-}
-.logo h1 {
-  font-family: 'Orbitron', sans-serif;
-  font-size: 22px;
-  background: linear-gradient(90deg, var(--zep-blue), var(--zep-pink), var(--zep-purple));
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  text-shadow: 0 0 8px var(--zep-blue);
-}
+    .balance-card h1 {
+      font-size: 36px;
+      color: #ffffff;
+      margin-bottom: 20px;
+    }
 
-/* Power Button */
-.power-btn {
-  width: 44px;
-  height: 44px;
-  border-radius: 50%;
-  background: radial-gradient(circle at center, rgba(255,0,240,0.2), rgba(60,0,90,0.8));
-  box-shadow: 0 0 20px rgba(255,0,240,0.4), 0 0 35px rgba(0,240,255,0.2);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  transition: 0.3s ease;
-}
-.power-btn:hover {
-  transform: scale(1.1);
-  box-shadow: 0 0 30px rgba(255,0,240,0.6), 0 0 50px rgba(0,240,255,0.4);
-}
-.power-btn svg {
-  width: 20px;
-  height: 20px;
-  fill: #fff;
-  filter: drop-shadow(0 0 8px var(--zep-pink));
-}
+    .balance-buttons {
+      display: flex;
+      justify-content: space-around;
+      margin-top: 10px;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
 
-/* Deal Grid */
-.deal-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 1rem;
-  margin: 1.5rem;
-}
-.deal-card {
-  background: var(--glass);
-  border: 1px solid rgba(255,255,255,0.08);
-  border-radius: 1rem;
-  text-align: center;
-  padding: 1.5rem 1rem;
-  box-shadow: 0 0 20px rgba(255,255,255,0.05);
-  transition: 0.4s ease;
-  animation: pulseGlow 5s ease-in-out infinite;
-}
-.deal-card:hover {
-  transform: scale(1.05);
-  box-shadow: 0 0 25px rgba(255,0,240,0.3), 0 0 30px rgba(0,240,255,0.2);
-}
-.deal-card svg {
-  width: 38px;
-  height: 38px;
-  fill: url(#zepGradient);
-  margin-bottom: 10px;
-  filter: drop-shadow(0 0 8px var(--zep-blue));
-}
-.deal-card p {
-  font-family: 'Orbitron', sans-serif;
-  font-size: 0.9rem;
-  color: var(--zep-pink);
-}
+    .balance-buttons button {
+      background-color: #1D2750;
+      border: none;
+      color: white;
+      padding: 10px 15px;
+      border-radius: 12px;
+      font-size: 14px;
+      cursor: pointer;
+      flex: 1;
+      min-width: 80px;
+    }
 
-/* Balance */
-.balance-card {
-  background: rgba(25, 10, 45, 0.5);
-  margin: 1.5rem;
-  border-radius: 1.2rem;
-  border: 1px solid rgba(255,255,255,0.1);
-  padding: 1.5rem;
-  text-align: center;
-  box-shadow: 0 0 25px rgba(255,0,240,0.1);
-  animation: pulseGlow 6s ease-in-out infinite;
-}
-.balance-card h3 {
-  color: var(--zep-blue);
-  font-weight: 600;
-}
-.balance-card .amount {
-  font-size: 2rem;
-  font-family: 'Orbitron', sans-serif;
-  background: linear-gradient(90deg, var(--zep-blue), var(--zep-pink), var(--zep-purple));
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
+    .tabs {
+      display: flex;
+      justify-content: space-around;
+      background-color: #0B1022;
+      border-bottom: 1px solid #1E2A4A;
+      margin-top: 10px;
+    }
 
-/* Actions */
-.actions {
-  display: grid;
-  grid-template-columns: repeat(2,1fr);
-  gap: 1rem;
-  margin: 1.5rem;
-}
-.action-btn {
-  background: linear-gradient(90deg, var(--zep-blue), var(--zep-pink));
-  border-radius: 1rem;
-  border: none;
-  padding: 1rem;
-  font-family: 'Orbitron', sans-serif;
-  color: #fff;
-  font-weight: 600;
-  box-shadow: 0 0 15px rgba(0,240,255,0.2);
-  transition: all 0.3s ease;
-}
-.action-btn:hover {
-  background: linear-gradient(90deg, var(--zep-pink), var(--zep-purple));
-  box-shadow: 0 0 25px rgba(255,0,240,0.4);
-}
+    .tab {
+      flex: 1;
+      text-align: center;
+      padding: 15px 0;
+      color: #AAB2D5;
+      font-weight: 500;
+      cursor: pointer;
+      font-size: 14px;
+    }
 
-/* Transactions */
-.transactions {
-  background: rgba(25, 10, 45, 0.5);
-  margin: 1.5rem;
-  border-radius: 1rem;
-  padding: 1rem;
-  border: 1px solid rgba(255,255,255,0.08);
-  box-shadow: 0 0 20px rgba(255,0,240,0.1);
-}
-.transactions h4 {
-  font-family: 'Orbitron', sans-serif;
-  color: var(--zep-pink);
-  margin-bottom: 0.8rem;
-}
-.tx {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 0.6rem 0.5rem;
-  border-bottom: 1px solid rgba(255,255,255,0.05);
-  color: #fafafa;
-}
-.tx:last-child { border-bottom: none; }
-.tx span {
-  font-weight: 600;
-  color: var(--zep-purple);
-}
+    .tab.active {
+      color: #ffffff;
+      border-bottom: 2px solid #2E5EFF;
+    }
 
-/* Footer */
-footer {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  background: rgba(15, 0, 25, 0.9);
-  backdrop-filter: blur(20px);
-  border-top: 1px solid rgba(255,255,255,0.1);
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-  padding: 0.8rem 0;
-  animation: pulseGlow 5s infinite alternate ease-in-out;
-}
-.footer-btn svg {
-  width: 26px;
-  height: 26px;
-  fill: url(#zepGradient);
-  filter: drop-shadow(0 0 6px var(--zep-pink));
-  transition: 0.3s;
-}
-.footer-btn:hover svg, .footer-btn.active svg {
-  filter: drop-shadow(0 0 12px var(--zep-purple));
-}
+    .main-text {
+      text-align: left;
+      padding: 40px 25px;
+      font-size: 28px;
+      font-weight: 700;
+      line-height: 1.4;
+    }
 
-@keyframes pulseGlow {
-  0%,100% { box-shadow: 0 0 10px rgba(255,0,240,0.15); }
-  50% { box-shadow: 0 0 25px rgba(0,240,255,0.25); }
-}
-</style>
+    .main-text span {
+      color: #2E5EFF;
+    }
+
+    .footer {
+      background-color: #0B1022;
+      border-top: 1px solid #1E2A4A;
+      display: flex;
+      justify-content: space-around;
+      padding: 12px 0;
+      position: absolute;
+      bottom: 0;
+      width: 100%;
+    }
+
+    .footer-icon {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      color: #AAB2D5;
+      font-size: 12px;
+    }
+
+    .footer-icon.active {
+      color: white;
+    }
+
+    .footer-icon i {
+      font-size: 20px;
+      margin-bottom: 3px;
+    }
+
+    /* 📱 Responsive adjustments */
+    @media (max-width: 420px) {
+      body {
+        height: auto;
+        background-color: #0B1022;
+      }
+
+      .phone {
+        width: 100%;
+        height: 100vh;
+        border-radius: 0;
+        box-shadow: none;
+        border: none;
+      }
+
+      .balance-card {
+        margin: 15px;
+        padding: 20px;
+      }
+
+      .main-text {
+        font-size: 24px;
+        padding: 30px 20px;
+      }
+
+      .balance-buttons button {
+        font-size: 13px;
+        padding: 8px 12px;
+      }
+
+      .tab {
+        font-size: 13px;
+      }
+    }
+
+    @media (max-width: 330px) {
+      .main-text {
+        font-size: 20px;
+      }
+
+      .balance-card h1 {
+        font-size: 28px;
+      }
+
+      .header {
+        font-size: 18px;
+      }
+    }
+
+  </style>
+
+  <!-- Font Awesome for icons -->
+  <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
 </head>
-
 <body>
+  <div class="phone">
+    <div class="header">Zep Swipe</div>
 
-<svg width="0" height="0">
-  <linearGradient id="zepGradient" x1="0%" y1="0%" x2="100%" y2="0%">
-    <stop stop-color="#00f0ff" offset="0%" />
-    <stop stop-color="#ff00f0" offset="50%" />
-    <stop stop-color="#9c4dff" offset="100%" />
-  </linearGradient>
-</svg>
+    <div class="balance-card">
+      <h3>Total Portfolio Balance</h3>
+      <h1>$1,870.00</h1>
+      <div class="balance-buttons">
+        <button>Send</button>
+        <button>Receive</button>
+        <button>Swap</button>
+      </div>
+    </div>
 
-<header class="header">
-  <div class="logo"><h1>ZEP SWIPE</h1></div>
-  <a href="index.html" class="power-btn" title="Logout">
-    <svg viewBox="0 0 24 24"><path d="M12 2v10m6.364-7.636A9 9 0 1 1 5.636 4.364"/></svg>
-  </a>
-</header>
+    <div class="tabs">
+      <div class="tab active">Transactions</div>
+      <div class="tab">Campus Deals</div>
+    </div>
 
-<div class="deal-grid">
-  <a href="store-food.html" class="deal-card">
-    <svg viewBox="0 0 24 24"><path d="M6 8h12v10a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2V8zm6-6a2 2 0 0 1 2 2v2H10V4a2 2 0 0 1 2-2z"/></svg>
-    <p>Food Deals</p>
-  </a>
-  <a href="store-gadget.html" class="deal-card">
-    <svg viewBox="0 0 24 24"><path d="M8 2h8a2 2 0 0 1 2 2v16a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2z"/></svg>
-    <p>Gadget Deals</p>
-  </a>
-  <a href="delivery.html" class="deal-card">
-    <svg viewBox="0 0 24 24"><path d="M3 6h13l3 6v6h-2a3 3 0 0 1-6 0H8a3 3 0 0 1-6 0V6z"/></svg>
-    <p>ParcelOn</p>
-  </a>
-  <a href="ride-hailing.html" class="deal-card">
-    <svg viewBox="0 0 24 24"><path d="M5 11l1.5-4.5h11L19 11H5zm13 2a3 3 0 1 1-6 0h-2a3 3 0 1 1-6 0H2v3h20v-3h-4z"/></svg>
-    <p>Swipe Rides</p>
-  </a>
-</div>
+    <div class="main-text">
+      Learn. Earn.<br>Grow. <span>ZepSwipe</span>
+    </div>
 
-<div class="balance-card">
-  <h3>Total Portfolio</h3>
-  <div class="amount" id="totalBalance">$0.00</div>
-</div>
-
-<div class="actions">
-  <button class="action-btn" onclick="location.href='learn-earn.html'">Earn $ZAC</button>
-  <button class="action-btn" onclick="location.href='zep-ai.html'">Ask Zep AI 🤖</button>
-</div>
-
-<div class="transactions">
-  <h4>Transaction History</h4>
-  <div class="tx"><span>Ride Payment</span> -5 ZAC</div>
-  <div class="tx"><span>Food Purchase</span> -3 ZAC</div>
-  <div class="tx"><span>Earn $ZAC</span> +8 ZAC</div>
-  <div class="tx"><span>Send to Friend</span> -2 ZAC</div>
-</div>
-
-<footer>
-  <a href="dashboard.html" class="footer-btn active" title="Dashboard">
-    <svg viewBox="0 0 24 24"><path d="M3 12l9-9 9 9v9a2 2 0 0 1-2 2h-4v-6H9v6H5a2 2 0 0 1-2-2v-9z"/></svg>
-  </a>
-  <a href="chat.html" class="footer-btn" title="Chat">
-    <svg viewBox="0 0 24 24"><path d="M4 4h16v12H7l-3 3V4z"/></svg>
-  </a>
-  <a href="delivery.html" class="footer-btn" title="Orders">
-    <svg viewBox="0 0 24 24"><path d="M4 6h16l-2 10H6L4 6zm6 14a2 2 0 1 0 0-4 2 2 0 0 0 0 4zm8 0a2 2 0 1 0 0-4 2 2 0 0 0 0 4z"/></svg>
-  </a>
-  <a href="learn-earn.html" class="footer-btn" title="Rewards">
-    <svg viewBox="0 0 24 24"><path d="M12 2l4 8H8l4-8zm0 19c-4.42 0-8-1.79-8-4v2c0 2.21 3.58 4 8 4s8-1.79 8-4v-2c0 2.21-3.58 4-8 4z"/></svg>
-  </a>
-  <a href="profile.html" class="footer-btn" title="Profile">
-    <svg viewBox="0 0 24 24"><path d="M12 12a5 5 0 1 0 0-10 5 5 0 0 0 0 10zm0 2c-5.33 0-8 2.67-8 5v3h16v-3c0-2.33-2.67-5-8-5z"/></svg>
-  </a>
-</footer>
-
-<script>
-const zac = 450.0;
-const usdt = 120.0;
-document.getElementById('totalBalance').innerText = `$${(zac + usdt).toFixed(2)}`;
-</script>
+    <div class="footer">
+      <div class="footer-icon active">
+        <i class="fas fa-home"></i>
+        <span>Home</span>
+      </div>
+      <div class="footer-icon">
+        <i class="fas fa-shopping-bag"></i>
+        <span>Shop</span>
+      </div>
+      <div class="footer-icon">
+        <i class="fas fa-user"></i>
+        <span>Chat</span>
+      </div>
+    </div>
+  </div>
 </body>
 </html>
