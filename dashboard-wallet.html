@@ -3,126 +3,191 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Neon Wallet</title>
-<script src="https://cdn.tailwindcss.com"></script>
+<title>Zep Swipe — Wallet</title>
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
 
 <style>
-:root{
-  --violet:#6b23ff;
-  --cyan:#00faff;
-  --lime:#43ff9b;
-  --pink:#ff4bcd;
-  --bg:#05000d;
-  --glass:rgba(255,255,255,0.09);
+:root {
+  --zep-blue: #00f0ff;
+  --zep-violet: #9c4dff;
+  --glass: rgba(255,255,255,0.08);
+  --bg: radial-gradient(circle at 25% 10%, #050018 0%, #000010 90%);
 }
 
-body{
-  background:radial-gradient(circle at 30% 20%, #1a0036, #05000d 60%);
-  font-family:'Poppins',sans-serif;
-  color:white;
-  margin:0;
-  padding-bottom:110px;
+body {
+  margin: 0;
+  font-family: 'Poppins', sans-serif;
+  background: var(--bg);
+  color: #fff;
+  min-height: 100vh;
+  padding-bottom: 100px;
+  -webkit-overflow-scrolling: touch;
 }
 
-/* Header */
-header{
-  position:sticky;top:0;z-index:50;
-  display:flex;justify-content:space-between;align-items:center;
-  padding:14px 16px;background:#070014;
-  border-bottom:1px solid rgba(255,255,255,0.09);
+/* ===== Header ===== */
+header {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 14px 18px;
+  background: rgba(15, 10, 30, 0.75);
+  backdrop-filter: blur(16px);
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+  box-shadow: 0 0 16px rgba(0,240,255,0.1);
 }
-.logo{
-  font-family:'Orbitron',sans-serif;font-size:21px;font-weight:700;
-  background:linear-gradient(90deg,var(--cyan),var(--pink),var(--lime));
-  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+.logo {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 21px;
+  font-weight: 700;
+  background: linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
-.logout-btn svg{
-  width:28px;height:28px;fill:var(--pink);
-  filter:drop-shadow(0 0 10px var(--pink));
-  transition:.3s;
+.logout-btn svg {
+  width: 28px; height: 28px;
+  fill: var(--zep-blue);
+  filter: drop-shadow(0 0 10px var(--zep-blue));
+  transition: 0.3s;
 }
-.logout-btn:hover svg{
-  fill:var(--lime);
-  filter:drop-shadow(0 0 16px var(--lime));
-  transform:scale(1.15);
-}
-
-/* Glass Panels */
-.glass{
-  background:var(--glass);
-  backdrop-filter:blur(14px);
-  border-radius:16px;
-  border:1px solid rgba(255,255,255,0.06);
-  padding:16px;
-}
-
-/* Portfolio */
-.balance{
-  font-family:'Orbitron',sans-serif;font-size:40px;
-  background:linear-gradient(90deg,var(--cyan),var(--pink),var(--lime));
-  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
-  animation:breath 2.8s infinite alternate;
-}
-@keyframes breath{
-  from{filter:drop-shadow(0 0 8px var(--cyan));}
-  to{filter:drop-shadow(0 0 16px var(--pink));}
+.logout-btn:hover svg {
+  fill: var(--zep-violet);
+  filter: drop-shadow(0 0 14px var(--zep-violet));
+  transform: scale(1.1);
 }
 
-/* Buttons */
-.action-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;}
-.btn{padding:14px 0;text-align:center;font-weight:600;border-radius:12px;}
-
-.cyan{background:linear-gradient(90deg,var(--cyan),#d9ffff);color:#000;}
-.lime{background:linear-gradient(90deg,var(--lime),#d2ffe9);color:#001;}
-.violet{background:linear-gradient(90deg,var(--violet),#d7bdff);color:#11001c;}
-.ghost{border:1px solid rgba(255,255,255,0.12);color:#e7ffff;}
-
-/* History */
-.tx-row{display:flex;justify-content:space-between;align-items:center;
-  padding:10px 4px;border-bottom:1px solid rgba(255,255,255,0.06);}
-.badge{padding:6px 12px;border-radius:999px;font-size:12px;font-weight:600;}
-.sale{background:rgba(0,255,180,0.2);color:var(--lime);}
-.refund{background:rgba(255,0,180,0.25);color:var(--pink);}
-
-/* Zep AI Insights */
-.ai-box{
-  margin-top:18px;background:rgba(255,255,255,0.05);
-  border:1px solid rgba(255,255,255,0.07);
-  border-radius:14px;padding:14px;
-}
-.ai-title{opacity:.8;font-size:13px;text-align:center;}
-.ai-value{
-  font-family:Orbitron;font-size:23px;text-align:center;
-  background:linear-gradient(90deg,var(--lime),var(--pink),var(--cyan));
-  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+/* ===== Glass Panels ===== */
+.glass {
+  background: var(--glass);
+  backdrop-filter: blur(14px);
+  border-radius: 16px;
+  border: 1px solid rgba(255,255,255,0.08);
+  padding: 16px;
+  box-shadow: 0 0 18px rgba(0,240,255,0.08);
 }
 
-/* Footer */
-footer{
-  position:fixed;bottom:0;width:100%;padding:14px 0;
-  background:rgba(8,0,20,0.96);backdrop-filter:blur(18px);
-  border-top:1px solid rgba(255,255,255,0.1);
-  display:flex;justify-content:space-around;
+/* ===== Balance Card ===== */
+.balance {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 38px;
+  background: linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: pulseGlow 3s infinite alternate;
 }
-.fbtn svg{
-  width:30px;height:30px;
-  fill:var(--cyan);
-  filter:drop-shadow(0 0 7px var(--cyan));
-  transition:.3s;
+@keyframes pulseGlow {
+  0% { filter: drop-shadow(0 0 10px var(--zep-blue)); }
+  100% { filter: drop-shadow(0 0 20px var(--zep-violet)); }
 }
-.fbtn:hover svg{
-  fill:var(--lime);
-  filter:drop-shadow(0 0 18px var(--lime));
-  transform:translateY(-4px);
+
+/* ===== Buttons ===== */
+.action-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+  margin-top: 1rem;
 }
+.btn {
+  padding: 12px 0;
+  border-radius: 12px;
+  text-align: center;
+  font-weight: 600;
+  font-family: 'Orbitron', sans-serif;
+  color: #fff;
+  border: 1px solid rgba(255,255,255,0.12);
+  transition: 0.3s;
+  cursor: pointer;
+}
+.btn:hover { transform: scale(1.05); }
+.btn.send { background: linear-gradient(90deg, var(--zep-blue), #66ffff); color: #000; }
+.btn.request { background: linear-gradient(90deg, var(--zep-violet), #d0b3ff); color: #11001c; }
+.btn.buy { background: linear-gradient(90deg, var(--zep-blue), var(--zep-violet)); }
+.btn.withdraw { background: rgba(255,255,255,0.08); color: #d6d6ff; }
+
+/* ===== AI Box ===== */
+.ai-box {
+  margin-top: 20px;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.07);
+  border-radius: 14px;
+  padding: 16px;
+  text-align: center;
+}
+.ai-title {
+  font-size: 13px;
+  opacity: 0.8;
+  margin-bottom: 6px;
+}
+.ai-value {
+  font-family: 'Orbitron';
+  font-size: 24px;
+  background: linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* ===== Transactions ===== */
+h3 {
+  font-family: 'Orbitron';
+  color: var(--zep-blue);
+  margin-top: 1.5rem;
+  margin-bottom: 0.5rem;
+}
+.tx-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 4px;
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+  font-size: 0.95rem;
+}
+.badge {
+  padding: 6px 12px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 600;
+}
+.sale { background: rgba(0,240,255,0.15); color: var(--zep-blue); }
+.refund { background: rgba(156,77,255,0.2); color: var(--zep-violet); }
+
+/* ===== Footer ===== */
+footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background: rgba(15,15,30,0.9);
+  border-top: 1px solid rgba(255,255,255,0.1);
+  backdrop-filter: blur(14px);
+  display: flex;
+  justify-content: space-around;
+  padding: 12px 0;
+  z-index: 100;
+}
+.fbtn svg {
+  width: 26px;
+  height: 26px;
+  fill: var(--zep-blue);
+  filter: drop-shadow(0 0 8px var(--zep-violet));
+  transition: 0.3s;
+}
+.fbtn:hover svg {
+  fill: var(--zep-violet);
+  filter: drop-shadow(0 0 12px var(--zep-blue));
+  transform: translateY(-3px);
+}
+
+/* ===== Scroll Momentum ===== */
+html, body { scroll-behavior: smooth; }
 </style>
 </head>
 
 <body>
 
 <header>
-  <div class="logo">NEON WALLET</div>
+  <div class="logo">ZEP SWIPE</div>
   <button class="logout-btn" onclick="location.href='index.html'">
     <svg viewBox="0 0 24 24"><path d="M7 4v2h6v12H7v2h8V4H7zm-3 8l4-4v3h8v2H8v3l-4-4z"/></svg>
   </button>
@@ -131,7 +196,7 @@ footer{
 <div class="px-4 mt-4">
 
   <div class="glass">
-    <div style="opacity:.7;font-size:14px;">Total Portfolio</div>
+    <div style="opacity:.7;font-size:14px;">Total Wallet</div>
     <div id="totalPortfolio" class="balance">$0.00</div>
 
     <div class="mt-4 flex gap-3">
@@ -145,11 +210,11 @@ footer{
       </div>
     </div>
 
-    <div class="action-grid mt-4">
-      <a href="send-cash.html" class="btn cyan">Send</a>
-      <a href="cash-request.html" class="btn lime">Request</a>
-      <a href="top-up.html" class="btn violet">Buy</a>
-      <a href="withdrawal.html" class="btn ghost">Withdraw</a>
+    <div class="action-grid">
+      <a href="send-cash.html" class="btn send">Send</a>
+      <a href="cash-request.html" class="btn request">Request</a>
+      <a href="top-up.html" class="btn buy">Buy</a>
+      <a href="withdrawal.html" class="btn withdraw">Withdraw</a>
     </div>
   </div>
 
@@ -158,29 +223,41 @@ footer{
     <div id="aiValue" class="ai-value">+0.00%</div>
   </div>
 
-  <h3 class="mt-6 font-orbitron" style="color:var(--cyan);">Recent Activity</h3>
+  <h3>Recent Activity</h3>
   <div class="glass">
-    <div class="tx-row"><span>E-Book Sale</span><span class="badge sale">+5 ZAC</span></div>
-    <div class="tx-row"><span>Refund</span><span class="badge refund">-2 ZAC</span></div>
+    <div class="tx-row"><span>Ride Payment</span><span class="badge sale">-4 ZAC</span></div>
+    <div class="tx-row"><span>Referral Bonus</span><span class="badge sale">+10 ZAC</span></div>
+    <div class="tx-row"><span>Gadget Purchase</span><span class="badge refund">-6 USDT</span></div>
+    <div class="tx-row"><span>Earn $ZAC</span><span class="badge sale">+3 ZAC</span></div>
   </div>
 
 </div>
 
 <footer>
-  <a class="fbtn" href="student-dashboard.html"><svg viewBox="0 0 24 24"><path d="M3 10l9-7 9 7v10H3z"/></svg></a>
-  <a class="fbtn" href="dashboard-store.html"><svg viewBox="0 0 24 24"><path d="M4 7h16l-2 13H6z M4 7l2-4h12l2 4"/></svg></a>
-  <a class="fbtn" href="ride-hailing.html"><svg viewBox="0 0 24 24"><path d="M5 12l2-5h10l2 5zM6 17a2 2 0 104 0 2 2 0 00-4 0zm8 0a2 2 0 104 0 2 2 0 00-4 0z"/></svg></a>
-  <a class="fbtn" href="neon-wallet.html"><svg viewBox="0 0 24 24"><rect x="3" y="6" width="18" height="12" rx="2"/></svg></a>
-  <a class="fbtn" href="profile.html"><svg viewBox="0 0 24 24"><circle cx="12" cy="7" r="4"/><path d="M4 20c0-4 4-6 8-6s8 2 8 6"/></svg></a>
+  <a class="fbtn" href="dashboard.html">
+    <svg viewBox="0 0 24 24"><path d="M3 12l9-9 9 9v8a2 2 0 0 1-2 2h-4v-6H9v6H5a2 2 0 0 1-2-2v-8z"/></svg>
+  </a>
+  <a class="fbtn" href="dashboard-store.html">
+    <svg viewBox="0 0 24 24"><path d="M3 6h18l-2 12H5z"/></svg>
+  </a>
+  <a class="fbtn" href="ride-hailing.html">
+    <svg viewBox="0 0 24 24"><path d="M4 11l1.5-4.5h13L20 11h1a1 1 0 011 1v5h-2v2h-2v-2H7v2H5v-2H3v-5a1 1 0 011-1zM6 14a2 2 0 104 0 2 2 0 00-4 0zm8 0a2 2 0 104 0 2 2 0 00-4 0z"/></svg>
+  </a>
+  <a class="fbtn" href="neon-wallet.html">
+    <svg viewBox="0 0 24 24"><rect x="3" y="6" width="18" height="12" rx="2"/></svg>
+  </a>
+  <a class="fbtn" href="profile.html">
+    <svg viewBox="0 0 24 24"><circle cx="12" cy="7" r="4"/><path d="M4 20c0-4 4-6 8-6s8 2 8 6"/></svg>
+  </a>
 </footer>
 
 <script>
-const zac=(+localStorage.getItem('walletZAC')||450);
-const usdt=(+localStorage.getItem('walletUSDT')||120);
-document.getElementById('zacBal').innerText=zac.toFixed(2);
-document.getElementById('usdtBal').innerText=usdt.toFixed(2);
-document.getElementById('totalPortfolio').innerText='$'+(zac+usdt).toFixed(2);
-document.getElementById('aiValue').innerText=`+${((zac+usdt)*0.021).toFixed(2)}%`;
+const zac = (+localStorage.getItem('walletZAC') || 450);
+const usdt = (+localStorage.getItem('walletUSDT') || 120);
+document.getElementById('zacBal').innerText = zac.toFixed(2);
+document.getElementById('usdtBal').innerText = usdt.toFixed(2);
+document.getElementById('totalPortfolio').innerText = '$' + (zac + usdt).toFixed(2);
+document.getElementById('aiValue').innerText = `+${((zac + usdt) * 0.021).toFixed(2)}%`;
 </script>
 
 </body>
