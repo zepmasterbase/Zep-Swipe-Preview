@@ -1,272 +1,297 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Zep Swipe</title>
-  <style>
-    body {
-      margin: 0;
-      padding: 0;
-      font-family: 'Poppins', sans-serif;
-      background-color: #0B1022;
-      color: white;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-    }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Zep Swipe — Dashboard</title>
 
-    .phone {
-      width: 375px;
-      height: 812px;
-      background-color: #0B1022;
-      border-radius: 40px;
-      box-shadow: 0 0 20px rgba(0,0,0,0.4);
-      display: flex;
-      flex-direction: column;
-      overflow: hidden;
-      border: 2px solid #1E2A4A;
-      position: relative;
-    }
+<style>
+:root {
+  --zep-blue: #00f0ff;
+  --zep-pink: #ff00f0;
+  --zep-purple: #9c4dff;
+  --glass: rgba(255, 255, 255, 0.08);
+}
 
-    /* 🔷 Header with glass effect */
-    .header {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      position: relative;
-      padding: 20px 0;
-      font-weight: 600;
-      font-size: 20px;
-      color: #ffffff;
-      background: rgba(255, 255, 255, 0.1);
-      backdrop-filter: blur(10px);
-      border-bottom: 1px solid rgba(255, 255, 255, 0.2);
-      box-shadow: 0 0 15px rgba(46, 94, 255, 0.3);
-    }
+* { box-sizing: border-box; margin: 0; padding: 0; }
 
-    .menu-icon {
-      position: absolute;
-      left: 20px;
-      top: 50%;
-      transform: translateY(-50%);
-      font-size: 20px;
-      cursor: pointer;
-      color: white;
-    }
+body {
+  font-family: 'Poppins', sans-serif;
+  background: radial-gradient(circle at 25% 10%, #050018, #000010 90%);
+  color: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
 
-    .balance-card {
-      background-color: #141C3B;
-      margin: 20px;
-      padding: 25px;
-      border-radius: 20px;
-      text-align: center;
-    }
+/* Phone frame */
+.phone {
+  width: 375px;
+  max-width: 100%;
+  height: 812px;
+  max-height: 100vh;
+  background: rgba(10, 10, 25, 0.9);
+  border-radius: 40px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 0 25px rgba(156, 77, 255, 0.3);
+  overflow: hidden;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
 
-    .balance-card h3 {
-      font-size: 14px;
-      color: #AAB2D5;
-      margin-bottom: 8px;
-    }
+/* Header */
+.header {
+  position: relative;
+  text-align: center;
+  font-size: 20px;
+  padding: 16px 0;
+  background: rgba(25, 10, 45, 0.65);
+  backdrop-filter: blur(12px);
+  font-weight: 700;
+  text-transform: uppercase;
+  color: transparent;
+  background-clip: text;
+  -webkit-background-clip: text;
+  background-image: linear-gradient(90deg, var(--zep-blue), var(--zep-pink), var(--zep-purple));
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  text-shadow: 0 0 8px var(--zep-blue);
+}
 
-    .balance-card h1 {
-      font-size: 36px;
-      color: #ffffff;
-      margin-bottom: 20px;
-    }
+.menu-icon {
+  position: absolute;
+  left: 20px;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+}
+.menu-icon svg {
+  width: 24px;
+  height: 24px;
+  fill: url(#zepGradient);
+  filter: drop-shadow(0 0 6px var(--zep-blue));
+  transition: 0.3s;
+}
+.menu-icon:hover svg {
+  transform: scale(1.1);
+  filter: drop-shadow(0 0 12px var(--zep-pink));
+}
 
-    .balance-buttons {
-      display: flex;
-      justify-content: space-around;
-      margin-top: 10px;
-      flex-wrap: wrap;
-      gap: 10px;
-    }
+/* Balance Card */
+.balance-card {
+  background: var(--glass);
+  border-radius: 20px;
+  margin: 20px;
+  padding: 25px;
+  text-align: center;
+  box-shadow: 0 0 20px rgba(0, 240, 255, 0.08);
+  backdrop-filter: blur(10px);
+}
+.balance-card h3 { font-size: 14px; color: #b8c3ff; margin-bottom: 8px; }
+.balance-card h1 {
+  font-size: 36px;
+  background: linear-gradient(90deg, var(--zep-blue), var(--zep-pink), var(--zep-purple));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin-bottom: 20px;
+}
 
-    .balance-buttons button {
-      background-color: #1D2750;
-      border: none;
-      color: white;
-      padding: 10px 15px;
-      border-radius: 12px;
-      font-size: 14px;
-      cursor: pointer;
-      flex: 1;
-      min-width: 80px;
-    }
+/* Buttons */
+.balance-buttons {
+  display: flex;
+  justify-content: space-around;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+.balance-buttons button {
+  flex: 1;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 12px;
+  color: #fff;
+  padding: 10px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: 0.3s;
+}
+.balance-buttons button:hover {
+  background: linear-gradient(90deg, var(--zep-blue), var(--zep-pink));
+  box-shadow: 0 0 12px rgba(0, 240, 255, 0.4);
+}
 
-    /* 🔷 Tabs */
-    .tabs {
-      display: flex;
-      justify-content: space-around;
-      background-color: #0B1022;
-      border-bottom: 1px solid #1E2A4A;
-      margin-top: 10px;
-    }
+/* Learn Card */
+.main-text { padding: 40px 25px; }
+.glass-placeholder {
+  display: block;
+  background: var(--glass);
+  border-radius: 20px;
+  padding: 30px 20px;
+  font-size: 26px;
+  font-weight: 700;
+  color: #fff;
+  text-decoration: none;
+  box-shadow: 0 0 15px rgba(0, 240, 255, 0.1);
+  backdrop-filter: blur(8px);
+  text-align: left;
+  line-height: 1.4;
+}
+.glass-placeholder span {
+  background: linear-gradient(90deg, var(--zep-blue), var(--zep-pink));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
 
-    .tab {
-      flex: 1;
-      text-align: center;
-      padding: 15px 0;
-      color: #AAB2D5;
-      font-weight: 500;
-      cursor: pointer;
-      font-size: 14px;
-      text-decoration: none;
-    }
+/* Footer */
+.footer {
+  margin-top: auto;
+  background: rgba(15, 15, 30, 0.8);
+  backdrop-filter: blur(12px);
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  padding: 10px 0;
+}
+.footer-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: #aab2d5;
+  text-decoration: none;
+  font-size: 12px;
+  transition: 0.3s;
+}
+.footer-btn svg {
+  width: 24px;
+  height: 24px;
+  fill: url(#zepGradient);
+  filter: drop-shadow(0 0 6px var(--zep-blue));
+  margin-bottom: 3px;
+  transition: 0.3s;
+}
+.footer-btn:hover svg, .footer-btn.active svg {
+  filter: drop-shadow(0 0 10px var(--zep-pink));
+}
+.footer-btn.active { color: #fff; }
 
-    .tab.active {
-      color: #ffffff;
-      border-bottom: 2px solid #2E5EFF;
-    }
+/* Sidebar */
+.sidebar {
+  position: absolute;
+  top: 0;
+  left: -260px;
+  width: 240px;
+  height: 100%;
+  background: rgba(10, 20, 40, 0.85);
+  backdrop-filter: blur(18px);
+  border-right: 1px solid rgba(0,255,255,0.1);
+  box-shadow: 0 0 25px rgba(0, 240, 255, 0.15);
+  border-radius: 0 20px 20px 0;
+  transition: left 0.4s ease;
+  display: flex;
+  flex-direction: column;
+  padding-top: 80px;
+  z-index: 200;
+}
+.sidebar.active { left: 0; }
 
-    /* 🔷 Glass placeholder for Learn.Earn.Grow */
-    .main-text {
-      text-align: left;
-      padding: 40px 25px;
-    }
+.sidebar a {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 20px;
+  color: #c9d8ff;
+  font-weight: 500;
+  text-decoration: none;
+  transition: 0.3s;
+}
+.sidebar a:hover {
+  background: rgba(0, 240, 255, 0.08);
+  color: #fff;
+}
+.sidebar a svg {
+  width: 22px;
+  height: 22px;
+  fill: url(#zepGradient);
+  filter: drop-shadow(0 0 4px var(--zep-blue));
+}
 
-    .glass-placeholder {
-      background: rgba(255, 255, 255, 0.1);
-      border-radius: 20px;
-      padding: 30px 20px;
-      backdrop-filter: blur(10px);
-      box-shadow: 0 0 15px rgba(46, 94, 255, 0.3);
-      font-size: 28px;
-      font-weight: 700;
-      line-height: 1.4;
-      color: white;
-      text-decoration: none;
-      display: inline-block;
-      width: 100%;
-    }
-
-    .glass-placeholder span {
-      color: #2E5EFF;
-    }
-
-    /* 🔷 Footer */
-    .footer {
-      background-color: #0B1022;
-      border-top: 1px solid #1E2A4A;
-      display: flex;
-      justify-content: space-around;
-      padding: 12px 0;
-      position: absolute;
-      bottom: 0;
-      width: 100%;
-    }
-
-    .footer-icon {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      color: #AAB2D5;
-      font-size: 12px;
-      text-decoration: none;
-    }
-
-    .footer-icon.active {
-      color: white;
-    }
-
-    .footer-icon i {
-      font-size: 20px;
-      margin-bottom: 3px;
-    }
-
-    /* 📱 Responsive adjustments */
-    @media (max-width: 420px) {
-      body {
-        height: auto;
-        background-color: #0B1022;
-      }
-
-      .phone {
-        width: 100%;
-        height: 100vh;
-        border-radius: 0;
-        box-shadow: none;
-        border: none;
-      }
-
-      .balance-card {
-        margin: 15px;
-        padding: 20px;
-      }
-
-      .glass-placeholder {
-        font-size: 24px;
-      }
-    }
-
-    @media (max-width: 330px) {
-      .glass-placeholder {
-        font-size: 20px;
-      }
-
-      .balance-card h1 {
-        font-size: 28px;
-      }
-
-      .header {
-        font-size: 18px;
-      }
-    }
-
-  </style>
-
-  <!-- Font Awesome for icons -->
-  <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+/* Responsive */
+@media (min-width: 768px) {
+  .phone { width: 420px; height: 850px; }
+}
+</style>
 </head>
+
 <body>
-  <div class="phone">
 
-    <!-- 🔷 Glass Header -->
-    <div class="header">
-      <i class="fas fa-bars menu-icon"></i>
-      Zep Swipe
+<svg width="0" height="0">
+  <linearGradient id="zepGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+    <stop stop-color="#00f0ff" offset="0%" />
+    <stop stop-color="#ff00f0" offset="50%" />
+    <stop stop-color="#9c4dff" offset="100%" />
+  </linearGradient>
+</svg>
+
+<div class="phone">
+
+  <!-- Sidebar -->
+  <div class="sidebar" id="sidebar">
+    <a href="delivery.html"><svg viewBox="0 0 24 24"><path d="M3 6h13l3 6v6h-2a3 3 0 1 1-6 0H8a3 3 0 1 1-6 0V6z"/></svg> ParcelOn</a>
+    <a href="ride-hailing.html"><svg viewBox="0 0 24 24"><path d="M5 11l1.5-4.5h11L19 11H5z"/></svg> Rides</a>
+    <a href="dashboard-wallet.html"><svg viewBox="0 0 24 24"><path d="M2 6a2 2 0 0 1 2-2h16v16H4a2 2 0 0 1-2-2V6z"/></svg> Wallet</a>
+    <a href="dashboard-store.html"><svg viewBox="0 0 24 24"><path d="M3 6h18l-2 12H5z"/></svg> Shop</a>
+    <a href="sell.html"><svg viewBox="0 0 24 24"><path d="M12 2l4 8H8l4-8zM4 22h16v-2H4v2z"/></svg> Sell</a>
+  </div>
+
+  <!-- Header -->
+  <div class="header">
+    <div class="menu-icon" onclick="toggleSidebar()">
+      <svg viewBox="0 0 24 24"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
     </div>
+    ZEP SWIPE
+  </div>
 
-    <div class="balance-card">
-      <h3>Total Portfolio Balance</h3>
-      <h1>$1,870.00</h1>
-      <div class="balance-buttons">
-        <button>Send</button>
-        <button>Receive</button>
-        <button>Swap</button>
-      </div>
-    </div>
-
-    <!-- 🔷 Tabs with Campus Deals link -->
-    <div class="tabs">
-      <a href="#" class="tab active">Transactions</a>
-      <a href="campus-deals.html" class="tab">Campus Deals</a>
-    </div>
-
-    <!-- 🔷 Clickable Learn.Earn.Grow section -->
-    <div class="main-text">
-      <a href="learn-earn-grow.html" class="glass-placeholder">
-        Learn. Earn.<br>Grow. <span>ZepSwipe</span>
-      </a>
-    </div>
-
-    <!-- 🔷 Footer -->
-    <div class="footer">
-      <a href="#" class="footer-icon active">
-        <i class="fas fa-home"></i>
-        <span>Home</span>
-      </a>
-      <a href="#" class="footer-icon">
-        <i class="fas fa-shopping-bag"></i>
-        <span>Shop</span>
-      </a>
-      <a href="#" class="footer-icon">
-        <i class="fas fa-car"></i>
-        <span>Rides</span>
-      </a>
+  <!-- Balance -->
+  <div class="balance-card">
+    <h3>Total Portfolio Balance</h3>
+    <h1>$1,870.00</h1>
+    <div class="balance-buttons">
+      <button>Send</button>
+      <button>Receive</button>
+      <button>Swap</button>
     </div>
   </div>
+
+  <!-- Learn Section -->
+  <div class="main-text">
+    <a href="learn-earn-grow.html" class="glass-placeholder">
+      Learn. Earn.<br>Grow. <span>Zep Swipe</span>
+    </a>
+  </div>
+
+  <!-- Footer -->
+  <div class="footer">
+    <a href="#" class="footer-btn active" title="Home">
+      <svg viewBox="0 0 24 24"><path d="M3 12l9-9 9 9v8a2 2 0 0 1-2 2h-4v-6H9v6H5a2 2 0 0 1-2-2v-8z"/></svg>
+      Home
+    </a>
+    <a href="#" class="footer-btn" title="Shop">
+      <svg viewBox="0 0 24 24"><path d="M3 6h18l-2 12H5z"/></svg>
+      Shop
+    </a>
+    <a href="#" class="footer-btn" title="Rides">
+      <svg viewBox="0 0 24 24"><path d="M5 11l1.5-4.5h11L19 11H5z"/></svg>
+      Rides
+    </a>
+  </div>
+</div>
+
+<script>
+function toggleSidebar() {
+  document.getElementById("sidebar").classList.toggle("active");
+}
+</script>
 </body>
 </html>
