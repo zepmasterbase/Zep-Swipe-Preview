@@ -1,214 +1,239 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Zep Swipe — Earn. Learn. Get Rewarded.</title>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Zep Swipe — Earn. Learn. Get Rewarded.</title>
 
-  <!-- Fonts + Icons -->
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700&family=Poppins:wght@400;500;600&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+<!-- Fonts + Icons -->
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700&family=Poppins:wght@400;500;600&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
 
-  <style>
-    :root {
-      --zep-blue: #00f0ff;
-      --zep-violet: #9c4dff;
-      --glass: rgba(255,255,255,0.06);
-      --bg: radial-gradient(circle at 25% 10%, #050018 0%, #000010 90%);
-    }
+<style>
+:root {
+  --zep-blue: #00f0ff;
+  --zep-violet: #9c4dff;
+  --glass: rgba(255, 255, 255, 0.06);
+  --bg: radial-gradient(circle at 25% 10%, #050018 0%, #000010 90%);
+}
 
-    body {
-      font-family: 'Poppins', sans-serif;
-      background: var(--bg);
-      color: #fff;
-      margin: 0;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      min-height: 100vh;
-      overflow-x: hidden;
-    }
+/* ===== Base ===== */
+body {
+  margin: 0;
+  font-family: "Poppins", sans-serif;
+  background: var(--bg);
+  color: #fff;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  overflow-x: hidden;
+}
 
-    /* ===== HEADER ===== */
-    header {
-      width: 100%;
-      position: fixed;
-      top: 0;
-      left: 0;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 1rem 1.5rem;
-      background: rgba(15, 10, 30, 0.75);
-      backdrop-filter: blur(16px);
-      border-bottom: 1px solid rgba(255,255,255,0.08);
-      box-shadow: 0 0 16px rgba(0,240,255,0.1);
-      z-index: 100;
-    }
+/* ===== Header ===== */
+header {
+  width: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 50;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 14px 18px;
+  background: rgba(15, 10, 30, 0.7);
+  backdrop-filter: blur(16px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 0 16px rgba(0, 240, 255, 0.1);
+}
 
-    .logo {
-      font-family: 'Orbitron', sans-serif;
-      font-size: 1.5rem;
-      font-weight: 700;
-      background: linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      text-shadow: 0 0 12px rgba(0,240,255,0.3);
-    }
+.logo {
+  font-family: "Orbitron", sans-serif;
+  font-size: 1.5rem;
+  font-weight: 700;
+  background: linear-gradient(90deg, var(--zep-blue), var(--zep-violet));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow: 0 0 10px rgba(0, 240, 255, 0.4);
+}
 
-    .login-btn {
-      padding: 0.45rem 1rem;
-      border-radius: 9999px;
-      border: 1px solid rgba(255,255,255,0.1);
-      font-weight: 600;
-      font-size: 0.9rem;
-      color: #fff;
-      background: linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
-      box-shadow: 0 0 10px rgba(0,240,255,0.3);
-      cursor: pointer;
-      transition: 0.3s;
-    }
-    .login-btn:hover {
-      box-shadow: 0 0 16px rgba(156,77,255,0.4);
-      transform: scale(1.05);
-    }
+.login-btn {
+  padding: 6px 14px;
+  border: none;
+  border-radius: 10px;
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: #fff;
+  background: linear-gradient(90deg, var(--zep-blue), var(--zep-violet));
+  box-shadow: 0 0 10px rgba(0, 240, 255, 0.4);
+  transition: 0.3s;
+  cursor: pointer;
+}
+.login-btn:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 18px rgba(156, 77, 255, 0.5);
+}
 
-    /* ===== HERO ===== */
-    .hero {
-      margin-top: 8rem;
-      text-align: center;
-      padding: 1rem;
-    }
-    .hero h1 {
-      font-family: 'Orbitron', sans-serif;
-      font-size: 1.9rem;
-      font-weight: 700;
-      background: linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      text-shadow: 0 0 15px rgba(0,240,255,0.4);
-    }
-    .hero p {
-      max-width: 320px;
-      margin: 0.8rem auto 1.8rem;
-      font-size: 1rem;
-      color: #b8cfff;
-      line-height: 1.6;
-    }
+/* ===== Hero Section ===== */
+.hero {
+  margin-top: 8rem;
+  text-align: center;
+  padding: 1rem;
+  max-width: 95%;
+}
 
-    /* ===== NEON CIRCLE IMAGE ===== */
-    .neon-circle {
-      width: 180px;
-      height: 180px;
-      margin: 1.5rem auto 2rem;
-      border-radius: 50%;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      background: radial-gradient(circle at 30% 30%, rgba(0,240,255,0.15), rgba(156,77,255,0.1));
-      box-shadow: 0 0 25px rgba(0,240,255,0.2), 0 0 40px rgba(156,77,255,0.2);
-      border: 2px solid rgba(255,255,255,0.1);
-    }
-    .neon-circle img {
-      width: 100px;
-      filter: drop-shadow(0 0 10px rgba(255,215,0,0.6)); /* only yellow glow */
-    }
+.hero h1 {
+  font-family: "Orbitron", sans-serif;
+  font-size: 1.8rem;
+  background: linear-gradient(90deg, var(--zep-blue), var(--zep-violet));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow: 0 0 10px rgba(0, 240, 255, 0.3);
+  margin-bottom: 0.6rem;
+}
 
-    /* ===== BUTTON ===== */
-    .btn {
-      display: block;
-      width: 280px;
-      margin: 0.7rem auto;
-      padding: 0.9rem;
-      border-radius: 9999px;
-      text-align: center;
-      font-weight: 600;
-      font-family: 'Orbitron';
-      font-size: 0.95rem;
-      background: linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
-      color: #fff;
-      box-shadow: 0 0 18px rgba(0,240,255,0.3);
-      text-decoration: none;
-      transition: 0.3s;
-    }
-    .btn:hover {
-      transform: scale(1.05);
-      box-shadow: 0 0 25px rgba(156,77,255,0.4);
-    }
+.hero p {
+  color: #b8cfff;
+  max-width: 320px;
+  margin: 0 auto 1.8rem;
+  line-height: 1.6;
+  font-size: 1rem;
+}
 
-    /* ===== PLACEHOLDER CARD ===== */
-    .placeholder {
-      margin: 2rem auto;
-      max-width: 300px;
-      padding: 1rem;
-      text-align: center;
-      border-radius: 1rem;
-      border: 1px solid rgba(255,255,255,0.08);
-      background: var(--glass);
-      color: #b8cfff;
-      box-shadow: 0 0 20px rgba(0,240,255,0.15);
-      font-weight: 600;
-      font-family: 'Orbitron', sans-serif;
-      font-size: 0.9rem;
-      line-height: 1.4;
-    }
+/* ===== Neon Circle Image ===== */
+.neon-circle {
+  width: 180px;
+  height: 180px;
+  margin: 1.5rem auto;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: radial-gradient(circle at 30% 30%, rgba(0,240,255,0.1), rgba(156,77,255,0.1));
+  box-shadow: 0 0 25px rgba(0,240,255,0.15), 0 0 40px rgba(156,77,255,0.2);
+  border: 2px solid rgba(255,255,255,0.1);
+}
+.neon-circle img {
+  width: 100px;
+  filter: drop-shadow(0 0 20px rgba(255,215,0,0.8)); /* yellow glow only */
+}
 
-    /* ===== FOOTER ===== */
-    footer {
-      text-align: center;
-      margin-top: auto;
-      padding: 1.5rem 0;
-      color: #b8cfff;
-      background: rgba(15,15,30,0.7);
-      backdrop-filter: blur(10px);
-      border-top: 1px solid rgba(255,255,255,0.08);
-    }
-    footer a {
-      margin: 0 0.6rem;
-      color: var(--zep-blue);
-      transition: 0.3s;
-    }
-    footer a:hover {
-      color: var(--zep-violet);
-      transform: scale(1.1);
-    }
-  </style>
+/* ===== Join Button ===== */
+.btn {
+  display: inline-block;
+  margin-top: 1.5rem;
+  background: linear-gradient(90deg, var(--zep-blue), var(--zep-violet));
+  padding: 0.8rem 2rem;
+  border-radius: 9999px;
+  font-weight: 600;
+  color: #fff;
+  text-decoration: none;
+  font-family: "Orbitron";
+  box-shadow: 0 0 15px rgba(0,240,255,0.3);
+  transition: 0.3s;
+}
+.btn:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 25px rgba(156,77,255,0.5);
+}
+
+/* ===== Placeholder Card ===== */
+.placeholder {
+  margin: 2rem auto;
+  max-width: 300px;
+  padding: 1rem;
+  border-radius: 1rem;
+  background: var(--glass);
+  border: 1px solid rgba(255,255,255,0.1);
+  text-align: center;
+  box-shadow: 0 0 20px rgba(0,240,255,0.1);
+  font-weight: 600;
+  font-family: "Orbitron";
+  color: #b8cfff;
+}
+
+/* ===== Footer ===== */
+footer {
+  width: 100%;
+  text-align: center;
+  margin-top: auto;
+  padding: 1.2rem 0;
+  background: rgba(15,15,30,0.8);
+  backdrop-filter: blur(10px);
+  border-top: 1px solid rgba(255,255,255,0.1);
+}
+
+footer div {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 18px;
+}
+
+footer a {
+  color: var(--zep-blue);
+  transition: 0.3s;
+}
+footer a:hover {
+  color: var(--zep-violet);
+  transform: scale(1.1);
+}
+footer i {
+  font-size: 1.2rem;
+  text-shadow: 0 0 8px rgba(0,240,255,0.4);
+}
+
+footer p {
+  margin-top: 8px;
+  font-size: 0.8rem;
+  color: #b8cfff;
+  opacity: 0.8;
+}
+
+/* ===== Responsive ===== */
+@media (max-width: 480px) {
+  .hero h1 { font-size: 1.6rem; }
+  .hero p { font-size: 0.9rem; }
+  .btn { padding: 0.8rem 1.6rem; }
+  .neon-circle { width: 150px; height: 150px; }
+}
+</style>
 </head>
 
 <body>
 
-  <!-- HEADER -->
-  <header>
-    <div class="logo">ZEP SWIPE</div>
-    <button class="login-btn">LOGIN</button>
-  </header>
+<!-- HEADER -->
+<header>
+  <div class="logo">ZEP SWIPE</div>
+  <button class="login-btn">Login</button>
+</header>
 
-  <!-- HERO -->
-  <section class="hero">
-    <h1>Earn. Learn. Get Rewarded.</h1>
-    <p>Join our early access program — build your profile, earn tokens, and get ready for our upcoming marketplace.</p>
+<!-- HERO SECTION -->
+<section class="hero">
+  <h1>Earn. Learn. Get Rewarded.</h1>
+  <p>Join our early access program — build your profile, earn tokens, and prepare for the new student marketplace.</p>
 
-    <div class="neon-circle">
-      <img src="https://cdn-icons-png.flaticon.com/512/706/706830.png" alt="Student Neon Icon" />
-    </div>
+  <div class="neon-circle">
+    <img src="https://cdn-icons-png.flaticon.com/512/706/706830.png" alt="Student Icon">
+  </div>
 
-    <a href="signup.html" class="btn">JOIN THE BETA</a>
+  <a href="signup.html" class="btn">Join the Beta</a>
 
-    <div class="placeholder">
-      ZEP SHOP MARKETPLACE<br>COMING SOON
-    </div>
-  </section>
+  <div class="placeholder">
+    ZEP SHOP MARKETPLACE<br>COMING SOON
+  </div>
+</section>
 
-  <!-- FOOTER -->
-  <footer>
-    <div>
-      <a href="https://t.me/zepswipe" target="_blank"><i class="fab fa-telegram fa-lg"></i></a>
-      <a href="https://www.instagram.com/zepswipe?igsh=bXF3anMxODhxZWFs" target="_blank"><i class="fab fa-instagram fa-lg"></i></a>
-      <a href="https://x.com/ZepSwipe?t=r94a0_pgN7ew1xT5L4eOSA&s=09" target="_blank"><i class="fab fa-x-twitter fa-lg"></i></a>
-      <a href="https://facebook.com/ZepSwipe" target="_blank"><i class="fab fa-facebook fa-lg"></i></a>
-    </div>
-    <p class="text-sm mt-2 opacity-70">© 2025 Zep Swipe. All rights reserved.</p>
-  </footer>
+<!-- FOOTER -->
+<footer>
+  <div>
+    <a href="https://t.me/zepswipe" target="_blank"><i class="fab fa-telegram"></i></a>
+    <a href="https://www.instagram.com/zepswipe?igsh=bXF3anMxODhxZWFs" target="_blank"><i class="fab fa-instagram"></i></a>
+    <a href="https://x.com/ZepSwipe?t=r94a0_pgN7ew1xT5L4eOSA&s=09" target="_blank"><i class="fab fa-x-twitter"></i></a>
+    <a href="https://facebook.com/ZepSwipe" target="_blank"><i class="fab fa-facebook"></i></a>
+  </div>
+  <p>© 2025 Zep Swipe. All rights reserved.</p>
+</footer>
 
 </body>
 </html>
