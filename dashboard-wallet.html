@@ -46,16 +46,35 @@ header {
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
+.logout-btn {
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.1);
+  backdrop-filter: blur(10px);
+  border-radius: 50%;
+  width: 42px;
+  height: 42px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: 0.3s;
+  box-shadow: 0 0 10px rgba(0,240,255,0.1);
+}
+.logout-btn:hover {
+  background: rgba(156,77,255,0.1);
+  box-shadow: 0 0 16px rgba(156,77,255,0.4);
+  transform: scale(1.1);
+}
 .logout-btn svg {
-  width: 28px; height: 28px;
+  width: 24px;
+  height: 24px;
   fill: var(--zep-blue);
-  filter: drop-shadow(0 0 10px var(--zep-blue));
+  filter: drop-shadow(0 0 8px var(--zep-blue));
   transition: 0.3s;
 }
 .logout-btn:hover svg {
   fill: var(--zep-violet);
-  filter: drop-shadow(0 0 14px var(--zep-violet));
-  transform: scale(1.1);
+  filter: drop-shadow(0 0 10px var(--zep-violet));
 }
 
 /* ===== Glass Panels ===== */
