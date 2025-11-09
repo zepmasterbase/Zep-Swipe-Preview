@@ -3,320 +3,318 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Zep Swipe — Vendor Dashboard</title>
-<!-- Tailwind CSS + Fonts + Icons -->
-<script src="https://cdn.tailwindcss.com"></script>
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Orbitron:wght@600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<title>ZepSwipe — Vendor Dashboard</title>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700&family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+<script src="https://kit.fontawesome.com/a2e0d6da3c.js" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 <style>
 :root {
-  --accent-a: #00f0ff;
-  --accent-b: #ff00f0;
-  --glass: rgba(255,255,255,0.1);
+  --zep-blue: #00f0ff;
+  --zep-violet: #9c4dff;
+  --glass: rgba(255,255,255,0.06);
+  --bg: radial-gradient(circle at 25% 10%, #050018 0%, #000010 90%);
 }
 
 body {
-  font-family: 'Poppins', sans-serif;
   margin: 0;
-  background: radial-gradient(circle at top, #120b2e 0%, #0b0520 100%);
+  font-family: 'Poppins', sans-serif;
+  background: var(--bg);
   color: #fff;
-  min-height: 100vh;
+  overflow-x: hidden;
   display: flex;
   flex-direction: column;
+  min-height: 100vh;
 }
 
-/* Header */
-.header {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  backdrop-filter: blur(12px);
-  background: rgba(15,5,32,0.85);
+/* HEADER */
+header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 1rem 1.5rem;
-  z-index: 50;
-  box-shadow: 0 0 25px rgba(0,255,255,0.3);
+  padding: 14px 18px;
+  background: rgba(15,10,30,0.8);
+  backdrop-filter: blur(18px);
+  border-bottom: 1px solid rgba(255,255,255,0.1);
+  animation: headerPulse 3s infinite alternate ease-in-out;
 }
-.header h1 {
+@keyframes headerPulse {
+  0% { box-shadow: 0 0 10px rgba(0,240,255,0.2); }
+  100% { box-shadow: 0 0 30px rgba(156,77,255,0.4); }
+}
+.logo {
   font-family: 'Orbitron', sans-serif;
+  font-size: 1.5rem;
+  background: linear-gradient(90deg, var(--zep-blue), var(--zep-violet));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow: 0 0 15px rgba(0,240,255,0.5);
+}
+.logout-btn {
+  background: linear-gradient(90deg, var(--zep-violet), var(--zep-blue));
+  border: none;
+  border-radius: 10px;
+  padding: 8px 14px;
+  color: #fff;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 0 10px rgba(156,77,255,0.5);
+  transition: 0.3s;
+}
+.logout-btn:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 20px rgba(0,240,255,0.6);
+}
+
+/* MAIN */
+main {
+  flex: 1;
+  padding: 1rem 1.2rem 6rem;
+}
+
+/* GLASS CARDS */
+.glass {
+  background: var(--glass);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 16px;
+  padding: 1.2rem;
+  backdrop-filter: blur(16px);
+  box-shadow: 0 0 20px rgba(0,240,255,0.15);
+  animation: cardPulse 3s infinite alternate ease-in-out;
+  margin-bottom: 1.2rem;
+}
+@keyframes cardPulse {
+  0% { box-shadow: 0 0 10px rgba(0,240,255,0.15); }
+  100% { box-shadow: 0 0 25px rgba(156,77,255,0.35); }
+}
+h2 {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 1.1rem;
+  background: linear-gradient(90deg, var(--zep-blue), var(--zep-violet));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin-bottom: 0.8rem;
+}
+
+/* ANALYTICS GRID */
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 1rem;
+}
+.stat-card {
+  background: rgba(255,255,255,0.04);
+  border-radius: 12px;
+  padding: 14px;
+  text-align: center;
+  border: 1px solid rgba(255,255,255,0.08);
+  animation: pulse 2.5s infinite alternate ease-in-out;
+}
+@keyframes pulse {
+  0% { box-shadow: 0 0 8px rgba(0,240,255,0.2); }
+  100% { box-shadow: 0 0 18px rgba(156,77,255,0.3); }
+}
+.stat-card h3 {
+  font-family: 'Orbitron';
+  font-size: 0.9rem;
+  margin: 0.3rem 0;
+  color: var(--zep-blue);
+}
+.stat-card p {
   font-weight: 700;
-  font-size: 1.6rem;
-  background: linear-gradient(90deg,#00f0ff,#ff00f0);
+  font-family: 'Orbitron';
+  font-size: 1.1rem;
+  background: linear-gradient(90deg, var(--zep-blue), var(--zep-violet));
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 
-/* Stats Cards */
-.stats-cards {
-  display: flex;
-  gap: 1rem;
-  margin-top: 5rem;
-  overflow-x: auto;
-  padding-bottom: 1rem;
-}
-.card {
-  flex: 0 0 220px;
-  background: var(--glass);
-  backdrop-filter: blur(15px);
-  border-radius: 1rem;
-  padding: 1rem;
-  box-shadow: 0 0 20px rgba(0,240,255,0.3);
-  transform: perspective(800px) rotateY(-3deg);
-  transition: transform 0.3s;
-}
-.card:hover {
-  transform: perspective(800px) rotateY(0deg) scale(1.05);
-}
-.card h3 {
-  font-family: 'Orbitron', sans-serif;
-  font-size: 1rem;
-  color: #e0e0ff;
-  margin-bottom: 0.3rem;
-}
-.card p {
-  font-size: 1.2rem;
-  font-weight: 700;
-  color: #00f0ff;
+/* SALES GRAPH */
+canvas {
+  width: 100% !important;
+  height: 240px !important;
+  border-radius: 12px;
 }
 
-/* Circular Progress */
-.circular-progress {
-  width: 80px;
-  height: 80px;
-  border-radius: 50%;
-  border: 6px solid rgba(0,240,255,0.2);
-  border-top: 6px solid #00f0ff;
-  animation: spin 2s linear infinite;
-  margin-top: 0.5rem;
-}
-@keyframes spin {
-  0% {transform: rotate(0deg);}
-  100% {transform: rotate(360deg);}
-}
-
-/* 3D Product Cards */
-.cards-3d {
-  display: flex;
-  gap: 1rem;
-  overflow-x: auto;
-  padding: 1rem 0;
-}
-.cards-3d .card {
-  min-width: 200px;
-}
-
-/* Quick Action Buttons */
-.quick-actions {
-  display: flex;
-  gap: 1rem;
-  overflow-x: auto;
-  padding-bottom: 1rem;
+/* ORDER TABLE */
+.orders {
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 14px;
+  overflow: hidden;
   margin-top: 1rem;
 }
-.quick-action-btn {
-  background: var(--glass);
-  border-radius: 50%;
-  width: 60px;
-  height: 60px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  transition: all 0.3s;
-}
-.quick-action-btn:hover {
-  box-shadow: 0 0 15px #00f0ff;
-  transform: scale(1.1);
-}
-
-/* Charts Placeholder */
-.chart-box {
-  background: var(--glass);
-  border-radius: 1rem;
-  padding: 1rem;
-  height: 180px;
-  margin-top: 1rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: #c0bdf4;
-}
-
-/* AI Side Panel */
-.ai-panel {
-  position: fixed;
-  right: 0;
-  top: 5rem;
-  width: 280px;
-  height: calc(100vh - 5rem);
-  background: var(--glass);
-  backdrop-filter: blur(20px);
-  padding: 1rem;
-  overflow-y: auto;
-  box-shadow: -2px 0 20px rgba(0,240,255,0.3);
-}
-.ai-panel h3 {
-  font-family: 'Orbitron', sans-serif;
-  font-weight: 600;
-  margin-bottom: 1rem;
-}
-
-/* Footer */
-.footer {
+.orders table {
   width: 100%;
+  border-collapse: collapse;
+}
+.orders th, .orders td {
+  padding: 10px;
+  text-align: left;
+  border-bottom: 1px solid rgba(255,255,255,0.05);
+}
+.orders th {
+  color: var(--zep-blue);
+  font-weight: 600;
+  font-family: 'Orbitron';
+}
+
+/* FOOTER */
+footer {
   position: fixed;
   bottom: 0;
   left: 0;
+  width: 100%;
+  background: rgba(15,15,30,0.9);
   backdrop-filter: blur(12px);
-  background: rgba(15,5,32,0.85);
   display: flex;
   justify-content: space-around;
-  padding: 0.8rem 0;
-  box-shadow: 0 -2px 20px rgba(0,255,255,0.2);
-  z-index: 60;
-}
-.footer a {
-  display: flex;
-  flex-direction: column;
   align-items: center;
-  font-size: 0.8rem;
-  color: #00f0ff;
+  border-top: 1px solid rgba(255,255,255,0.08);
+  padding: 10px 0;
+  box-shadow: 0 0 15px rgba(0,240,255,0.3);
+}
+.fbtn {
+  width: 54px;
+  height: 54px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.1);
+  transition: 0.3s;
+  cursor: pointer;
+}
+.fbtn svg {
+  width: 26px;
+  height: 26px;
+  stroke: var(--zep-blue);
   transition: 0.3s;
 }
-.footer a i {
-  font-size: 1.5rem;
+.fbtn:hover {
+  transform: translateY(-3px);
+  background: rgba(255,255,255,0.1);
 }
-.footer a:hover, .footer a.active {
-  color: #ff00f0;
-  transform: scale(1.3);
-}
-
-/* Scrollbars */
-.cards-3d::-webkit-scrollbar,
-.stats-cards::-webkit-scrollbar,
-.quick-actions::-webkit-scrollbar {
-  height: 8px;
-}
-.cards-3d::-webkit-scrollbar-thumb,
-.stats-cards::-webkit-scrollbar-thumb,
-.quick-actions::-webkit-scrollbar-thumb {
-  background: #00f0ff33;
-  border-radius: 4px;
+.fbtn:hover svg {
+  stroke: var(--zep-violet);
+  filter: drop-shadow(0 0 10px var(--zep-blue));
 }
 
-/* Mobile Responsiveness */
-@media (max-width: 768px) {
-  .ai-panel {
-    position: relative;
-    width: 100%;
-    height: auto;
-    margin-top: 1rem;
-    box-shadow: none;
-  }
-  .stats-cards, .cards-3d, .quick-actions {
-    flex-wrap: nowrap;
-    overflow-x: auto;
-  }
+/* RESPONSIVE */
+@media (max-width: 480px) {
+  header { flex-direction: column; gap: 0.5rem; }
+  .logo { font-size: 1.3rem; }
+  .stats-grid { grid-template-columns: repeat(2, 1fr); }
 }
 </style>
 </head>
-<body>
 
-<!-- Header -->
-<header class="header">
-  <h1>Zep Swipe</h1>
+<body>
+<header>
+  <div class="logo">ZEP<span style="color:var(--zep-violet)">SWIPE</span> Vendor</div>
+  <button class="logout-btn"><i class="fas fa-sign-out-alt"></i> Logout</button>
 </header>
 
-<main class="px-4 pt-24 pb-24">
-  <!-- Revenue Stats -->
-  <div class="stats-cards">
-    <div class="card">
-      <h3>Total Revenue</h3>
-      <p id="revenue">$12,540</p>
-      <div class="circular-progress"></div>
-    </div>
-    <div class="card">
-      <h3>Pending Orders</h3>
-      <p id="orders">24</p>
-      <div class="circular-progress"></div>
-    </div>
-    <div class="card">
-      <h3>Low Stock Items</h3>
-      <p id="inventory">7</p>
-      <div class="circular-progress"></div>
-    </div>
-  </div>
-
-  <!-- 3D Top Products Cards -->
-  <h2 class="mt-6 mb-2 font-semibold">Top Products</h2>
-  <div class="cards-3d">
-    <div class="card" onclick="location.href='product-a.html'">
-      <h3>Product A</h3>
-      <p>150 Sold</p>
-    </div>
-    <div class="card" onclick="location.href='product-b.html'">
-      <h3>Product B</h3>
-      <p>120 Sold</p>
-    </div>
-    <div class="card" onclick="location.href='product-c.html'">
-      <h3>Product C</h3>
-      <p>95 Sold</p>
+<main>
+  <!-- ANALYTICS SECTION -->
+  <div class="glass">
+    <h2>📊 Store Analytics</h2>
+    <div class="stats-grid">
+      <div class="stat-card">
+        <h3>Total Orders</h3>
+        <p>128</p>
+      </div>
+      <div class="stat-card">
+        <h3>Pending</h3>
+        <p>12</p>
+      </div>
+      <div class="stat-card">
+        <h3>Completed</h3>
+        <p>116</p>
+      </div>
+      <div class="stat-card">
+        <h3>Revenue</h3>
+        <p>$2,540</p>
+      </div>
     </div>
   </div>
 
-  <!-- Quick Action Buttons -->
-  <h2 class="mt-6 mb-2 font-semibold">Quick Actions</h2>
-  <div class="quick-actions">
-    <div class="quick-action-btn" onclick="location.href='add-product.html'"><i class="fas fa-plus"></i></div>
-    <div class="quick-action-btn" onclick="location.href='process-order.html'"><i class="fas fa-box-open"></i></div>
-    <div class="quick-action-btn" onclick="location.href='report.html'"><i class="fas fa-chart-line"></i></div>
+  <!-- SALES GRAPH -->
+  <div class="glass">
+    <h2>📈 Sales Overview</h2>
+    <canvas id="salesChart"></canvas>
   </div>
 
-  <!-- Charts Section -->
-  <h2 class="mt-6 mb-2 font-semibold">Sales Overview</h2>
-  <div class="chart-box">
-    Holographic chart placeholder
+  <!-- RECENT ORDERS -->
+  <div class="glass">
+    <h2>🛍 Recent Orders</h2>
+    <div class="orders">
+      <table>
+        <thead>
+          <tr><th>Order ID</th><th>Product</th><th>Status</th><th>Amount</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>#1024</td><td>Wireless Headset</td><td style="color:var(--zep-blue)">Delivered</td><td>$45</td></tr>
+          <tr><td>#1025</td><td>Smart Watch S2</td><td style="color:var(--zep-violet)">Pending</td><td>$60</td></tr>
+          <tr><td>#1026</td><td>Laptop Pro X</td><td style="color:var(--zep-blue)">Delivered</td><td>$420</td></tr>
+        </tbody>
+      </table>
+    </div>
   </div>
 </main>
 
-<!-- AI Side Panel -->
-<div class="ai-panel">
-  <h3>AI Insights</h3>
-  <p>• Trending product: Product A</p>
-  <p>• Orders expected to rise by 12%</p>
-  <p>• Low stock alert for Product C</p>
-  <p>• Recommended: Boost marketing for Product B</p>
-</div>
-
-<!-- Footer -->
-<footer class="footer sm:hidden">
-  <a href="dashboard-store.html"><i class="fas fa-store"></i><span>Store</span></a>
-  <a href="chat.html"><i class="fas fa-comments"></i><span>Chat</span></a>
-  <a href="dashboard-wallet.html"><i class="fas fa-wallet"></i><span>Wallet</span></a>
-  <a href="profile.html"><i class="fas fa-user"></i><span>Profile</span></a>
+<!-- FOOTER NAV -->
+<footer>
+  <a href="vendor-dashboard.html" class="fbtn" title="Home">
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke-width="1.8" viewBox="0 0 24 24"><path d="M3 12l9-9 9 9v9H3z"/></svg>
+  </a>
+  <a href="dashboard-wallet.html" class="fbtn" title="Wallet">
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke-width="1.8" viewBox="0 0 24 24"><path d="M2 7h20v10H2zM16 12h4"/></svg>
+  </a>
+  <a href="add-product.html" class="fbtn" title="Add Product">
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke-width="1.8" viewBox="0 0 24 24"><path d="M12 3v18m9-9H3"/></svg>
+  </a>
+  <a href="store.html" class="fbtn" title="Store">
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke-width="1.8" viewBox="0 0 24 24"><path d="M4 4h16v4H4zM4 8h16v12H4z"/></svg>
+  </a>
+  <a href="profile.html" class="fbtn" title="Profile">
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke-width="1.8" viewBox="0 0 24 24"><path d="M12 14c-4.33 0-8 2-8 5v3h16v-3c0-3-3.67-5-8-5zm0-2a5 5 0 100-10 5 5 0 000 10z"/></svg>
+  </a>
 </footer>
 
+<!-- SALES CHART SCRIPT -->
 <script>
-// Animate counters
-function animateValue(id, start, end, duration) {
-  let obj = document.getElementById(id);
-  let range = end - start;
-  let current = start;
-  let increment = end > start ? 1 : -1;
-  let stepTime = Math.abs(Math.floor(duration / range));
-  let timer = setInterval(function() {
-      current += increment;
-      obj.textContent = current.toLocaleString();
-      if (current == end) clearInterval(timer);
-  }, stepTime);
-}
-animateValue('revenue', 0, 12540, 2000);
-animateValue('orders', 0, 24, 1500);
-animateValue('inventory', 0, 7, 1500);
+const ctx = document.getElementById('salesChart');
+const gradient = ctx.getContext('2d').createLinearGradient(0, 0, 0, 300);
+gradient.addColorStop(0, 'rgba(0,240,255,0.4)');
+gradient.addColorStop(1, 'rgba(156,77,255,0.05)');
+
+const salesChart = new Chart(ctx, {
+  type: 'line',
+  data: {
+    labels: ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'],
+    datasets: [{
+      label: 'Sales ($)',
+      data: [120, 190, 150, 210, 260, 310, 400],
+      fill: true,
+      borderColor: '#00f0ff',
+      backgroundColor: gradient,
+      tension: 0.4,
+      pointRadius: 5,
+      pointBackgroundColor: '#9c4dff',
+      pointHoverRadius: 8,
+    }]
+  },
+  options: {
+    responsive: true,
+    plugins: { legend: { display: false } },
+    scales: {
+      x: { ticks: { color: '#bffaff' }, grid: { color: 'rgba(255,255,255,0.05)' } },
+      y: { ticks: { color: '#bffaff' }, grid: { color: 'rgba(255,255,255,0.05)' }, beginAtZero: true }
+    }
+  }
+});
 </script>
 
 </body>
