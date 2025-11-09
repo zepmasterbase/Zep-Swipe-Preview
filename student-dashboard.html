@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1" />
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Zep Swipe — Student Dashboard</title>
 
 <script src="https://cdn.tailwindcss.com"></script>
@@ -10,284 +10,203 @@
 
 <style>
 :root {
-  --neon-red:#ff003c;
-  --neon-magenta:#ff00a0;
-  --glass: rgba(255,255,255,0.05);
+  --neon-blue: #00f0ff;
+  --neon-violet: #9c4dff;
+  --neon-emerald: #00ff9c;
+  --glass: rgba(255, 255, 255, 0.05);
 }
 
 body {
-  font-family:'Poppins',sans-serif;
-  margin:0;
-  background: radial-gradient(circle at 20% 15%, #060018 0%, #01000a 100%);
-  color:#fff;
-  padding-bottom:90px;
+  font-family: 'Poppins', sans-serif;
+  background: radial-gradient(circle at 25% 15%, #050018, #000010 90%);
+  color: #fff;
+  margin: 0;
+  padding-bottom: 90px;
 }
 
 /* Header */
 .header {
-  position:sticky;top:0;z-index:60;
-  display:flex;justify-content:space-between;align-items:center;
-  padding:14px 16px;
-  background: rgba(255,255,255,0.05);
+  position: sticky;
+  top: 0;
+  z-index: 60;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 14px 16px;
+  background: rgba(10, 10, 30, 0.7);
   backdrop-filter: blur(20px) saturate(180%);
-  border-bottom-left-radius:16px;
-  border-bottom-right-radius:16px;
-  box-shadow:0 8px 32px rgba(0,0,0,0.55);
+  box-shadow: 0 0 18px rgba(0, 255, 255, 0.1);
 }
 
 .logo h1 {
-  font-family:'Orbitron',sans-serif;
-  font-size:24px;
-  background:linear-gradient(90deg,var(--neon-red),var(--neon-magenta));
-  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
-  margin:0;
+  font-family: 'Orbitron', sans-serif;
+  font-size: 22px;
+  background: linear-gradient(90deg, var(--neon-blue), var(--neon-emerald), var(--neon-violet));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow: 0 0 8px var(--neon-blue);
 }
 
-.logo small {
-  font-size:11px;
-  color:#ffb6c1;
-  opacity:0.8;
-}
-
-/* Power Off Button */
+/* Power Button */
 .power-btn {
-  width:38px;height:38px;
-  border-radius:50%;
-  background:radial-gradient(circle at center, var(--neon-red), #35000a);
-  box-shadow:0 0 12px var(--neon-red),0 0 25px rgba(255,0,60,0.6);
-  display:flex;align-items:center;justify-content:center;
-  cursor:pointer;
-  transition:transform .25s ease, box-shadow .25s ease;
-  animation: pulseRed 2s infinite alternate;
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  background: radial-gradient(circle at center, rgba(0,255,200,0.25), rgba(20,0,60,0.8));
+  box-shadow: 0 0 18px rgba(0,255,200,0.6), 0 0 25px rgba(156,77,255,0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: 0.3s ease;
 }
 .power-btn:hover {
-  transform:scale(1.1);
-  box-shadow:0 0 20px var(--neon-magenta),0 0 35px rgba(255,0,100,0.9);
+  transform: scale(1.08);
+  box-shadow: 0 0 25px rgba(0,255,200,0.8), 0 0 35px rgba(156,77,255,0.6);
 }
 .power-btn svg {
-  width:18px;height:18px;
-  fill:#fff;
-}
-@keyframes pulseRed {
-  0% { box-shadow:0 0 10px var(--neon-red),0 0 15px rgba(255,0,60,0.7);}
-  100% { box-shadow:0 0 25px var(--neon-magenta),0 0 35px rgba(255,0,120,0.8);}
+  width: 20px;
+  height: 20px;
+  fill: #fff;
+  filter: drop-shadow(0 0 6px var(--neon-emerald));
 }
 
-/* Neon Avatar */
-.profile-avatar {
-  width:36px;height:36px;border-radius:50%;
-  background: radial-gradient(circle at center, var(--neon-magenta), var(--neon-red));
-  display:flex;align-items:center;justify-content:center;
-  box-shadow:0 0 6px var(--neon-red),0 0 10px var(--neon-magenta);
+/* Deals Section */
+.deal-row {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+  margin: 1.5rem;
 }
-
-/* Deal placeholders */
-.deal-placeholder {
-  display:flex;flex-direction:column;align-items:center;justify-content:center;
-  height:120px;margin-bottom:14px;
-  font-family:'Orbitron',sans-serif;font-size:16px;
-  border-radius:16px;cursor:pointer;
-  background:linear-gradient(135deg, rgba(255,0,60,0.12), rgba(255,0,160,0.12));
-  border:1px solid rgba(255,255,255,0.08);
-  box-shadow:0 0 12px rgba(255,0,60,0.3);
-  transition:transform .3s ease, box-shadow .3s ease;
-}
-.deal-placeholder:hover {
-  transform:scale(1.03);
-  box-shadow:0 0 20px rgba(255,0,100,0.5);
-}
-.deal-placeholder svg {
-  width:40px;
-  height:40px;
-  margin-bottom:8px;
-  fill:#fff;
-  opacity:0.9;
-  filter: drop-shadow(0 0 8px var(--neon-magenta));
-}
-
-/* Glass panels */
-.glass {
+.deal-btn {
   background: var(--glass);
-  border-radius: 16px;
-  border: 1px solid rgba(255,255,255,0.12);
-  padding: 16px;
-  backdrop-filter: blur(18px) saturate(140%);
-  box-shadow: 0 6px 20px rgba(0,0,0,0.5);
+  border: 1px solid rgba(0,255,255,0.15);
+  border-radius: 1rem;
+  text-align: center;
+  padding: 1.5rem 1rem;
+  box-shadow: 0 0 18px rgba(0,255,255,0.1);
+  transition: 0.3s ease;
+}
+.deal-btn:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 20px rgba(0,255,200,0.5), 0 0 30px rgba(156,77,255,0.4);
+}
+.deal-btn svg {
+  width: 36px;
+  height: 36px;
+  fill: var(--neon-emerald);
+  filter: drop-shadow(0 0 6px var(--neon-blue));
+  margin-bottom: 10px;
+}
+.deal-btn p {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 0.9rem;
+  color: var(--neon-blue);
 }
 
-/* Balances */
-.total-balance {
-  font-family:'Orbitron',sans-serif;
-  font-size:28px;
-  background: linear-gradient(90deg,var(--neon-red),var(--neon-magenta));
-  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+/* Balance */
+.balance-card {
+  background: rgba(10, 20, 40, 0.4);
+  margin: 0 1.5rem;
+  border-radius: 1.2rem;
+  border: 1px solid rgba(0,255,255,0.1);
+  padding: 1.5rem;
+  text-align: center;
+  box-shadow: 0 0 25px rgba(0,255,255,0.1);
 }
-
-/* Sub balances */
-.sub-bal{display:flex;gap:10px;margin-top:12px;flex-wrap:wrap;}
-.sub-bal .item {
-  flex:1;min-width:100px;
-  background: rgba(255,255,255,0.04);
-  border:1px solid rgba(255,255,255,0.08);
-  padding:12px;border-radius:12px;text-align:center;
+.balance-card h3 {
+  color: var(--neon-emerald);
+  font-weight: 600;
+  letter-spacing: 0.5px;
 }
-.sub-bal h4{color: var(--neon-magenta);font-weight:600;font-size:12px;margin:0;}
-.sub-bal p{font-weight:700;margin-top:6px;}
-
-/* Buttons */
-.actions{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-top:14px;}
-.action-btn {
-  display:flex;justify-content:center;align-items:center;gap:8px;
-  padding:12px;border-radius:14px;font-weight:600;
-  transition:all .18s ease;
+.balance-card .amount {
+  font-size: 2rem;
+  font-family: 'Orbitron', sans-serif;
+  background: linear-gradient(90deg, var(--neon-blue), var(--neon-emerald), var(--neon-violet));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
-.pink{background:linear-gradient(90deg,var(--neon-red),var(--neon-magenta));}
-.cyan{background:linear-gradient(90deg,#ff004c,#ff66cc);}
-.neon-ghost{background:transparent;border:1px solid rgba(255,0,80,0.4);color:#ffb0d4;}
-
-/* Transactions */
-.tx-list{display:flex;flex-direction:column;gap:12px;margin-top:12px;}
-.tx{display:flex;justify-content:space-between;align-items:center;background:rgba(255,255,255,0.04);
-  border:1px solid rgba(255,255,255,0.08);padding:12px;border-radius:14px;}
-.tx .badge{font-weight:700;font-size:12px;padding:4px 8px;border-radius:999px;}
-.tx .badge-green{background:rgba(255,0,60,0.15);color:var(--neon-magenta);}
-.tx .badge-pink{background:rgba(255,0,100,0.12);color:var(--neon-red);}
 
 /* Footer */
 footer {
-  position:fixed;bottom:10px;left:50%;transform:translateX(-50%);
-  background:rgba(5,0,15,0.8);
-  border-radius:999px;padding:10px 14px;
-  border:1px solid rgba(255,255,255,0.08);
-  display:flex;gap:12px;align-items:center;
-  backdrop-filter:blur(16px) saturate(160%);
-  animation:footerPulse 3s infinite alternate;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background: rgba(0, 10, 25, 0.9);
+  backdrop-filter: blur(15px);
+  border-top: 1px solid rgba(0,255,255,0.15);
+  display: flex;
+  justify-content: space-around;
+  padding: 0.8rem 0;
+  animation: footerPulse 4s infinite alternate ease-in-out;
 }
-.fbtn {
-  width:56px;height:56px;border-radius:999px;
-  display:flex;align-items:center;justify-content:center;
-  background:rgba(255,255,255,0.05);
-  border:1px solid rgba(255,0,60,0.25);
-  box-shadow:0 0 12px rgba(255,0,60,0.4);
-  transition:transform .18s,box-shadow .18s;
+.footer-btn svg {
+  width: 26px;
+  height: 26px;
+  fill: var(--neon-blue);
+  filter: drop-shadow(0 0 6px var(--neon-emerald));
+  transition: 0.3s;
 }
-.fbtn:hover {
-  transform:scale(1.1);
-  box-shadow:0 0 20px rgba(255,0,100,0.8);
-}
-.fbtn svg {
-  width:26px;height:26px;
-  fill:#fff;
-  filter:drop-shadow(0 0 8px var(--neon-red));
+.footer-btn:hover svg,
+.footer-btn.active svg {
+  fill: var(--neon-emerald);
+  filter: drop-shadow(0 0 10px var(--neon-violet));
 }
 @keyframes footerPulse {
-  0% { box-shadow:0 0 12px rgba(255,0,60,0.3);}
-  100% { box-shadow:0 0 25px rgba(255,0,120,0.6);}
+  0% { box-shadow: 0 0 6px rgba(0,255,255,0.1); }
+  100% { box-shadow: 0 0 22px rgba(156,77,255,0.25); }
 }
 </style>
 </head>
 
 <body>
+
 <header class="header">
   <div class="logo">
     <h1>ZEP SWIPE</h1>
-    <small>Student Hub</small>
   </div>
-
-  <div class="profile-section">
-    <a href="index.html" class="power-btn" title="Sign Out">
-      <svg viewBox="0 0 24 24"><path d="M13 3h-2v10h2V3zm-1 18a8 8 0 01-4.9-14.3l1.4 1.4A6 6 0 1012 18a6.07 6.07 0 004.2-1.7l1.4 1.4A8 8 0 0112 21z"/></svg>
-    </a>
-
-    <a href="profile.html">
-      <div class="profile-avatar">
-        <svg viewBox="0 0 24 24"><path d="M12 12c2.67 0 8 1.34 8 4v4H4v-4c0-2.66 5.33-4 8-4zm0-2a4 4 0 110-8 4 4 0 010 8z"/></svg>
-      </div>
-    </a>
-  </div>
+  <a href="index.html" class="power-btn" title="Logout">
+    <svg viewBox="0 0 24 24"><path d="M13 3h-2v10h2V3zm-1 18a8 8 0 01-4.9-14.3l1.4 1.4A6 6 0 1012 18a6.07 6.07 0 004.2-1.7l1.4 1.4A8 8 0 0112 21z"/></svg>
+  </a>
 </header>
 
-<div class="container px-4 mt-4">
-
-  <!-- Food Deals -->
-  <a href="store-deals.html" class="deal-placeholder">
+<!-- Deals Row -->
+<div class="deal-row">
+  <a href="store-food.html" class="deal-btn">
     <svg viewBox="0 0 24 24"><path d="M4 8h16v2H4V8zm0 3h16v7a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2v-7zm10-7h2v3h-2V4zm-4 0h2v3h-2V4z"/></svg>
-    Food Deals
+    <p>Food Deals</p>
   </a>
-
-  <!-- Gadget Deals -->
-  <a href="store-deals.html" class="deal-placeholder">
+  <a href="store-gadget.html" class="deal-btn">
     <svg viewBox="0 0 24 24"><path d="M7 2h10a2 2 0 0 1 2 2v16a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2zm5 19a1 1 0 1 0 0-2 1 1 0 0 0 0 2z"/></svg>
-    Gadget Deals
+    <p>Gadget Deals</p>
   </a>
-
-  <div class="glass">
-    <div class="flex justify-between items-center">
-      <div>
-        <div class="text-xs text-[#ffb6c1] font-semibold">Total Portfolio</div>
-        <p id="totalBalance" class="total-balance">$0.00</p>
-      </div>
-      <div class="text-right">
-        <div class="text-xs text-[#ffb6c1]">Updated</div>
-        <div class="text-xs text-[#ff80c1]" id="lastUpdated">—</div>
-      </div>
-    </div>
-
-    <div class="sub-bal">
-      <div class="item"><h4>ZAC</h4><p id="zacBalance">0.00</p></div>
-      <div class="item"><h4>USDT</h4><p id="usdtBalance">0.00</p></div>
-    </div>
-
-    <div class="actions">
-      <button class="action-btn pink" onclick="location.href='ride-hailing.html'">Swipe Rides</button>
-      <button class="action-btn cyan" onclick="location.href='learn-earn.html'">Earn $ZAC</button>
-      <button class="action-btn neon-ghost" onclick="location.href='delivery.html'">ParcelOn</button>
-      <button class="action-btn neon-ghost" onclick="location.href='study-buddy.html'">Ask Zep AI 🤖</button>
-    </div>
-  </div>
-
-  <h3 class="text-[#ff003c] font-orbitron mb-2 mt-4">Transaction History</h3>
-  <div class="glass">
-    <div class="tx-list" id="txList"></div>
-  </div>
 </div>
 
+<!-- Balance -->
+<div class="balance-card">
+  <h3>Total Portfolio</h3>
+  <div class="amount" id="totalBalance">$1,200.00</div>
+</div>
+
+<!-- Footer -->
 <footer>
-  <a class="fbtn" href="chat.html" title="Chat"><svg viewBox="0 0 24 24"><path d="M4 4h16v10H7l-3 3V4z"/></svg></a>
-  <a class="fbtn" href="dashboard-store.html" title="Store"><svg viewBox="0 0 24 24"><path d="M3 9l1-5h16l1 5H3zm0 2h18v11H3V11zm6 2v7h6v-7H9z"/></svg></a>
-  <a class="fbtn" href="ride-hailing.html" title="Ride"><svg viewBox="0 0 24 24"><path d="M5 11l1.5-4.5h11L19 11H5z"/></svg></a>
-  <a class="fbtn" href="delivery.html" title="ParcelOn"><svg viewBox="0 0 24 24"><path d="M20 8l-8-5-8 5v10l8 5 8-5V8z"/></svg></a>
-  <a class="fbtn" href="profile.html" title="Profile"><svg viewBox="0 0 24 24"><path d="M12 12c2.67 0 8 1.34 8 4v4H4v-4c0-2.66 5.33-4 8-4z"/></svg></a>
+  <a href="dashboard.html" class="footer-btn active">
+    <svg viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
+  </a>
+  <a href="chat.html" class="footer-btn">
+    <svg viewBox="0 0 24 24"><path d="M4 4h16v10H7l-3 3V4z"/></svg>
+  </a>
+  <a href="delivery.html" class="footer-btn">
+    <svg viewBox="0 0 24 24"><path d="M20 8l-8-5-8 5v10l8 5 8-5V8z"/></svg>
+  </a>
+  <a href="learn-earn.html" class="footer-btn">
+    <svg viewBox="0 0 24 24"><path d="M12 2l4 8h-8l4-8zm0 18c-4.42 0-8-1.79-8-4v2c0 2.21 3.58 4 8 4s8-1.79 8-4v-2c0 2.21-3.58 4-8 4z"/></svg>
+  </a>
+  <a href="profile.html" class="footer-btn">
+    <svg viewBox="0 0 24 24"><path d="M12 12c2.67 0 8 1.34 8 4v4H4v-4c0-2.66 5.33-4 8-4zm0-2a4 4 0 110-8 4 4 0 010 8z"/></svg>
+  </a>
 </footer>
 
-<script>
-const DEFAULT_ZAC = 450.00;
-const DEFAULT_USDT = 120.00;
-
-function readBalances(){
-  const zac = parseFloat(localStorage.getItem('walletZAC')) || DEFAULT_ZAC;
-  const usdt = parseFloat(localStorage.getItem('walletUSDT')) || DEFAULT_USDT;
-  return { zac, usdt };
-}
-function renderBalances(){
-  const { zac, usdt } = readBalances();
-  const total = zac + usdt;
-  document.getElementById('zacBalance').innerText = `ZAC ${zac.toFixed(2)}`;
-  document.getElementById('usdtBalance').innerText = `USDT ${usdt.toFixed(2)}`;
-  document.getElementById('totalBalance').innerText = `$${total.toFixed(2)}`;
-  document.getElementById('lastUpdated').innerText = new Date().toLocaleTimeString();
-}
-function pushTransaction(title, amountText, positive=true){
-  const txList = document.getElementById('txList');
-  const wrapper = document.createElement('div');
-  wrapper.className = 'tx';
-  wrapper.innerHTML = `<div><strong>${title}</strong></div><div><span class="badge ${positive?'badge-green':'badge-pink'}">${amountText}</span></div>`;
-  txList.prepend(wrapper);
-}
-pushTransaction('Ride Payment','+5 ZAC',true);
-pushTransaction('Earn $ZAC','+2 USDT',true);
-pushTransaction('Marketplace','-2 ZAC',false);
-renderBalances();
-</script>
 </body>
 </html>
