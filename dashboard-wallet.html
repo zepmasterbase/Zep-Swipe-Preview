@@ -22,9 +22,10 @@ body {
   min-height: 100vh;
   padding-bottom: 120px;
   -webkit-overflow-scrolling: touch;
+  overflow-x: hidden;
 }
 
-/* ===== Header ===== */
+/* ===== Glowing Header ===== */
 header {
   position: sticky;
   top: 0;
@@ -32,71 +33,83 @@ header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 14px 18px;
-  background: rgba(15, 10, 30, 0.75);
-  backdrop-filter: blur(16px);
-  border-bottom: 1px solid rgba(255,255,255,0.08);
-  box-shadow: 0 0 16px rgba(0,240,255,0.1);
+  padding: 16px 20px;
+  background: rgba(10, 10, 30, 0.75);
+  backdrop-filter: blur(16px) saturate(160%);
+  border-bottom: 1px solid rgba(255,255,255,0.1);
+  box-shadow: 0 0 25px rgba(0,240,255,0.2);
+  animation: headerPulse 3s infinite alternate ease-in-out;
+  border-bottom-left-radius: 12px;
+  border-bottom-right-radius: 12px;
+}
+@keyframes headerPulse {
+  0% { box-shadow: 0 0 10px rgba(0,240,255,0.2); }
+  100% { box-shadow: 0 0 25px rgba(156,77,255,0.3); }
 }
 .logo {
   font-family: 'Orbitron', sans-serif;
-  font-size: 21px;
-  font-weight: 700;
+  font-size: 1.5rem;
   background: linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
+  letter-spacing: 1px;
 }
 .logout-btn {
-  background: rgba(255,255,255,0.05);
-  border: 1px solid rgba(255,255,255,0.1);
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.12);
   backdrop-filter: blur(10px);
   border-radius: 50%;
-  width: 42px;
-  height: 42px;
+  width: 44px;
+  height: 44px;
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  transition: 0.3s;
-  box-shadow: 0 0 10px rgba(0,240,255,0.1);
+  box-shadow: 0 0 12px rgba(0,240,255,0.15);
+  transition: all 0.3s;
 }
 .logout-btn:hover {
-  background: rgba(156,77,255,0.1);
-  box-shadow: 0 0 16px rgba(156,77,255,0.4);
-  transform: scale(1.1);
+  background: rgba(156,77,255,0.15);
+  transform: scale(1.08);
+  box-shadow: 0 0 20px rgba(156,77,255,0.4);
 }
 .logout-btn svg {
   width: 24px;
   height: 24px;
   fill: var(--zep-blue);
-  filter: drop-shadow(0 0 8px var(--zep-blue));
-  transition: 0.3s;
+  transition: all 0.3s ease;
 }
 .logout-btn:hover svg {
   fill: var(--zep-violet);
-  filter: drop-shadow(0 0 10px var(--zep-violet));
 }
 
-/* ===== Glass Panels ===== */
+/* ===== Glass & Cards ===== */
 .glass {
   background: var(--glass);
-  backdrop-filter: blur(14px);
+  backdrop-filter: blur(14px) saturate(150%);
   border-radius: 16px;
   border: 1px solid rgba(255,255,255,0.08);
-  padding: 16px;
-  box-shadow: 0 0 18px rgba(0,240,255,0.08);
+  padding: 18px;
+  box-shadow: 0 0 25px rgba(0,240,255,0.08);
+  animation: pulseCard 5s infinite alternate ease-in-out;
+  transition: all 0.4s;
+}
+@keyframes pulseCard {
+  0% { box-shadow: 0 0 12px rgba(0,240,255,0.15); transform: scale(1); }
+  100% { box-shadow: 0 0 28px rgba(156,77,255,0.35); transform: scale(1.01); }
 }
 
-/* ===== Balance Card ===== */
+/* ===== Balance ===== */
 .balance {
   font-family: 'Orbitron', sans-serif;
   font-size: 38px;
   background: linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-  animation: pulseGlow 3s infinite alternate;
+  text-align: center;
+  animation: glowBalance 3s infinite alternate ease-in-out;
 }
-@keyframes pulseGlow {
+@keyframes glowBalance {
   0% { filter: drop-shadow(0 0 10px var(--zep-blue)); }
   100% { filter: drop-shadow(0 0 20px var(--zep-violet)); }
 }
@@ -115,7 +128,7 @@ header {
   font-weight: 600;
   font-family: 'Orbitron', sans-serif;
   color: #fff;
-  border: 1px solid rgba(255,255,255,0.12);
+  border: 1px solid rgba(255,255,255,0.1);
   transition: 0.3s;
   cursor: pointer;
 }
@@ -125,7 +138,7 @@ header {
 .btn.buy { background: linear-gradient(90deg, var(--zep-blue), var(--zep-violet)); }
 .btn.withdraw { background: rgba(255,255,255,0.08); color: #d6d6ff; }
 
-/* ===== AI Box ===== */
+/* ===== AI Section ===== */
 .ai-box {
   margin-top: 20px;
   background: rgba(255,255,255,0.04);
@@ -133,6 +146,7 @@ header {
   border-radius: 14px;
   padding: 16px;
   text-align: center;
+  box-shadow: 0 0 18px rgba(0,240,255,0.12);
 }
 .ai-title {
   font-size: 13px;
@@ -171,48 +185,43 @@ h3 {
 .sale { background: rgba(0,240,255,0.15); color: var(--zep-blue); }
 .refund { background: rgba(156,77,255,0.2); color: var(--zep-violet); }
 
-/* ===== Centered Footer (One Home Button) ===== */
+/* ===== Center Floating Home Button ===== */
 footer {
   position: fixed;
-  bottom: 20px;
+  bottom: 22px;
   left: 50%;
   transform: translateX(-50%);
-  background: rgba(10,10,20,0.85);
-  backdrop-filter: blur(14px);
-  border: 1px solid rgba(255,255,255,0.08);
-  border-radius: 9999px;
-  padding: 14px 20px;
-  box-shadow: 0 0 25px rgba(0,240,255,0.3);
-  z-index: 120;
+  z-index: 200;
 }
 .fbtn {
+  width: 68px;
+  height: 68px;
+  border-radius: 50%;
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 64px;
-  height: 64px;
-  border-radius: 50%;
   background: radial-gradient(circle at 30% 30%, var(--zep-blue), var(--zep-violet));
+  box-shadow: 0 0 25px rgba(0,240,255,0.3), 0 0 40px rgba(156,77,255,0.25);
+  animation: pulseHome 3s infinite alternate ease-in-out;
   cursor: pointer;
-  animation: pulseButton 3s infinite ease-in-out;
-  transition: transform 0.3s;
+  transition: all 0.3s;
 }
-.fbtn:hover { transform: scale(1.08); }
-@keyframes pulseButton {
-  0% { box-shadow: 0 0 15px rgba(0,240,255,0.3), 0 0 25px rgba(156,77,255,0.2); }
-  100% { box-shadow: 0 0 35px rgba(0,240,255,0.6), 0 0 50px rgba(156,77,255,0.4); }
+@keyframes pulseHome {
+  0% { box-shadow: 0 0 15px rgba(0,240,255,0.3), 0 0 30px rgba(156,77,255,0.25); transform: scale(1); }
+  100% { box-shadow: 0 0 35px rgba(0,240,255,0.6), 0 0 55px rgba(156,77,255,0.5); transform: scale(1.05); }
 }
+.fbtn:hover { transform: scale(1.1); }
 .fbtn svg {
   width: 30px;
   height: 30px;
   fill: #fff;
-  filter: drop-shadow(0 0 8px var(--zep-blue));
+  filter: drop-shadow(0 0 10px var(--zep-blue));
 }
 
-/* ===== Mobile Friendly ===== */
-@media (max-width:480px){
-  .fbtn { width: 58px; height: 58px; }
-  footer { padding: 10px 16px; bottom: 16px; }
+/* ===== Responsive ===== */
+@media (max-width: 480px) {
+  .fbtn { width: 60px; height: 60px; }
+  .logo { font-size: 1.3rem; }
 }
 </style>
 </head>
@@ -229,15 +238,15 @@ footer {
 <div class="px-4 mt-4">
 
   <div class="glass">
-    <div style="opacity:.7;font-size:14px;">Total Wallet</div>
+    <div style="opacity:.7;font-size:14px;text-align:center;">Total Wallet</div>
     <div id="totalPortfolio" class="balance">$0.00</div>
 
-    <div class="mt-4 flex gap-3">
-      <div class="glass flex-1 text-center py-2">
+    <div class="mt-4 flex gap-3" style="display:flex;gap:1rem;">
+      <div class="glass flex-1 text-center py-2" style="flex:1;">
         <div style="opacity:.7;font-size:12px;">ZAC</div>
         <div id="zacBal" style="font-size:17px;font-weight:600;"></div>
       </div>
-      <div class="glass flex-1 text-center py-2">
+      <div class="glass flex-1 text-center py-2" style="flex:1;">
         <div style="opacity:.7;font-size:12px;">USDT</div>
         <div id="usdtBal" style="font-size:17px;font-weight:600;"></div>
       </div>
@@ -266,11 +275,11 @@ footer {
 
 </div>
 
-<!-- Center Glowing Home Button -->
+<!-- Center Floating Home Button -->
 <footer>
-  <a id="homeLink" class="fbtn" href="#">
+  <div id="homeLink" class="fbtn">
     <svg viewBox="0 0 24 24"><path d="M3 12l9-9 9 9v8a2 2 0 0 1-2 2h-4v-6H9v6H5a2 2 0 0 1-2-2v-8z"/></svg>
-  </a>
+  </div>
 </footer>
 
 <script>
@@ -282,8 +291,7 @@ document.getElementById('totalPortfolio').innerText = '$' + (zac + usdt).toFixed
 document.getElementById('aiValue').innerText = `+${((zac + usdt) * 0.021).toFixed(2)}%`;
 
 // Dynamic Home Redirect
-document.getElementById('homeLink').addEventListener('click', function(e) {
-  e.preventDefault();
+document.getElementById('homeLink').addEventListener('click', function() {
   const role = localStorage.getItem('userRole'); 
   if (role === 'vendor') {
     window.location.href = 'vendor-dashboard.html';
