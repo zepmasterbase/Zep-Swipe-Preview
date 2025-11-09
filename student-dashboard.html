@@ -5,286 +5,281 @@
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Zep Swipe — Dashboard</title>
 
+<!-- Fonts + Chart.js -->
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&family=Orbitron:wght@600&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
 <style>
 :root {
-  --zep-light: #00eaff;
-  --zep-dark: #003b5b;
-  --zep-glass: rgba(255, 255, 255, 0.07);
-  --zep-bg: radial-gradient(circle at 20% 10%, #021020, #000814 90%);
-  --zep-gradient: linear-gradient(90deg, #00eaff, #00bfff);
+  --zep-blue: #00f0ff;
+  --zep-purple: #8a5cff;
+  --zep-pink: #ff00f0;
+  --bg-dark: radial-gradient(circle at 25% 10%, #050018, #000010 90%);
+  --glass: rgba(255,255,255,0.08);
 }
 
-* { box-sizing: border-box; margin: 0; padding: 0; }
-
+/* Layout */
 body {
-  font-family: 'Poppins', sans-serif;
-  background: var(--zep-bg);
+  margin: 0;
+  background: var(--bg-dark);
   color: #fff;
+  font-family: 'Poppins', sans-serif;
   display: flex;
-  justify-content: center;
-  align-items: center;
   min-height: 100vh;
-  overflow-x: hidden;
 }
 
-/* 📱 Phone Frame */
-.phone {
-  width: 375px;
-  max-width: 100%;
-  height: 812px;
-  background: rgba(0, 10, 25, 0.95);
-  border-radius: 36px;
-  border: 1px solid rgba(0, 255, 255, 0.08);
-  box-shadow: 0 0 20px rgba(0, 255, 255, 0.12);
+/* Sidebar */
+.sidebar {
+  width: 250px;
+  background: rgba(10, 20, 45, 0.8);
+  backdrop-filter: blur(12px);
+  border-right: 1px solid rgba(0,255,255,0.1);
+  padding: 2rem 1rem;
   display: flex;
   flex-direction: column;
-  overflow: hidden;
-  position: relative;
 }
-
-/* 🔹 Header */
-.header {
-  position: relative;
-  text-align: center;
-  padding: 16px 0;
-  font-weight: 700;
-  letter-spacing: 1px;
-  color: #00eaff;
-  background: rgba(0, 40, 80, 0.7);
-  backdrop-filter: blur(14px);
-  font-size: 18px;
-  text-transform: uppercase;
-  border-bottom: 1px solid rgba(0, 255, 255, 0.1);
-}
-
-.menu-icon {
-  position: absolute;
-  left: 20px;
-  top: 50%;
-  transform: translateY(-50%);
-  cursor: pointer;
-}
-.menu-icon svg {
-  width: 26px;
-  height: 26px;
-  fill: #00eaff;
-  filter: drop-shadow(0 0 6px rgba(0, 234, 255, 0.8));
-  transition: 0.3s;
-}
-.menu-icon:hover svg {
-  transform: scale(1.1);
-  filter: drop-shadow(0 0 12px #00eaff);
-}
-
-/* 💰 Balance Card */
-.balance-card {
-  background: var(--zep-glass);
-  border-radius: 20px;
-  margin: 20px;
-  padding: 25px;
-  text-align: center;
-  backdrop-filter: blur(12px);
-  box-shadow: 0 0 18px rgba(0, 234, 255, 0.08);
-}
-.balance-card h3 {
-  color: #9cd9ff;
-  font-size: 13px;
-  margin-bottom: 8px;
-  letter-spacing: 0.5px;
-}
-.balance-card h1 {
-  font-size: 36px;
-  color: #fff;
-  margin-bottom: 20px;
-}
-
-/* Buttons */
-.balance-buttons {
-  display: flex;
-  justify-content: space-around;
-  gap: 10px;
-  flex-wrap: wrap;
-}
-.balance-buttons button {
-  flex: 1;
-  background: rgba(255, 255, 255, 0.06);
-  border: 1px solid rgba(0, 234, 255, 0.15);
-  border-radius: 10px;
-  color: #fff;
-  padding: 10px;
-  cursor: pointer;
-  transition: all 0.25s ease;
-  font-weight: 500;
-}
-.balance-buttons button:hover {
-  background: var(--zep-gradient);
-  color: #001a2c;
-  box-shadow: 0 0 10px rgba(0, 234, 255, 0.3);
-}
-
-/* 🌐 Learn Section */
-.main-text {
-  padding: 35px 25px;
-}
-.glass-placeholder {
-  display: block;
-  text-decoration: none;
-  background: var(--zep-glass);
-  border: 1px solid rgba(0, 255, 255, 0.08);
-  border-radius: 18px;
-  padding: 30px 20px;
-  font-size: 24px;
-  font-weight: 700;
-  line-height: 1.4;
-  color: #fff;
-  box-shadow: 0 0 15px rgba(0, 234, 255, 0.05);
-  backdrop-filter: blur(10px);
-}
-.glass-placeholder span {
-  background: var(--zep-gradient);
+.sidebar h2 {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 1.4rem;
+  background: linear-gradient(90deg,var(--zep-blue),var(--zep-purple));
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
+  text-align: center;
+  margin-bottom: 2rem;
 }
-
-/* ⚙️ Sidebar */
-.sidebar {
-  position: absolute;
-  top: 0;
-  left: -260px;
-  width: 240px;
-  height: 100%;
-  background: rgba(0, 40, 80, 0.92);
-  backdrop-filter: blur(14px);
-  border-right: 1px solid rgba(0, 255, 255, 0.15);
-  transition: left 0.35s ease;
-  display: flex;
-  flex-direction: column;
-  padding-top: 80px;
-  z-index: 99;
-}
-.sidebar.active { left: 0; }
-
 .sidebar a {
+  color: #c9d8ff;
+  text-decoration: none;
+  margin: 0.8rem 0;
   display: flex;
   align-items: center;
-  gap: 12px;
-  padding: 14px 22px;
-  text-decoration: none;
-  color: #c6e6ff;
-  font-weight: 500;
-  font-size: 15px;
+  gap: 10px;
   transition: 0.25s;
+  padding: 0.6rem 0.8rem;
+  border-radius: 10px;
 }
-.sidebar a:hover {
-  background: rgba(0, 234, 255, 0.08);
-  color: #fff;
-}
-.sidebar svg {
+.sidebar a svg {
   width: 20px;
   height: 20px;
-  fill: #00eaff;
-  filter: drop-shadow(0 0 4px #00eaff);
+  fill: var(--zep-blue);
+  filter: drop-shadow(0 0 6px var(--zep-blue));
+}
+.sidebar a:hover {
+  background: rgba(0,255,255,0.08);
+  color: #fff;
 }
 
-/* 🚗 Footer */
-.footer {
-  margin-top: auto;
-  background: rgba(0, 25, 55, 0.9);
-  border-top: 1px solid rgba(0, 255, 255, 0.1);
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-  padding: 10px 0;
-  backdrop-filter: blur(10px);
-}
-.footer-btn {
+/* Main Area */
+.main {
+  flex: 1;
   display: flex;
   flex-direction: column;
+  background: rgba(0,0,0,0.3);
+  backdrop-filter: blur(12px);
+}
+
+/* Header */
+.header {
+  display: flex;
+  justify-content: space-between;
   align-items: center;
-  color: #8bcfff;
-  text-decoration: none;
-  font-size: 12px;
+  padding: 1rem 2rem;
+  background: rgba(10,20,40,0.5);
+  border-bottom: 1px solid rgba(0,255,255,0.1);
+}
+.header h1 {
+  font-family: 'Orbitron', sans-serif;
+  background: linear-gradient(90deg,var(--zep-blue),var(--zep-pink));
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+}
+.header button {
+  background: linear-gradient(90deg,var(--zep-blue),var(--zep-purple));
+  border: none;
+  padding: 0.5rem 1.2rem;
+  border-radius: 12px;
+  color: #fff;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.25s;
+}
+.header button:hover { opacity: 0.8; }
+
+/* Dashboard Grid */
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit,minmax(300px,1fr));
+  gap: 1.5rem;
+  padding: 2rem;
+}
+
+/* Cards */
+.card {
+  background: var(--glass);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 16px;
+  padding: 1.5rem;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 0 25px rgba(0,255,255,0.08);
   transition: 0.3s;
 }
-.footer-btn svg {
-  width: 24px;
-  height: 24px;
-  fill: #00eaff;
-  margin-bottom: 3px;
-  filter: drop-shadow(0 0 4px rgba(0, 234, 255, 0.5));
+.card:hover { transform: translateY(-3px); box-shadow: 0 0 30px rgba(0,255,255,0.15); }
+.card h3 {
+  color: var(--zep-blue);
+  font-weight: 600;
+  margin-bottom: 1rem;
+  font-size: 1.1rem;
 }
-.footer-btn.active { color: #fff; }
-.footer-btn:hover svg {
-  filter: drop-shadow(0 0 8px #00eaff);
+
+/* Portfolio Card */
+.portfolio .amount {
+  font-size: 2.2rem;
+  font-family: 'Orbitron', sans-serif;
+  background: linear-gradient(90deg,var(--zep-blue),var(--zep-purple));
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+  margin: 0.8rem 0;
+}
+
+/* Transactions */
+.tx {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid rgba(255,255,255,0.05);
+  padding: 0.5rem 0;
+}
+.tx:last-child { border: none; }
+.tx span {
+  font-weight: 500;
+  color: #b8cfff;
+}
+.tx .amount {
+  color: var(--zep-blue);
+  font-weight: 600;
+}
+
+/* Chart Container */
+.chart-container {
+  position: relative;
+  height: 220px;
+  width: 100%;
+}
+
+/* Footer */
+.footer {
+  text-align: center;
+  padding: 1rem;
+  color: #9dbaff;
+  font-size: 0.85rem;
+  border-top: 1px solid rgba(0,255,255,0.1);
+  background: rgba(0,20,50,0.5);
 }
 
 /* Responsive */
-@media (min-width: 768px) {
-  .phone { width: 420px; height: 850px; }
+@media (max-width: 768px) {
+  body { flex-direction: column; }
+  .sidebar { flex-direction: row; justify-content: space-around; width: 100%; height: auto; padding: 0.8rem; border-right: none; border-top: 1px solid rgba(0,255,255,0.1); }
+  .main { width: 100%; }
 }
 </style>
 </head>
 
 <body>
 
-<div class="phone">
+<!-- Sidebar -->
+<div class="sidebar">
+  <h2>ZEP SWIPE</h2>
+  <a href="#"><svg viewBox="0 0 24 24"><path d="M3 12l9-9 9 9v8a2 2 0 0 1-2 2h-4v-6H9v6H5a2 2 0 0 1-2-2v-8z"/></svg> Dashboard</a>
+  <a href="wallet.html"><svg viewBox="0 0 24 24"><path d="M2 6a2 2 0 0 1 2-2h16v16H4a2 2 0 0 1-2-2V6z"/></svg> Wallet</a>
+  <a href="delivery.html"><svg viewBox="0 0 24 24"><path d="M3 6h13l3 6v6h-2a3 3 0 1 1-6 0H8a3 3 0 1 1-6 0V6z"/></svg> ParcelOn</a>
+  <a href="ride-hailing.html"><svg viewBox="0 0 24 24"><path d="M5 11l1.5-4.5h11L19 11H5z"/></svg> Rides</a>
+  <a href="learn-earn.html"><svg viewBox="0 0 24 24"><path d="M12 2l4 8H8l4-8zM4 22h16v-2H4v2z"/></svg> Earn</a>
+</div>
 
-  <!-- Sidebar -->
-  <div class="sidebar" id="sidebar">
-    <a href="delivery.html"><svg viewBox="0 0 24 24"><path d="M3 6h13l3 6v6h-2a3 3 0 1 1-6 0H8a3 3 0 1 1-6 0V6z"/></svg> ParcelOn</a>
-    <a href="ride-hailing.html"><svg viewBox="0 0 24 24"><path d="M5 11l1.5-4.5h11L19 11H5z"/></svg> Rides</a>
-    <a href="wallet.html"><svg viewBox="0 0 24 24"><path d="M2 6a2 2 0 0 1 2-2h16v16H4a2 2 0 0 1-2-2V6z"/></svg> Wallet</a>
-    <a href="shop.html"><svg viewBox="0 0 24 24"><path d="M3 6h18l-2 12H5z"/></svg> Shop</a>
-    <a href="sell.html"><svg viewBox="0 0 24 24"><path d="M12 2l4 8H8l4-8zM4 22h16v-2H4v2z"/></svg> Sell</a>
-  </div>
+<!-- Main Content -->
+<div class="main">
 
   <!-- Header -->
   <div class="header">
-    <div class="menu-icon" onclick="toggleSidebar()">
-      <svg viewBox="0 0 24 24"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
-    </div>
-    ZEP SWIPE
+    <h1>Student Dashboard</h1>
+    <button onclick="window.location.href='index.html'">Logout</button>
   </div>
 
-  <!-- Balance -->
-  <div class="balance-card">
-    <h3>Total Portfolio Balance</h3>
-    <h1>$1,870.00</h1>
-    <div class="balance-buttons">
-      <button>Send</button>
-      <button>Receive</button>
-      <button>Request</button>
-    </div>
-  </div>
+  <!-- Dashboard Grid -->
+  <div class="dashboard-grid">
 
-  <!-- Learn Section -->
-  <div class="main-text">
-    <a href="learn-earn.html" class="glass-placeholder">
-      Learn. Earn.<br>Grow. <span>Zep Swipe</span>
-    </a>
+    <!-- Live Wallet -->
+    <div class="card portfolio">
+      <h3>Total Wallet Balance</h3>
+      <div class="amount" id="totalBalance">$0.00</div>
+      <p>ZAC: <span id="zacBalance">0</span> · USDT: <span id="usdtBalance">0</span></p>
+    </div>
+
+    <!-- Transactions -->
+    <div class="card">
+      <h3>Recent Transactions</h3>
+      <div id="transactions">
+        <div class="tx"><span>Ride Payment</span><div class="amount">-5 ZAC</div></div>
+        <div class="tx"><span>Earn $ZAC</span><div class="amount">+8 ZAC</div></div>
+        <div class="tx"><span>Food Purchase</span><div class="amount">-3 ZAC</div></div>
+      </div>
+    </div>
+
+    <!-- Earnings Chart -->
+    <div class="card">
+      <h3>Earnings Overview</h3>
+      <div class="chart-container">
+        <canvas id="earningsChart"></canvas>
+      </div>
+    </div>
+
   </div>
 
   <!-- Footer -->
-  <div class="footer">
-    <a href="#" class="footer-btn active" title="Home">
-      <svg viewBox="0 0 24 24"><path d="M3 12l9-9 9 9v8a2 2 0 0 1-2 2h-4v-6H9v6H5a2 2 0 0 1-2-2v-8z"/></svg>
-      Home
-    </a>
-    <a href="#" class="footer-btn" title="Shop">
-      <svg viewBox="0 0 24 24"><path d="M3 6h18l-2 12H5z"/></svg>
-      Shop
-    </a>
-    <a href="#" class="footer-btn" title="Rides">
-      <svg viewBox="0 0 24 24"><path d="M5 11l1.5-4.5h11L19 11H5z"/></svg>
-      Rides
-    </a>
-  </div>
+  <div class="footer">© 2025 Zep Swipe · All Rights Reserved</div>
+
 </div>
 
 <script>
-function toggleSidebar() {
-  document.getElementById("sidebar").classList.toggle("active");
+// 🪙 Live Wallet Simulation
+let zac = 450, usdt = 120;
+function updateWallet() {
+  zac += Math.random() * 2 - 1;
+  usdt += Math.random() * 0.5 - 0.25;
+  document.getElementById("zacBalance").innerText = zac.toFixed(2);
+  document.getElementById("usdtBalance").innerText = usdt.toFixed(2);
+  document.getElementById("totalBalance").innerText = `$${(zac + usdt).toFixed(2)}`;
 }
+setInterval(updateWallet, 2000);
+updateWallet();
+
+// 📊 Earnings Chart
+const ctx = document.getElementById('earningsChart').getContext('2d');
+new Chart(ctx, {
+  type: 'line',
+  data: {
+    labels: ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'],
+    datasets: [{
+      label: 'Earnings (ZAC)',
+      data: [3, 5, 6, 8, 7, 9, 12],
+      borderColor: '#00f0ff',
+      backgroundColor: 'rgba(0,240,255,0.1)',
+      tension: 0.3,
+      fill: true,
+      pointRadius: 3,
+      pointBackgroundColor: '#9c4dff'
+    }]
+  },
+  options: {
+    plugins: { legend: { labels: { color: '#b8cfff' } } },
+    scales: {
+      x: { ticks: { color: '#9bdfff' }, grid: { color: 'rgba(255,255,255,0.05)' } },
+      y: { ticks: { color: '#9bdfff' }, grid: { color: 'rgba(255,255,255,0.05)' } }
+    }
+  }
+});
 </script>
+
 </body>
 </html>
