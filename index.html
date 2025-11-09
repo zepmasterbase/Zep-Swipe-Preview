@@ -1,266 +1,292 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Zep Swipe — Earn. Learn. Get Rewarded.</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Zep Swipe — Earn. Learn. Get Rewarded.</title>
 
-<!-- Fonts + Icons -->
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700&family=Poppins:wght@400;500;600&display=swap" rel="stylesheet" />
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+  <!-- Fonts + Icons -->
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700&family=Poppins:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
 
-<style>
-:root {
-  --zep-blue: #00f0ff;
-  --zep-violet: #9c4dff;
-  --glass: rgba(255, 255, 255, 0.06);
-  --bg: radial-gradient(circle at 25% 10%, #050018 0%, #000010 90%);
-}
+  <style>
+    :root {
+      --zep-blue: #00f0ff;
+      --zep-violet: #9c4dff;
+      --glass: rgba(255, 255, 255, 0.06);
+      --bg: radial-gradient(circle at 25% 10%, #050018 0%, #000010 90%);
+    }
 
-/* ===== Base ===== */
-body {
-  margin: 0;
-  font-family: "Poppins", sans-serif;
-  background: var(--bg);
-  color: #fff;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  overflow-x: hidden;
-}
+    /* ===== Base ===== */
+    body {
+      margin: 0;
+      font-family: "Poppins", sans-serif;
+      background: var(--bg);
+      color: #fff;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      overflow-x: hidden;
+    }
 
-/* ===== Header ===== */
-header {
-  width: 100%;
-  position: fixed;
-  top: 0;
-  left: 0;
-  z-index: 50;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 12px 18px; /* increased slightly for balance */
-  background: rgba(15, 10, 30, 0.8);
-  backdrop-filter: blur(14px);
-  border-bottom: 1px solid rgba(255,255,255,0.08);
-  box-shadow: 0 0 14px rgba(0,240,255,0.15);
-}
+    /* ===== Header ===== */
+    header {
+      width: 100%;
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: 50;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 12px 18px;
+      background: rgba(15, 10, 30, 0.8);
+      backdrop-filter: blur(14px);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      box-shadow: 0 0 14px rgba(0, 240, 255, 0.15);
+    }
 
-.logo {
-  font-family: "Orbitron", sans-serif;
-  font-size: 1.4rem;
-  font-weight: 700;
-  background: linear-gradient(90deg, var(--zep-blue), var(--zep-violet));
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  text-shadow: 0 0 10px rgba(0, 240, 255, 0.4);
-}
+    .logo {
+      font-family: "Orbitron", sans-serif;
+      font-size: 1.4rem;
+      font-weight: 700;
+      background: linear-gradient(90deg, var(--zep-blue), var(--zep-violet));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      text-shadow: 0 0 10px rgba(0, 240, 255, 0.4);
+    }
 
-.login-btn {
-  margin-right: 6px; /* moved slightly left for mobile visibility */
-  padding: 6px 16px;
-  border: none;
-  border-radius: 10px;
-  font-weight: 600;
-  font-size: 0.9rem;
-  color: #fff;
-  background: linear-gradient(90deg, var(--zep-blue), var(--zep-violet));
-  box-shadow: 0 0 10px rgba(0, 240, 255, 0.4);
-  transition: 0.3s;
-  cursor: pointer;
-}
-.login-btn:hover {
-  transform: scale(1.05);
-  box-shadow: 0 0 18px rgba(156, 77, 255, 0.5);
-}
+    .login-btn {
+      margin-right: 6px;
+      padding: 6px 16px;
+      border: none;
+      border-radius: 10px;
+      font-weight: 600;
+      font-size: 0.9rem;
+      color: #fff;
+      background: linear-gradient(90deg, var(--zep-blue), var(--zep-violet));
+      box-shadow: 0 0 10px rgba(0, 240, 255, 0.4);
+      transition: 0.3s;
+      cursor: pointer;
+    }
 
-/* ===== Hero Section ===== */
-.hero {
-  margin-top: 7.5rem;
-  text-align: center;
-  padding: 1rem;
-  max-width: 95%;
-}
+    .login-btn:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 18px rgba(156, 77, 255, 0.5);
+    }
 
-.hero h1 {
-  font-family: "Orbitron", sans-serif;
-  font-size: 1.9rem;
-  background: linear-gradient(90deg, var(--zep-blue), var(--zep-violet));
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  text-shadow: 0 0 10px rgba(0, 240, 255, 0.3);
-  margin-bottom: 0.6rem;
-}
+    /* ===== Hero Section ===== */
+    .hero {
+      margin-top: 7.5rem;
+      text-align: center;
+      padding: 1rem;
+      max-width: 95%;
+    }
 
-.hero p {
-  color: #b8cfff;
-  max-width: 330px;
-  margin: 0 auto 1.8rem;
-  line-height: 1.6;
-  font-size: 1rem;
-}
+    .hero h1 {
+      font-family: "Orbitron", sans-serif;
+      font-size: 1.9rem;
+      background: linear-gradient(90deg, var(--zep-blue), var(--zep-violet));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      text-shadow: 0 0 10px rgba(0, 240, 255, 0.3);
+      margin-bottom: 0.6rem;
+    }
 
-/* ===== Glass Pulsing Placeholder ===== */
-.glass-pulse {
-  width: 190px;
-  height: 190px;
-  margin: 1.8rem auto;
-  border-radius: 20px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background: rgba(255,255,255,0.05);
-  backdrop-filter: blur(10px);
-  border: 1px solid rgba(255,255,255,0.12);
-  box-shadow: 0 0 20px rgba(0,240,255,0.1);
-  animation: pulseGlass 3s infinite alternate;
-}
-@keyframes pulseGlass {
-  0% {
-    box-shadow: 0 0 15px rgba(0,240,255,0.15), 0 0 25px rgba(156,77,255,0.2);
-    transform: scale(1);
-  }
-  100% {
-    box-shadow: 0 0 25px rgba(0,240,255,0.3), 0 0 40px rgba(156,77,255,0.3);
-    transform: scale(1.05);
-  }
-}
-.glass-pulse img {
-  width: 100px;
-  filter: drop-shadow(0 0 20px rgba(0, 240, 255, 0.8));
-  opacity: 0.95;
-}
+    .hero p {
+      color: #b8cfff;
+      max-width: 330px;
+      margin: 0 auto 1.8rem;
+      line-height: 1.6;
+      font-size: 1rem;
+    }
 
-/* ===== Join Button ===== */
-.btn {
-  display: inline-block;
-  margin-top: 1.5rem;
-  background: linear-gradient(90deg, var(--zep-blue), var(--zep-violet));
-  padding: 0.8rem 2rem;
-  border-radius: 9999px;
-  font-weight: 600;
-  color: #fff;
-  text-decoration: none;
-  font-family: "Orbitron";
-  box-shadow: 0 0 15px rgba(0,240,255,0.3);
-  transition: 0.3s;
-}
-.btn:hover {
-  transform: scale(1.05);
-  box-shadow: 0 0 25px rgba(156,77,255,0.5);
-}
+    /* ===== Glass Pulsing Placeholder ===== */
+    .glass-pulse {
+      width: 190px;
+      height: 190px;
+      margin: 1.8rem auto;
+      border-radius: 20px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      box-shadow: 0 0 20px rgba(0, 240, 255, 0.1);
+      animation: pulseGlass 3s infinite alternate;
+    }
 
-/* ===== Placeholder Card ===== */
-.placeholder {
-  margin: 2rem auto;
-  max-width: 300px;
-  padding: 1rem;
-  border-radius: 1rem;
-  background: var(--glass);
-  border: 1px solid rgba(255,255,255,0.1);
-  text-align: center;
-  box-shadow: 0 0 20px rgba(0,240,255,0.1);
-  font-weight: 600;
-  font-family: "Orbitron";
-  color: #b8cfff;
-}
+    @keyframes pulseGlass {
+      0% {
+        box-shadow: 0 0 15px rgba(0, 240, 255, 0.15),
+          0 0 25px rgba(156, 77, 255, 0.2);
+        transform: scale(1);
+      }
+      100% {
+        box-shadow: 0 0 25px rgba(0, 240, 255, 0.3),
+          0 0 40px rgba(156, 77, 255, 0.3);
+        transform: scale(1.05);
+      }
+    }
 
-/* ===== Footer ===== */
-footer {
-  width: 100%;
-  text-align: center;
-  margin-top: auto;
-  padding: 1.2rem 0;
-  background: rgba(15,15,30,0.8);
-  backdrop-filter: blur(10px);
-  border-top: 1px solid rgba(255,255,255,0.1);
-}
+    .glass-pulse img {
+      width: 100px;
+      filter: drop-shadow(0 0 20px rgba(0, 240, 255, 0.8));
+      opacity: 0.95;
+    }
 
-footer div {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 18px;
-}
+    /* ===== Join Button ===== */
+    .btn {
+      display: inline-block;
+      margin-top: 1.5rem;
+      background: linear-gradient(90deg, var(--zep-blue), var(--zep-violet));
+      padding: 0.8rem 2rem;
+      border-radius: 9999px;
+      font-weight: 600;
+      color: #fff;
+      text-decoration: none;
+      font-family: "Orbitron";
+      box-shadow: 0 0 15px rgba(0, 240, 255, 0.3);
+      transition: 0.3s;
+    }
 
-footer a {
-  color: var(--zep-blue);
-  transition: 0.3s;
-}
-footer a:hover {
-  color: var(--zep-violet);
-  transform: scale(1.1);
-}
-footer i {
-  font-size: 1.2rem;
-  text-shadow: 0 0 8px rgba(0,240,255,0.4);
-}
+    .btn:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 25px rgba(156, 77, 255, 0.5);
+    }
 
-footer p {
-  margin-top: 8px;
-  font-size: 0.8rem;
-  color: #b8cfff;
-  opacity: 0.8;
-}
+    /* ===== Placeholder Card ===== */
+    .placeholder {
+      margin: 2rem auto;
+      max-width: 300px;
+      padding: 1rem;
+      border-radius: 1rem;
+      background: var(--glass);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      text-align: center;
+      box-shadow: 0 0 20px rgba(0, 240, 255, 0.1);
+      font-weight: 600;
+      font-family: "Orbitron";
+      color: #b8cfff;
+    }
 
-/* ===== Responsive ===== */
-@media (max-width: 480px) {
-  header {
-    padding: 10px 14px;
-    justify-content: space-between;
-  }
-  .logo {
-    font-size: 1.2rem;
-  }
-  .login-btn {
-    margin-right: 2px; /* keeps button visible */
-    font-size: 0.85rem;
-    padding: 5px 11px;
-  }
-  .hero h1 { font-size: 1.6rem; }
-  .hero p { font-size: 0.9rem; }
-  .glass-pulse { width: 160px; height: 160px; }
-  .glass-pulse img { width: 90px; }
-  .btn { padding: 0.8rem 1.6rem; }
-}
-</style>
+    /* ===== Footer ===== */
+    footer {
+      width: 100%;
+      text-align: center;
+      margin-top: auto;
+      padding: 1.2rem 0;
+      background: rgba(15, 15, 30, 0.8);
+      backdrop-filter: blur(10px);
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    footer div {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 18px;
+    }
+
+    footer a {
+      color: var(--zep-blue);
+      transition: 0.3s;
+    }
+
+    footer a:hover {
+      color: var(--zep-violet);
+      transform: scale(1.1);
+    }
+
+    footer i {
+      font-size: 1.2rem;
+      text-shadow: 0 0 8px rgba(0, 240, 255, 0.4);
+    }
+
+    footer p {
+      margin-top: 8px;
+      font-size: 0.8rem;
+      color: #b8cfff;
+      opacity: 0.8;
+    }
+
+    /* ===== Responsive ===== */
+    @media (max-width: 480px) {
+      header {
+        padding: 10px 14px;
+        justify-content: space-between;
+      }
+
+      .logo {
+        font-size: 1.2rem;
+      }
+
+      .login-btn {
+        margin-right: 2px;
+        font-size: 0.85rem;
+        padding: 5px 11px;
+      }
+
+      .hero h1 {
+        font-size: 1.6rem;
+      }
+
+      .hero p {
+        font-size: 0.9rem;
+      }
+
+      .glass-pulse {
+        width: 160px;
+        height: 160px;
+      }
+
+      .glass-pulse img {
+        width: 90px;
+      }
+
+      .btn {
+        padding: 0.8rem 1.6rem;
+      }
+    }
+  </style>
 </head>
 
 <body>
 
-<!-- HEADER -->
-<header>
-  <div class="logo">ZEP SWIPE</div>
-  <button class="login-btn">Login</button>
-</header>
+  <!-- HEADER -->
+  <header>
+    <div class="logo">ZEP SWIPE</div>
+    <button class="login-btn">Login</button>
+  </header>
 
-<!-- HERO SECTION -->
-<section class="hero">
-  <h1>Earn. Learn. Get Rewarded.</h1>
-  <p>Join our early access program — build your profile, earn tokens, and prepare for the new student marketplace.</p>
+  <!-- HERO SECTION -->
+  <section class="hero">
+    <h1>Earn. Learn. Get Rewarded.</h1>
+    <p>Join our early access program — build your profile, earn tokens, and prepare for the new student marketplace.</p>
 
-  <div class="glass-pulse">
-    <img src="https://cdn-icons-png.flaticon.com/512/706/706830.png" alt="Student Icon">
-  </div>
+    <div class="glass-pulse">
+      <img src="https://cdn-icons-png.flaticon.com/512/706/706830.png" alt="Student Icon" />
+    </div>
 
-  <a href="signup.html" class="btn">Join the Beta</a>
+    <a href="signup.html" class="btn">Join the Beta</a>
 
-  <div class="placeholder">
-    ZEP SHOP MARKETPLACE<br>COMING SOON
-  </div>
-</section>
+    <div class="placeholder">
+      ZEP SHOP MARKETPLACE<br />COMING SOON
+    </div>
+  </section>
 
-<!-- FOOTER -->
-<footer>
-  <div>
-    <a href="https://t.me/zepswipe" target="_blank"><i class="fab fa-telegram"></i></a>
-    <a href="https://www.instagram.com/zepswipe?igsh=bXF3anMxODhxZWFs" target="_blank"><i class="fab fa-instagram"></i></a>
-    <a href="https://x.com/ZepSwipe" target="_blank"><i class="fab fa-x-twitter"></i></a>
-    <a href="https://facebook.com/ZepSwipe" target="_blank"><i class="fab fa-facebook"></i></a>
-  </div>
-  <p>© 2025 Zep Swipe. All rights reserved.</p>
-</footer>
+  <!-- FOOTER -->
+  <footer>
+    <div>
+      <a href="https://t.me/zepswipe" target="_blank"><i class="fab fa-telegram"></i></a>
+      <a href="https://www.instagram.com/zepswipe?igsh=bXF3anMxODhxZWFs" target="_blank"><i class="fab fa-instagram"></i></a>
+      <a href="https://x.com/ZepSwipe" target="_blank"><i class="fab fa-x-twitter"></i></a>
+      <a href="https://facebook.com/ZepSwipe" target="_blank"><i class="fab fa-facebook"></i></a>
+    </div>
+    <p>© 2025 Zep Swipe. All rights reserved.</p>
+  </footer>
 
 </body>
 </html>
