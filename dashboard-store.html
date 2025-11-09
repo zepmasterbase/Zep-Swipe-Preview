@@ -1,175 +1,200 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>ZepShop Marketplace</title>
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700&family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>ZepShop Marketplace</title>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700&family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
 
-  <style>
-    :root {
-      --zep-blue: #00f0ff;
-      --zep-violet: #9c4dff;
-      --glass: rgba(255, 255, 255, 0.06);
-      --bg: radial-gradient(circle at 25% 10%, #050018 0%, #000010 90%);
-    }
+<style>
+:root {
+  --zep-blue: #00f0ff;
+  --zep-violet: #9c4dff;
+  --glass: rgba(255, 255, 255, 0.06);
+  --bg: radial-gradient(circle at 25% 10%, #050018 0%, #000010 90%);
+}
 
-    body {
-      margin: 0;
-      font-family: 'Poppins', sans-serif;
-      background: var(--bg);
-      color: #fff;
-      overflow-x: hidden;
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-    }
+/* ===== BASE ===== */
+body {
+  margin: 0;
+  font-family: 'Poppins', sans-serif;
+  background: var(--bg);
+  color: #fff;
+  overflow-x: hidden;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
 
-    /* ===== HEADER ===== */
-    header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 14px 18px;
-      background: rgba(15, 10, 30, 0.75);
-      backdrop-filter: blur(16px);
-      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-      box-shadow: 0 0 16px rgba(0, 240, 255, 0.1);
-      position: sticky;
-      top: 0;
-      z-index: 100;
-    }
-    .neon-logo {
-      font-family: 'Orbitron', sans-serif;
-      font-weight: 700;
-      font-size: 1.5rem;
-      background: linear-gradient(90deg, var(--zep-blue), var(--zep-violet));
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      letter-spacing: 1px;
-    }
-    .neon-btn {
-      background: linear-gradient(90deg, var(--zep-blue), var(--zep-violet));
-      border: none;
-      border-radius: 999px;
-      padding: 8px 16px;
-      color: #fff;
-      font-weight: 600;
-      cursor: pointer;
-      font-family: 'Orbitron';
-      transition: 0.3s;
-      box-shadow: 0 0 12px rgba(0, 240, 255, 0.3);
-    }
-    .neon-btn:hover {
-      transform: scale(1.05);
-      box-shadow: 0 0 18px rgba(156, 77, 255, 0.4);
-    }
+/* ===== HEADER ===== */
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 14px 18px;
+  background: rgba(15, 10, 30, 0.75);
+  backdrop-filter: blur(16px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  animation: headerPulse 3s infinite alternate ease-in-out;
+  box-shadow: 0 0 18px rgba(0, 240, 255, 0.1);
+}
+@keyframes headerPulse {
+  0% { box-shadow: 0 0 16px rgba(0,240,255,0.15), 0 0 25px rgba(156,77,255,0.1); }
+  100% { box-shadow: 0 0 28px rgba(0,240,255,0.3), 0 0 40px rgba(156,77,255,0.25); }
+}
+.neon-logo {
+  font-family: 'Orbitron', sans-serif;
+  font-weight: 700;
+  font-size: 1.5rem;
+  background: linear-gradient(90deg, var(--zep-blue), var(--zep-violet));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  letter-spacing: 1px;
+  text-shadow: 0 0 10px rgba(0,240,255,0.4);
+  animation: textGlow 3s infinite alternate ease-in-out;
+}
+@keyframes textGlow {
+  0% { text-shadow: 0 0 10px rgba(0,240,255,0.4); }
+  100% { text-shadow: 0 0 25px rgba(156,77,255,0.5); }
+}
+.neon-btn {
+  background: linear-gradient(90deg, var(--zep-blue), var(--zep-violet));
+  border: none;
+  border-radius: 999px;
+  padding: 8px 16px;
+  color: #fff;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: 'Orbitron';
+  transition: 0.3s;
+  box-shadow: 0 0 12px rgba(0, 240, 255, 0.3);
+}
+.neon-btn:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 18px rgba(156, 77, 255, 0.4);
+}
 
-    /* ===== SEARCH BAR ===== */
-    .search-bar {
-      margin: 1rem 1.2rem 0.5rem;
-    }
-    .search-bar input {
-      width: 100%;
-      padding: 12px 18px;
-      border-radius: 9999px;
-      border: 1px solid rgba(255, 255, 255, 0.12);
-      background: rgba(255, 255, 255, 0.05);
-      color: #fff;
-      font-size: 0.95rem;
-      outline: none;
-      transition: 0.3s;
-    }
-    .search-bar input:focus {
-      border-color: var(--zep-blue);
-      box-shadow: 0 0 10px rgba(0, 240, 255, 0.3);
-    }
+/* ===== SEARCH BAR ===== */
+.search-bar {
+  margin: 1rem 1.2rem 0.5rem;
+}
+.search-bar input {
+  width: 100%;
+  padding: 12px 18px;
+  border-radius: 9999px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: rgba(255, 255, 255, 0.05);
+  color: #fff;
+  font-size: 0.95rem;
+  outline: none;
+  transition: 0.3s;
+}
+.search-bar input:focus {
+  border-color: var(--zep-blue);
+  box-shadow: 0 0 10px rgba(0, 240, 255, 0.3);
+}
 
-    /* ===== PRODUCT SECTIONS ===== */
-    main {
-      flex: 1;
-      padding: 1rem 1.2rem 5rem;
-    }
-    h2 {
-      font-family: 'Orbitron', sans-serif;
-      font-size: 1.1rem;
-      background: linear-gradient(90deg, var(--zep-blue), var(--zep-violet));
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      margin-bottom: 0.8rem;
-    }
+/* ===== PRODUCT SECTIONS ===== */
+main {
+  flex: 1;
+  padding: 1rem 1.2rem 5rem;
+}
+h2 {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 1.1rem;
+  background: linear-gradient(90deg, var(--zep-blue), var(--zep-violet));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin-bottom: 0.8rem;
+}
 
-    .product-grid {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 1rem;
-    }
-    .product-card {
-      background: var(--glass);
-      border-radius: 1rem;
-      padding: 1rem;
-      text-align: center;
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      box-shadow: 0 0 15px rgba(0, 255, 255, 0.08);
-      transition: 0.3s;
-    }
-    .product-card:hover {
-      transform: scale(1.05);
-      box-shadow: 0 0 20px rgba(156, 77, 255, 0.3);
-    }
-    .product-card img {
-      width: 72px;
-      height: 72px;
-      margin-bottom: 0.6rem;
-    }
-    .product-card p {
-      font-weight: 500;
-      margin-bottom: 0.5rem;
-    }
-    .shop-btn {
-      display: inline-block;
-      font-family: 'Orbitron';
-      background: linear-gradient(90deg, var(--zep-blue), var(--zep-violet));
-      padding: 6px 14px;
-      border-radius: 999px;
-      color: #fff;
-      font-size: 0.8rem;
-      box-shadow: 0 0 10px rgba(0, 240, 255, 0.2);
-      transition: 0.3s;
-      text-decoration: none;
-    }
-    .shop-btn:hover {
-      transform: scale(1.05);
-      box-shadow: 0 0 18px rgba(156, 77, 255, 0.4);
-    }
+/* ===== PRODUCT GRID ===== */
+.product-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+}
+.product-card {
+  background: var(--glass);
+  border-radius: 1rem;
+  padding: 1rem;
+  text-align: center;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 0 15px rgba(0, 255, 255, 0.08);
+  animation: pulseCard 3.5s infinite alternate ease-in-out;
+  transition: 0.3s;
+}
+@keyframes pulseCard {
+  0% { box-shadow: 0 0 10px rgba(0,240,255,0.15), 0 0 15px rgba(156,77,255,0.1); transform: scale(1); }
+  100% { box-shadow: 0 0 25px rgba(0,240,255,0.3), 0 0 35px rgba(156,77,255,0.25); transform: scale(1.02); }
+}
+.product-card:hover {
+  transform: scale(1.05);
+}
+.product-card img {
+  width: 72px;
+  height: 72px;
+  margin-bottom: 0.6rem;
+  filter: drop-shadow(0 0 10px rgba(0,240,255,0.5));
+}
+.product-card p {
+  font-weight: 500;
+  margin-bottom: 0.5rem;
+}
+.shop-btn {
+  display: inline-block;
+  font-family: 'Orbitron';
+  background: linear-gradient(90deg, var(--zep-blue), var(--zep-violet));
+  padding: 6px 14px;
+  border-radius: 999px;
+  color: #fff;
+  font-size: 0.8rem;
+  box-shadow: 0 0 10px rgba(0, 240, 255, 0.2);
+  transition: 0.3s;
+  text-decoration: none;
+}
+.shop-btn:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 18px rgba(156, 77, 255, 0.4);
+}
 
-    /* ===== FOOTER ===== */
-    footer {
-      position: fixed;
-      bottom: 0;
-      left: 0;
-      width: 100%;
-      background: rgba(15, 15, 30, 0.8);
-      border-top: 1px solid rgba(255, 255, 255, 0.1);
-      backdrop-filter: blur(12px);
-      display: flex;
-      justify-content: space-around;
-      padding: 10px 0;
-      z-index: 100;
-    }
-    .footer-icon svg {
-      width: 24px;
-      height: 24px;
-      stroke: var(--zep-blue);
-      filter: drop-shadow(0 0 6px var(--zep-violet));
-      transition: 0.3s;
-    }
-    .footer-icon:hover svg {
-      stroke: var(--zep-violet);
-      filter: drop-shadow(0 0 10px var(--zep-blue));
-      transform: scale(1.1);
-    }
-  </style>
+/* ===== FOOTER ===== */
+footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background: rgba(15, 15, 30, 0.8);
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(12px);
+  display: flex;
+  justify-content: space-around;
+  padding: 10px 0;
+  z-index: 100;
+}
+.footer-icon svg {
+  width: 24px;
+  height: 24px;
+  stroke: var(--zep-blue);
+  filter: drop-shadow(0 0 6px var(--zep-violet));
+  transition: 0.3s;
+}
+.footer-icon:hover svg {
+  stroke: var(--zep-violet);
+  filter: drop-shadow(0 0 10px var(--zep-blue));
+  transform: scale(1.1);
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 480px) {
+  header { flex-direction: column; gap: 0.6rem; }
+  .neon-logo { font-size: 1.2rem; }
+  .product-grid { gap: 0.8rem; }
+}
+</style>
 </head>
 
 <body>
@@ -241,29 +266,19 @@
   <!-- FOOTER -->
   <footer>
     <a href="dashboard.html" class="footer-icon">
-      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.8">
-        <path stroke-linecap="round" stroke-linejoin="round" d="M3 12l9-9 9 9v9H3z" />
-      </svg>
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.8"><path stroke-linecap="round" stroke-linejoin="round" d="M3 12l9-9 9 9v9H3z"/></svg>
     </a>
     <a href="search.html" class="footer-icon">
-      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.8">
-        <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-4.35-4.35m1.35-5.65a7 7 0 11-14 0 7 7 0 0114 0z" />
-      </svg>
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.8"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-4.35-4.35m1.35-5.65a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
     </a>
     <a href="sell.html" class="footer-icon">
-      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.8">
-        <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v18m9-9H3" />
-      </svg>
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.8"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3v18m9-9H3"/></svg>
     </a>
     <a href="cart.html" class="footer-icon">
-      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.8">
-        <path stroke-linecap="round" stroke-linejoin="round" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 7m1.6 6l-.4 2h12m-9 4a1 1 0 100-2 1 1 0 000 2zm8 0a1 1 0 100-2 1 1 0 000 2z" />
-      </svg>
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.8"><path stroke-linecap="round" stroke-linejoin="round" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 7m1.6 6l-.4 2h12m-9 4a1 1 0 100-2 1 1 0 000 2zm8 0a1 1 0 100-2 1 1 0 000 2z"/></svg>
     </a>
     <a href="profile.html" class="footer-icon">
-      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.8">
-        <path stroke-linecap="round" stroke-linejoin="round" d="M12 14c-4.33 0-8 2-8 5v3h16v-3c0-3-3.67-5-8-5zm0-2a5 5 0 100-10 5 5 0 000 10z" />
-      </svg>
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.8"><path stroke-linecap="round" stroke-linejoin="round" d="M12 14c-4.33 0-8 2-8 5v3h16v-3c0-3-3.67-5-8-5zm0-2a5 5 0 100-10 5 5 0 000 10z"/></svg>
     </a>
   </footer>
 </body>
