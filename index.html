@@ -57,23 +57,31 @@
       text-shadow: 0 0 10px rgba(0, 240, 255, 0.4);
     }
 
-    .login-btn {
-      margin-right: 6px;
-      padding: 6px 16px;
-      border: none;
-      border-radius: 10px;
-      font-weight: 600;
-      font-size: 0.9rem;
-      color: #fff;
-      background: linear-gradient(90deg, var(--zep-blue), var(--zep-violet));
-      box-shadow: 0 0 10px rgba(0, 240, 255, 0.4);
-      transition: 0.3s;
-      cursor: pointer;
+    /* ===== Navigation Menu ===== */
+    nav {
+      display: flex;
+      gap: 1rem;
+      align-items: center;
+      background: rgba(255, 255, 255, 0.05);
+      padding: 6px 14px;
+      border-radius: 12px;
+      backdrop-filter: blur(8px);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      box-shadow: 0 0 10px rgba(0, 240, 255, 0.15);
     }
 
-    .login-btn:hover {
-      transform: scale(1.05);
-      box-shadow: 0 0 18px rgba(156, 77, 255, 0.5);
+    nav a {
+      color: #b8cfff;
+      font-weight: 600;
+      font-size: 0.9rem;
+      text-decoration: none;
+      font-family: "Orbitron";
+      transition: 0.3s;
+    }
+
+    nav a:hover {
+      color: var(--zep-blue);
+      text-shadow: 0 0 10px var(--zep-violet);
     }
 
     /* ===== Hero Section ===== */
@@ -111,22 +119,20 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      background: rgba(255, 255, 255, 0.05);
+      background: rgba(255,255,255,0.05);
       backdrop-filter: blur(10px);
-      border: 1px solid rgba(255, 255, 255, 0.12);
-      box-shadow: 0 0 20px rgba(0, 240, 255, 0.1);
+      border: 1px solid rgba(255,255,255,0.12);
+      box-shadow: 0 0 20px rgba(0,240,255,0.1);
       animation: pulseGlass 3s infinite alternate;
     }
 
     @keyframes pulseGlass {
       0% {
-        box-shadow: 0 0 15px rgba(0, 240, 255, 0.15),
-          0 0 25px rgba(156, 77, 255, 0.2);
+        box-shadow: 0 0 15px rgba(0,240,255,0.15), 0 0 25px rgba(156,77,255,0.2);
         transform: scale(1);
       }
       100% {
-        box-shadow: 0 0 25px rgba(0, 240, 255, 0.3),
-          0 0 40px rgba(156, 77, 255, 0.3);
+        box-shadow: 0 0 25px rgba(0,240,255,0.3), 0 0 40px rgba(156,77,255,0.3);
         transform: scale(1.05);
       }
     }
@@ -148,13 +154,13 @@
       color: #fff;
       text-decoration: none;
       font-family: "Orbitron";
-      box-shadow: 0 0 15px rgba(0, 240, 255, 0.3);
+      box-shadow: 0 0 15px rgba(0,240,255,0.3);
       transition: 0.3s;
     }
 
     .btn:hover {
       transform: scale(1.05);
-      box-shadow: 0 0 25px rgba(156, 77, 255, 0.5);
+      box-shadow: 0 0 25px rgba(156,77,255,0.5);
     }
 
     /* ===== Placeholder Card ===== */
@@ -164,9 +170,9 @@
       padding: 1rem;
       border-radius: 1rem;
       background: var(--glass);
-      border: 1px solid rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255,255,255,0.1);
       text-align: center;
-      box-shadow: 0 0 20px rgba(0, 240, 255, 0.1);
+      box-shadow: 0 0 20px rgba(0,240,255,0.1);
       font-weight: 600;
       font-family: "Orbitron";
       color: #b8cfff;
@@ -178,9 +184,9 @@
       text-align: center;
       margin-top: auto;
       padding: 1.2rem 0;
-      background: rgba(15, 15, 30, 0.8);
+      background: rgba(15,15,30,0.8);
       backdrop-filter: blur(10px);
-      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      border-top: 1px solid rgba(255,255,255,0.1);
     }
 
     footer div {
@@ -202,7 +208,7 @@
 
     footer i {
       font-size: 1.2rem;
-      text-shadow: 0 0 8px rgba(0, 240, 255, 0.4);
+      text-shadow: 0 0 8px rgba(0,240,255,0.4);
     }
 
     footer p {
@@ -216,17 +222,21 @@
     @media (max-width: 480px) {
       header {
         padding: 10px 14px;
-        justify-content: space-between;
+        flex-direction: column;
+        gap: 8px;
       }
 
       .logo {
         font-size: 1.2rem;
       }
 
-      .login-btn {
-        margin-right: 2px;
-        font-size: 0.85rem;
-        padding: 5px 11px;
+      nav {
+        gap: 0.8rem;
+        padding: 6px 10px;
+      }
+
+      nav a {
+        font-size: 0.8rem;
       }
 
       .hero h1 {
@@ -258,7 +268,11 @@
   <!-- HEADER -->
   <header>
     <div class="logo">ZEP SWIPE</div>
-    <button class="login-btn">Login</button>
+    <nav>
+      <a href="login.html">Login</a>
+      <a href="about.html">About</a>
+      <a href="roadmap.html">Roadmap</a>
+    </nav>
   </header>
 
   <!-- HERO SECTION -->
