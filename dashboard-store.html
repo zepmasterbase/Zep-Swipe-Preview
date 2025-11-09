@@ -31,7 +31,7 @@ header {
   justify-content: space-between;
   align-items: center;
   padding: 14px 18px;
-  background: rgba(15, 10, 30, 0.75);
+  background: rgba(15, 10, 30, 0.8);
   backdrop-filter: blur(18px);
   border-bottom: 1px solid rgba(255,255,255,0.08);
   position: sticky;
@@ -45,17 +45,17 @@ header {
 }
 .logo {
   font-family: 'Orbitron', sans-serif;
-  font-size: 1.5rem;
+  font-size: 1.6rem;
   font-weight: 700;
   background: linear-gradient(90deg, var(--zep-blue), var(--zep-violet));
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-  text-shadow: 0 0 15px rgba(0,240,255,0.5);
+  text-shadow: 0 0 20px rgba(0,240,255,0.6);
   animation: textPulse 3s infinite alternate;
 }
 @keyframes textPulse {
   0% { text-shadow: 0 0 10px rgba(0,240,255,0.4); }
-  100% { text-shadow: 0 0 25px rgba(156,77,255,0.6); }
+  100% { text-shadow: 0 0 30px rgba(156,77,255,0.8); }
 }
 .deals-btn {
   background: linear-gradient(90deg, var(--zep-blue), var(--zep-violet));
@@ -66,12 +66,12 @@ header {
   font-family: 'Orbitron';
   font-weight: 600;
   cursor: pointer;
-  box-shadow: 0 0 15px rgba(0,240,255,0.3);
+  box-shadow: 0 0 15px rgba(0,240,255,0.4);
   transition: all 0.3s ease;
 }
 .deals-btn:hover {
-  transform: scale(1.05);
-  box-shadow: 0 0 25px rgba(156,77,255,0.5);
+  transform: scale(1.08);
+  box-shadow: 0 0 25px rgba(156,77,255,0.6);
 }
 
 /* ===== SEARCH BAR ===== */
@@ -82,8 +82,8 @@ header {
   width: 100%;
   padding: 12px 18px;
   border-radius: 9999px;
-  border: 1px solid rgba(255,255,255,0.1);
-  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.12);
+  background: rgba(255,255,255,0.06);
   color: #fff;
   font-size: 0.95rem;
   outline: none;
@@ -97,7 +97,7 @@ header {
 /* ===== PRODUCT SECTIONS ===== */
 main {
   flex: 1;
-  padding: 1rem 1.2rem 6rem;
+  padding: 1rem 1.2rem 8rem; /* extra bottom padding for footer space */
 }
 h2 {
   font-family: 'Orbitron', sans-serif;
@@ -132,7 +132,7 @@ h2 {
   width: 72px;
   height: 72px;
   margin-bottom: 0.6rem;
-  filter: drop-shadow(0 0 10px rgba(0,240,255,0.5));
+  filter: drop-shadow(0 0 12px rgba(0,240,255,0.5));
 }
 .product-card p {
   font-weight: 500;
@@ -166,27 +166,32 @@ h2 {
 /* ===== FLOATING CART COUNTER ===== */
 .cart-counter {
   position: fixed;
-  bottom: 80px;
+  bottom: 90px;
   right: 20px;
-  background: linear-gradient(90deg, var(--zep-blue), var(--zep-violet));
+  background: radial-gradient(circle at 40% 40%, var(--zep-blue), var(--zep-violet));
+  border: 2px solid rgba(255,255,255,0.2);
   color: #fff;
   border-radius: 50%;
-  width: 58px;
-  height: 58px;
+  width: 64px;
+  height: 64px;
   display: flex;
   align-items: center;
   justify-content: center;
   font-family: 'Orbitron';
   font-weight: 700;
-  font-size: 1rem;
-  box-shadow: 0 0 20px rgba(0,240,255,0.4);
+  font-size: 1.1rem;
+  box-shadow: 0 0 25px rgba(0,240,255,0.6), inset 0 0 10px rgba(156,77,255,0.4);
   cursor: pointer;
-  z-index: 150;
-  animation: cartPulse 2.5s infinite ease-in-out alternate;
+  z-index: 200;
+  animation: cartPulse 2s infinite ease-in-out alternate;
 }
 @keyframes cartPulse {
-  0% { transform: scale(1); box-shadow: 0 0 10px rgba(0,240,255,0.2), 0 0 15px rgba(156,77,255,0.2); }
-  100% { transform: scale(1.1); box-shadow: 0 0 25px rgba(0,240,255,0.4), 0 0 35px rgba(156,77,255,0.5); }
+  0% { transform: scale(1); box-shadow: 0 0 15px rgba(0,240,255,0.3), inset 0 0 5px rgba(156,77,255,0.3); }
+  100% { transform: scale(1.1); box-shadow: 0 0 30px rgba(0,240,255,0.8), inset 0 0 15px rgba(156,77,255,0.5); }
+}
+.cart-counter:hover {
+  box-shadow: 0 0 35px rgba(156,77,255,0.8), inset 0 0 20px rgba(0,240,255,0.5);
+  transform: scale(1.1);
 }
 
 /* ===== FOOTER ===== */
@@ -200,8 +205,9 @@ footer {
   border-top: 1px solid rgba(255,255,255,0.1);
   display: flex;
   justify-content: space-around;
+  align-items: center;
   padding: 10px 0;
-  z-index: 100;
+  z-index: 150;
   animation: footerGlow 3s infinite alternate ease-in-out;
 }
 @keyframes footerGlow {
@@ -209,8 +215,8 @@ footer {
   100% { box-shadow: 0 0 25px rgba(156,77,255,0.4); }
 }
 .footer-icon svg {
-  width: 24px;
-  height: 24px;
+  width: 26px;
+  height: 26px;
   stroke: var(--zep-blue);
   filter: drop-shadow(0 0 6px var(--zep-violet));
   transition: 0.3s;
@@ -223,17 +229,17 @@ footer {
 
 /* ===== RESPONSIVE ===== */
 @media (max-width: 480px) {
-  header { flex-direction: column; gap: 0.5rem; }
-  .logo { font-size: 1.2rem; }
+  .logo { font-size: 1.3rem; }
+  .deals-btn { padding: 7px 14px; font-size: 0.85rem; }
   .product-grid { gap: 0.8rem; }
-  .cart-counter { width: 50px; height: 50px; font-size: 0.9rem; right: 15px; bottom: 75px; }
+  .cart-counter { width: 55px; height: 55px; font-size: 0.95rem; right: 15px; bottom: 85px; }
 }
 </style>
 </head>
 
 <body>
 <header>
-  <div class="logo">ZEP<span style="color:var(--zep-violet)">SHOP</span></div>
+  <div class="logo">ZEP<span style="color:var(--zep-violet)">SWIPE</span></div>
   <button class="deals-btn">🔥 Deals</button>
 </header>
 
@@ -320,11 +326,12 @@ footer {
   </section>
 </main>
 
-<!-- FLOATING CART COUNTER -->
+<!-- FLOATING NEON CART -->
 <div class="cart-counter" onclick="window.location.href='cart.html'">
   🛒<span id="cartCount" style="margin-left:6px;">2</span>
 </div>
 
+<!-- FIXED FOOTER -->
 <footer>
   <a href="dashboard.html" class="footer-icon">
     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.8"><path stroke-linecap="round" stroke-linejoin="round" d="M3 12l9-9 9 9v9H3z"/></svg>
