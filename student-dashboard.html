@@ -30,12 +30,30 @@
       position: relative;
     }
 
+    /* 🔷 Header with glass effect */
     .header {
-      text-align: center;
-      padding: 25px 0 10px 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      padding: 20px 0;
       font-weight: 600;
       font-size: 20px;
       color: #ffffff;
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+      box-shadow: 0 0 15px rgba(46, 94, 255, 0.3);
+    }
+
+    .menu-icon {
+      position: absolute;
+      left: 20px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 20px;
+      cursor: pointer;
+      color: white;
     }
 
     .balance-card {
@@ -78,6 +96,7 @@
       min-width: 80px;
     }
 
+    /* 🔷 Tabs */
     .tabs {
       display: flex;
       justify-content: space-around;
@@ -94,6 +113,7 @@
       font-weight: 500;
       cursor: pointer;
       font-size: 14px;
+      text-decoration: none;
     }
 
     .tab.active {
@@ -101,18 +121,32 @@
       border-bottom: 2px solid #2E5EFF;
     }
 
+    /* 🔷 Glass placeholder for Learn.Earn.Grow */
     .main-text {
       text-align: left;
       padding: 40px 25px;
+    }
+
+    .glass-placeholder {
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 20px;
+      padding: 30px 20px;
+      backdrop-filter: blur(10px);
+      box-shadow: 0 0 15px rgba(46, 94, 255, 0.3);
       font-size: 28px;
       font-weight: 700;
       line-height: 1.4;
+      color: white;
+      text-decoration: none;
+      display: inline-block;
+      width: 100%;
     }
 
-    .main-text span {
+    .glass-placeholder span {
       color: #2E5EFF;
     }
 
+    /* 🔷 Footer */
     .footer {
       background-color: #0B1022;
       border-top: 1px solid #1E2A4A;
@@ -130,6 +164,7 @@
       align-items: center;
       color: #AAB2D5;
       font-size: 12px;
+      text-decoration: none;
     }
 
     .footer-icon.active {
@@ -161,23 +196,13 @@
         padding: 20px;
       }
 
-      .main-text {
+      .glass-placeholder {
         font-size: 24px;
-        padding: 30px 20px;
-      }
-
-      .balance-buttons button {
-        font-size: 13px;
-        padding: 8px 12px;
-      }
-
-      .tab {
-        font-size: 13px;
       }
     }
 
     @media (max-width: 330px) {
-      .main-text {
+      .glass-placeholder {
         font-size: 20px;
       }
 
@@ -197,7 +222,12 @@
 </head>
 <body>
   <div class="phone">
-    <div class="header">Zep Swipe</div>
+
+    <!-- 🔷 Glass Header -->
+    <div class="header">
+      <i class="fas fa-bars menu-icon"></i>
+      Zep Swipe
+    </div>
 
     <div class="balance-card">
       <h3>Total Portfolio Balance</h3>
@@ -209,28 +239,33 @@
       </div>
     </div>
 
+    <!-- 🔷 Tabs with Campus Deals link -->
     <div class="tabs">
-      <div class="tab active">Transactions</div>
-      <div class="tab">Campus Deals</div>
+      <a href="#" class="tab active">Transactions</a>
+      <a href="campus-deals.html" class="tab">Campus Deals</a>
     </div>
 
+    <!-- 🔷 Clickable Learn.Earn.Grow section -->
     <div class="main-text">
-      Learn. Earn.<br>Grow. <span>ZepSwipe</span>
+      <a href="learn-earn-grow.html" class="glass-placeholder">
+        Learn. Earn.<br>Grow. <span>ZepSwipe</span>
+      </a>
     </div>
 
+    <!-- 🔷 Footer -->
     <div class="footer">
-      <div class="footer-icon active">
+      <a href="#" class="footer-icon active">
         <i class="fas fa-home"></i>
         <span>Home</span>
-      </div>
-      <div class="footer-icon">
+      </a>
+      <a href="#" class="footer-icon">
         <i class="fas fa-shopping-bag"></i>
         <span>Shop</span>
-      </div>
-      <div class="footer-icon">
-        <i class="fas fa-user"></i>
-        <span>Chat</span>
-      </div>
+      </a>
+      <a href="#" class="footer-icon">
+        <i class="fas fa-car"></i>
+        <span>Rides</span>
+      </a>
     </div>
   </div>
 </body>
