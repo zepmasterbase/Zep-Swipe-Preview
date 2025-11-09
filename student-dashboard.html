@@ -65,16 +65,18 @@ body {
   overflow-y: auto;
   padding: 1.2rem;
   gap: 1rem;
+  margin-bottom: 75px; /* Leave room for footer */
 }
 
-/* ===== Balance Card ===== */
+/* ===== Balance Card (Pulse Enhancement) ===== */
 .balance-card {
   background: var(--glass);
   border-radius: 18px;
   padding: 1.3rem;
   text-align: center;
-  box-shadow: 0 0 20px rgba(0,255,255,0.08);
+  box-shadow: 0 0 20px rgba(0,255,255,0.1);
   backdrop-filter: blur(10px);
+  animation: pulseGlow 2.5s infinite alternate;
 }
 .balance-card h3 {
   color: #9adfff;
@@ -87,6 +89,14 @@ body {
   background: linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
+}
+@keyframes pulseGlow {
+  0% {
+    box-shadow: 0 0 15px rgba(0,240,255,0.15), 0 0 25px rgba(156,77,255,0.2);
+  }
+  100% {
+    box-shadow: 0 0 25px rgba(0,240,255,0.3), 0 0 40px rgba(156,77,255,0.3);
+  }
 }
 
 /* ===== Mini Placeholders ===== */
@@ -122,18 +132,25 @@ body {
   margin: 0;
 }
 
-/* ===== Transactions ===== */
+/* ===== Transactions (Scrollable Section) ===== */
 .transactions {
   background: var(--glass);
   border-radius: 14px;
   padding: 1rem;
   box-shadow: 0 0 15px rgba(0,255,255,0.08);
+  overflow-y: auto;
+  max-height: 220px;
 }
 .transactions h4 {
   font-family: 'Orbitron', sans-serif;
   font-size: 1rem;
   color: var(--zep-blue);
   margin-bottom: 0.6rem;
+  position: sticky;
+  top: 0;
+  background: rgba(10,10,30,0.7);
+  backdrop-filter: blur(8px);
+  padding: 5px 0;
 }
 .tx {
   display: flex;
@@ -158,6 +175,7 @@ footer {
   display: flex;
   justify-content: space-around;
   padding: 10px 0;
+  z-index: 10;
 }
 .footer-btn {
   display: flex;
@@ -256,6 +274,11 @@ footer {
     <div class="tx"><span>Ride Payment</span> <div class="amount">-5 ZAC</div></div>
     <div class="tx"><span>Earn $ZAC</span> <div class="amount">+8 ZAC</div></div>
     <div class="tx"><span>Parcel Delivery</span> <div class="amount">-2 ZAC</div></div>
+    <div class="tx"><span>Shop Purchase</span> <div class="amount">-3 ZAC</div></div>
+    <div class="tx"><span>Food Order</span> <div class="amount">-4 ZAC</div></div>
+    <div class="tx"><span>Referral Bonus</span> <div class="amount">+10 ZAC</div></div>
+    <div class="tx"><span>Ride Payment</span> <div class="amount">-5 ZAC</div></div>
+    <div class="tx"><span>Earn $ZAC</span> <div class="amount">+8 ZAC</div></div>
   </div>
 </main>
 
