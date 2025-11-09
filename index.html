@@ -5,25 +5,31 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Zep Swipe — Earn. Learn. Get Rewarded.</title>
 
-  <!-- Tailwind + Fonts + Icons -->
-  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Fonts + Icons -->
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700&family=Poppins:wght@400;500;600&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
 
   <style>
+    :root {
+      --zep-blue: #00f0ff;
+      --zep-violet: #9c4dff;
+      --glass: rgba(255,255,255,0.06);
+      --bg: radial-gradient(circle at 25% 10%, #050018 0%, #000010 90%);
+    }
+
     body {
       font-family: 'Poppins', sans-serif;
-      background: radial-gradient(circle at top, #0a021b 0%, #10062a 100%);
+      background: var(--bg);
       color: #fff;
       margin: 0;
-      min-height: 100vh;
       display: flex;
       flex-direction: column;
       align-items: center;
+      min-height: 100vh;
       overflow-x: hidden;
     }
 
-    /* Header */
+    /* ===== HEADER ===== */
     header {
       width: 100%;
       position: fixed;
@@ -33,9 +39,10 @@
       justify-content: space-between;
       align-items: center;
       padding: 1rem 1.5rem;
-      backdrop-filter: blur(10px);
-      background: rgba(10, 2, 27, 0.8);
-      box-shadow: 0 0 25px rgba(255, 0, 240, 0.3);
+      background: rgba(15, 10, 30, 0.75);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+      box-shadow: 0 0 16px rgba(0,240,255,0.1);
       z-index: 100;
     }
 
@@ -43,32 +50,30 @@
       font-family: 'Orbitron', sans-serif;
       font-size: 1.5rem;
       font-weight: 700;
-      background: linear-gradient(90deg, #00ffff, #ff00ff);
+      background: linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
-      text-shadow: 0 0 15px rgba(0, 255, 255, 0.5);
+      text-shadow: 0 0 12px rgba(0,240,255,0.3);
     }
 
     .login-btn {
-      padding: 0.4rem 1rem;
+      padding: 0.45rem 1rem;
       border-radius: 9999px;
-      border: 1px solid rgba(255, 255, 255, 0.3);
+      border: 1px solid rgba(255,255,255,0.1);
       font-weight: 600;
       font-size: 0.9rem;
-      color: #ff00ff;
-      background: rgba(0, 0, 0, 0.2);
-      text-shadow: 0 0 10px rgba(255, 0, 240, 0.8);
-      box-shadow: 0 0 10px rgba(255, 0, 240, 0.6);
-      pointer-events: none; /* disabled */
-      opacity: 1; /* neon visible */
+      color: #fff;
+      background: linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
+      box-shadow: 0 0 10px rgba(0,240,255,0.3);
+      cursor: pointer;
       transition: 0.3s;
     }
     .login-btn:hover {
-      transform: none; /* no hover effect */
-      box-shadow: 0 0 15px rgba(255, 0, 240, 1);
+      box-shadow: 0 0 16px rgba(156,77,255,0.4);
+      transform: scale(1.05);
     }
 
-    /* Hero */
+    /* ===== HERO ===== */
     .hero {
       margin-top: 8rem;
       text-align: center;
@@ -78,20 +83,20 @@
       font-family: 'Orbitron', sans-serif;
       font-size: 1.9rem;
       font-weight: 700;
-      background: linear-gradient(90deg, #ff00ff, #ff66ff, #00ffff);
+      background: linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
-      text-shadow: 0 0 15px rgba(255, 0, 240, 0.4);
+      text-shadow: 0 0 15px rgba(0,240,255,0.4);
     }
     .hero p {
       max-width: 320px;
       margin: 0.8rem auto 1.8rem;
       font-size: 1rem;
-      color: #bdbaf9;
+      color: #b8cfff;
       line-height: 1.6;
     }
 
-    /* Neon Circle Image */
+    /* ===== NEON CIRCLE IMAGE ===== */
     .neon-circle {
       width: 180px;
       height: 180px;
@@ -100,70 +105,71 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      background: radial-gradient(circle at 30% 30%, rgba(255, 0, 240, 0.2), rgba(0, 255, 255, 0.05));
-      box-shadow: 0 0 20px rgba(255, 0, 240, 0.3), 0 0 40px rgba(0, 255, 255, 0.3);
-      border: 2px solid rgba(255, 255, 255, 0.15);
+      background: radial-gradient(circle at 30% 30%, rgba(0,240,255,0.15), rgba(156,77,255,0.1));
+      box-shadow: 0 0 25px rgba(0,240,255,0.2), 0 0 40px rgba(156,77,255,0.2);
+      border: 2px solid rgba(255,255,255,0.1);
     }
     .neon-circle img {
       width: 100px;
-      filter: drop-shadow(0 0 15px rgba(255, 0, 240, 0.6));
+      filter: drop-shadow(0 0 10px rgba(255,215,0,0.6)); /* only yellow glow */
     }
 
-    /* Buttons */
+    /* ===== BUTTON ===== */
     .btn {
       display: block;
       width: 280px;
       margin: 0.7rem auto;
-      padding: 0.8rem;
+      padding: 0.9rem;
       border-radius: 9999px;
       text-align: center;
       font-weight: 600;
+      font-family: 'Orbitron';
+      font-size: 0.95rem;
+      background: linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
+      color: #fff;
+      box-shadow: 0 0 18px rgba(0,240,255,0.3);
+      text-decoration: none;
       transition: 0.3s;
     }
-
-    .btn-primary {
-      background: linear-gradient(90deg, #00ffff, #ff00ff);
-      color: #0b0520;
-      box-shadow: 0 0 20px rgba(255, 0, 240, 0.4);
-    }
-    .btn-primary:hover {
-      background: linear-gradient(90deg, #ff00ff, #00ffcc);
+    .btn:hover {
       transform: scale(1.05);
-      box-shadow: 0 0 30px rgba(255, 0, 240, 0.6);
+      box-shadow: 0 0 25px rgba(156,77,255,0.4);
     }
 
+    /* ===== PLACEHOLDER CARD ===== */
     .placeholder {
       margin: 2rem auto;
       max-width: 300px;
       padding: 1rem;
       text-align: center;
       border-radius: 1rem;
-      border: 1px solid rgba(255, 255, 255, 0.15);
-      background: rgba(255, 255, 255, 0.05);
-      color: #bdbaf9;
-      box-shadow: 0 0 20px rgba(0, 255, 255, 0.2);
+      border: 1px solid rgba(255,255,255,0.08);
+      background: var(--glass);
+      color: #b8cfff;
+      box-shadow: 0 0 20px rgba(0,240,255,0.15);
       font-weight: 600;
       font-family: 'Orbitron', sans-serif;
       font-size: 0.9rem;
       line-height: 1.4;
     }
 
-    /* Footer */
+    /* ===== FOOTER ===== */
     footer {
       text-align: center;
       margin-top: auto;
       padding: 1.5rem 0;
-      color: #bdbaf9;
+      color: #b8cfff;
+      background: rgba(15,15,30,0.7);
+      backdrop-filter: blur(10px);
+      border-top: 1px solid rgba(255,255,255,0.08);
     }
-
     footer a {
       margin: 0 0.6rem;
-      color: #00ffff;
+      color: var(--zep-blue);
       transition: 0.3s;
     }
-
     footer a:hover {
-      color: #ff00ff;
+      color: var(--zep-violet);
       transform: scale(1.1);
     }
   </style>
@@ -174,7 +180,7 @@
   <!-- HEADER -->
   <header>
     <div class="logo">ZEP SWIPE</div>
-    <span class="login-btn">LOGIN</span>
+    <button class="login-btn">LOGIN</button>
   </header>
 
   <!-- HERO -->
@@ -186,7 +192,7 @@
       <img src="https://cdn-icons-png.flaticon.com/512/706/706830.png" alt="Student Neon Icon" />
     </div>
 
-    <a href="signup.html" class="btn btn-primary">JOIN THE BETA</a>
+    <a href="signup.html" class="btn">JOIN THE BETA</a>
 
     <div class="placeholder">
       ZEP SHOP MARKETPLACE<br>COMING SOON
@@ -199,7 +205,7 @@
       <a href="https://t.me/zepswipe" target="_blank"><i class="fab fa-telegram fa-lg"></i></a>
       <a href="https://www.instagram.com/zepswipe?igsh=bXF3anMxODhxZWFs" target="_blank"><i class="fab fa-instagram fa-lg"></i></a>
       <a href="https://x.com/ZepSwipe?t=r94a0_pgN7ew1xT5L4eOSA&s=09" target="_blank"><i class="fab fa-x-twitter fa-lg"></i></a>
-      <a href="https://x.com/ZepSwipe?t=r94a0_pgN7ew1xT5L4eOSA&s=09" target="_blank"><i class="fab fa-facebook fa-lg"></i></a>
+      <a href="https://facebook.com/ZepSwipe" target="_blank"><i class="fab fa-facebook fa-lg"></i></a>
     </div>
     <p class="text-sm mt-2 opacity-70">© 2025 Zep Swipe. All rights reserved.</p>
   </footer>
