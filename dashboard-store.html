@@ -2,327 +2,419 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>ZepShop Marketplace Dashboard</title>
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700&family=Poppins:wght@400;500;600&display=swap" rel="stylesheet" />
-<script src="https://kit.fontawesome.com/a2e0d6da3c.js" crossorigin="anonymous"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Zep Shop — Public Marketplace</title>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700&family=Poppins:wght@400;500;600&display=swap" rel="stylesheet"/>
 
 <style>
-:root {
-  --zep-blue: #00f0ff;
-  --zep-violet: #9c4dff;
+:root{
+  --zep-blue:#00f0ff;
+  --zep-violet:#9c4dff;
+  --zep-lime:#a6ff00;
   --glass: rgba(255,255,255,0.06);
-  --bg: radial-gradient(circle at 25% 10%, #050018 0%, #000010 90%);
+  --bg: radial-gradient(circle at 25% 10%, #050018 0%, #000010 100%);
 }
 
-body {
-  margin: 0;
-  font-family: 'Poppins', sans-serif;
-  background: var(--bg);
-  color: #fff;
-  overflow-x: hidden;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
+*{box-sizing:border-box}
+body{
+  margin:0; font-family:'Poppins',sans-serif; color:#fff; background:var(--bg);
+  min-height:100vh; overflow-x:hidden; padding-bottom:84px;
 }
 
-/* ===== HEADER ===== */
-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 14px 18px;
-  background: rgba(15, 10, 30, 0.8);
-  backdrop-filter: blur(18px);
-  border-bottom: 1px solid rgba(255,255,255,0.08);
-  position: sticky;
-  top: 0;
-  z-index: 100;
-  animation: headerGlow 4s infinite alternate ease-in-out;
+/* ===== Header ===== */
+header{
+  position:sticky; top:0; z-index:60;
+  display:flex; align-items:center; justify-content:space-between; gap:12px;
+  padding:14px 18px; background:rgba(255,255,255,0.08); backdrop-filter:blur(18px);
+  border-bottom:1px solid rgba(255,255,255,0.1);
+  animation: headerGlow 3.5s ease-in-out infinite alternate;
+  box-shadow:0 0 18px rgba(0,240,255,0.18);
 }
-@keyframes headerGlow {
-  0% { box-shadow: 0 0 10px rgba(0,240,255,0.2); }
-  100% { box-shadow: 0 0 25px rgba(156,77,255,0.3); }
+@keyframes headerGlow{
+  0%{ box-shadow:0 0 12px rgba(0,240,255,0.25); }
+  100%{ box-shadow:0 0 34px rgba(156,77,255,0.45); }
 }
-.logo {
-  font-family: 'Orbitron', sans-serif;
-  font-size: 1.6rem;
-  font-weight: 700;
-  background: linear-gradient(90deg, var(--zep-blue), var(--zep-violet));
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  text-shadow: 0 0 20px rgba(0,240,255,0.6);
-  animation: textPulse 3s infinite alternate;
+.logo{
+  font-family:'Orbitron',sans-serif; font-weight:700; font-size:1.25rem; letter-spacing:.5px;
+  background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
+  -webkit-background-clip:text; -webkit-text-fill-color:transparent;
+  text-shadow:0 0 18px rgba(0,240,255,0.5);
 }
-@keyframes textPulse {
-  0% { text-shadow: 0 0 10px rgba(0,240,255,0.4); }
-  100% { text-shadow: 0 0 30px rgba(156,77,255,0.8); }
+.deals-btn{
+  padding:8px 14px; border-radius:999px; border:1px solid rgba(255,255,255,0.1);
+  background:linear-gradient(90deg,var(--zep-lime),var(--zep-blue)); color:#050018;
+  font-family:'Orbitron'; font-weight:700; cursor:pointer; transition:.25s;
+  box-shadow:0 0 14px rgba(0,240,255,0.25);
 }
-.deals-btn {
-  background: linear-gradient(90deg, var(--zep-blue), var(--zep-violet));
-  border: none;
-  border-radius: 9999px;
-  padding: 8px 16px;
-  color: #fff;
-  font-family: 'Orbitron';
-  font-weight: 600;
-  cursor: pointer;
-  box-shadow: 0 0 15px rgba(0,240,255,0.4);
-  transition: 0.3s;
-}
-.deals-btn:hover { transform: scale(1.08); }
+.deals-btn:hover{ transform:scale(1.05); box-shadow:0 0 22px rgba(156,77,255,0.45); }
 
-/* ===== SEARCH BAR ===== */
-.search-bar {
-  margin: 1rem 1.2rem 0.8rem;
-  display: flex;
-  justify-content: center;
+/* ===== Search / Filters ===== */
+.toolbar{
+  padding:12px 18px; display:grid; grid-template-columns:1fr auto; gap:10px;
 }
-.search-container {
-  width: 100%;
-  max-width: 420px;
-  display: flex;
-  align-items: center;
-  background: rgba(255,255,255,0.08);
-  border-radius: 9999px;
-  border: 1px solid rgba(255,255,255,0.1);
-  padding: 0.4rem 0.8rem;
-  backdrop-filter: blur(8px);
-  animation: searchGlow 3s infinite alternate;
+.search{
+  display:flex; align-items:center; gap:10px; padding:8px 12px;
+  border-radius:9999px; border:1px solid rgba(255,255,255,0.1);
+  background:rgba(255,255,255,0.07); backdrop-filter:blur(10px);
+  animation: softPulse 3s ease-in-out infinite alternate;
 }
-@keyframes searchGlow {
-  0% { box-shadow: 0 0 10px rgba(0,240,255,0.15); }
-  100% { box-shadow: 0 0 18px rgba(156,77,255,0.35); }
+.search input{
+  flex:1; background:transparent; border:0; outline:0; color:#fff; font-size:.95rem;
 }
-.search-container input {
-  flex: 1;
-  background: transparent;
-  border: none;
-  color: #fff;
-  padding: 0.6rem;
-  font-size: 0.95rem;
+.search .icon{
+  width:22px; height:22px; filter:drop-shadow(0 0 8px var(--zep-violet));
 }
-.search-container input::placeholder {
-  color: rgba(255,255,255,0.6);
+.filters{
+  display:flex; gap:8px; flex-wrap:wrap;
 }
-.search-btn {
-  background: linear-gradient(90deg, var(--zep-blue), var(--zep-violet));
-  border: none;
-  border-radius: 50%;
-  width: 38px;
-  height: 38px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: #fff;
-  font-size: 1rem;
-  cursor: pointer;
+.filter-chip{
+  padding:8px 12px; border-radius:999px; border:1px solid rgba(255,255,255,0.12);
+  background:rgba(255,255,255,0.06); color:#bfefff; cursor:pointer; font-weight:600; font-size:.85rem;
+  transition:.25s;
+}
+.filter-chip.active{ background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet)); color:#050018; }
+
+/* ===== Sections ===== */
+.section{
+  padding:6px 18px 18px;
+}
+.section-title{
+  font-family:'Orbitron'; margin:8px 0 12px; font-size:1.1rem;
+  background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
+  -webkit-background-clip:text; -webkit-text-fill-color:transparent;
 }
 
-/* ===== PRODUCT SECTIONS ===== */
-main { flex: 1; padding: 1rem 1.2rem 8rem; }
-h2 {
-  font-family: 'Orbitron';
-  font-size: 1.1rem;
-  background: linear-gradient(90deg, var(--zep-blue), var(--zep-violet));
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  margin-bottom: 0.8rem;
+/* ===== Grid & Cards ===== */
+.grid{
+  display:grid; grid-template-columns:repeat(auto-fit,minmax(170px,1fr)); gap:12px;
 }
-.product-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 1rem;
+.card{
+  text-align:center; padding:14px; border-radius:16px; position:relative;
+  background:var(--glass); border:1px solid rgba(255,255,255,0.1);
+  box-shadow:0 0 16px rgba(0,240,255,0.12);
+  animation:pulseCard 3s ease-in-out infinite alternate;
+  transition:.25s;
 }
-.product-card {
-  background: var(--glass);
-  border-radius: 1rem;
-  padding: 1rem;
-  text-align: center;
-  border: 1px solid rgba(255,255,255,0.1);
-  animation: pulseCard 3s infinite alternate ease-in-out;
-  box-shadow: 0 0 15px rgba(0,255,255,0.1);
+.card:hover{ transform:translateY(-3px) scale(1.02); }
+@keyframes pulseCard{
+  0%{ box-shadow:0 0 10px rgba(0,240,255,0.14), 0 0 16px rgba(156,77,255,0.12); }
+  100%{ box-shadow:0 0 26px rgba(0,240,255,0.35), 0 0 34px rgba(156,77,255,0.28); }
 }
-@keyframes pulseCard {
-  0% { box-shadow: 0 0 10px rgba(0,240,255,0.1); }
-  100% { box-shadow: 0 0 25px rgba(0,240,255,0.4); }
+.card img{ width:70px; height:70px; filter:drop-shadow(0 0 12px rgba(0,240,255,0.45)); }
+.name{ margin:.4rem 0 .15rem; font-weight:600; }
+.price{
+  font-family:'Orbitron'; font-size:.95rem;
+  background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
+  -webkit-background-clip:text; -webkit-text-fill-color:transparent;
 }
-.product-card img {
-  width: 72px;
-  height: 72px;
-  margin-bottom: 0.6rem;
-  filter: drop-shadow(0 0 12px rgba(0,240,255,0.5));
+.badge{
+  display:inline-block; margin-top:6px; font-size:.7rem; font-weight:700;
+  padding:4px 8px; border-radius:999px; color:#050018;
+  background:linear-gradient(90deg,var(--zep-lime),var(--zep-blue));
 }
-.price {
-  font-family: 'Orbitron';
-  font-size: 0.85rem;
-  background: linear-gradient(90deg, var(--zep-blue), var(--zep-violet));
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  margin-bottom: 0.5rem;
+.meta{
+  margin-top:8px; display:flex; justify-content:center; gap:10px; align-items:center; font-size:.85rem;
 }
-.shop-btn {
-  display: inline-block;
-  background: linear-gradient(90deg, var(--zep-blue), var(--zep-violet));
-  padding: 6px 14px;
-  border-radius: 999px;
-  color: #fff;
-  font-family: 'Orbitron';
-  font-size: 0.8rem;
-  text-decoration: none;
-  box-shadow: 0 0 10px rgba(0,240,255,0.2);
-  transition: 0.3s;
+.like{
+  display:inline-flex; gap:6px; align-items:center; padding:6px 10px; border-radius:999px;
+  background:rgba(255,255,255,0.08); border:1px solid rgba(255,255,255,0.1); cursor:pointer;
+  transition:.25s;
 }
-.shop-btn:hover { transform: scale(1.05); }
+.like:hover{ transform:translateY(-1px); }
+.like svg{ width:18px; height:18px; stroke:var(--zep-blue); filter:drop-shadow(0 0 6px var(--zep-violet)); }
+.review-btn{
+  padding:6px 10px; border-radius:999px; border:1px solid rgba(255,255,255,0.12);
+  background:rgba(255,255,255,0.06); cursor:pointer; transition:.25s; color:#bfefff; font-weight:600;
+}
+.review-btn:hover{ transform:translateY(-1px); }
 
-/* ===== FLOATING CART ===== */
-.cart-counter {
-  position: fixed;
-  bottom: 90px;
-  right: 20px;
-  background: radial-gradient(circle at 40% 40%, var(--zep-blue), var(--zep-violet));
-  border-radius: 50%;
-  width: 64px;
-  height: 64px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-family: 'Orbitron';
-  font-weight: 700;
-  font-size: 1.1rem;
-  color: #fff;
-  box-shadow: 0 0 25px rgba(0,240,255,0.6);
-  animation: cartPulse 2s infinite alternate;
-  cursor: pointer;
-  z-index: 200;
+/* ===== Modal ===== */
+.modal{
+  position:fixed; inset:0; display:none; align-items:center; justify-content:center; z-index:80;
+  background:rgba(5,7,14,0.85);
 }
-@keyframes cartPulse {
-  0% { transform: scale(1); }
-  100% { transform: scale(1.1); box-shadow: 0 0 30px rgba(156,77,255,0.7); }
+.modal-card{
+  width:92%; max-width:540px; border-radius:16px; padding:16px;
+  background: linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.015));
+  border:1px solid rgba(255,255,255,0.08); backdrop-filter:blur(16px);
+  box-shadow:0 10px 40px rgba(0,0,0,0.6);
+}
+.modal-head{
+  display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;
+}
+.modal-title{
+  font-family:'Orbitron';
+  background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
+  -webkit-background-clip:text; -webkit-text-fill-color:transparent;
+}
+.close{ cursor:pointer; padding:6px 10px; border-radius:8px; border:1px solid rgba(255,255,255,0.1); }
+.review-list{ display:flex; flex-direction:column; gap:8px; margin:10px 0; max-height:220px; overflow:auto; }
+.review-item{
+  padding:10px; border-radius:12px; border:1px solid rgba(255,255,255,0.1);
+  background:rgba(255,255,255,0.05);
+}
+.review-form{ display:flex; gap:8px; margin-top:8px; }
+.review-form input{
+  flex:1; padding:10px; border-radius:12px; border:1px solid rgba(255,255,255,0.12);
+  background:rgba(255,255,255,0.06); color:#fff;
+}
+.review-form button{
+  padding:10px 14px; border-radius:12px; border:0; cursor:pointer; font-weight:700; font-family:'Orbitron';
+  background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet)); color:#050018;
 }
 
-/* ===== FOOTER ===== */
-footer {
-  position: fixed;
-  bottom: 0;
-  width: 100%;
-  background: rgba(15,15,30,0.9);
-  border-top: 1px solid rgba(255,255,255,0.1);
-  display: flex;
-  justify-content: space-around;
-  padding: 10px 0;
-  animation: footerGlow 3s infinite alternate;
+/* ===== Footer ===== */
+footer{
+  position:fixed; bottom:0; left:0; width:100%;
+  background:rgba(15,15,30,0.9); backdrop-filter:blur(12px);
+  border-top:1px solid rgba(255,255,255,0.1);
+  display:flex; justify-content:space-around; align-items:center; padding:10px 0; z-index:50;
+  animation: footerPulse 3.2s ease-in-out infinite alternate;
 }
-@keyframes footerGlow {
-  0% { box-shadow: 0 0 10px rgba(0,240,255,0.2); }
-  100% { box-shadow: 0 0 25px rgba(156,77,255,0.4); }
+@keyframes footerPulse{
+  0%{ box-shadow:0 0 12px rgba(0,240,255,0.25); }
+  100%{ box-shadow:0 0 30px rgba(156,77,255,0.45); }
 }
-.footer-icon svg {
-  width: 26px;
-  height: 26px;
-  stroke: var(--zep-blue);
-  transition: 0.3s;
+.footer-icon svg{
+  width:26px; height:26px; stroke:var(--zep-blue);
+  filter:drop-shadow(0 0 8px var(--zep-violet)); transition:.25s;
 }
-.footer-icon:hover svg { stroke: var(--zep-violet); }
+.footer-icon:hover svg{
+  stroke:var(--zep-violet); transform:translateY(-2px) scale(1.06); filter:drop-shadow(0 0 12px var(--zep-blue));
+}
 
-/* ===== RESPONSIVE ===== */
-@media (max-width: 480px) {
-  .logo { font-size: 1.3rem; }
-  .deals-btn { padding: 7px 14px; font-size: 0.85rem; }
-  .cart-counter { width: 55px; height: 55px; font-size: 0.95rem; }
+/* Anim */
+@keyframes softPulse{ 0%{ transform:translateY(0) } 100%{ transform:translateY(-1px) } }
+
+/* Responsive */
+@media (max-width:560px){
+  .toolbar{ grid-template-columns:1fr; }
+  .filters{ justify-content:center; }
 }
 </style>
 </head>
 
 <body>
 <header>
-  <div class="logo">ZEP<span style="color:var(--zep-violet)">SWIPE</span></div>
-  <button class="deals-btn">🔥 Deals</button>
+  <div class="logo">ZEP SHOP</div>
+  <button class="deals-btn" onclick="alert('Campus deals coming soon ✨')">List Deals</button>
 </header>
 
-<!-- Search -->
-<div class="search-bar">
-  <div class="search-container">
-    <input type="text" placeholder="Search gadgets, food, stationery or digital deals..." />
-    <button class="search-btn"><i class="fas fa-search"></i></button>
+<!-- Search + Filters -->
+<div class="toolbar">
+  <div class="search">
+    <img class="icon" src="https://cdn-icons-png.flaticon.com/512/2811/2811806.png" alt="Search"/>
+    <input id="searchInput" type="text" placeholder="Search phones, ebooks, meals, stationery..." />
+  </div>
+  <div class="filters">
+    <button class="filter-chip active" data-filter="all">All</button>
+    <button class="filter-chip" data-filter="digital">Digital ($ZAC)</button>
+    <button class="filter-chip" data-filter="food">Food (USDT)</button>
+    <button class="filter-chip" data-filter="gadgets">Gadgets (USDT)</button>
+    <button class="filter-chip" data-filter="stationery">Stationery (USDT)</button>
   </div>
 </div>
 
-<main>
-  <!-- DIGITAL PRODUCTS -->
-  <section>
-    <h2>🎵 Digital Products — $ZAC</h2>
-    <div class="product-grid">
-      <div class="product-card"><img src="https://cdn-icons-png.flaticon.com/512/727/727245.png"><p>Indie Beats Pack</p><div class="price">25 $ZAC</div><a href="#" class="shop-btn">Add to Cart</a></div>
-      <div class="product-card"><img src="https://cdn-icons-png.flaticon.com/512/2232/2232688.png"><p>Student Guide eBook</p><div class="price">12 $ZAC</div><a href="#" class="shop-btn">Add to Cart</a></div>
-      <div class="product-card"><img src="https://cdn-icons-png.flaticon.com/512/3237/3237472.png"><p>Design Templates</p><div class="price">40 $ZAC</div><a href="#" class="shop-btn">Add to Cart</a></div>
-    </div>
-  </section>
+<!-- Sections -->
+<main id="content"></main>
 
-  <!-- FOOD -->
-  <section>
-    <h2>🍔 Food — USDT</h2>
-    <div class="product-grid">
-      <div class="product-card"><img src="https://cdn-icons-png.flaticon.com/512/2921/2921822.png"><p>KFC Bucket Meal</p><div class="price">6.5 USDT</div><a href="#" class="shop-btn">Order Now</a></div>
-      <div class="product-card"><img src="https://cdn-icons-png.flaticon.com/512/3595/3595455.png"><p>McDonald's Burger</p><div class="price">4.5 USDT</div><a href="#" class="shop-btn">Order Now</a></div>
-      <div class="product-card"><img src="https://cdn-icons-png.flaticon.com/512/1046/1046784.png"><p>Nando’s Meal</p><div class="price">5.8 USDT</div><a href="#" class="shop-btn">Order Now</a></div>
+<!-- Reviews Modal -->
+<div class="modal" id="reviewsModal" aria-hidden="true">
+  <div class="modal-card">
+    <div class="modal-head">
+      <div class="modal-title" id="modalTitle">Reviews</div>
+      <div class="close" onclick="closeReviews()">✕</div>
     </div>
-  </section>
-
-  <!-- GADGETS -->
-  <section>
-    <h2>💻 Gadgets — USDT</h2>
-    <div class="product-grid">
-      <div class="product-card"><img src="https://cdn-icons-png.flaticon.com/512/860/860784.png"><p>Smartphone 11</p><div class="price">180 USDT</div><a href="#" class="shop-btn">Add to Cart</a></div>
-      <div class="product-card"><img src="https://cdn-icons-png.flaticon.com/512/870/870910.png"><p>Laptop Pro X</p><div class="price">350 USDT</div><a href="#" class="shop-btn">Add to Cart</a></div>
-      <div class="product-card"><img src="https://cdn-icons-png.flaticon.com/512/1116/1116479.png"><p>Wireless Headset</p><div class="price">25 USDT</div><a href="#" class="shop-btn">Add to Cart</a></div>
+    <div class="review-list" id="reviewList"></div>
+    <div class="review-form">
+      <input type="text" id="reviewInput" placeholder="Write a review...">
+      <button onclick="addReview()">Post</button>
     </div>
-  </section>
-
-  <!-- STATIONERY -->
-  <section>
-    <h2>✏️ Stationery — USDT</h2>
-    <div class="product-grid">
-      <div class="product-card"><img src="https://cdn-icons-png.flaticon.com/512/2553/2553626.png"><p>Pen Set (5pcs)</p><div class="price">2.5 USDT</div><a href="#" class="shop-btn">Add to Cart</a></div>
-      <div class="product-card"><img src="https://cdn-icons-png.flaticon.com/512/1043/1043470.png"><p>Notebook Pack</p><div class="price">4.0 USDT</div><a href="#" class="shop-btn">Add to Cart</a></div>
-      <div class="product-card"><img src="https://cdn-icons-png.flaticon.com/512/3022/3022657.png"><p>Drawing Kit</p><div class="price">3.0 USDT</div><a href="#" class="shop-btn">Add to Cart</a></div>
-    </div>
-  </section>
-</main>
-
-<!-- Floating Cart -->
-<div class="cart-counter" onclick="window.location.href='cart.html'">
-  🛒<span id="cartCount" style="margin-left:6px;">2</span>
+  </div>
 </div>
 
 <!-- Footer -->
 <footer>
-  <a href="#" id="homeLink" class="footer-icon">
-    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.8"><path stroke-linecap="round" stroke-linejoin="round" d="M3 12l9-9 9 9v9H3z"/></svg>
+  <a href="index.html" class="footer-icon" title="Home">
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.8"><path stroke-linecap="round" stroke-linejoin="round" d="M3 12l9-9 9 9v8a2 2 0 0 1-2 2h-4v-6H9v6H5a2 2 0 0 1-2-2v-8z"/></svg>
   </a>
-  <a href="search.html" class="footer-icon">
+  <a href="search.html" class="footer-icon" title="Search">
     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.8"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-4.35-4.35m1.35-5.65a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
   </a>
-  <a href="digital-product.html" class="footer-icon">
-    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.8"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3v18m9-9H3"/></svg>
+  <a href="cart.html" class="footer-icon" title="Cart">
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.8"><path stroke-linecap="round" stroke-linejoin="round" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 7m1.6 6l-.4 2h12m-9 4a1 1 0 100-2 1 1 0 000 2m8 0a1 1 0 100-2 1 1 0 000 2"/></svg>
   </a>
-  <a href="cart.html" class="footer-icon">
-    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.8"><path stroke-linecap="round" stroke-linejoin="round" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 7m1.6 6l-.4 2h12m-9 4a1 1 0 100-2 1 1 0 000 2zm8 0a1 1 0 100-2 1 1 0 000 2z"/></svg>
-  </a>
-  <a href="dashboard-wallet.html" class="footer-icon">
-    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.8"><path stroke-linecap="round" stroke-linejoin="round" d="M2 7h20v10H2zM16 12h4"/></svg>
+  <a href="profile.html" class="footer-icon" title="Profile">
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.8"><circle cx="12" cy="7" r="4"/><path d="M4 20c0-4 4-6 8-6s8 2 8 6"/></svg>
   </a>
 </footer>
 
-<!-- JS for Home Role Redirect -->
 <script>
-  document.getElementById('homeLink').addEventListener('click', e => {
-    e.preventDefault();
-    const role = localStorage.getItem('userRole');
-    if (role === 'vendor') window.location.href = 'vendor-dashboard.html';
-    else window.location.href = 'student-dashboard.html';
-  });
-</script>
+/* ===== Demo Data ===== */
+const PRODUCTS = [
+  // Digital ($ZAC)
+  {id:'d1', name:'Indie Beats Vol.1', cat:'digital', price:35, currency:'ZAC', img:'https://cdn-icons-png.flaticon.com/512/727/727245.png', tag:'Campus Verified'},
+  {id:'d2', name:'Design eBook Pack', cat:'digital', price:30, currency:'ZAC', img:'https://cdn-icons-png.flaticon.com/512/2232/2232688.png', tag:'Verified'},
+  {id:'d3', name:'UI Kit Templates', cat:'digital', price:45, currency:'ZAC', img:'https://cdn-icons-png.flaticon.com/512/3237/3237472.png', tag:'Creator'},
 
+  // Food (USDT)
+  {id:'f1', name:'KFC Bucket Meal', cat:'food', price:5.5, currency:'USDT', img:'https://cdn-icons-png.flaticon.com/512/2921/2921822.png', tag:'Deal'},
+  {id:'f2', name:'McCampus Burger', cat:'food', price:4.0, currency:'USDT', img:'https://cdn-icons-png.flaticon.com/512/3595/3595455.png', tag:'Partner'},
+  {id:'f3', name:'Nando’s Grill', cat:'food', price:6.5, currency:'USDT', img:'https://cdn-icons-png.flaticon.com/512/1046/1046784.png', tag:'Hot'},
+
+  // Gadgets (USDT)
+  {id:'g1', name:'Smartphone 12 Pro', cat:'gadgets', price:220, currency:'USDT', img:'https://cdn-icons-png.flaticon.com/512/860/860784.png', tag:'Campus Verified'},
+  {id:'g2', name:'Laptop Pro X', cat:'gadgets', price:420, currency:'USDT', img:'https://cdn-icons-png.flaticon.com/512/870/870910.png', tag:'Trending'},
+  {id:'g3', name:'Bluetooth Headset', cat:'gadgets', price:18, currency:'USDT', img:'https://cdn-icons-png.flaticon.com/512/1116/1116479.png', tag:'Popular'},
+
+  // Stationery (USDT)
+  {id:'s1', name:'Notebook Pack', cat:'stationery', price:4.0, currency:'USDT', img:'https://cdn-icons-png.flaticon.com/512/1043/1043470.png', tag:'Supplies'},
+  {id:'s2', name:'Pen Set (5pcs)', cat:'stationery', price:2.5, currency:'USDT', img:'https://cdn-icons-png.flaticon.com/512/2553/2553626.png', tag:'Best Value'},
+  {id:'s3', name:'Drawing Kit', cat:'stationery', price:3.0, currency:'USDT', img:'https://cdn-icons-png.flaticon.com/512/3022/3022657.png', tag:'Creative'}
+];
+
+/* ===== State (localStorage-backed) ===== */
+const likeKey = 'zepshop_likes';
+const reviewKey = 'zepshop_reviews';
+
+function getLikes(){
+  try{ return JSON.parse(localStorage.getItem(likeKey)) || {}; }catch{return {}}
+}
+function setLikes(obj){ localStorage.setItem(likeKey, JSON.stringify(obj)); }
+
+function getReviews(){
+  try{ return JSON.parse(localStorage.getItem(reviewKey)) || {}; }catch{return {}}
+}
+function setReviews(obj){ localStorage.setItem(reviewKey, JSON.stringify(obj)); }
+
+/* ===== Render ===== */
+const content = document.getElementById('content');
+
+function sectionBlock(title, items){
+  const sec = document.createElement('section');
+  sec.className = 'section';
+  sec.innerHTML = `<h3 class="section-title">${title}</h3>`;
+  const grid = document.createElement('div');
+  grid.className = 'grid';
+
+  const likes = getLikes();
+  items.forEach(p=>{
+    const likeCount = likes[p.id] || 0;
+    const card = document.createElement('div');
+    card.className = 'card';
+    card.innerHTML = `
+      <img src="${p.img}" alt="${p.name}"/>
+      <div class="name">${p.name}</div>
+      <div class="price">${p.price} ${p.currency}</div>
+      <span class="badge">${p.tag}</span>
+      <div class="meta">
+        <button class="like" data-id="${p.id}" title="Like to support merchants (earns $ZAC)">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M5 15l7-7 7 7"/>
+          </svg>
+          <span class="count">${likeCount}</span>
+        </button>
+        <button class="review-btn" data-id="${p.id}" data-name="${p.name}">Reviews</button>
+      </div>
+    `;
+    grid.appendChild(card);
+  });
+
+  sec.appendChild(grid);
+  return sec;
+}
+
+function renderAll(filter='all', query=''){
+  content.innerHTML = '';
+  const q = query.trim().toLowerCase();
+  const filtered = PRODUCTS.filter(p=>{
+    const byFilter = (filter==='all') ? true : p.cat===filter;
+    const byQuery  = !q || p.name.toLowerCase().includes(q);
+    return byFilter && byQuery;
+  });
+
+  const groups = {
+    digital: filtered.filter(p=>p.cat==='digital'),
+    food: filtered.filter(p=>p.cat==='food'),
+    gadgets: filtered.filter(p=>p.cat==='gadgets'),
+    stationery: filtered.filter(p=>p.cat==='stationery')
+  };
+
+  if(groups.digital.length)   content.appendChild(sectionBlock('🎵 Digital Products — $ZAC', groups.digital));
+  if(groups.food.length)      content.appendChild(sectionBlock('🍔 Food — USDT', groups.food));
+  if(groups.gadgets.length)   content.appendChild(sectionBlock('💻 Gadgets — USDT', groups.gadgets));
+  if(groups.stationery.length)content.appendChild(sectionBlock('✏️ Stationery — USDT', groups.stationery));
+
+  // attach handlers
+  content.querySelectorAll('.like').forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      const id = btn.getAttribute('data-id');
+      const likes = getLikes();
+      likes[id] = (likes[id] || 0) + 1;
+      setLikes(likes);
+      btn.querySelector('.count').textContent = likes[id];
+    });
+  });
+
+  content.querySelectorAll('.review-btn').forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      openReviews(btn.getAttribute('data-id'), btn.getAttribute('data-name'));
+    });
+  });
+}
+
+/* ===== Filters & Search ===== */
+let activeFilter = 'all';
+document.querySelectorAll('.filter-chip').forEach(chip=>{
+  chip.addEventListener('click', ()=>{
+    document.querySelectorAll('.filter-chip').forEach(c=>c.classList.remove('active'));
+    chip.classList.add('active');
+    activeFilter = chip.dataset.filter;
+    renderAll(activeFilter, document.getElementById('searchInput').value);
+  });
+});
+document.getElementById('searchInput').addEventListener('input', e=>{
+  renderAll(activeFilter, e.target.value);
+});
+
+/* ===== Reviews Modal ===== */
+let currentProductId = null;
+
+function openReviews(id, name){
+  currentProductId = id;
+  document.getElementById('modalTitle').textContent = `Reviews • ${name}`;
+  const store = getReviews();
+  const list = document.getElementById('reviewList');
+  list.innerHTML = '';
+  (store[id] || []).forEach(t=>{
+    const div = document.createElement('div');
+    div.className='review-item';
+    div.textContent = t;
+    list.appendChild(div);
+  });
+  document.getElementById('reviewInput').value='';
+  document.getElementById('reviewsModal').style.display = 'flex';
+  document.getElementById('reviewsModal').setAttribute('aria-hidden','false');
+}
+function closeReviews(){
+  document.getElementById('reviewsModal').style.display = 'none';
+  document.getElementById('reviewsModal').setAttribute('aria-hidden','true');
+}
+function addReview(){
+  const val = document.getElementById('reviewInput').value.trim();
+  if(!val) return;
+  const store = getReviews();
+  store[currentProductId] = store[currentProductId] || [];
+  store[currentProductId].push(val);
+  setReviews(store);
+  openReviews(currentProductId, document.getElementById('modalTitle').textContent.split('• ')[1] || '');
+}
+document.getElementById('reviewsModal').addEventListener('click', (e)=>{
+  if(e.target.id==='reviewsModal') closeReviews();
+});
+
+/* Init */
+renderAll();
+</script>
 </body>
 </html>
