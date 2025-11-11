@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Zep Swipe — Admin Login</title>
+<style>
+body {
+  font-family:'Poppins',sans-serif; background:#000010; color:white;
+  display:flex; flex-direction:column; align-items:center; justify-content:center;
+  height:100vh; text-align:center;
+}
+input {
+  padding:10px; border-radius:8px; border:none; outline:none;
+  margin:8px; width:200px; background:rgba(255,255,255,0.1); color:white;
+}
+button {
+  padding:10px 25px; border:none; border-radius:999px;
+  background:linear-gradient(90deg,#00f0ff,#9c4dff); color:#050018;
+  font-family:'Orbitron'; font-weight:700; cursor:pointer;
+}
+</style>
+</head>
+<body>
+<h2>Admin Access</h2>
+<input type="password" id="password" placeholder="Enter Admin Key"/>
+<button onclick="checkLogin()">Login</button>
+<script>
+function checkLogin(){
+  const pass=document.getElementById('password').value;
+  if(pass==="ZEP-ADMIN-KEY-2025"){
+    localStorage.setItem('adminAuth','true');
+    window.location.href="dashboard.html";
+  } else {
+    alert("❌ Invalid password");
+  }
+}
+</script>
+</body>
+</html>
