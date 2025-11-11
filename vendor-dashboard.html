@@ -1,295 +1,411 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Campus Vendor — Dashboard</title>
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700&family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
-<script src="https://kit.fontawesome.com/a2e0d6da3c.js" crossorigin="anonymous"></script>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Zep Swipe Merchants — Dashboard</title>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700&family=Poppins:wght@400;500;600&display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com"></script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 <style>
-:root {
-  --campus-blue: #00f0ff;
-  --campus-violet: #9c4dff;
-  --glass: rgba(255,255,255,0.06);
-  --bg: radial-gradient(circle at 25% 10%, #050018 0%, #000010 90%);
+:root{
+  --zep-blue:#00f0ff;
+  --zep-violet:#9c4dff;
+  --zep-lime:#a6ff00;
+  --glass:rgba(255,255,255,0.06);
+  --bg: radial-gradient(circle at 25% 10%, #050018 0%, #000010 100%);
+}
+*{box-sizing:border-box}
+body{
+  font-family:'Poppins',sans-serif; margin:0; color:#fff; background:var(--bg);
+  min-height:100vh; overflow-x:hidden; padding-bottom:92px;
 }
 
-body {
-  margin: 0;
-  font-family: 'Poppins', sans-serif;
-  background: var(--bg);
-  color: #fff;
-  overflow-x: hidden;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
+/* ===== Header ===== */
+header{
+  position:sticky; top:0; z-index:60;
+  display:flex; align-items:center; justify-content:space-between; gap:12px;
+  padding:14px 18px; background:rgba(255,255,255,0.08); backdrop-filter:blur(18px);
+  border-bottom:1px solid rgba(255,255,255,0.1);
+  animation: headerGlow 3.5s ease-in-out infinite alternate;
+  box-shadow:0 0 18px rgba(0,240,255,0.18);
+  border-bottom-left-radius:14px; border-bottom-right-radius:14px;
+}
+@keyframes headerGlow{
+  0%{ box-shadow:0 0 12px rgba(0,240,255,0.25); }
+  100%{ box-shadow:0 0 32px rgba(156,77,255,0.45); }
+}
+.logo{
+  font-family:'Orbitron',sans-serif; font-weight:700; font-size:1.25rem; letter-spacing:.5px;
+  background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
+  -webkit-background-clip:text; -webkit-text-fill-color:transparent;
+  text-shadow:0 0 18px rgba(0,240,255,0.5);
+}
+.connect-btn{
+  padding:9px 16px; border-radius:999px; border:0; cursor:pointer;
+  font-family:'Orbitron',sans-serif; font-weight:700; color:#050018;
+  background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
+  box-shadow:0 0 16px rgba(0,240,255,0.35);
+  transition:.25s;
+}
+.connect-btn:hover{ transform:scale(1.05); box-shadow:0 0 24px rgba(156,77,255,0.5); }
+
+/* ===== General Glass ===== */
+.glass{
+  background:var(--glass); backdrop-filter:blur(14px);
+  border:1px solid rgba(255,255,255,0.1);
+  border-radius:16px; padding:16px;
+  box-shadow:0 0 20px rgba(0,240,255,0.12);
+  animation:pulseCard 3.2s ease-in-out infinite alternate;
+}
+@keyframes pulseCard{
+  0%{ box-shadow:0 0 10px rgba(0,240,255,0.14), 0 0 16px rgba(156,77,255,0.12); transform:translateY(0); }
+  100%{ box-shadow:0 0 26px rgba(0,240,255,0.35), 0 0 34px rgba(156,77,255,0.28); transform:translateY(-1px); }
 }
 
-/* HEADER */
-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 14px 18px;
-  background: rgba(15, 10, 30, 0.75);
-  backdrop-filter: blur(20px);
-  border-bottom: 1px solid rgba(255,255,255,0.1);
-  animation: headerGlow 3s infinite alternate ease-in-out;
-}
-@keyframes headerGlow {
-  0% { box-shadow: 0 0 10px rgba(0,240,255,0.3); }
-  100% { box-shadow: 0 0 30px rgba(156,77,255,0.4); }
-}
-.logo {
-  font-family: 'Orbitron', sans-serif;
-  font-size: 1.5rem;
-  font-weight: 700;
-  background: linear-gradient(90deg, var(--campus-blue), var(--campus-violet));
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  text-shadow: 0 0 15px rgba(0,240,255,0.5);
-}
-.logout-btn {
-  background: linear-gradient(90deg, var(--campus-violet), var(--campus-blue));
-  border: none;
-  border-radius: 10px;
-  padding: 8px 14px;
-  color: #fff;
-  font-weight: 600;
-  cursor: pointer;
-  box-shadow: 0 0 10px rgba(156,77,255,0.5);
-  transition: 0.3s;
-}
-.logout-btn:hover {
-  transform: scale(1.05);
-  box-shadow: 0 0 20px rgba(0,240,255,0.6);
+/* ===== Section Titles ===== */
+.section-title{
+  font-family:'Orbitron'; margin:0 0 12px; font-size:1.12rem;
+  background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
+  -webkit-background-clip:text; -webkit-text-fill-color:transparent;
 }
 
-/* MAIN */
-main {
-  flex: 1;
-  padding: 1rem 1.2rem 6rem;
+/* ===== KPI Row ===== */
+.kpi-grid{
+  display:grid; grid-template-columns:repeat(4,1fr); gap:10px;
+}
+.kpi{
+  text-align:center; padding:12px; border-radius:14px;
+  background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.08);
+}
+.kpi .label{ font-size:.75rem; opacity:.8 }
+.kpi .value{
+  font-family:'Orbitron'; font-size:1.08rem; margin-top:4px;
+  background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
+  -webkit-background-clip:text; -webkit-text-fill-color:transparent;
+  text-shadow:0 0 12px rgba(0,240,255,0.35);
 }
 
-/* MINI DEALS BUTTON */
-.deals-mini {
-  background: linear-gradient(90deg, var(--campus-blue), var(--campus-violet));
-  border: none;
-  border-radius: 9999px;
-  padding: 6px 14px;
-  font-family: 'Orbitron';
-  color: #fff;
-  font-size: 0.85rem;
-  cursor: pointer;
-  box-shadow: 0 0 15px rgba(0,240,255,0.3);
-  transition: 0.3s;
-  margin-bottom: 10px;
+/* ===== Zep AI Insights ===== */
+.ai-card .pill{
+  display:inline-flex; gap:8px; align-items:center;
+  padding:8px 12px; border-radius:999px;
+  background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.1);
+  font-size:.85rem;
 }
-.deals-mini:hover {
-  transform: scale(1.05);
-  box-shadow: 0 0 25px rgba(156,77,255,0.5);
+.ai-card .dot{
+  width:8px; height:8px; border-radius:999px;
+  background:radial-gradient(circle,var(--zep-lime),var(--zep-blue));
+  box-shadow:0 0 10px rgba(0,240,255,0.7);
 }
 
-/* GLASS SECTIONS */
-.glass {
-  background: var(--glass);
-  border: 1px solid rgba(255,255,255,0.08);
-  border-radius: 16px;
-  padding: 1.2rem;
-  backdrop-filter: blur(16px);
-  box-shadow: 0 0 20px rgba(0,240,255,0.15);
-  animation: glassPulse 3s infinite alternate ease-in-out;
-  margin-bottom: 1.2rem;
+/* ===== Disabled Preview Button ===== */
+.preview-wrap{ display:flex; justify-content:center; margin:10px 0 2px; }
+.preview-btn{
+  display:inline-flex; align-items:center; gap:10px;
+  padding:10px 16px; border-radius:12px; border:1px solid rgba(255,255,255,0.1);
+  background:rgba(255,255,255,0.05); color:#bfefff; text-decoration:none;
+  font-family:'Orbitron'; cursor:not-allowed; opacity:.7;
+  filter: drop-shadow(0 0 8px rgba(0,240,255,0.3));
+  animation:softPulse 2.6s ease-in-out infinite alternate;
 }
-@keyframes glassPulse {
-  0% { box-shadow: 0 0 10px rgba(0,240,255,0.15); }
-  100% { box-shadow: 0 0 25px rgba(156,77,255,0.35); }
+.preview-btn .eye{ filter: drop-shadow(0 0 8px rgba(156,77,255,0.6)); }
+@keyframes softPulse{ 0%{ transform:translateY(0) } 100%{ transform:translateY(-1px) } }
+.preview-note{ text-align:center; font-size:.85rem; opacity:.65; margin-top:4px; }
+
+/* ===== Listings ===== */
+.grid{
+  display:grid; grid-template-columns:repeat(auto-fit,minmax(170px,1fr)); gap:12px;
+}
+.card{
+  text-align:center; padding:14px; border-radius:16px; position:relative;
+  background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.08);
+  box-shadow:0 0 14px rgba(0,240,255,0.12);
+  animation:pulseCard 3.2s ease-in-out infinite alternate;
+  transition:.25s;
+}
+.card:hover{ transform:translateY(-3px) scale(1.02); }
+.card img{ width:70px; height:70px; filter:drop-shadow(0 0 12px rgba(0,240,255,0.45)); }
+.card .name{ margin:.4rem 0 .2rem; font-weight:600 }
+.card .price{
+  font-family:'Orbitron'; font-size:.95rem;
+  background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
+  -webkit-background-clip:text; -webkit-text-fill-color:transparent;
+}
+.badge{
+  display:inline-block; margin-top:6px; font-size:.7rem; font-weight:700;
+  padding:4px 8px; border-radius:999px; color:#050018;
+  background:linear-gradient(90deg,var(--zep-lime),var(--zep-blue));
+}
+.card .meta{
+  margin-top:8px; font-size:.78rem; opacity:.8;
+  display:flex; gap:10px; justify-content:center;
+}
+.meta .heart, .meta .star{ filter: drop-shadow(0 0 6px rgba(0,240,255,0.5)); }
+.card .cta{
+  display:inline-block; margin-top:10px; padding:8px 14px; border-radius:999px;
+  background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet)); color:#050018;
+  font-family:'Orbitron'; font-weight:700; text-decoration:none;
+  box-shadow:0 0 14px rgba(0,240,255,0.25); transition:.25s;
+}
+.card .cta:hover{ transform:scale(1.05); box-shadow:0 0 22px rgba(156,77,255,0.45); }
+
+/* ===== Charts ===== */
+canvas{ width:100%; height:260px; }
+
+/* ===== Footer ===== */
+footer{
+  position:fixed; bottom:0; left:0; width:100%;
+  background:rgba(15,15,30,0.9); backdrop-filter:blur(12px);
+  border-top:1px solid rgba(255,255,255,0.1);
+  display:flex; justify-content:space-around; align-items:center;
+  padding:10px 0; z-index:50;
+  animation: footerPulse 3.2s ease-in-out infinite alternate;
+}
+@keyframes footerPulse{
+  0%{ box-shadow:0 0 12px rgba(0,240,255,0.25); }
+  100%{ box-shadow:0 0 30px rgba(156,77,255,0.45); }
+}
+.footer-icon svg{
+  width:28px; height:28px; stroke:var(--zep-blue);
+  filter:drop-shadow(0 0 8px var(--zep-violet)); transition:.25s;
+}
+.footer-icon:hover svg{
+  stroke:var(--zep-violet); transform:scale(1.08); filter:drop-shadow(0 0 12px var(--zep-blue));
 }
 
-h2 {
-  font-family: 'Orbitron', sans-serif;
-  font-size: 1.1rem;
-  background: linear-gradient(90deg, var(--campus-blue), var(--campus-violet));
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  margin-bottom: 0.8rem;
-}
-
-/* STAT CARDS */
-.stats-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-  gap: 1rem;
-}
-.stat-card {
-  background: rgba(255,255,255,0.05);
-  border-radius: 12px;
-  padding: 14px;
-  text-align: center;
-  border: 1px solid rgba(255,255,255,0.08);
-  animation: pulse 2.5s infinite alternate ease-in-out;
-}
-@keyframes pulse {
-  0% { box-shadow: 0 0 8px rgba(0,240,255,0.2); }
-  100% { box-shadow: 0 0 18px rgba(156,77,255,0.3); }
-}
-.stat-card h3 {
-  font-family: 'Orbitron';
-  font-size: 0.9rem;
-  margin: 0.3rem 0;
-  color: var(--campus-blue);
-}
-.stat-card p {
-  font-weight: 700;
-  font-family: 'Orbitron';
-  font-size: 1.1rem;
-  background: linear-gradient(90deg, var(--campus-blue), var(--campus-violet));
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-
-/* CHART */
-canvas {
-  width: 100% !important;
-  height: 240px !important;
-  border-radius: 12px;
-}
-
-/* FOOTER */
-footer {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  background: rgba(15,15,30,0.9);
-  backdrop-filter: blur(12px);
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-  border-top: 1px solid rgba(255,255,255,0.08);
-  padding: 10px 0;
-  box-shadow: 0 0 15px rgba(0,240,255,0.3);
-}
-.fbtn {
-  width: 54px;
-  height: 54px;
-  border-radius: 50%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background: rgba(255,255,255,0.05);
-  border: 1px solid rgba(255,255,255,0.1);
-  transition: 0.3s;
-  cursor: pointer;
-}
-.fbtn svg {
-  width: 26px;
-  height: 26px;
-  stroke: var(--campus-blue);
-  transition: 0.3s;
-}
-.fbtn:hover {
-  transform: translateY(-3px);
-  background: rgba(255,255,255,0.1);
-}
-.fbtn:hover svg {
-  stroke: var(--campus-violet);
-  filter: drop-shadow(0 0 10px var(--campus-blue));
+/* ===== Responsive ===== */
+@media (max-width:560px){
+  .kpi-grid{ grid-template-columns:repeat(2,1fr); }
 }
 </style>
 </head>
 
 <body>
 <header>
-  <div class="logo">CAMPUS <span style="color:var(--campus-violet)">VENDOR</span></div>
-  <button class="logout-btn"><i class="fas fa-sign-out-alt"></i> Logout</button>
+  <div class="logo">Zep Swipe Merchants</div>
+  <button class="connect-btn" id="connectBtn">Connect Wallet</button>
 </header>
 
-<main>
-  <!-- MINI DEALS -->
-  <button class="deals-mini">🔥 List Deals</button>
+<main class="px-4 mt-4">
 
-  <!-- ANALYTICS -->
-  <div class="glass">
-    <h2>📊 Store Analytics</h2>
-    <div class="stats-grid">
-      <div class="stat-card">
-        <h3>Total Orders</h3>
-        <p>132</p>
-      </div>
-      <div class="stat-card">
-        <h3>Pending</h3>
-        <p>10</p>
-      </div>
-      <div class="stat-card">
-        <h3>Delivered</h3>
-        <p>122</p>
-      </div>
-      <div class="stat-card">
-        <h3>Revenue</h3>
-        <p>$3,480</p>
+  <!-- KPIs -->
+  <section class="glass">
+    <h2 class="section-title">Store Overview</h2>
+    <div class="kpi-grid">
+      <div class="kpi"><div class="label">Balance (USDT)</div><div id="kpiBal" class="value">120.00</div></div>
+      <div class="kpi"><div class="label">Orders</div><div id="kpiOrders" class="value">42</div></div>
+      <div class="kpi"><div class="label">Likes</div><div id="kpiLikes" class="value">318</div></div>
+      <div class="kpi"><div class="label">Reviews</div><div id="kpiReviews" class="value">87</div></div>
+    </div>
+
+    <!-- Zep AI Insights -->
+    <div class="glass ai-card" style="margin-top:12px;">
+      <div class="section-title" style="margin-bottom:8px;">Zep AI — Insights</div>
+      <div class="pill"><span class="dot"></span> Trend: “Headsets” up <strong id="aiTrend">+12%</strong> in 24h. Consider a bundle deal.</div>
+      <div style="display:flex; gap:10px; margin-top:10px; flex-wrap:wrap;">
+        <div class="kpi" style="flex:1; min-width:160px;">
+          <div class="label">Conversion Rate</div>
+          <div class="value" id="aiConv">3.7%</div>
+        </div>
+        <div class="kpi" style="flex:1; min-width:160px;">
+          <div class="label">Avg. Rating</div>
+          <div class="value" id="aiRating">4.6★</div>
+        </div>
       </div>
     </div>
-  </div>
 
-  <!-- SALES GRAPH -->
-  <div class="glass">
-    <h2>📈 Weekly Sales</h2>
+    <!-- Preview Store (disabled for now) -->
+    <div class="preview-wrap">
+      <a href="#" class="preview-btn" aria-disabled="true" tabindex="-1" title="Preview Store (coming soon)">
+        <svg class="eye" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M2 12s4-7 10-7 10 7 10 7-4 7-10 7-10-7-10-7Z" stroke="#bfefff" stroke-width="1.7"/><circle cx="12" cy="12" r="3" stroke="#bfefff" stroke-width="1.7"/></svg>
+        Preview Store
+      </a>
+    </div>
+    <div class="preview-note">Public storefront (likes & reviews) will live on Zep Shop. This button will link there.</div>
+  </section>
+
+  <!-- Quick Actions -->
+  <section class="glass" style="margin-top:12px;">
+    <h2 class="section-title">Quick Actions</h2>
+    <div style="display:flex; gap:10px; flex-wrap:wrap;">
+      <a href="dashboard-store.html" class="card" style="flex:1; min-width:180px; text-decoration:none; color:#fff;">
+        <img src="https://cdn-icons-png.flaticon.com/512/3916/3916798.png" alt="List"/>
+        <div class="name">List New Product</div>
+        <span class="badge">Add SKU</span>
+      </a>
+      <a href="dashboard-wallet.html" class="card" style="flex:1; min-width:180px; text-decoration:none; color:#fff;">
+        <img src="https://cdn-icons-png.flaticon.com/512/891/891462.png" alt="Wallet"/>
+        <div class="name">Wallet & Payouts</div>
+        <span class="badge">Manage</span>
+      </a>
+    </div>
+  </section>
+
+  <!-- Your Listings -->
+  <section class="glass" style="margin-top:12px;">
+    <h2 class="section-title">Your Listings</h2>
+    <div class="grid" id="listingGrid">
+      <!-- Each card includes data-product-id for future like/review hooks -->
+      <div class="card" data-product-id="sku-1001">
+        <img src="https://cdn-icons-png.flaticon.com/512/860/860784.png" alt="Phone"/>
+        <div class="name">Smartphone 12 Pro</div>
+        <div class="price">220 USDT</div>
+        <div class="meta">
+          <span class="heart">❤️ <span class="like-count">128</span></span>
+          <span class="star">⭐ <span class="review-count">36</span></span>
+        </div>
+        <span class="badge">In Stock</span><br/>
+        <a href="dashboard-store.html" class="cta">Edit</a>
+      </div>
+
+      <div class="card" data-product-id="sku-2002">
+        <img src="https://cdn-icons-png.flaticon.com/512/2232/2232688.png" alt="eBook"/>
+        <div class="name">Design eBook Pack</div>
+        <div class="price">30 ZAC</div>
+        <div class="meta">
+          <span class="heart">❤️ <span class="like-count">212</span></span>
+          <span class="star">⭐ <span class="review-count">58</span></span>
+        </div>
+        <span class="badge">Digital</span><br/>
+        <a href="dashboard-store.html" class="cta">Edit</a>
+      </div>
+
+      <div class="card" data-product-id="sku-3003">
+        <img src="https://cdn-icons-png.flaticon.com/512/3595/3595455.png" alt="Meal"/>
+        <div class="name">Campus Meal Deal</div>
+        <div class="price">4.50 USDT</div>
+        <div class="meta">
+          <span class="heart">❤️ <span class="like-count">341</span></span>
+          <span class="star">⭐ <span class="review-count">74</span></span>
+        </div>
+        <span class="badge">Cafeteria</span><br/>
+        <a href="dashboard-store.html" class="cta">Edit</a>
+      </div>
+
+      <div class="card" data-product-id="sku-4004">
+        <img src="https://cdn-icons-png.flaticon.com/512/1043/1043470.png" alt="Notebook"/>
+        <div class="name">Notebook Pack</div>
+        <div class="price">4.00 USDT</div>
+        <div class="meta">
+          <span class="heart">❤️ <span class="like-count">88</span></span>
+          <span class="star">⭐ <span class="review-count">19</span></span>
+        </div>
+        <span class="badge">Supplies</span><br/>
+        <a href="dashboard-store.html" class="cta">Edit</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Analytics -->
+  <section class="glass" style="margin-top:12px;">
+    <h2 class="section-title">Live Sales Analytics</h2>
     <canvas id="salesChart"></canvas>
-  </div>
+  </section>
+
 </main>
 
-<!-- FOOTER -->
+<!-- Footer -->
 <footer>
-  <a href="dashboard-wallet.html" class="fbtn" title="Wallet">
-    <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke-width="1.8" viewBox="0 0 24 24"><path d="M2 7h20v10H2zM16 12h4"/></svg>
+  <a href="dashboard-wallet.html" class="footer-icon" title="Wallet">
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.8">
+      <rect x="3" y="6" width="18" height="12" rx="2"/><path d="M16 12h4"/>
+    </svg>
   </a>
-  <a href="add-product.html" class="fbtn" title="Sell">
-    <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke-width="1.8" viewBox="0 0 24 24"><path d="M12 3v18m9-9H3"/></svg>
+  <a href="digital-product.html" class="footer-icon" title="Sell">
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.8">
+      <path d="M12 3v18m9-9H3"/>
+    </svg>
   </a>
-  <a href="dashboard-store.html" class="fbtn" title="Store">
-    <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke-width="1.8" viewBox="0 0 24 24"><path d="M4 4h16v4H4zM4 8h16v12H4z"/></svg>
+  <a href="dashboard-store.html" class="footer-icon" title="Store">
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.8">
+      <path d="M3 6h18l-2 12H5z"/>
+    </svg>
   </a>
-  <a href="profile.html" class="fbtn" title="Profile">
-    <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke-width="1.8" viewBox="0 0 24 24"><path d="M12 14c-4.33 0-8 2-8 5v3h16v-3c0-3-3.67-5-8-5zm0-2a5 5 0 100-10 5 5 0 000 10z"/></svg>
+  <a href="profile.html" class="footer-icon" title="Profile">
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.8">
+      <circle cx="12" cy="7" r="4"/><path d="M4 20c0-4 4-6 8-6s8 2 8 6"/>
+    </svg>
   </a>
 </footer>
 
-<!-- SALES GRAPH -->
 <script>
-const ctx = document.getElementById('salesChart');
-const gradient = ctx.getContext('2d').createLinearGradient(0, 0, 0, 300);
-gradient.addColorStop(0, 'rgba(0,240,255,0.4)');
-gradient.addColorStop(1, 'rgba(156,77,255,0.05)');
+// Fake connect + UI update
+document.getElementById('connectBtn').addEventListener('click', ()=>{
+  const addr = '0xA1B2...9C3D';
+  document.getElementById('connectBtn').textContent = addr;
+  document.getElementById('connectBtn').style.cursor = 'default';
+});
 
+/* === Zep AI: toy updates to keep it lively === */
+setInterval(()=>{
+  const jitter = () => (Math.random() * 2 - 1).toFixed(1);
+  document.getElementById('aiTrend').textContent = `+${(10 + Math.random()*6).toFixed(1)}%`;
+  document.getElementById('aiConv').textContent = `${(3.2 + Math.random()*1.2).toFixed(1)}%`;
+  document.getElementById('aiRating').textContent = `${(4.4 + Math.random()*0.6).toFixed(1)}★`;
+}, 3000);
+
+// Sales Chart
+const ctx = document.getElementById('salesChart').getContext('2d');
 const salesChart = new Chart(ctx, {
-  type: 'line',
-  data: {
-    labels: ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'],
-    datasets: [{
-      label: 'Sales ($)',
-      data: [120, 180, 210, 240, 280, 320, 400],
-      fill: true,
-      borderColor: '#00f0ff',
-      backgroundColor: gradient,
-      tension: 0.4,
-      pointRadius: 5,
-      pointBackgroundColor: '#9c4dff',
-      pointHoverRadius: 8,
+  type:'line',
+  data:{
+    labels: Array.from({length:12}, (_,i)=>`T-${12-i}`),
+    datasets:[{
+      label:'Sales ($ZAC / USDT)',
+      data: Array.from({length:12}, ()=>Math.floor(Math.random()*25)+5),
+      borderColor:'#00f0ff',
+      backgroundColor:'rgba(0,240,255,0.18)',
+      fill:true, tension:.4, pointRadius:3.5, pointHoverRadius:6
     }]
   },
-  options: {
-    responsive: true,
-    plugins: { legend: { display: false } },
-    scales: {
-      x: { ticks: { color: '#bffaff' }, grid: { color: 'rgba(255,255,255,0.05)' } },
-      y: { ticks: { color: '#bffaff' }, grid: { color: 'rgba(255,255,255,0.05)' }, beginAtZero: true }
+  options:{
+    responsive:true, maintainAspectRatio:false,
+    plugins:{ legend:{ display:false }},
+    scales:{
+      x:{ ticks:{ color:'#b9c7ff' }, grid:{ color:'rgba(255,255,255,0.06)' } },
+      y:{ ticks:{ color:'#b9c7ff' }, grid:{ color:'rgba(255,255,255,0.06)' }, beginAtZero:true }
     }
   }
 });
-</script>
+setInterval(()=>{
+  salesChart.data.datasets[0].data.shift();
+  salesChart.data.datasets[0].data.push(Math.floor(Math.random()*28)+4);
+  salesChart.update();
+}, 2200);
 
+// Example counters (wire to real data later)
+const fmt = n => Number(n).toLocaleString(undefined,{minimumFractionDigits:2, maximumFractionDigits:2});
+let bal=120, orders=42, likes=318, reviews=87;
+document.getElementById('kpiBal').textContent = fmt(bal);
+document.getElementById('kpiOrders').textContent = orders;
+document.getElementById('kpiLikes').textContent = likes;
+document.getElementById('kpiReviews').textContent = reviews;
+
+/* === Likes/Reviews Integration Hooks (future) ===
+   - On Zep Shop, increment likes and write review to decentralized storage.
+   - Emit an event or call an API that updates merchant stats.
+   - Below is a minimal example of wiring UI updates if events arrive.
+*/
+function simulateIncomingEngagement(){
+  // Pick a random listing
+  const cards = Array.from(document.querySelectorAll('.card[data-product-id]'));
+  const card = cards[Math.floor(Math.random()*cards.length)];
+  if(!card) return;
+  // Random: like or review
+  const doLike = Math.random() > 0.4;
+  if(doLike){
+    const el = card.querySelector('.like-count');
+    el.textContent = (+el.textContent + 1);
+    likes += 1; document.getElementById('kpiLikes').textContent = likes;
+  }else{
+    const el = card.querySelector('.review-count');
+    el.textContent = (+el.textContent + 1);
+    reviews += 1; document.getElementById('kpiReviews').textContent = reviews;
+  }
+}
+setInterval(simulateIncomingEngagement, 5000);
+</script>
 </body>
 </html>
