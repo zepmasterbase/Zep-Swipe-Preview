@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Zep Swipe Merchants — Wallet</title>
+<title>Zep Swipe — Merchant Wallet</title>
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700&family=Poppins:wght@400;500;600&display=swap" rel="stylesheet" />
 <script src="https://cdn.tailwindcss.com"></script>
 <script src="https://cdn.jsdelivr.net/npm/ethers@6.6.0/dist/ethers.min.js"></script>
@@ -48,11 +48,17 @@ header {
 }
 .logout-btn:hover { transform:scale(1.1); filter:drop-shadow(0 0 12px var(--zep-violet)); }
 
-/* ===== Wallet Section ===== */
-main { padding:20px; display:flex; flex-direction:column; align-items:center; gap:20px; }
-
+/* ===== Main ===== */
+main {
+  padding:20px;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:20px;
+}
 .glass {
-  width:100%; max-width:680px;
+  width:100%;
+  max-width:700px;
   background:var(--glass);
   border-radius:18px;
   border:1px solid rgba(255,255,255,0.1);
@@ -72,14 +78,47 @@ main { padding:20px; display:flex; flex-direction:column; align-items:center; ga
   -webkit-background-clip:text; -webkit-text-fill-color:transparent;
   font-size:1.25rem; margin-bottom:8px;
 }
-.wallet-address {
+.wallet-grid {
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(150px,1fr));
+  gap:12px;
+  margin-top:10px;
+}
+.tile {
+  background:rgba(255,255,255,0.05);
+  border:1px solid rgba(255,255,255,0.1);
+  border-radius:14px;
+  padding:14px;
+  text-align:center;
   font-family:'Orbitron';
-  font-size:0.95rem;
-  opacity:0.9;
-  margin-bottom:10px;
+}
+.tile h3 {
+  font-size:.9rem; opacity:.8;
+}
+.tile p {
+  font-size:1.1rem;
+  background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+  text-shadow:0 0 10px rgba(0,240,255,0.3);
 }
 
-/* ===== AI Chat Floating Widget ===== */
+/* Withdraw placeholder */
+.withdraw-btn {
+  margin-top:16px;
+  background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
+  border:none; border-radius:999px;
+  padding:14px 32px;
+  color:#050018;
+  font-weight:700;
+  cursor:pointer;
+  font-family:'Orbitron';
+  transition:0.3s;
+  box-shadow:0 0 40px rgba(0,240,255,0.5);
+}
+.withdraw-btn:hover { transform:scale(1.05); box-shadow:0 0 70px rgba(156,77,255,0.8); }
+
+/* ===== Zep AI Chat Widget ===== */
 .ai-chat-btn {
   position:fixed;
   bottom:95px;
@@ -184,17 +223,31 @@ footer {
 
 <main>
   <div class="glass">
-    <h2 class="section-title">💳 Connected Wallet</h2>
-    <p class="wallet-address" id="walletAddress">—</p>
-    <h3 class="section-title">$ZAC Balance</h3>
-    <p id="zacBalance" style="font-family:'Orbitron'; font-size:1.4rem;">0 ZAC</p>
-    <p id="usdValue" style="font-size:1rem; opacity:.85;">≈ $0.00 USD</p>
+    <h2 class="section-title">💳 Portfolio Overview</h2>
+    <p id="walletAddress" style="font-family:'Orbitron'; font-size:1rem; opacity:.9;">—</p>
+
+    <div class="wallet-grid">
+      <div class="tile">
+        <h3>ZAC</h3>
+        <p id="zacBalance">0.00</p>
+      </div>
+      <div class="tile">
+        <h3>USDT</h3>
+        <p id="usdtBalance">0.00</p>
+      </div>
+      <div class="tile">
+        <h3>Total (USD)</h3>
+        <p id="totalBalance">$0.00</p>
+      </div>
+    </div>
+
+    <button class="withdraw-btn">🏦 Withdraw to Bank (Coming Soon)</button>
   </div>
 
   <div class="glass">
     <h2 class="section-title">💬 Zep AI Insights</h2>
-    <p style="opacity:.85;">Zep AI is analyzing your wallet and marketplace activity...  
-    Ask me anything about sales, payouts, or performance insights.</p>
+    <p style="opacity:.85;">Zep AI monitors your wallet and provides instant insights on performance, sales, and rewards.  
+    Ask me anything below.</p>
   </div>
 </main>
 
@@ -203,7 +256,7 @@ footer {
 <div class="ai-chatbox" id="aiChat">
   <div class="ai-header">Zep AI</div>
   <div class="ai-messages" id="aiMessages">
-    <p>👋 Hey there! I’m Zep AI. Want to check your balance or learn how to optimize your store?</p>
+    <p>👋 Hey! I’m Zep AI — your global merchant assistant. Your balances auto-sync every 30s.</p>
   </div>
   <div class="ai-input">
     <input type="text" id="aiInput" placeholder="Ask me anything..." onkeypress="if(event.key==='Enter')sendAI()">
@@ -231,33 +284,38 @@ const tokenABI = [
   "function balanceOf(address owner) view returns (uint256)",
   "function decimals() view returns (uint8)"
 ];
-const ZAC_TOKEN_ADDRESS = "0xfe4119a9cac1425d808526905e92386b4234bf2a";
 
-// Fetch real-time ZAC balance
-async function fetchZACBalance(wallet){
+const ZAC_TOKEN_ADDRESS = "0xfe4119a9cac1425d808526905e92386b4234bf2a";
+const USDT_TOKEN_ADDRESS = "0xdAC17F958D2ee523a2206206994597C13D831ec7"; // example ERC20 USDT address (Ethereum for placeholder)
+
+async function fetchBalances(wallet){
   try {
     const provider = new ethers.JsonRpcProvider("https://mainnet.base.org");
-    const contract = new ethers.Contract(ZAC_TOKEN_ADDRESS, tokenABI, provider);
-    const decimals = await contract.decimals();
-    const balance = await contract.balanceOf(wallet);
-    const formatted = Number(ethers.formatUnits(balance, decimals)).toFixed(2);
 
-    const simulatedZacPrice = 0.15; // Simulated for MVP
-    const zacUSD = (formatted * simulatedZacPrice).toFixed(2);
+    // Fetch ZAC
+    const zacContract = new ethers.Contract(ZAC_TOKEN_ADDRESS, tokenABI, provider);
+    const decimals = await zacContract.decimals();
+    const zacBalance = Number(ethers.formatUnits(await zacContract.balanceOf(wallet), decimals));
+    
+    // Simulated USDT balance for MVP
+    const usdtBalance = 50; // Placeholder balance
 
-    document.getElementById('zacBalance').textContent = `${formatted} ZAC`;
-    document.getElementById('usdValue').textContent = `≈ $${zacUSD} USD`;
-  } catch (err) {
-    console.error("Fetch error:", err);
-    const fallback = localStorage.getItem('zacBalance') || 25;
     const simulatedZacPrice = 0.15;
-    const zacUSD = (fallback * simulatedZacPrice).toFixed(2);
-    document.getElementById('zacBalance').textContent = `${fallback} ZAC (Test Credit)`;
-    document.getElementById('usdValue').textContent = `≈ $${zacUSD} USD`;
+    const totalUSD = (zacBalance * simulatedZacPrice + usdtBalance).toFixed(2);
+
+    document.getElementById('zacBalance').textContent = `${zacBalance.toFixed(2)} ZAC`;
+    document.getElementById('usdtBalance').textContent = `${usdtBalance.toFixed(2)} USDT`;
+    document.getElementById('totalBalance').textContent = `$${totalUSD}`;
+  } catch (err) {
+    console.error("Balance fetch error:", err);
   }
 }
 
-// Simple Zep AI response logic
+function toggleAI(){
+  const ai = document.getElementById('aiChat');
+  ai.style.display = ai.style.display === 'flex' ? 'none' : 'flex';
+}
+
 function sendAI(){
   const input = document.getElementById('aiInput');
   const msg = input.value.trim();
@@ -267,29 +325,21 @@ function sendAI(){
   userMsg.textContent = "🧑 " + msg;
   box.appendChild(userMsg);
   input.value = '';
-
   const aiReply = document.createElement('p');
   aiReply.textContent = "🤖 ...thinking";
   box.appendChild(aiReply);
-
   setTimeout(()=>{
     aiReply.textContent = generateAIResponse(msg);
     box.scrollTop = box.scrollHeight;
-  }, 800);
+  }, 700);
 }
 
 function generateAIResponse(q){
   const lower = q.toLowerCase();
-  if(lower.includes('balance')) return "💰 Your current ZAC wallet balance is displayed above. It syncs live with Base Network.";
-  if(lower.includes('withdraw')) return "💸 Withdrawals will be available in the next Zep Swipe update — stay tuned!";
-  if(lower.includes('earn')) return "🚀 You earn ZAC as you get store likes and verified sales. Keep growing your engagement!";
-  if(lower.includes('trend')) return "📊 Latest merchant trend: Digital courses and gadgets are dominating student markets!";
-  return "🤖 I’m still learning — but I can help you track sales, likes, and your ZAC balance anytime.";
-}
-
-function toggleAI(){
-  const ai = document.getElementById('aiChat');
-  ai.style.display = ai.style.display === 'flex' ? 'none' : 'flex';
+  if(lower.includes('balance')) return "💰 Your ZAC and USDT balances are synced in real time. The total value updates every 30 seconds.";
+  if(lower.includes('withdraw')) return "🏦 Withdraw to Bank is under development — soon you’ll be able to cash out directly.";
+  if(lower.includes('trend')) return "📊 Merchants holding more ZAC see higher reward multipliers. Keep your portfolio diversified!";
+  return "🤖 I can help you with wallet, balance, or payout insights — just ask!";
 }
 
 window.addEventListener('load', async ()=>{
@@ -298,10 +348,11 @@ window.addEventListener('load', async ()=>{
     window.location.href='index.html';
     return;
   }
+  document.getElementById('walletAddress').textContent = `${user.wallet.slice(0,6)}...${user.wallet.slice(-4)}`;
+  await fetchBalances(user.wallet);
 
-  const shortAddr = `${user.wallet.slice(0,6)}...${user.wallet.slice(-4)}`;
-  document.getElementById('walletAddress').textContent = shortAddr;
-  await fetchZACBalance(user.wallet);
+  // Auto-refresh balances every 30 seconds
+  setInterval(()=>fetchBalances(user.wallet), 30000);
 });
 
 function logout(){
