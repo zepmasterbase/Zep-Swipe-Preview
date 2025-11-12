@@ -1,246 +1,270 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Zep Swipe Dashboard - Profile</title>
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Zep Swipe Merchants — Profile</title>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700&family=Poppins:wght@400;500;600&display=swap" rel="stylesheet" />
+<script src="https://cdn.tailwindcss.com"></script>
+
 <style>
-  *{margin:0;padding:0;box-sizing:border-box;font-family:'Poppins',sans-serif;}
-  body{
-    background: radial-gradient(circle at top,#0a021b,#10062a);
-    color:#fff;
-    min-height:100vh;
-  }
-  .container{
-    max-width:900px;
-    margin:2rem auto;
-    padding:2rem;
-    display:flex;
-    flex-direction:column;
-    gap:2rem;
-  }
-  h1{
-    font-family:'Orbitron',sans-serif;
-    font-size:2rem;
-    background: linear-gradient(90deg,#00ffff,#ff00ff);
-    -webkit-background-clip:text;
-    -webkit-text-fill-color:transparent;
-    text-shadow:0 0 15px rgba(255,0,240,0.5);
-    text-align:center;
-  }
-  .profile-section{
-    display:flex;
-    flex-direction:column;
-    align-items:center;
-    gap:1rem;
-    padding:1.5rem;
-    border:1px solid rgba(255,255,255,0.1);
-    border-radius:1rem;
-    background: rgba(255,255,255,0.03);
-    box-shadow:0 0 25px rgba(0,255,255,0.3);
-  }
-  .profile-pic{
-    width:120px;
-    height:120px;
-    border-radius:50%;
-    object-fit:cover;
-    border:3px solid #00ffff;
-    box-shadow:0 0 20px #00ffff;
-    transition:0.3s;
-  }
-  .profile-pic:hover{
-    transform: scale(1.05);
-    box-shadow:0 0 25px #ff00ff;
-  }
-  form{
-    display:flex;
-    flex-direction:column;
-    gap:0.8rem;
-    width:100%;
-    max-width:350px;
-  }
-  input{
-    padding:0.8rem;
-    border-radius:9999px;
-    border:1px solid rgba(255,255,255,0.2);
-    background: rgba(255,255,255,0.05);
-    color:#fff;
-    outline:none;
-    transition:0.3s;
-  }
-  input:focus{
-    border-color:#ff00ff;
-    box-shadow:0 0 10px #ff00ff;
-  }
-  button{
-    padding:0.8rem;
-    border-radius:9999px;
-    background: linear-gradient(90deg,#00ffff,#ff00ff);
-    color:#0b0520;
-    font-weight:600;
-    cursor:pointer;
-    transition:0.3s;
-    box-shadow:0 0 15px rgba(255,0,240,0.4);
-  }
-  button:hover{
-    transform: scale(1.05);
-    box-shadow:0 0 25px rgba(0,255,255,0.6);
-  }
-  .wallet-card{
-    padding:1.5rem;
-    border-radius:1rem;
-    background: rgba(255,255,255,0.03);
-    border:1px solid rgba(0,255,255,0.2);
-    box-shadow:0 0 20px rgba(0,255,255,0.3);
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-  }
-  .wallet-balance{
-    font-size:1.5rem;
-    font-weight:700;
-    color:#00ffff;
-  }
-  .shortcuts{
-    display:grid;
-    grid-template-columns: repeat(auto-fit,minmax(180px,1fr));
-    gap:1rem;
-  }
-  .shortcut-card{
-    padding:1rem;
-    text-align:center;
-    border-radius:1rem;
-    background: rgba(255,255,255,0.03);
-    border:1px solid rgba(255,0,255,0.2);
-    box-shadow:0 0 20px rgba(255,0,255,0.3);
-    cursor:pointer;
-    transition:0.3s;
-  }
-  .shortcut-card:hover{
-    transform: scale(1.05);
-    box-shadow:0 0 25px rgba(0,255,255,0.6);
-  }
-  .shortcut-card i{
-    font-size:1.5rem;
-    margin-bottom:0.5rem;
-    color:#00ffff;
-  }
-  .recent-activity{
-    padding:1.5rem;
-    border-radius:1rem;
-    background: rgba(255,255,255,0.03);
-    border:1px solid rgba(255,255,255,0.1);
-    box-shadow:0 0 20px rgba(255,0,255,0.2);
-  }
-  .recent-activity h2{
-    font-family:'Orbitron',sans-serif;
-    font-size:1.2rem;
-    color:#ff00ff;
-    margin-bottom:0.8rem;
-  }
-  .back-link{
-    display:block;
-    text-align:center;
-    color:#00ffff;
-    text-decoration:none;
-    margin-top:1rem;
-    font-weight:500;
-    transition:0.3s;
-  }
-  .back-link:hover{
-    color:#ff00ff;
-    transform: scale(1.05);
-  }
+:root {
+  --zep-blue:#00f0ff;
+  --zep-violet:#9c4dff;
+  --zep-lime:#a6ff00;
+  --glass:rgba(255,255,255,0.06);
+  --bg:radial-gradient(circle at 25% 10%, #050018 0%, #000010 100%);
+}
+body {
+  font-family:'Poppins',sans-serif;
+  background:var(--bg);
+  color:#fff;
+  margin:0;
+  min-height:100vh;
+  overflow-x:hidden;
+  padding-bottom:90px;
+}
+
+/* ===== Header ===== */
+header {
+  display:flex; justify-content:space-between; align-items:center;
+  padding:14px 18px;
+  background:rgba(255,255,255,0.08);
+  backdrop-filter:blur(18px);
+  border-bottom:1px solid rgba(255,255,255,0.1);
+  box-shadow:0 0 18px rgba(0,240,255,0.18);
+  position:sticky; top:0; z-index:60;
+}
+.logo {
+  font-family:'Orbitron',sans-serif; font-weight:700;
+  font-size:1.25rem;
+  background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+  text-shadow:0 0 18px rgba(0,240,255,0.5);
+}
+.logout-btn {
+  background:none; border:none; cursor:pointer;
+  filter:drop-shadow(0 0 8px var(--zep-blue)); transition:.25s;
+}
+.logout-btn:hover { transform:scale(1.1); filter:drop-shadow(0 0 12px var(--zep-violet)); }
+
+/* ===== Profile Card ===== */
+.profile-card {
+  max-width:460px;
+  margin:2rem auto;
+  background:var(--glass);
+  backdrop-filter:blur(16px);
+  border-radius:16px;
+  border:1px solid rgba(255,255,255,0.1);
+  padding:24px;
+  box-shadow:0 0 25px rgba(0,240,255,0.15);
+  animation:glow 3s infinite alternate ease-in-out;
+}
+@keyframes glow {
+  0%{ box-shadow:0 0 12px rgba(0,240,255,0.2);}
+  100%{ box-shadow:0 0 35px rgba(156,77,255,0.4);}
+}
+.profile-avatar {
+  width:90px; height:90px;
+  border-radius:50%;
+  border:2px solid var(--zep-blue);
+  box-shadow:0 0 25px rgba(0,240,255,0.3);
+  margin:0 auto 1rem;
+  display:block;
+  object-fit:cover;
+}
+.upload-label {
+  display:block; text-align:center;
+  font-size:.8rem; opacity:.8;
+  cursor:pointer; text-decoration:underline;
+  margin-bottom:1rem;
+}
+h2 {
+  text-align:center;
+  font-family:'Orbitron';
+  background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+  margin-bottom:0.5rem;
+}
+p.role {
+  text-align:center;
+  opacity:0.8;
+  font-size:0.9rem;
+  margin-bottom:1.2rem;
+}
+input, select, textarea {
+  width:100%;
+  padding:10px 12px;
+  border-radius:8px;
+  border:1px solid rgba(255,255,255,0.1);
+  background:rgba(255,255,255,0.05);
+  color:#fff;
+  margin-bottom:1rem;
+  outline:none;
+  font-size:0.9rem;
+}
+input:focus, select:focus, textarea:focus {
+  border-color:var(--zep-blue);
+  box-shadow:0 0 10px rgba(0,240,255,0.3);
+}
+button.save-btn {
+  width:100%;
+  background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
+  color:#050018;
+  font-family:'Orbitron';
+  font-weight:700;
+  border:none;
+  border-radius:999px;
+  padding:12px;
+  cursor:pointer;
+  box-shadow:0 0 18px rgba(0,240,255,0.4);
+  transition:.3s;
+}
+button.save-btn:hover {
+  transform:scale(1.05);
+  box-shadow:0 0 30px rgba(156,77,255,0.6);
+}
+
+/* ===== Floating AI Button ===== */
+.ask-ai {
+  position:fixed; bottom:85px; right:20px;
+  background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
+  color:#050018;
+  font-family:'Orbitron';
+  font-weight:700;
+  border:none; border-radius:999px;
+  padding:12px 24px;
+  box-shadow:0 0 25px rgba(0,240,255,0.5);
+  cursor:pointer;
+  z-index:999;
+  animation:pulse 2.4s ease-in-out infinite alternate;
+}
+@keyframes pulse {
+  0% { box-shadow:0 0 15px rgba(0,240,255,0.4); opacity:0.9; }
+  100% { box-shadow:0 0 40px rgba(156,77,255,0.8); opacity:1; }
+}
+.ask-ai:hover { transform:scale(1.08); }
+
+/* ===== Footer ===== */
+footer {
+  position:fixed; bottom:0; left:0; width:100%;
+  background:rgba(15,15,30,0.9); backdrop-filter:blur(12px);
+  border-top:1px solid rgba(255,255,255,0.1);
+  display:flex; justify-content:space-around; align-items:center;
+  padding:10px 0; z-index:50;
+}
+.footer-icon svg {
+  width:28px; height:28px; stroke:var(--zep-blue);
+  filter:drop-shadow(0 0 8px var(--zep-violet)); transition:.25s;
+}
+.footer-icon:hover svg {
+  stroke:var(--zep-violet); transform:scale(1.1);
+  filter:drop-shadow(0 0 12px var(--zep-blue));
+}
 </style>
 </head>
+
 <body>
-  <div class="container">
-    <h1>🎮 Zep Swipe Profile</h1>
-    
-    <!-- Profile Section -->
-    <div class="profile-section">
-      <img id="profilePic" class="profile-pic" src="https://i.pravatar.cc/120" alt="Profile Picture">
-      <form id="profileForm">
-        <input type="text" id="nameInput" placeholder="Your Name">
-        <input type="url" id="avatarInput" placeholder="Avatar Image URL">
-        <button type="submit">Save Profile</button>
-      </form>
-    </div>
+<header>
+  <div class="logo">Merchant Profile</div>
+  <button class="logout-btn" onclick="window.location.href='index.html'" title="Logout">
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="#00f0ff" viewBox="0 0 24 24" width="26" height="26" stroke-width="1.8">
+      <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/>
+      <polyline points="10 17 15 12 10 7"/>
+      <line x1="15" y1="12" x2="3" y2="12"/>
+    </svg>
+  </button>
+</header>
 
-    <!-- Wallet Balance -->
-    <div class="wallet-card">
-      <span>Wallet Balance</span>
-      <span class="wallet-balance" id="walletBalance">50 ZAC</span>
-    </div>
+<main>
+  <div class="profile-card">
+    <img id="avatarPreview" src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png" alt="Avatar" class="profile-avatar" />
+    <label for="avatarUpload" class="upload-label">📷 Upload New Avatar</label>
+    <input type="file" id="avatarUpload" accept="image/*" style="display:none" />
 
-    <!-- Quick Links / Shortcuts -->
-    <div class="shortcuts">
-      <div class="shortcut-card" onclick="window.location.href='learn-earn.html'">
-        <i class="fas fa-gift"></i>
-        <p>Learn & Earn</p>
-      </div>
-      <div class="shortcut-card" onclick="window.location.href='dashboard-store.html'">
-        <i class="fas fa-store"></i>
-        <p>Marketplace</p>
-      </div>
-      <div class="shortcut-card" onclick="window.location.href='dashboard-wallet.html'">
-        <i class="fas fa-wallet"></i>
-        <p>Wallet</p>
-      </div>
-      <div class="shortcut-card" onclick="window.location.href='profile.html'">
-        <i class="fas fa-user"></i>
-        <p>Profile</p>
-      </div>
-    </div>
+    <h2 id="merchantName">Alex Global</h2>
+    <p class="role">Campus & Global Vendor</p>
 
-    <!-- Recent Activity Placeholder -->
-    <div class="recent-activity">
-      <h2>Recent Activity</h2>
-      <p>No recent activity yet. Complete Learn & Earn levels to see updates here.</p>
-    </div>
+    <label>Store Name</label>
+    <input type="text" id="storeName" placeholder="Store Name" />
 
-    <!-- Back to Home -->
-    <a id="backHome" class="back-link" href="#">Back to Home</a>
+    <label>Email</label>
+    <input type="email" id="email" placeholder="Email" />
+
+    <label>Country</label>
+    <select id="country">
+      <option>South Africa</option>
+      <option>Kenya</option>
+      <option>Nigeria</option>
+      <option>Ghana</option>
+      <option>United States</option>
+    </select>
+
+    <label>About</label>
+    <textarea id="about" rows="3" placeholder="Tell us about your business..."></textarea>
+
+    <button class="save-btn" onclick="saveProfile()">💾 Save Changes</button>
   </div>
+</main>
 
-  <script>
-    const profilePic = document.getElementById('profilePic');
-    const nameInput = document.getElementById('nameInput');
-    const avatarInput = document.getElementById('avatarInput');
-    const profileForm = document.getElementById('profileForm');
-    const backHome = document.getElementById('backHome');
+<!-- Floating Ask Zep AI -->
+<button class="ask-ai" onclick="window.location.href='zep-ai.html'">💬 Ask Zep AI</button>
 
-    // Example user role: 'student' or 'vendor'
-    const userRole = 'student'; // dynamically set this
+<footer>
+  <a href="wallet.html" class="footer-icon" title="Wallet">
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.8"><rect x="3" y="6" width="18" height="12" rx="2"/><path d="M16 12h4"/></svg>
+  </a>
+  <a href="listing.html" class="footer-icon" title="Sell">
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.8"><path d="M12 3v18m9-9H3"/></svg>
+  </a>
+  <a href="zepshop.html" class="footer-icon" title="Store">
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.8"><path d="M3 6h18l-2 12H5z"/></svg>
+  </a>
+  <a href="profile.html" class="footer-icon" title="Profile">
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.8"><circle cx="12" cy="7" r="4"/><path d="M4 20c0-4 4-6 8-6s8 2 8 6"/></svg>
+  </a>
+</footer>
 
-    let currentUser = {
-      name: "You",
-      avatar: "https://i.pravatar.cc/120",
-      walletBalance: 50
-    };
+<script>
+// === AUTO SAVE ===
+function saveProfile() {
+  const profile = {
+    storeName: document.getElementById('storeName').value,
+    email: document.getElementById('email').value,
+    country: document.getElementById('country').value,
+    about: document.getElementById('about').value,
+    avatar: document.getElementById('avatarPreview').src
+  };
+  localStorage.setItem('zepProfile', JSON.stringify(profile));
+  alert('✅ Profile Auto-Saved!');
+}
 
-    function loadProfile() {
-      nameInput.value = currentUser.name;
-      avatarInput.value = currentUser.avatar;
-      profilePic.src = currentUser.avatar;
-      document.getElementById('walletBalance').textContent = currentUser.walletBalance + " ZAC";
-    }
+// === LOAD PROFILE ===
+window.onload = function() {
+  const saved = JSON.parse(localStorage.getItem('zepProfile'));
+  if(saved){
+    document.getElementById('storeName').value = saved.storeName || '';
+    document.getElementById('email').value = saved.email || '';
+    document.getElementById('country').value = saved.country || 'South Africa';
+    document.getElementById('about').value = saved.about || '';
+    document.getElementById('avatarPreview').src = saved.avatar || 'https://cdn-icons-png.flaticon.com/512/3135/3135715.png';
+    document.getElementById('merchantName').textContent = saved.storeName || 'Merchant Profile';
+  }
+};
 
-    profileForm.addEventListener('submit', (e)=>{
-      e.preventDefault();
-      currentUser.name = nameInput.value || "Anonymous";
-      currentUser.avatar = avatarInput.value || "https://i.pravatar.cc/120";
-      profilePic.src = currentUser.avatar;
-      alert("Profile updated!");
-      // send update to backend if needed
-    });
-
-    // Back to home based on role
-    backHome.href = userRole === 'student' ? 'student-dashboard.html' : 'vendor-dashboard.html';
-
-    loadProfile();
-  </script>
+// === AVATAR UPLOAD PREVIEW ===
+document.getElementById('avatarUpload').addEventListener('change', function(e){
+  const file = e.target.files[0];
+  if(!file) return;
+  const reader = new FileReader();
+  reader.onload = function(evt){
+    document.getElementById('avatarPreview').src = evt.target.result;
+    saveProfile(); // auto-save avatar
+  };
+  reader.readAsDataURL(file);
+});
+</script>
 </body>
 </html>
