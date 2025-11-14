@@ -13,95 +13,106 @@
 
 <style>
   body {
-    background: radial-gradient(circle at 20% 20%, #040012, #02000a, #0d0030);
+    background: radial-gradient(circle at 20% 20%, #030012, #05001b, #0a0030);
+    font-family: "Poppins", sans-serif;
     color: white;
     padding-bottom: 110px;
-    font-family: "Poppins", sans-serif;
   }
 
+  /* GLASS UI */
   .glass {
-    background: rgba(255,255,255,0.08);
-    border: 1px solid rgba(255,255,255,0.18);
+    background: rgba(255, 255, 255, 0.07);
+    border: 1px solid rgba(255, 255, 255, 0.15);
     backdrop-filter: blur(18px);
-    border-radius: 1.3rem;
-    box-shadow: 0 0 35px rgba(0,200,255,0.25);
-    transition: 0.3s;
+    border-radius: 1.4rem;
+    box-shadow: 0 0 40px rgba(0,255,255,0.22);
+    transition: 0.25s;
   }
-
   .glass:hover {
-    transform: scale(1.03);
-    box-shadow: 0 0 48px rgba(140,65,255,0.55);
+    transform: translateY(-2px);
+    box-shadow: 0 0 55px rgba(166,93,255,0.55);
   }
 
+  /* GLOW TEXT */
   .glow {
     font-family: Orbitron;
-    background: linear-gradient(90deg,#00dfff,#b96bff);
+    background: linear-gradient(90deg, #00eaff, #a55dff);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
-    text-shadow: 0 0 20px rgba(0,255,255,0.4);
+    animation: glowPulse 3s infinite ease-in-out;
+  }
+  @keyframes glowPulse {
+    0% { text-shadow: 0 0 10px rgba(0,255,255,0.4); }
+    50% { text-shadow: 0 0 35px rgba(166,93,255,1); }
+    100% { text-shadow: 0 0 10px rgba(0,255,255,0.4); }
   }
 
-  /* Header Banner */
-  .header-banner {
-    background: rgba(255,255,255,0.08);
-    border: 1px solid rgba(255,255,255,0.15);
-    backdrop-filter: blur(20px);
+  /* 3D NEON ICON STYLE */
+  .icon-3d {
+    width: 55px;
+    filter:
+      drop-shadow(0 0 6px #00eaff)
+      drop-shadow(0 0 16px #8d4dff)
+      drop-shadow(0 0 22px rgba(0,255,255,0.6));
+    transition: 0.2s;
+  }
+  .icon-3d:hover {
+    transform: scale(1.15) rotate(2deg);
+    filter:
+      drop-shadow(0 0 10px #00eaff)
+      drop-shadow(0 0 25px #a55dff);
+  }
+
+  /* HEADER BAR */
+  .header-bar {
     margin: 20px;
-    padding: 20px;
-    border-radius: 20px;
+    padding: 15px 22px;
+    border-radius: 18px;
+    background: rgba(255,255,255,0.07);
+    backdrop-filter: blur(25px);
+    border: 1px solid rgba(255,255,255,0.18);
     display: flex;
     justify-content: space-between;
     align-items: center;
-    animation: bannerPulse 4s infinite alternate;
+    box-shadow: 0 0 40px rgba(0,255,255,0.28);
+    animation: headerPulse 4s infinite alternate;
+  }
+  @keyframes headerPulse {
+    0% { box-shadow: 0 0 25px rgba(0,255,255,0.22); }
+    100% { box-shadow: 0 0 45px rgba(166,93,255,0.6); }
   }
 
-  @keyframes bannerPulse {
-    0% { box-shadow: 0 0 25px rgba(0,255,255,0.25); }
-    100% { box-shadow: 0 0 38px rgba(166,93,255,0.55); }
-  }
-
-  /* Logout */
   .logout-icon {
-    width: 28px;
-    filter: drop-shadow(0 0 8px rgba(255,40,40,0.8));
+    width: 30px;
     cursor: pointer;
+    filter: drop-shadow(0 0 8px red);
     transition: 0.2s;
   }
-
   .logout-icon:hover {
     transform: scale(1.15);
-    filter: drop-shadow(0 0 14px rgba(255,40,40,1));
+    filter: drop-shadow(0 0 15px #ff3b3b);
   }
 
-  /* Footer Navigation */
+  /* FOOTER */
   .footer-nav {
     position: fixed;
-    bottom: 0;
-    left: 0; right: 0;
-    background: rgba(255,255,255,0.05);
-    border-top: 1px solid rgba(255,255,255,0.12);
-    padding: 0.9rem 1rem;
+    bottom: 0; left: 0; right: 0;
+    padding: 0.8rem 1rem;
+    background: rgba(255,255,255,0.06);
+    backdrop-filter: blur(22px);
+    border-top: 1px solid rgba(255,255,255,0.2);
     display: flex;
     justify-content: space-around;
-    backdrop-filter: blur(25px);
   }
 
-  .nav-icon {
-    width: 32px;
-    opacity: 0.9;
-    transition: 0.3s;
-    filter: drop-shadow(0 0 10px rgba(0,255,255,0.4));
+  .footer-icon {
+    width: 34px;
+    filter: drop-shadow(0 0 12px #00eaff);
+    transition: 0.25s;
   }
-
-  .nav-icon:hover {
-    transform: scale(1.22);
-    filter: drop-shadow(0 0 20px rgba(185,107,255,1));
-  }
-
-  .feature-icon {
-    width: 48px;
-    margin: 0 auto 10px auto;
-    filter: drop-shadow(0 0 10px rgba(0,255,255,0.45));
+  .footer-icon:hover {
+    transform: scale(1.25);
+    filter: drop-shadow(0 0 22px #b96bff);
   }
 </style>
 </head>
@@ -109,56 +120,53 @@
 <body>
 
 <!-- HEADER -->
-<div class="header-banner">
-  <div>
-    <h1 class="glow text-2xl">Zep Swipe</h1>
-    <p class="text-cyan-200 text-xs">Learn • Earn • Build on Campus</p>
-  </div>
+<div class="header-bar">
+  <h1 class="glow text-xl">Student Dashboard</h1>
 
-  <img src="https://www.svgrepo.com/show/503029/logout.svg" 
-       class="logout-icon"
-       onclick="logoutUser()">
+  <img src="https://www.svgrepo.com/show/503029/logout.svg" class="logout-icon" onclick="logoutUser()">
 </div>
 
-<!-- WALLET CARD -->
+<!-- WALLET -->
 <div class="mx-5 glass p-6 mb-6">
   <p class="text-cyan-200 text-sm">Wallet Balance</p>
-  <h2 class="text-4xl font-semibold mt-1">$42.40</h2>
-  <p class="text-purple-300 mt-2">ZAC Tokens: <span class="font-semibold">320 ZAC</span></p>
+  <h1 class="text-4xl font-semibold mt-1">$42.40</h1>
+  <p class="text-purple-300 mt-1">ZAC Tokens: <span class="font-semibold">320 ZAC</span></p>
 </div>
 
-<!-- FEATURE GRID -->
-<div class="mx-5 grid grid-cols-2 gap-5 mb-12">
+<!-- FEATURE GRID (3D ICONS) -->
+<div class="mx-5 grid grid-cols-2 gap-4 mb-10">
 
   <a href="delivery.html" class="glass text-center py-7">
-    <img src="https://www.svgrepo.com/show/477807/delivery-truck-fast.svg" class="feature-icon">
+    <img src="https://www.svgrepo.com/show/475935/delivery.svg" class="icon-3d mx-auto mb-3">
     <p class="glow text-sm">Parcel On</p>
   </a>
 
   <a href="ride.hailing.html" class="glass text-center py-7">
-    <img src="https://www.svgrepo.com/show/530442/car-03.svg" class="feature-icon">
+    <img src="https://www.svgrepo.com/show/503850/car.svg" class="icon-3d mx-auto mb-3">
     <p class="glow text-sm">Swipe Rides</p>
   </a>
 
   <a href="dashboard-store.html" class="glass text-center py-7">
-    <img src="https://www.svgrepo.com/show/530445/store-02.svg" class="feature-icon">
+    <img src="https://www.svgrepo.com/show/500724/store.svg" class="icon-3d mx-auto mb-3">
     <p class="glow text-sm">ZepShop Store</p>
   </a>
 
   <a href="learn-earn.html" class="glass text-center py-7">
-    <img src="https://www.svgrepo.com/show/530429/coins-01.svg" class="feature-icon">
+    <img src="https://www.svgrepo.com/show/500810/coins.svg" class="icon-3d mx-auto mb-3">
     <p class="glow text-sm">Earn $ZAC</p>
   </a>
 
 </div>
 
-<!-- STUDY AI -->
+<!-- ZEP AI STUDY BUDDY -->
 <div class="mx-5 glass p-6 mb-24">
-  <h2 class="glow text-lg mb-1">Zep Study Buddy AI</h2>
-  <p class="text-gray-300 text-sm">Assignments • Exams • Quizzes • Research</p>
+  <h2 class="glow text-lg mb-2">Zep Study Buddy AI</h2>
+  <p class="text-gray-300 text-sm">
+    Your personal AI tutor for coursework, tests & revision.
+  </p>
 
   <a href="zep-ai.html">
-    <div class="mt-5 py-3 bg-gradient-to-r from-cyan-400 to-purple-600 text-black font-semibold rounded-xl text-center">
+    <div class="mt-5 py-3 bg-gradient-to-r from-cyan-400 to-purple-600 text-black rounded-xl text-center font-semibold">
       Launch Zep AI
     </div>
   </a>
@@ -166,21 +174,23 @@
 
 <!-- FOOTER NAV -->
 <div class="footer-nav">
+
   <a href="wallet.html">
-    <img src="https://www.svgrepo.com/show/530448/wallet-02.svg" class="nav-icon">
+    <img src="https://www.svgrepo.com/show/488484/wallet.svg" class="footer-icon">
   </a>
 
   <a href="dashboard-store.html">
-    <img src="https://www.svgrepo.com/show/530445/store-02.svg" class="nav-icon">
+    <img src="https://www.svgrepo.com/show/500724/store.svg" class="footer-icon">
   </a>
 
   <a href="listing.html">
-    <img src="https://www.svgrepo.com/show/530443/add-circle.svg" class="nav-icon">
+    <img src="https://www.svgrepo.com/show/488952/add-square.svg" class="footer-icon">
   </a>
 
   <a href="profile.html">
-    <img src="https://www.svgrepo.com/show/530428/user-circle.svg" class="nav-icon">
+    <img src="https://www.svgrepo.com/show/493468/user-circle.svg" class="footer-icon">
   </a>
+
 </div>
 
 <script>
