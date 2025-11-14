@@ -13,9 +13,9 @@
 
 <style>
   body {
-    background: radial-gradient(circle at 20% 20%, #040012, #02000a, #0c0124);
+    background: radial-gradient(circle at 20% 20%, #040012, #02000a, #0d0030);
     color: white;
-    padding-bottom: 100px;
+    padding-bottom: 110px;
     font-family: "Poppins", sans-serif;
   }
 
@@ -29,8 +29,8 @@
   }
 
   .glass:hover {
-    box-shadow: 0 0 50px rgba(166,93,255,0.55);
-    transform: scale(1.02);
+    transform: scale(1.03);
+    box-shadow: 0 0 48px rgba(140,65,255,0.55);
   }
 
   .glow {
@@ -38,24 +38,39 @@
     background: linear-gradient(90deg,#00dfff,#b96bff);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
-    animation: glowPulse 3s ease-in-out infinite;
-  }
-
-  @keyframes glowPulse {
-    0% { text-shadow: 0 0 15px rgba(0,255,255,0.45); }
-    50% { text-shadow: 0 0 35px rgba(185,107,255,0.95); }
-    100% { text-shadow: 0 0 15px rgba(0,255,255,0.45); }
+    text-shadow: 0 0 20px rgba(0,255,255,0.4);
   }
 
   /* Header Banner */
-  .banner {
-    background: linear-gradient(120deg, rgba(0,225,255,0.25), rgba(166,93,255,0.23));
-    border: 1px solid rgba(255,255,255,0.2);
+  .header-banner {
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.15);
     backdrop-filter: blur(20px);
     margin: 20px;
-    padding: 18px;
+    padding: 20px;
     border-radius: 20px;
-    box-shadow: 0 0 45px rgba(0,255,255,0.25);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    animation: bannerPulse 4s infinite alternate;
+  }
+
+  @keyframes bannerPulse {
+    0% { box-shadow: 0 0 25px rgba(0,255,255,0.25); }
+    100% { box-shadow: 0 0 38px rgba(166,93,255,0.55); }
+  }
+
+  /* Logout */
+  .logout-icon {
+    width: 28px;
+    filter: drop-shadow(0 0 8px rgba(255,40,40,0.8));
+    cursor: pointer;
+    transition: 0.2s;
+  }
+
+  .logout-icon:hover {
+    transform: scale(1.15);
+    filter: drop-shadow(0 0 14px rgba(255,40,40,1));
   }
 
   /* Footer Navigation */
@@ -63,9 +78,9 @@
     position: fixed;
     bottom: 0;
     left: 0; right: 0;
-    background: rgba(255,255,255,0.06);
+    background: rgba(255,255,255,0.05);
     border-top: 1px solid rgba(255,255,255,0.12);
-    padding: 0.75rem;
+    padding: 0.9rem 1rem;
     display: flex;
     justify-content: space-around;
     backdrop-filter: blur(25px);
@@ -73,40 +88,36 @@
 
   .nav-icon {
     width: 32px;
-    filter: drop-shadow(0 0 10px rgba(0,255,255,0.5));
-    transition: 0.2s;
+    opacity: 0.9;
+    transition: 0.3s;
+    filter: drop-shadow(0 0 10px rgba(0,255,255,0.4));
   }
 
   .nav-icon:hover {
-    transform: scale(1.2);
-    filter: drop-shadow(0 0 18px rgba(185,107,255,0.9));
+    transform: scale(1.22);
+    filter: drop-shadow(0 0 20px rgba(185,107,255,1));
   }
 
-  /* Logout */
-  .logout-btn {
-    width: 28px;
-    filter: drop-shadow(0 0 10px rgba(255,40,40,0.85));
-    cursor: pointer;
-    transition: 0.2s;
-  }
-
-  .logout-btn:hover {
-    transform: scale(1.15);
-    filter: drop-shadow(0 0 16px rgba(255,40,40,1));
+  .feature-icon {
+    width: 48px;
+    margin: 0 auto 10px auto;
+    filter: drop-shadow(0 0 10px rgba(0,255,255,0.45));
   }
 </style>
 </head>
 
 <body>
 
-<!-- HEADER SECTION -->
-<div class="banner flex justify-between items-center">
+<!-- HEADER -->
+<div class="header-banner">
   <div>
     <h1 class="glow text-2xl">Zep Swipe</h1>
-    <p class="text-cyan-200 text-sm">Empowering students to earn on campus</p>
+    <p class="text-cyan-200 text-xs">Learn • Earn • Build on Campus</p>
   </div>
 
-  <img src="https://www.svgrepo.com/show/503029/logout.svg" class="logout-btn" onclick="logoutUser()">
+  <img src="https://www.svgrepo.com/show/503029/logout.svg" 
+       class="logout-icon"
+       onclick="logoutUser()">
 </div>
 
 <!-- WALLET CARD -->
@@ -117,34 +128,34 @@
 </div>
 
 <!-- FEATURE GRID -->
-<div class="mx-5 grid grid-cols-2 gap-4 mb-10">
+<div class="mx-5 grid grid-cols-2 gap-5 mb-12">
 
   <a href="delivery.html" class="glass text-center py-7">
-    <img src="https://www.svgrepo.com/show/475935/delivery.svg" class="mx-auto w-10 mb-2">
+    <img src="https://www.svgrepo.com/show/477807/delivery-truck-fast.svg" class="feature-icon">
     <p class="glow text-sm">Parcel On</p>
   </a>
 
   <a href="ride.hailing.html" class="glass text-center py-7">
-    <img src="https://www.svgrepo.com/show/503850/car.svg" class="mx-auto w-10 mb-2">
+    <img src="https://www.svgrepo.com/show/530442/car-03.svg" class="feature-icon">
     <p class="glow text-sm">Swipe Rides</p>
   </a>
 
   <a href="dashboard-store.html" class="glass text-center py-7">
-    <img src="https://www.svgrepo.com/show/500724/store.svg" class="mx-auto w-10 mb-2">
+    <img src="https://www.svgrepo.com/show/530445/store-02.svg" class="feature-icon">
     <p class="glow text-sm">ZepShop Store</p>
   </a>
 
   <a href="learn-earn.html" class="glass text-center py-7">
-    <img src="https://www.svgrepo.com/show/500810/coins.svg" class="mx-auto w-10 mb-2">
+    <img src="https://www.svgrepo.com/show/530429/coins-01.svg" class="feature-icon">
     <p class="glow text-sm">Earn $ZAC</p>
   </a>
 
 </div>
 
-<!-- STUDY BUDDY AI -->
+<!-- STUDY AI -->
 <div class="mx-5 glass p-6 mb-24">
   <h2 class="glow text-lg mb-1">Zep Study Buddy AI</h2>
-  <p class="text-gray-300 text-sm">Your personal AI tutor for revision, quizzes and coursework.</p>
+  <p class="text-gray-300 text-sm">Assignments • Exams • Quizzes • Research</p>
 
   <a href="zep-ai.html">
     <div class="mt-5 py-3 bg-gradient-to-r from-cyan-400 to-purple-600 text-black font-semibold rounded-xl text-center">
@@ -153,25 +164,23 @@
   </a>
 </div>
 
-<!-- FOOTER NAVIGATION -->
+<!-- FOOTER NAV -->
 <div class="footer-nav">
-
   <a href="wallet.html">
-    <img src="https://www.svgrepo.com/show/488484/wallet.svg" class="nav-icon">
+    <img src="https://www.svgrepo.com/show/530448/wallet-02.svg" class="nav-icon">
   </a>
 
   <a href="dashboard-store.html">
-    <img src="https://www.svgrepo.com/show/500724/store.svg" class="nav-icon">
+    <img src="https://www.svgrepo.com/show/530445/store-02.svg" class="nav-icon">
   </a>
 
   <a href="listing.html">
-    <img src="https://www.svgrepo.com/show/512317/add-circle.svg" class="nav-icon">
+    <img src="https://www.svgrepo.com/show/530443/add-circle.svg" class="nav-icon">
   </a>
 
   <a href="profile.html">
-    <img src="https://www.svgrepo.com/show/493468/user-circle.svg" class="nav-icon">
+    <img src="https://www.svgrepo.com/show/530428/user-circle.svg" class="nav-icon">
   </a>
-
 </div>
 
 <script>
