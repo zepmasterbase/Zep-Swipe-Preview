@@ -1,204 +1,342 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
 <title>Zep Swipe — Student Dashboard</title>
 
-<!-- Tailwind -->
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700&family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/ethers@6.6.0/dist/ethers.min.js"></script>
 <script src="https://cdn.tailwindcss.com"></script>
 
-<!-- Fonts -->
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
-
 <style>
-  body {
-    background: radial-gradient(circle at 20% 20%, #030012, #05001b, #0a0030);
-    font-family: "Poppins", sans-serif;
-    color: white;
-    padding-bottom: 110px;
-  }
+:root{
+  --zep-blue:#00f0ff;
+  --zep-violet:#9c4dff;
+  --zep-lime:#a6ff00;
+  --glass: rgba(255,255,255,0.06);
+  --bg: radial-gradient(circle at 25% 10%, #050018 0%, #000010 100%);
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0;font-family:'Poppins',sans-serif;background:var(--bg);color:#fff;-webkit-font-smoothing:antialiased;}
+header{
+  position:sticky;top:0;z-index:40;
+  display:flex;justify-content:space-between;align-items:center;
+  padding:14px 18px;background:rgba(255,255,255,0.06);
+  backdrop-filter:blur(14px);border-bottom:1px solid rgba(255,255,255,0.06);
+}
+.logo{font-family:'Orbitron';font-weight:700;background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));-webkit-background-clip:text;color:transparent;font-size:1.15rem;text-shadow:0 0 14px rgba(0,240,255,0.18);}
+.signout {
+  background:none;border:0;color:var(--zep-blue);cursor:pointer;padding:8px;border-radius:10px;filter:drop-shadow(0 0 8px var(--zep-violet));
+}
+.container{max-width:1100px;margin:20px auto;padding:0 16px 120px;}
+.grid-2{display:grid;grid-template-columns:1fr 360px;gap:18px;align-items:start;}
+@media (max-width:920px){.grid-2{grid-template-columns:1fr;}}
+.card{background:var(--glass);border-radius:14px;padding:18px;border:1px solid rgba(255,255,255,0.06);box-shadow:0 6px 30px rgba(0,0,0,0.45);backdrop-filter:blur(12px);}
+.header-row{display:flex;justify-content:space-between;align-items:center;gap:12px}
+.h1{font-family:'Orbitron';background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));-webkit-background-clip:text;color:transparent;font-size:1.3rem}
+.small{font-size:0.9rem;opacity:0.85}
 
-  /* GLASS UI */
-  .glass {
-    background: rgba(255, 255, 255, 0.07);
-    border: 1px solid rgba(255, 255, 255, 0.15);
-    backdrop-filter: blur(18px);
-    border-radius: 1.4rem;
-    box-shadow: 0 0 40px rgba(0,255,255,0.22);
-    transition: 0.25s;
-  }
-  .glass:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 0 55px rgba(166,93,255,0.55);
-  }
+/* balance */
+.balance-value{font-family:'Orbitron';font-size:1.6rem}
+.portfolio-row{display:flex;gap:12px;flex-wrap:wrap;margin-top:12px}
 
-  /* GLOW TEXT */
-  .glow {
-    font-family: Orbitron;
-    background: linear-gradient(90deg, #00eaff, #a55dff);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    animation: glowPulse 3s infinite ease-in-out;
-  }
-  @keyframes glowPulse {
-    0% { text-shadow: 0 0 10px rgba(0,255,255,0.4); }
-    50% { text-shadow: 0 0 35px rgba(166,93,255,1); }
-    100% { text-shadow: 0 0 10px rgba(0,255,255,0.4); }
-  }
+/* mini grid placeholders */
+.mini-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+.mini{background:linear-gradient(180deg,rgba(255,255,255,0.02),rgba(255,255,255,0.01));padding:14px;border-radius:12px;text-align:left;border:1px solid rgba(255,255,255,0.04);display:flex;flex-direction:column;gap:8px;min-height:92px;justify-content:center}
+.mini a{color:inherit;text-decoration:none}
+.mini .title{font-weight:700;font-family:'Orbitron';font-size:0.95rem}
+.mini .desc{font-size:0.82rem;opacity:0.85}
 
-  /* 3D NEON ICON STYLE */
-  .icon-3d {
-    width: 55px;
-    filter:
-      drop-shadow(0 0 6px #00eaff)
-      drop-shadow(0 0 16px #8d4dff)
-      drop-shadow(0 0 22px rgba(0,255,255,0.6));
-    transition: 0.2s;
-  }
-  .icon-3d:hover {
-    transform: scale(1.15) rotate(2deg);
-    filter:
-      drop-shadow(0 0 10px #00eaff)
-      drop-shadow(0 0 25px #a55dff);
-  }
+/* right column (insights + wallet) */
+.right-stack{display:flex;flex-direction:column;gap:14px}
+.kpi-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
+.kpi{background:rgba(255,255,255,0.03);padding:12px;border-radius:10px;text-align:center;border:1px solid rgba(255,255,255,0.04)}
+.kpi .num{font-family:'Orbitron';font-size:1.05rem}
 
-  /* HEADER BAR */
-  .header-bar {
-    margin: 20px;
-    padding: 15px 22px;
-    border-radius: 18px;
-    background: rgba(255,255,255,0.07);
-    backdrop-filter: blur(25px);
-    border: 1px solid rgba(255,255,255,0.18);
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    box-shadow: 0 0 40px rgba(0,255,255,0.28);
-    animation: headerPulse 4s infinite alternate;
-  }
-  @keyframes headerPulse {
-    0% { box-shadow: 0 0 25px rgba(0,255,255,0.22); }
-    100% { box-shadow: 0 0 45px rgba(166,93,255,0.6); }
-  }
+/* AI bubble */
+.ai-btn{position:fixed;right:18px;bottom:86px;background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));color:#050018;border:0;padding:12px 16px;border-radius:999px;font-family:'Orbitron';font-weight:700;cursor:pointer;z-index:60;box-shadow:0 8px 30px rgba(0,240,255,0.18)}
+.ai-panel{position:fixed;right:18px;bottom:146px;width:320px;background:rgba(6,6,20,0.98);border-radius:12px;border:1px solid rgba(255,255,255,0.06);overflow:hidden;display:none;flex-direction:column;z-index:60}
+.ai-head{background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));color:#050018;padding:10px 12px;font-family:'Orbitron';font-weight:700}
+.ai-body{padding:10px;max-height:280px;overflow:auto;font-size:0.9rem}
+.ai-input{display:flex;gap:8px;padding:8px;border-top:1px solid rgba(255,255,255,0.03)}
+.ai-input input{flex:1;padding:8px;border-radius:8px;border:1px solid rgba(255,255,255,0.04);background:rgba(255,255,255,0.02);color:#fff}
 
-  .logout-icon {
-    width: 30px;
-    cursor: pointer;
-    filter: drop-shadow(0 0 8px red);
-    transition: 0.2s;
-  }
-  .logout-icon:hover {
-    transform: scale(1.15);
-    filter: drop-shadow(0 0 15px #ff3b3b);
-  }
+/* footer spacing */
+footer{height:86px}
+.sm-note{font-size:0.82rem;opacity:0.76}
 
-  /* FOOTER */
-  .footer-nav {
-    position: fixed;
-    bottom: 0; left: 0; right: 0;
-    padding: 0.8rem 1rem;
-    background: rgba(255,255,255,0.06);
-    backdrop-filter: blur(22px);
-    border-top: 1px solid rgba(255,255,255,0.2);
-    display: flex;
-    justify-content: space-around;
-  }
-
-  .footer-icon {
-    width: 34px;
-    filter: drop-shadow(0 0 12px #00eaff);
-    transition: 0.25s;
-  }
-  .footer-icon:hover {
-    transform: scale(1.25);
-    filter: drop-shadow(0 0 22px #b96bff);
-  }
+/* responsive adjust */
+@media (max-width:440px){
+  .mini-grid{grid-template-columns:1fr}
+  .ai-panel{right:12px;bottom:140px;width:92%}
+}
 </style>
 </head>
-
 <body>
+<header>
+  <div class="logo">Zep Swipe — Student</div>
+  <div>
+    <button class="signout" id="logoutBtn" title="Logout">Sign out</button>
+  </div>
+</header>
 
-<!-- HEADER -->
-<div class="header-bar">
-  <h1 class="glow text-xl">Student Dashboard</h1>
+<main class="container">
+  <div class="grid-2">
+    <!-- left: main content -->
+    <section>
+      <div class="card">
+        <div class="header-row">
+          <div>
+            <div class="h1">Welcome back</div>
+            <div class="small sm-note">Student dashboard · Zep Study Buddy ready</div>
+          </div>
+          <div style="text-align:right">
+            <div class="small">Connected</div>
+            <div id="addrShort" class="small" style="font-family:Orbitron"></div>
+          </div>
+        </div>
 
-  <img src="https://www.svgrepo.com/show/503029/logout.svg" class="logout-icon" onclick="logoutUser()">
+        <div style="margin-top:14px" class="portfolio-row">
+          <div style="flex:1">
+            <div class="small">Balance</div>
+            <div id="zacBal" class="balance-value">— ZAC</div>
+            <div id="usdVal" class="small" style="margin-top:6px">≈ $0.00 USD</div>
+          </div>
+
+          <div style="width:160px;text-align:center">
+            <div class="small">Actions</div>
+            <div style="margin-top:8px;display:flex;flex-direction:column;gap:8px">
+              <a href="learn-earn.html" class="card" style="padding:8px;border-radius:12px;text-decoration:none;color:inherit;background:linear-gradient(90deg,var(--zep-lime),var(--zep-blue));box-shadow:0 6px 20px rgba(0,240,255,0.08)">Earn $ZAC</a>
+              <a href="withdraw.html" class="card" style="padding:8px;border-radius:12px;text-decoration:none;color:inherit">Withdraw to Bank</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- mini grid -->
+      <div style="margin-top:16px" class="card">
+        <div style="display:flex;justify-content:space-between;align-items:center">
+          <div class="h1" style="font-size:1rem">Quick Tools</div>
+          <div class="small sm-note">Tap to open</div>
+        </div>
+
+        <div style="margin-top:12px" class="mini-grid">
+          <div class="mini"><a href="delivery.html">
+            <div class="title">Parcel On</div>
+            <div class="desc">Schedule & track campus parcel delivery.</div>
+          </a></div>
+
+          <div class="mini"><a href="ride.hailing.html">
+            <div class="title">Swipe Rides</div>
+            <div class="desc">On-demand student rides & pooling.</div>
+          </a></div>
+
+          <div class="mini"><a href="dashboard-store.html">
+            <div class="title">Store</div>
+            <div class="desc">Explore campus merchants & deals.</div>
+          </a></div>
+
+          <div class="mini"><a href="learn-earn.html">
+            <div class="title">Learn & Earn</div>
+            <div class="desc">Zep Study Buddy · complete tasks to earn ZAC.</div>
+          </a></div>
+        </div>
+      </div>
+
+      <!-- feed / announcements -->
+      <div style="margin-top:16px" class="card">
+        <div class="h1" style="font-size:1rem">Campus Announcements</div>
+        <div style="margin-top:10px" class="small">No new announcements. Check Zep Shop deals for campus promotions.</div>
+      </div>
+    </section>
+
+    <!-- right: insights & small widgets -->
+    <aside class="right-stack">
+      <div class="card">
+        <div class="h1" style="font-size:1rem">Study Buddy Insight</div>
+        <div style="margin-top:10px" class="small">Tip: Complete short lessons in <strong>Learn & Earn</strong> to unlock bonus ZAC for campus purchases.</div>
+        <div style="margin-top:12px" class="kpi-grid">
+          <div class="kpi"><div class="small">Lessons Completed</div><div id="lessons" class="num">2</div></div>
+          <div class="kpi"><div class="small">Bonus Earned</div><div id="bonus" class="num">5 ZAC</div></div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="h1" style="font-size:1rem">Wallet Snapshot</div>
+        <div style="margin-top:10px" class="small">Token · Balance</div>
+        <div style="margin-top:12px">
+          <div class="kpi" style="display:flex;justify-content:space-between;align-items:center">
+            <div><div class="small">ZAC</div><div id="zacMini" class="num">—</div></div>
+            <div style="text-align:right"><div class="small">USD</div><div id="zacMiniUsd" class="num">—</div></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="h1" style="font-size:1rem">Student Rewards</div>
+        <div style="margin-top:10px" class="small">You have <strong id="badgeCount">1</strong> campus badge(s).</div>
+        <div style="margin-top:12px"><a class="card" href="profile.html" style="padding:8px;border-radius:12px;text-decoration:none;color:inherit">View Profile</a></div>
+      </div>
+    </aside>
+  </div>
+</main>
+
+<!-- floating Zep Study Buddy -->
+<button class="ai-btn" id="aiBtn">💬 Zep Study Buddy</button>
+<div class="ai-panel" id="aiPanel" role="dialog" aria-label="Zep Study Buddy">
+  <div class="ai-head">Zep Study Buddy</div>
+  <div class="ai-body" id="aiBody">
+    <div class="small">👋 Hi! I can help with study tips, earn tasks, or explain how to use your ZAC balance.</div>
+  </div>
+  <div class="ai-input">
+    <input id="aiInput" placeholder="Ask Zep Study Buddy..." />
+    <button id="aiSend" style="background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));color:#050018;padding:8px 12px;border-radius:8px;border:0;font-weight:700">Send</button>
+  </div>
 </div>
 
-<!-- WALLET -->
-<div class="mx-5 glass p-6 mb-6">
-  <p class="text-cyan-200 text-sm">Wallet Balance</p>
-  <h1 class="text-4xl font-semibold mt-1">$42.40</h1>
-  <p class="text-purple-300 mt-1">ZAC Tokens: <span class="font-semibold">320 ZAC</span></p>
-</div>
-
-<!-- FEATURE GRID (3D ICONS) -->
-<div class="mx-5 grid grid-cols-2 gap-4 mb-10">
-
-  <a href="delivery.html" class="glass text-center py-7">
-    <img src="https://www.svgrepo.com/show/475935/delivery.svg" class="icon-3d mx-auto mb-3">
-    <p class="glow text-sm">Parcel On</p>
-  </a>
-
-  <a href="ride.hailing.html" class="glass text-center py-7">
-    <img src="https://www.svgrepo.com/show/503850/car.svg" class="icon-3d mx-auto mb-3">
-    <p class="glow text-sm">Swipe Rides</p>
-  </a>
-
-  <a href="dashboard-store.html" class="glass text-center py-7">
-    <img src="https://www.svgrepo.com/show/500724/store.svg" class="icon-3d mx-auto mb-3">
-    <p class="glow text-sm">ZepShop Store</p>
-  </a>
-
-  <a href="learn-earn.html" class="glass text-center py-7">
-    <img src="https://www.svgrepo.com/show/500810/coins.svg" class="icon-3d mx-auto mb-3">
-    <p class="glow text-sm">Earn $ZAC</p>
-  </a>
-
-</div>
-
-<!-- ZEP AI STUDY BUDDY -->
-<div class="mx-5 glass p-6 mb-24">
-  <h2 class="glow text-lg mb-2">Zep Study Buddy AI</h2>
-  <p class="text-gray-300 text-sm">
-    Your personal AI tutor for coursework, tests & revision.
-  </p>
-
-  <a href="zep-ai.html">
-    <div class="mt-5 py-3 bg-gradient-to-r from-cyan-400 to-purple-600 text-black rounded-xl text-center font-semibold">
-      Launch Zep AI
-    </div>
-  </a>
-</div>
-
-<!-- FOOTER NAV -->
-<div class="footer-nav">
-
-  <a href="wallet.html">
-    <img src="https://www.svgrepo.com/show/488484/wallet.svg" class="footer-icon">
-  </a>
-
-  <a href="dashboard-store.html">
-    <img src="https://www.svgrepo.com/show/500724/store.svg" class="footer-icon">
-  </a>
-
-  <a href="listing.html">
-    <img src="https://www.svgrepo.com/show/488952/add-square.svg" class="footer-icon">
-  </a>
-
-  <a href="profile.html">
-    <img src="https://www.svgrepo.com/show/493468/user-circle.svg" class="footer-icon">
-  </a>
-
-</div>
+<footer></footer>
 
 <script>
-  function logoutUser() {
-    localStorage.removeItem("zepStudent");
-    window.location.href = "login.html";
-  }
-</script>
+/* ---------------------------
+ Student Dashboard script
+ - Requires localStorage.zepUser = { wallet: "...", provider: "...", role: "student" }
+ - If not found redirects to login.html
+ - Fetches ZAC balance from Base mainnet using the provided token address
+ - Auto-refreshes every 15s. Simulated USD price used for MVP
+---------------------------- */
+const ZAC_TOKEN_ADDRESS = "0xfe4119a9cac1425d808526905e92386b4234bf2a";
+const tokenABI = [
+  "function balanceOf(address owner) view returns (uint256)",
+  "function decimals() view returns (uint8)"
+];
+const RPC = "https://mainnet.base.org";
+const simulatedZacPrice = 0.15; // USD per ZAC for MVP
 
+let autoRefreshTimer = null;
+
+function formatNum(n){
+  if (Number.isNaN(n)) return "0.00";
+  return Number(n).toLocaleString(undefined,{minimumFractionDigits:2,maximumFractionDigits:2});
+}
+
+async function fetchZacAndUpdate(addr){
+  try{
+    const provider = new ethers.JsonRpcProvider(RPC);
+    const contract = new ethers.Contract(ZAC_TOKEN_ADDRESS, tokenABI, provider);
+    const decimals = await contract.decimals();
+    const raw = await contract.balanceOf(addr);
+    const bal = Number(ethers.formatUnits(raw, decimals));
+    const usd = bal * simulatedZacPrice;
+    // Update UI
+    document.getElementById('zacBal').textContent = `${formatNum(bal)} ZAC`;
+    document.getElementById('usdVal').textContent = `≈ $${formatNum(usd)} USD`;
+    document.getElementById('zacMini').textContent = `${formatNum(bal)} ZAC`;
+    document.getElementById('zacMiniUsd').textContent = `$${formatNum(usd)}`;
+    // persist small snapshot for fallback
+    localStorage.setItem('zep_zac_balance', JSON.stringify({ bal, usd, ts: Date.now() }));
+  }catch(err){
+    console.warn("ZAC fetch failed:", err);
+    // fallback to stored snapshot
+    const snap = JSON.parse(localStorage.getItem('zep_zac_balance') || "{}");
+    const bal = (snap && snap.bal) ? snap.bal : 25;
+    const usd = bal * simulatedZacPrice;
+    document.getElementById('zacBal').textContent = `${formatNum(bal)} ZAC (test)`;
+    document.getElementById('usdVal').textContent = `≈ $${formatNum(usd)} USD`;
+    document.getElementById('zacMini').textContent = `${formatNum(bal)} ZAC`;
+    document.getElementById('zacMiniUsd').textContent = `$${formatNum(usd)}`;
+  }
+}
+
+function startAutoRefresh(addr){
+  // clear existing
+  if (autoRefreshTimer) clearInterval(autoRefreshTimer);
+  // immediate first fetch
+  fetchZacAndUpdate(addr);
+  // refresh every 15s
+  autoRefreshTimer = setInterval(()=>fetchZacAndUpdate(addr), 15000);
+}
+
+/* --- load user or redirect --- */
+window.addEventListener('load', ()=>{
+  const user = JSON.parse(localStorage.getItem('zepUser') || 'null');
+  if (!user || !user.wallet || user.role !== 'student'){
+    // not logged in or not a student -> go to login
+    window.location.href = 'login.html';
+    return;
+  }
+  // display short address
+  const addr = user.wallet;
+  document.getElementById('addrShort').textContent = `${addr.slice(0,6)}...${addr.slice(-4)}`;
+
+  // start fetching ZAC and auto-refreshing
+  startAutoRefresh(addr);
+});
+
+/* --- logout --- */
+document.getElementById('logoutBtn').addEventListener('click', ()=>{
+  localStorage.removeItem('zepUser');
+  // keep ZAC snapshot but sign out user
+  window.location.href = 'index.html';
+});
+
+/* --- AI mini chat (local, persisted) --- */
+const aiBtn = document.getElementById('aiBtn');
+const aiPanel = document.getElementById('aiPanel');
+const aiBody = document.getElementById('aiBody');
+const aiInput = document.getElementById('aiInput');
+
+aiBtn.addEventListener('click', ()=> {
+  aiPanel.style.display = aiPanel.style.display === 'flex' ? 'none' : 'flex';
+  if (aiPanel.style.display === 'flex') aiInput.focus();
+});
+
+// load persisted tiny chat
+function loadAiMessages(){
+  const msgs = JSON.parse(localStorage.getItem('zep_ai_msgs') || '[]');
+  aiBody.innerHTML = msgs.map(m => `<div style="margin-bottom:8px">${m}</div>`).join('') || '<div class="small">👋 Hi! I can help with study tips and ZAC questions.</div>';
+}
+function saveAiMessage(text){
+  const msgs = JSON.parse(localStorage.getItem('zep_ai_msgs') || '[]');
+  msgs.push(text);
+  // keep last 30
+  localStorage.setItem('zep_ai_msgs', JSON.stringify(msgs.slice(-30)));
+}
+loadAiMessages();
+
+document.getElementById('aiSend').addEventListener('click', ()=> {
+  const txt = aiInput.value.trim();
+  if (!txt) return;
+  const userLine = `🧑: ${txt}`;
+  aiBody.insertAdjacentHTML('beforeend', `<div style="margin-bottom:8px">${userLine}</div>`);
+  saveAiMessage(userLine);
+  aiInput.value='';
+  aiBody.insertAdjacentHTML('beforeend', `<div style="margin-bottom:8px">🤖 Zep Study Buddy: thinking...</div>`);
+  aiBody.scrollTop = aiBody.scrollHeight;
+  // fake reply
+  setTimeout(()=>{
+    const reply = generateStudyReply(txt);
+    aiBody.insertAdjacentHTML('beforeend', `<div style="margin-bottom:8px">${reply}</div>`);
+    saveAiMessage(reply);
+    // also remove the 'thinking' placeholder (keep simple: trim last two entries logic)
+    // For simplicity, we'll keep replies appended; the UI shows context.
+    aiBody.scrollTop = aiBody.scrollHeight;
+  }, 800);
+});
+
+function generateStudyReply(q){
+  const lower = q.toLowerCase();
+  if (lower.includes('earn') || lower.includes('learn')) return "🎓 Try the Learn & Earn module — short lessons with micro quizzes. Complete 1 lesson = 2 ZAC bonus.";
+  if (lower.includes('balance') || lower.includes('zac')) return "💡 Your ZAC balance is fetched live from Base. Use it in Zep Shop or convert via Wallet > Withdraw (bank).";
+  if (lower.includes('parcel') || lower.includes('delivery')) return "📦 Parcel On lets you schedule and track campus deliveries. Tap Parcel On in Quick Tools.";
+  if (lower.includes('ride')) return "🚗 Swipe Rides connects you with campus hailing partners. Safety first — always confirm driver profile.";
+  return "🤖 Zep Study Buddy: I can help with Learn & Earn tasks, explain ZAC basics, or point you to campus deals.";
+}
+
+/* small demo values (lessons/badges) - in future hook to real API */
+document.getElementById('lessons').textContent = localStorage.getItem('zep_lessons') || '2';
+document.getElementById('badgeCount').textContent = localStorage.getItem('zep_badges') || '1';
+document.getElementById('bonus').textContent = (localStorage.getItem('zep_bonus') || '5') + ' ZAC';
+</script>
 </body>
 </html>
