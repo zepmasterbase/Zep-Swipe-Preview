@@ -11,9 +11,9 @@
 
 <style>
   body {
-    background: radial-gradient(circle at 20% 20%, #050013, #02000b, #10022b);
+    background: radial-gradient(circle at 20% 20%, #060014, #02000b, #11022d);
     color: white;
-    padding-bottom: 90px;
+    padding-bottom: 95px;
     font-family: Poppins, sans-serif;
   }
 
@@ -23,12 +23,13 @@
     backdrop-filter: blur(18px);
     border-radius: 1.2rem;
     padding: 1.5rem;
-    box-shadow: 0 0 25px rgba(0,255,255,0.18);
+    box-shadow: 0 0 25px rgba(0,255,255,0.22);
     transition: 0.3s;
   }
 
   .glass:hover {
     box-shadow: 0 0 35px rgba(0,255,255,0.35);
+    transform: translateY(-2px);
   }
 
   .glow {
@@ -41,58 +42,66 @@
 
   @keyframes glowPulse {
     0% { text-shadow: 0 0 12px rgba(0,255,255,0.5); }
-    50% { text-shadow: 0 0 32px rgba(166,93,255,0.9); }
+    50% { text-shadow: 0 0 30px rgba(169,93,255,1); }
     100% { text-shadow: 0 0 12px rgba(0,255,255,0.5); }
   }
 
-  /* Footer */
+  /* HEADER */
+  .header-glass {
+    background: rgba(255,255,255,0.07);
+    backdrop-filter: blur(22px);
+    border: 1px solid rgba(255,255,255,0.2);
+    padding: 14px 20px;
+    margin: 18px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-radius: 16px;
+    box-shadow: 0 0 28px rgba(0,255,255,0.25);
+    animation: headerPulse 4s infinite alternate;
+  }
+
+  @keyframes headerPulse {
+    0% { box-shadow: 0 0 18px rgba(0,255,255,0.25); }
+    100% { box-shadow: 0 0 42px rgba(166,93,255,0.55); }
+  }
+
+  .logout-icon {
+    width: 30px;
+    filter: drop-shadow(0 0 8px rgba(255,70,70,0.95));
+    transition: 0.3s;
+    cursor: pointer;
+  }
+
+  .logout-icon:hover {
+    transform: scale(1.15);
+    filter: drop-shadow(0 0 14px rgba(255,0,0,1));
+  }
+
+  /* FOOTER */
   .footer-nav {
     position: fixed;
     bottom: 0;
     left: 0; right: 0;
     background: rgba(255,255,255,0.06);
     border-top: 1px solid rgba(255,255,255,0.13);
-    padding: 0.65rem 1rem;
+    padding: 0.55rem 1rem;
     display: flex;
     justify-content: space-between;
     backdrop-filter: blur(20px);
   }
 
   .footer-icon {
-    width: 30px;
+    width: 34px;
+    filter: drop-shadow(0 0 10px rgba(0,255,255,0.65));
     opacity: 0.9;
-    transition: 0.3s;
-    filter: drop-shadow(0 0 8px rgba(0,255,255,0.6));
+    transition: 0.25s;
   }
 
   .footer-icon:hover {
-    transform: scale(1.15);
-    filter: drop-shadow(0 0 12px rgba(166,93,255,0.9));
-  }
-
-  /* Header glass bar */
-  .header-glass {
-    background: rgba(255,255,255,0.07);
-    backdrop-filter: blur(20px);
-    border: 1px solid rgba(255,255,255,0.18);
-    padding: 12px 18px;
-    margin: 18px;
-    display: flex;
-    justify-content: space-between;
-    border-radius: 16px;
-    box-shadow: 0 0 25px rgba(0,255,255,0.25);
-    animation: headerPulse 4s infinite alternate;
-  }
-
-  @keyframes headerPulse {
-    0% { box-shadow: 0 0 20px rgba(0,255,255,0.25); }
-    100% { box-shadow: 0 0 40px rgba(166,93,255,0.55); }
-  }
-
-  .logout-icon {
-    width: 26px;
-    cursor: pointer;
-    filter: drop-shadow(0 0 6px rgba(255,50,50,0.9));
+    transform: scale(1.22);
+    filter: drop-shadow(0 0 16px rgba(166,93,255,0.95));
+    opacity: 1;
   }
 </style>
 </head>
@@ -101,11 +110,10 @@
 
 <!-- HEADER -->
 <div class="header-glass">
-  <h1 class="glow text-xl">Student Dashboard</h1>
+  <h1 class="glow text-lg">Zep Swipe — Student Dashboard</h1>
 
-  <!-- Logout -->
-  <img src="https://www.svgrepo.com/show/503029/logout.svg" 
-       class="logout-icon" 
+  <img src="https://www.svgrepo.com/show/532520/logout-2.svg" 
+       class="logout-icon"
        onclick="logoutUser()">
 </div>
 
@@ -120,24 +128,24 @@
 <div class="mx-5 grid grid-cols-2 gap-4 mb-6">
 
   <a href="delivery.html" class="glass text-center py-6">
-    <p class="glow">📦 Parcel On</p>
+    <p class="glow text-sm">📦 Parcel On</p>
   </a>
 
   <a href="ride.hailing.html" class="glass text-center py-6">
-    <p class="glow">🚗 Swipe Rides</p>
+    <p class="glow text-sm">🚗 Swipe Rides</p>
   </a>
 
   <a href="dashboard-store.html" class="glass text-center py-6">
-    <p class="glow">🛒 ZepShop Store</p>
+    <p class="glow text-sm">🛒 ZepShop Store</p>
   </a>
 
   <a href="learn-earn.html" class="glass text-center py-6">
-    <p class="glow">🎓 Earn $ZAC</p>
+    <p class="glow text-sm">🎓 Earn $ZAC</p>
   </a>
 
 </div>
 
-<!-- ZEP AI CARD -->
+<!-- ZEP AI -->
 <div class="mx-5 glass mb-24">
   <h2 class="glow text-lg mb-2">Zep Study Buddy AI</h2>
   <p class="text-sm text-gray-300">
@@ -153,21 +161,21 @@
 
 <!-- FOOTER -->
 <div class="footer-nav">
-  
+
   <a href="wallet.html">
-    <img src="https://www.svgrepo.com/show/488484/wallet.svg" class="footer-icon">
+    <img src="https://www.svgrepo.com/show/448266/wallet-02.svg" class="footer-icon">
   </a>
 
   <a href="dashboard-store.html">
-    <img src="https://www.svgrepo.com/show/500724/store.svg" class="footer-icon">
+    <img src="https://www.svgrepo.com/show/468655/store-2.svg" class="footer-icon">
   </a>
 
   <a href="listing.html">
-    <img src="https://www.svgrepo.com/show/489978/add.svg" class="footer-icon">
+    <img src="https://www.svgrepo.com/show/473393/add-circle.svg" class="footer-icon">
   </a>
 
   <a href="profile.html">
-    <img src="https://www.svgrepo.com/show/493468/user-circle.svg" class="footer-icon">
+    <img src="https://www.svgrepo.com/show/532553/user-circle.svg" class="footer-icon">
   </a>
 
 </div>
