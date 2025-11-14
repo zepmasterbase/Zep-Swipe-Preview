@@ -13,7 +13,7 @@
   body {
     background: radial-gradient(circle at 20% 20%, #050013, #02000b, #10022b);
     color: white;
-    padding-bottom: 80px;
+    padding-bottom: 90px;
     font-family: Poppins, sans-serif;
   }
 
@@ -24,6 +24,11 @@
     border-radius: 1.2rem;
     padding: 1.5rem;
     box-shadow: 0 0 25px rgba(0,255,255,0.18);
+    transition: 0.3s;
+  }
+
+  .glass:hover {
+    box-shadow: 0 0 35px rgba(0,255,255,0.35);
   }
 
   .glow {
@@ -31,19 +36,63 @@
     background: linear-gradient(90deg,#00eaff,#a65dff);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
+    animation: glowPulse 3s infinite ease-in-out;
   }
 
+  @keyframes glowPulse {
+    0% { text-shadow: 0 0 12px rgba(0,255,255,0.5); }
+    50% { text-shadow: 0 0 32px rgba(166,93,255,0.9); }
+    100% { text-shadow: 0 0 12px rgba(0,255,255,0.5); }
+  }
+
+  /* Footer */
   .footer-nav {
     position: fixed;
     bottom: 0;
-    left: 0;
-    right: 0;
-    background: rgba(255,255,255,0.07);
-    padding: 0.9rem;
+    left: 0; right: 0;
+    background: rgba(255,255,255,0.06);
+    border-top: 1px solid rgba(255,255,255,0.13);
+    padding: 0.65rem 1rem;
     display: flex;
-    justify-content: space-around;
+    justify-content: space-between;
     backdrop-filter: blur(20px);
-    border-top: 1px solid rgba(255,255,255,0.14);
+  }
+
+  .footer-icon {
+    width: 30px;
+    opacity: 0.9;
+    transition: 0.3s;
+    filter: drop-shadow(0 0 8px rgba(0,255,255,0.6));
+  }
+
+  .footer-icon:hover {
+    transform: scale(1.15);
+    filter: drop-shadow(0 0 12px rgba(166,93,255,0.9));
+  }
+
+  /* Header glass bar */
+  .header-glass {
+    background: rgba(255,255,255,0.07);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255,255,255,0.18);
+    padding: 12px 18px;
+    margin: 18px;
+    display: flex;
+    justify-content: space-between;
+    border-radius: 16px;
+    box-shadow: 0 0 25px rgba(0,255,255,0.25);
+    animation: headerPulse 4s infinite alternate;
+  }
+
+  @keyframes headerPulse {
+    0% { box-shadow: 0 0 20px rgba(0,255,255,0.25); }
+    100% { box-shadow: 0 0 40px rgba(166,93,255,0.55); }
+  }
+
+  .logout-icon {
+    width: 26px;
+    cursor: pointer;
+    filter: drop-shadow(0 0 6px rgba(255,50,50,0.9));
   }
 </style>
 </head>
@@ -51,9 +100,13 @@
 <body>
 
 <!-- HEADER -->
-<div class="text-center mt-6 mb-5">
-  <h1 class="glow text-2xl">Student Dashboard</h1>
-  <p class="text-cyan-300 text-sm">Earn, Learn & Thrive on Campus</p>
+<div class="header-glass">
+  <h1 class="glow text-xl">Student Dashboard</h1>
+
+  <!-- Logout -->
+  <img src="https://www.svgrepo.com/show/503029/logout.svg" 
+       class="logout-icon" 
+       onclick="logoutUser()">
 </div>
 
 <!-- WALLET CARD -->
@@ -63,34 +116,36 @@
   <p class="text-sm text-purple-300 mt-2">ZAC Tokens: 320 ZAC</p>
 </div>
 
-<!-- STUDENT FEATURES -->
-<div class="mx-5 grid grid-cols-2 gap-4 mb-5">
+<!-- FEATURE GRID -->
+<div class="mx-5 grid grid-cols-2 gap-4 mb-6">
+
   <a href="delivery.html" class="glass text-center py-6">
-    <p>📦 Parcel On</p>
+    <p class="glow">📦 Parcel On</p>
   </a>
 
   <a href="ride.hailing.html" class="glass text-center py-6">
-    <p>🚗 Swipe Rides</p>
+    <p class="glow">🚗 Swipe Rides</p>
   </a>
 
   <a href="dashboard-store.html" class="glass text-center py-6">
-    <p>🛒 ZepShop Store</p>
+    <p class="glow">🛒 ZepShop Store</p>
   </a>
 
   <a href="learn-earn.html" class="glass text-center py-6">
-    <p>🎓 Earn $ZAC</p>
+    <p class="glow">🎓 Earn $ZAC</p>
   </a>
+
 </div>
 
-<!-- ZEP AI STUDY BUDDY -->
+<!-- ZEP AI CARD -->
 <div class="mx-5 glass mb-24">
   <h2 class="glow text-lg mb-2">Zep Study Buddy AI</h2>
   <p class="text-sm text-gray-300">
-    Your personal AI tutor to help with assignments, quizzes & revision.
+    Your personal AI tutor for assignments, quizzes & revision.
   </p>
 
   <a href="zep-ai.html">
-    <div class="mt-4 py-3 px-4 bg-gradient-to-r from-cyan-400 to-purple-500 text-black font-semibold rounded-xl text-center">
+    <div class="mt-4 py-3 px-4 bg-gradient-to-r from-cyan-400 to-purple-600 text-black font-semibold rounded-xl text-center">
       Launch Zep AI
     </div>
   </a>
@@ -98,12 +153,31 @@
 
 <!-- FOOTER -->
 <div class="footer-nav">
-  <a href="#"><i class="fa fa-home"></i></a>
-  <a href="#"><i class="fa fa-book"></i></a>
-  <a href="#"><i class="fa fa-wallet"></i></a>
-  <a href="#"><i class="fa fa-user"></i></a>
+  
+  <a href="wallet.html">
+    <img src="https://www.svgrepo.com/show/488484/wallet.svg" class="footer-icon">
+  </a>
+
+  <a href="dashboard-store.html">
+    <img src="https://www.svgrepo.com/show/500724/store.svg" class="footer-icon">
+  </a>
+
+  <a href="listing.html">
+    <img src="https://www.svgrepo.com/show/489978/add.svg" class="footer-icon">
+  </a>
+
+  <a href="profile.html">
+    <img src="https://www.svgrepo.com/show/493468/user-circle.svg" class="footer-icon">
+  </a>
+
 </div>
 
-<script src="https://kit.fontawesome.com/a2e0e6b6a2.js" crossorigin="anonymous"></script>
+<script>
+  function logoutUser() {
+    localStorage.removeItem("zepStudent");
+    window.location.href = "login.html";
+  }
+</script>
+
 </body>
 </html>
