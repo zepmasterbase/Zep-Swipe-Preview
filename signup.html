@@ -1,147 +1,143 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Zep Swipe — Login</title>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Zep Swipe — Student Login</title>
 
+<!-- Tailwind -->
 <script src="https://cdn.tailwindcss.com"></script>
 
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
 
 <style>
-  body {
-    background: radial-gradient(circle at 20% 20%, #060014, #01000a, #0c0130);
-    font-family: Poppins, sans-serif;
-    color: white;
-    min-height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 2rem;
-  }
+:root {
+  --zep-blue:#00f0ff;
+  --zep-pink:#ff4dff;
+  --zep-purple:#9c4dff;
+  --glass:rgba(255,255,255,0.07);
+}
 
-  .glass-card {
-    width: 100%;
-    max-width: 420px;
-    background: rgba(255,255,255,0.07);
-    border: 1px solid rgba(255,255,255,0.14);
-    padding: 2rem;
-    border-radius: 1.5rem;
-    backdrop-filter: blur(20px);
-    box-shadow: 0 0 35px rgba(0,255,255,0.25);
-    animation: fadeIn 1s ease-out;
-  }
+body {
+  background: radial-gradient(circle at 25% 10%, #050018, #000010, #090022);
+  font-family:'Poppins',sans-serif;
+  color:white;
+  height:100vh;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  overflow:hidden;
+}
 
-  @keyframes fadeIn {
-    from { opacity: 0; transform: translateY(12px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
+/* Floating glow circles */
+.glow-circle {
+  position:absolute;
+  width:420px; height:420px;
+  border-radius:50%;
+  opacity:0.13;
+  filter:blur(40px);
+  animation:float 6s infinite alternate ease-in-out;
+}
+@keyframes float {
+  0% { transform:translateY(0); }
+  100% { transform:translateY(-25px); }
+}
 
-  .title {
-    font-family: Orbitron;
-    font-size: 1.9rem;
-    background: linear-gradient(90deg,#00eaff,#a65dff);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    text-align: center;
-    padding-bottom: 0.5rem;
-    animation: titlePulse 3s infinite ease-in-out;
-  }
+/* LOGIN CARD */
+.login-card {
+  background:var(--glass);
+  border:1px solid rgba(255,255,255,0.15);
+  backdrop-filter:blur(18px);
+  width:92%;
+  max-width:380px;
+  padding:2.2rem 1.6rem;
+  border-radius:1.4rem;
+  box-shadow:0 0 30px rgba(0,255,255,0.25);
+  animation:fadeIn 1.2s ease;
+}
+@keyframes fadeIn {
+  from { opacity:0; transform:translateY(25px); }
+  to { opacity:1; transform:translateY(0); }
+}
 
-  @keyframes titlePulse {
-    0% { text-shadow: 0 0 12px rgba(0,255,255,0.4); }
-    50% { text-shadow: 0 0 32px rgba(166,93,255,0.9); }
-    100% { text-shadow: 0 0 12px rgba(0,255,255,0.4); }
-  }
+/* Title */
+.title {
+  font-family:'Orbitron';
+  font-size:1.9rem;
+  text-align:center;
+  background:linear-gradient(90deg,var(--zep-blue),var(--zep-purple));
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+  text-shadow:0 0 18px rgba(0,240,255,0.55);
+  animation:pulse 3s infinite alternate;
+}
+@keyframes pulse {
+  0% { text-shadow:0 0 12px rgba(0,240,255,0.4); }
+  100% { text-shadow:0 0 32px rgba(156,77,255,0.8); }
+}
 
-  .wallet-btn {
-    width: 100%;
-    padding: 0.9rem;
-    margin-bottom: 1rem;
-    border-radius: 0.9rem;
-    background: rgba(255,255,255,0.08);
-    border: 1px solid rgba(255,255,255,0.18);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 0.6rem;
-    color: white;
-    transition: 0.3s;
-  }
+/* Button */
+.login-btn {
+  margin-top:1.8rem;
+  width:100%;
+  padding:14px;
+  border-radius:999px;
+  font-family:'Orbitron';
+  font-weight:700;
+  background:linear-gradient(90deg,var(--zep-blue),var(--zep-purple));
+  color:#050018;
+  font-size:1rem;
+  cursor:pointer;
+  transition:0.3s;
+  box-shadow:0 0 22px rgba(0,240,255,0.5);
+}
+.login-btn:hover {
+  transform:scale(1.05);
+  box-shadow:0 0 40px rgba(156,77,255,0.7);
+}
 
-  .wallet-btn:hover {
-    transform: scale(1.05);
-    box-shadow: 0 0 18px rgba(0,255,255,0.4);
-    background: linear-gradient(90deg,#00f0ff33,#9c4dff33);
-  }
-
-  .coming {
-    opacity: 0.4;
-    cursor: not-allowed;
-  }
-
-  .footer {
-    text-align: center;
-    margin-top: 1.4rem;
-    font-size: 0.75rem;
-    opacity: 0.7;
-  }
+.subtitle {
+  text-align:center;
+  opacity:0.75;
+  margin-top:0.6rem;
+  font-size:0.9rem;
+  letter-spacing:0.5px;
+}
 </style>
 </head>
 
 <body>
 
-<div class="glass-card">
-  
-  <h1 class="title">Zep Swipe Login</h1>
+<!-- Background Glow -->
+<div class="glow-circle" style="top:-120px; left:-120px; background:var(--zep-blue);"></div>
+<div class="glow-circle" style="bottom:-150px; right:-150px; background:var(--zep-purple);"></div>
 
-  <p class="text-center text-cyan-200 mb-6 text-sm">Choose your login method</p>
+<!-- LOGIN CARD -->
+<div class="login-card">
+  <h1 class="title mb-3">Zep Swipe</h1>
+  <p class="subtitle">Student Wallet • Campus Marketplace • Learn & Earn</p>
 
-  <!-- DEV MODE: Wallet buttons just redirect -->
-  <button class="wallet-btn" onclick="devLogin()">
-    🔗 Connect MetaMask
-  </button>
-
-  <button class="wallet-btn" onclick="devLogin()">
-    💼 Connect Coinbase/Base Wallet
-  </button>
-
-  <div class="text-center text-sm text-cyan-300 my-3">or continue with phone</div>
-
-  <button class="wallet-btn coming">
-    📱 Phone Login (Coming Soon)
-  </button>
-
-  <div id="status" class="text-center text-sm text-cyan-300 mt-2"></div>
-
-  <div class="footer">© 2025 Zep Swipe — Building on Base</div>
-
+  <button class="login-btn" onclick="studentLogin()">🚀 Enter Dashboard</button>
 </div>
 
 <script>
-  // Auto Redirect if already logged in
-  window.onload = () => {
-    const user = JSON.parse(localStorage.getItem("zepStudent"));
-    if (user && user.active === true) {
-      window.location.href = "student-dashboard.html";
-    }
-  };
+// DEV-MODE LOGIN
+function studentLogin() {
+  localStorage.setItem("zepStudent", JSON.stringify({
+    loggedIn:true,
+    time:Date.now()
+  }));
+  window.location.href = "student-dashboard.html";
+}
 
-  function devLogin() {
-    // DEV MODE — fake authentication
-    localStorage.setItem("zepStudent", JSON.stringify({
-      wallet: "0xDEV123456789",
-      active: true,
-      loginTime: Date.now()
-    }));
-
-    document.getElementById("status").innerHTML = "✅ Login successful — Redirecting…";
-
-    setTimeout(() => {
-      window.location.href = "student-dashboard.html";
-    }, 900);
+// AUTO LOGIN IF SESSION EXISTS
+window.onload = () => {
+  const s = JSON.parse(localStorage.getItem("zepStudent"));
+  if (s && s.loggedIn) {
+    window.location.href = "student-dashboard.html";
   }
+};
 </script>
 
 </body>
