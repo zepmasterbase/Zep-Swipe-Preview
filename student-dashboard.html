@@ -1,363 +1,120 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>Zep Swipe — Student Dashboard</title>
-
-<!-- fonts + tailwind (for convenience) -->
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Zep Swipe — Connect Wallet</title>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700&family=Poppins:wght@400;500;600&display=swap" rel="stylesheet" />
 <script src="https://cdn.tailwindcss.com"></script>
-<script src="https://cdn.jsdelivr.net/npm/ethers@6.6.0/dist/ethers.min.js"></script>
 
 <style>
-  :root{
-    --zep-blue: #00f0ff;
-    --zep-violet: #9c4dff;
-    --zep-lime: #a6ff00;
-    --glass: rgba(255,255,255,0.06);
-  }
-  html,body { height:100%; margin:0; font-family: 'Poppins', sans-serif; background: radial-gradient(circle at 20% 10%, #040217 0%, #000010 60%); color:#fff; -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale; }
-
-  /* header */
-  .topbar {
-    margin:18px;
-    padding:14px 18px;
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-    border-radius:14px;
-    background: var(--glass);
-    border:1px solid rgba(255,255,255,0.08);
-    backdrop-filter: blur(14px);
-    box-shadow: 0 8px 30px rgba(0,240,255,0.06);
-    animation: headerGlow 4s ease-in-out infinite alternate;
-  }
-  @keyframes headerGlow {
-    0%{ box-shadow:0 8px 20px rgba(0,240,255,0.08); }
-    100%{ box-shadow:0 8px 40px rgba(156,77,255,0.14); }
-  }
-  .brand {
-    display:flex; gap:12px; align-items:center;
-  }
-  .logo-mark {
-    width:44px; height:44px; border-radius:10px;
-    background:linear-gradient(135deg,var(--zep-blue),var(--zep-violet));
-    display:flex; align-items:center; justify-content:center;
-    font-family: 'Orbitron'; font-weight:700; color:#050018;
-    box-shadow:0 6px 18px rgba(0,240,255,0.14);
-  }
-  .brand h1 { font-family:'Orbitron'; font-size:1.05rem; margin:0; background: linear-gradient(90deg,var(--zep-blue),var(--zep-violet)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
-  .logout {
-    cursor:pointer;
-    width:40px; height:40px; border-radius:10px;
-    display:inline-flex; align-items:center; justify-content:center;
-    background: rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.06);
-    transition: transform .18s ease, box-shadow .18s;
-    filter: drop-shadow(0 6px 18px rgba(255,0,80,0.06));
-  }
-  .logout:hover { transform:scale(1.05); box-shadow:0 8px 24px rgba(255,0,80,0.12); }
-
-  /* main container */
-  .container { padding: 0 18px 120px; max-width:980px; margin: 0 auto; }
-
-  /* wallet card */
-  .wallet-card {
-    margin-top:18px;
-    background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.015));
-    border-radius:14px; padding:18px;
-    border:1px solid rgba(255,255,255,0.04);
-    backdrop-filter: blur(12px);
-    display:flex; gap:18px; align-items:center; justify-content:space-between;
-    box-shadow:0 20px 40px rgba(0,0,0,0.45), 0 8px 30px rgba(0,240,255,0.03);
-  }
-  .wallet-left { display:flex; gap:12px; align-items:center; }
-  .wallet-icon {
-    width:68px; height:68px; border-radius:12px;
-    background: radial-gradient(circle at 20% 20%, rgba(0,240,255,0.12), rgba(156,77,255,0.10));
-    display:flex; align-items:center; justify-content:center; font-family:Orbitron; font-weight:700; color:#cfefff;
-    box-shadow:0 10px 30px rgba(0,240,255,0.06), inset 0 -3px 12px rgba(0,0,0,0.3);
-  }
-  .wallet-meta { line-height:1.05; }
-  .wallet-meta p { margin:0; opacity:0.85; font-size:0.85rem; }
-  .wallet-balance { font-family:Orbitron; font-size:1.4rem; margin-top:6px; color:transparent; background: linear-gradient(90deg, var(--zep-blue), var(--zep-violet)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
-
-  /* grid features */
-  .features { margin-top:18px; display:grid; grid-template-columns:repeat(auto-fit,minmax(160px,1fr)); gap:14px; }
-  .feature {
-    padding:16px; border-radius:12px; text-align:center;
-    background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
-    border:1px solid rgba(255,255,255,0.03);
-    backdrop-filter: blur(10px);
-    transition: transform .18s ease, box-shadow .18s;
-    box-shadow:0 8px 30px rgba(0,0,0,0.45);
-  }
-  .feature:hover { transform:translateY(-6px); box-shadow:0 20px 40px rgba(0,0,0,0.5), 0 8px 30px rgba(156,77,255,0.06); }
-  .feature .icon {
-    width:56px; height:56px; margin:0 auto 10px; border-radius:10px;
-    display:flex; align-items:center; justify-content:center; background:linear-gradient(135deg,var(--zep-blue),var(--zep-violet));
-    box-shadow:0 12px 30px rgba(0,240,255,0.08);
-    color:#050018; font-weight:700; font-family:Orbitron;
-  }
-  .feature .label { display:block; font-weight:600; margin-top:6px; color:#dff7ff; }
-
-  /* insights */
-  .insights { margin-top:18px; display:flex; gap:14px; flex-direction:column; }
-  .insight-card { padding:14px; border-radius:12px; background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01)); border:1px solid rgba(255,255,255,0.03); }
-
-  /* ai bubble */
-  .ai-bubble {
-    position: fixed; right:18px; bottom:90px;
-    background: linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
-    color:#050018; font-weight:700; font-family:Orbitron;
-    padding:12px 16px; border-radius:999px;
-    box-shadow:0 20px 50px rgba(156,77,255,0.12);
-    cursor:pointer;
-  }
-
-  /* footer nav (3D-ish icons) */
-  .footer {
-    position: fixed; left:0; right:0; bottom:0; height:78px; display:flex; align-items:center; justify-content:center;
-    background: linear-gradient(180deg, rgba(0,0,0,0.2), rgba(0,0,0,0.3));
-    border-top:1px solid rgba(255,255,255,0.02); backdrop-filter: blur(10px);
-  }
-  .nav-inner { max-width:900px; width:100%; display:flex; justify-content:space-around; align-items:center; padding:0 18px; }
-  .nav-btn {
-    width:56px; height:56px; border-radius:12px; display:flex; align-items:center; justify-content:center;
-    background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
-    border:1px solid rgba(255,255,255,0.04); cursor:pointer; transition: transform .16s ease;
-    box-shadow: 0 12px 30px rgba(0,0,0,0.6), 0 6px 18px rgba(0,240,255,0.03);
-  }
-  .nav-btn:hover { transform:translateY(-6px); }
-  .nav-svg { width:26px; height:26px; filter: drop-shadow(0 6px 18px rgba(0,240,255,0.08)); }
-
-  /* small responsive tweaks */
-  @media (max-width:640px) {
-    .wallet-card { flex-direction:column; align-items:flex-start; gap:10px; }
-    .ai-bubble { right:14px; bottom:110px; font-size:0.86rem; padding:10px 12px; }
-  }
+:root {
+  --zep-blue:#00f0ff;
+  --zep-violet:#9c4dff;
+}
+body {
+  font-family:'Poppins',sans-serif;
+  background:radial-gradient(circle at 25% 10%, #050018 0%, #000010 100%);
+  color:#fff;
+  height:100vh;
+  margin:0;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  overflow:hidden;
+}
+h1 {
+  font-family:'Orbitron';
+  font-size:2rem;
+  background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+  margin-bottom:1rem;
+}
+button {
+  width:260px;
+  padding:14px 24px;
+  border:none;
+  border-radius:999px;
+  font-family:'Orbitron';
+  font-weight:700;
+  background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
+  color:#050018;
+  cursor:pointer;
+  box-shadow:0 0 25px rgba(0,240,255,0.5);
+}
+button:hover {
+  transform:scale(1.05);
+}
+footer {
+  position:fixed;
+  bottom:15px;
+  opacity:0.6;
+  font-size:0.8rem;
+}
 </style>
 </head>
+
 <body>
 
-  <!-- header -->
-  <div class="topbar container" role="banner">
-    <div class="brand">
-      <div class="logo-mark">Z</div>
-      <div>
-        <h1>Zep Swipe</h1>
-        <div style="font-size:.78rem; opacity:.85; margin-top:4px;">Student Dashboard</div>
-      </div>
-    </div>
+<h1>Zep Swipe</h1>
+<p style="opacity:0.7;max-width:260px;text-align:center;margin-bottom:1.5rem;">
+  Connect your wallet to continue to your Merchant Dashboard.
+</p>
 
-    <div style="display:flex;align-items:center; gap:8px;">
-      <div id="shortAddr" style="font-family:Orbitron; opacity:.9; font-size:.95rem;"></div>
-      <div class="logout" title="Logout / Back to Login" onclick="logout()">
-        <!-- slick logout SVG -->
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" class="nav-svg" xmlns="http://www.w3.org/2000/svg">
-          <path d="M16 17L21 12L16 7" stroke="#fff" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
-          <path d="M21 12H9" stroke="#fff" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
-          <path d="M14 19H6C5.44772 19 5 18.5523 5 18V6C5 5.44772 5.44772 5 6 5H14" stroke="#fff" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
-      </div>
-    </div>
-  </div>
+<button onclick="connectWallet()">🔗 Connect Wallet</button>
 
-  <!-- main container -->
-  <main class="container">
-
-    <!-- wallet card -->
-    <section class="wallet-card" role="region" aria-label="Wallet summary">
-      <div class="wallet-left">
-        <div class="wallet-icon">💳</div>
-        <div class="wallet-meta">
-          <p style="opacity:.85">Connected Wallet</p>
-          <div id="walletAddressShort" style="font-weight:600"></div>
-          <div class="wallet-balance" id="zacBalance">— ZAC</div>
-        </div>
-      </div>
-
-      <div style="text-align:right">
-        <p style="opacity:.8; font-size:.9rem">Estimated USD</p>
-        <div style="font-family:Orbitron; font-size:1.2rem; margin-top:6px;" id="usdValue">≈ $0.00</div>
-      </div>
-    </section>
-
-    <!-- features grid -->
-    <section class="features" aria-label="Student features">
-      <a class="feature" href="delivery.html">
-        <div class="icon"><svg width="28" height="28" viewBox="0 0 24 24" fill="none"><rect x="2" y="7" width="14" height="10" rx="2" fill="#fff" /></svg></div>
-        <span class="label">Parcel On</span>
-      </a>
-
-      <a class="feature" href="ride.hailing.html">
-        <div class="icon">🚗</div>
-        <span class="label">Swipe Rides</span>
-      </a>
-
-      <a class="feature" href="dashboard-store.html">
-        <div class="icon">🛒</div>
-        <span class="label">ZepShop</span>
-      </a>
-
-      <a class="feature" href="learn-earn.html">
-        <div class="icon">🎓</div>
-        <span class="label">Earn $ZAC</span>
-      </a>
-    </section>
-
-    <!-- insights -->
-    <section class="insights">
-      <div class="insight-card">
-        <h3 style="font-family:Orbitron; margin:0; color:transparent; background: linear-gradient(90deg,var(--zep-blue),var(--zep-violet)); -webkit-background-clip:text; -webkit-text-fill-color:transparent;">Zep Study Buddy</h3>
-        <p style="opacity:.85; margin-top:8px;">Have a question? Ask Zep AI for study help, quick summaries, or exam tips.</p>
-      </div>
-
-      <div class="insight-card" id="miniStats">
-        <div style="display:flex;justify-content:space-between;gap:12px;">
-          <div><p style="opacity:.85; margin:0;">Orders</p><p style="font-family:Orbitron; font-size:1.15rem; margin:6px 0;">12</p></div>
-          <div><p style="opacity:.85; margin:0;">Likes</p><p style="font-family:Orbitron; font-size:1.15rem; margin:6px 0;">240</p></div>
-          <div><p style="opacity:.85; margin:0;">Rating</p><p style="font-family:Orbitron; font-size:1.15rem; margin:6px 0;">4.7★</p></div>
-        </div>
-      </div>
-    </section>
-
-  </main>
-
-  <!-- Zep AI bubble -->
-  <button class="ai-bubble" onclick="toggleAI()" aria-label="Ask Zep AI">💬 Ask Zep AI</button>
-
-  <!-- footer nav with 3D-ish SVG icons -->
-  <nav class="footer" role="navigation" aria-label="Primary">
-    <div class="nav-inner">
-      <a class="nav-btn" href="student-dashboard.html" title="Home">
-        <!-- POS-like / home icon -->
-        <svg class="nav-svg" viewBox="0 0 24 24" fill="none"><path d="M3 12L12 3l9 9" stroke="#7ef0ff" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/><rect x="4" y="12" width="16" height="8" rx="2" stroke="#bca6ff" stroke-width="1.6"/></svg>
-      </a>
-
-      <a class="nav-btn" href="dashboard-store.html" title="Store">
-        <svg class="nav-svg" viewBox="0 0 24 24" fill="none"><path d="M3 9h18v2H3z" stroke="#9c4dff" stroke-width="1.6"/><path d="M5 11v7a2 2 0 002 2h10a2 2 0 002-2v-7" stroke="#7ef0ff" stroke-width="1.6"/></svg>
-      </a>
-
-      <a class="nav-btn" href="wallet.html" title="Wallet">
-        <svg class="nav-svg" viewBox="0 0 24 24" fill="none"><rect x="2" y="6" width="20" height="12" rx="2" stroke="#7ef0ff" stroke-width="1.6"/><circle cx="18" cy="12" r="1.6" fill="#9c4dff"/></svg>
-      </a>
-
-      <a class="nav-btn" href="profile.html" title="Profile">
-        <svg class="nav-svg" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="8" r="3" stroke="#7ef0ff" stroke-width="1.6"/><path d="M4 20a8 8 0 0116 0" stroke="#9c4dff" stroke-width="1.6"/></svg>
-      </a>
-    </div>
-  </nav>
-
-  <!-- AI small chat window (hidden) -->
-  <div id="aiWindow" style="display:none; position:fixed; right:16px; bottom:170px; width:320px; max-width:92%; background:rgba(5,5,20,0.98); border-radius:12px; border:1px solid rgba(255,255,255,0.06); box-shadow:0 20px 50px rgba(0,0,0,0.6); overflow:hidden; z-index:1200;">
-    <div style="background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet)); color:#050018; padding:8px 12px; font-family:Orbitron;">Zep AI</div>
-    <div id="aiMessages" style="padding:12px; max-height:220px; overflow:auto; color:#dff7ff; font-size:0.9rem;">
-      <div style="opacity:.8">🤖 Hi! Ask Zep Study Buddy a question.</div>
-    </div>
-    <div style="display:flex; gap:8px; padding:10px;">
-      <input id="aiInput" placeholder="Type a question..." style="flex:1; padding:8px; border-radius:8px; border:1px solid rgba(255,255,255,0.06); background:rgba(255,255,255,0.02); color:#fff; outline:none;" />
-      <button onclick="sendAI()" style="background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet)); color:#050018; padding:8px 10px; border-radius:8px; font-weight:700;">Send</button>
-    </div>
-  </div>
+<footer>© 2025 Zep Swipe — Web3 Merchant MVP</footer>
 
 <script>
-/* --------- Config: ZAC token on Base (for balance fetch) ---------- */
-const ZAC_TOKEN_ADDRESS = "0xfe4119a9cac1425d808526905e92386b4234bf2a"; // from you earlier
-const tokenABI = [
-  "function balanceOf(address owner) view returns (uint256)",
-  "function decimals() view returns (uint8)"
-];
-
-/* --- Utility to shorten address --- */
-function shortAddress(a){
-  if(!a) return "—";
-  return a.slice(0,6) + "…" + a.slice(-4);
-}
-
-/* --- Load user from localStorage and protect route --- */
-window.addEventListener('load', async ()=>{
-  const raw = localStorage.getItem('zepUser');
-  if(!raw) {
-    // Not logged in — redirect to login
-    window.location.href = 'login.html';
+async function connectWallet() {
+  if (!window.ethereum) {
+    alert("🚨 No wallet detected! Install MetaMask or open in Coinbase Wallet.");
     return;
   }
-  const user = JSON.parse(raw);
-  if(!user.wallet){
-    window.location.href = 'login.html';
-    return;
-  }
-
-  // show wallet address
-  document.getElementById('shortAddr').textContent = shortAddress(user.wallet);
-  document.getElementById('walletAddressShort').textContent = user.wallet;
-  // Try to fetch token balance (best effort)
-  await fetchZacAndUsd(user.wallet);
-  // refresh periodically
-  setInterval(()=>fetchZacAndUsd(user.wallet), 30_000);
-});
-
-/* --- Fetch ZAC token balance and display simulated USD --- */
-async function fetchZacAndUsd(wallet){
-  const zacEl = document.getElementById('zacBalance');
-  const usdEl = document.getElementById('usdValue');
-
-  // show loading
-  zacEl.textContent = '… ZAC';
-  usdEl.textContent = '≈ $…';
 
   try {
-    // prefer public Base provider
-    const provider = new ethers.JsonRpcProvider("https://mainnet.base.org");
-    const contract = new ethers.Contract(ZAC_TOKEN_ADDRESS, tokenABI, provider);
-    const decimals = await contract.decimals();
-    const balance = await contract.balanceOf(wallet);
-    const formatted = Number(ethers.formatUnits(balance, decimals));
-    const display = formatted.toFixed(2);
-    zacEl.textContent = `${display} ZAC`;
+    console.log("⏳ Requesting wallet...");
+    const accounts = await window.ethereum.request({
+      method: "eth_requestAccounts"
+    });
 
-    // simulated price until listing exists
-    const simulatedZacPrice = 0.15; // USD per ZAC, change later
-    usdEl.textContent = `≈ $${(formatted * simulatedZacPrice).toFixed(2)} USD`;
-    // persist small copy
-    localStorage.setItem('zacBalance', display);
+    if (!accounts || accounts.length === 0) {
+      alert("⚠️ No wallet connected.");
+      return;
+    }
+
+    const wallet = accounts[0];
+    console.log("Wallet connected:", wallet);
+
+    // Save merchant session
+    localStorage.setItem(
+      "zepUser",
+      JSON.stringify({ wallet, loggedIn: true })
+    );
+
+    // FIX FOR MOBILE METAMASK — Give the browser time to return focus
+    setTimeout(() => {
+      console.log("➡️ Redirecting to merchants-dashboard.html");
+      window.location.href = "merchants-dashboard.html";
+    }, 300); // 300ms works best on MetaMask mobile
+
   } catch (err) {
-    console.warn('Balance fetch failed, using fallback', err);
-    const fallback = localStorage.getItem('zacBalance') || 25;
-    zacEl.textContent = `${fallback} ZAC (test)`;
-    usdEl.textContent = `≈ $${(fallback * 0.15).toFixed(2)} USD`;
+    console.error("Login error:", err);
+    alert("⚠️ Wallet connection failed.");
   }
 }
 
-/* --- Logout --- */
-function logout(){
-  localStorage.removeItem('zepUser');
-  // optional: keep zacBalance but remove other session keys
-  window.location.href = 'login.html';
-}
-
-/* --- AI bubble logic (very small local mock) --- */
-function toggleAI(){
-  const w = document.getElementById('aiWindow');
-  w.style.display = (w.style.display === 'block') ? 'none' : 'block';
-}
-function sendAI(){
-  const input = document.getElementById('aiInput');
-  const val = input.value.trim();
-  if(!val) return;
-  const box = document.getElementById('aiMessages');
-  const userP = document.createElement('div'); userP.style.margin='8px 0'; userP.textContent = '🧑 ' + val; userP.style.opacity='0.9';
-  box.appendChild(userP);
-  input.value='';
-  const bot = document.createElement('div'); bot.textContent='🤖 Thinking...'; bot.style.opacity='0.8';
-  box.appendChild(bot);
-  box.scrollTop = box.scrollHeight;
-  setTimeout(()=>{ bot.textContent = "🤖 Try: 'How to earn ZAC' or 'Summarize topic X'"; box.scrollTop = box.scrollHeight; }, 700);
-}
-
-/* Accessibility: keyboard */
-document.addEventListener('keydown', (e)=>{ if(e.key === 'Escape'){ document.getElementById('aiWindow').style.display='none'; }});
+// Auto-login if already saved
+window.addEventListener("load", () => {
+  const user = JSON.parse(localStorage.getItem("zepUser"));
+  if (user && user.loggedIn) {
+    setTimeout(() => {
+      window.location.href = "merchants-dashboard.html";
+    }, 300);
+  }
+});
 </script>
 
 </body>
