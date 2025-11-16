@@ -17,39 +17,20 @@
 
 body {
   background: radial-gradient(circle at 20% 20%, #050018, #000010, #0a0020);
-  color:white;
   font-family:'Poppins',sans-serif;
+  color:white;
   padding-bottom:100px;
 }
 
-/* Glass Container */
+/* Glass */
 .glass {
   background:var(--glass);
-  backdrop-filter:blur(18px);
   border:1px solid rgba(255,255,255,0.15);
-  border-radius:1.2rem;
+  backdrop-filter:blur(18px);
+  border-radius:1.3rem;
   box-shadow:0 0 28px rgba(0,255,255,0.17);
   padding:1.4rem;
   transition:0.3s;
-}
-
-.glass:hover {
-  box-shadow:0 0 40px rgba(0,255,255,0.35);
-}
-
-/* Glow Text */
-.glow {
-  font-family:'Orbitron';
-  background:linear-gradient(90deg,var(--zep-blue),var(--zep-purple));
-  -webkit-background-clip:text;
-  -webkit-text-fill-color:transparent;
-  animation:pulse 3s infinite ease-in-out;
-}
-
-@keyframes pulse {
-  0%{text-shadow:0 0 8px rgba(0,240,255,0.4);}
-  50%{text-shadow:0 0 22px rgba(156,77,255,0.9);}
-  100%{text-shadow:0 0 8px rgba(0,240,255,0.4);}
 }
 
 /* Header */
@@ -66,40 +47,72 @@ body {
   box-shadow:0 0 25px rgba(0,240,255,0.25);
 }
 
-/* Logout Icon */
-.logout-btn {
-  width:32px;
-  cursor:pointer;
-  filter:drop-shadow(0 0 8px #ff4444);
-  transition:0.2s;
-}
-.logout-btn:hover {
-  transform:scale(1.1);
-  filter:drop-shadow(0 0 12px #ff7777);
+h2.glow {
+  font-family:'Orbitron';
+  background:linear-gradient(90deg,var(--zep-blue),var(--zep-purple));
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+  animation:pulse 3s infinite ease-in-out;
+  font-size:1.4rem;
 }
 
-/* Footer Navigation */
+@keyframes pulse {
+  0%{text-shadow:0 0 10px rgba(0,240,255,0.4);}
+  50%{text-shadow:0 0 22px rgba(156,77,255,0.9);}
+  100%{text-shadow:0 0 10px rgba(0,240,255,0.4);}
+}
+
+/* Logout */
+.logout-btn {
+  width:33px;
+  cursor:pointer;
+  filter:drop-shadow(0 0 10px red);
+  transition:0.2s;
+}
+.logout-btn:hover { transform:scale(1.1); }
+
+/* Footer */
 .footer-nav {
   position:fixed;
   bottom:0; left:0; right:0;
   display:flex;
   justify-content:space-around;
-  padding:14px 20px;
-  background:rgba(255,255,255,0.07);
+  padding:12px 20px;
+  background:rgba(255,255,255,0.06);
   border-top:1px solid rgba(255,255,255,0.14);
   backdrop-filter:blur(20px);
 }
 
 .footer-icon {
-  width:34px;
+  width:35px;
   filter:drop-shadow(0 0 12px rgba(0,255,255,0.7));
-  transition:0.3s;
+  transition:0.25s;
+}
+.footer-icon:hover {
+  transform:scale(1.18);
+  filter:drop-shadow(0 0 20px rgba(156,77,255,1));
 }
 
-.footer-icon:hover {
-  transform:scale(1.2);
-  filter:drop-shadow(0 0 22px rgba(156,77,255,1));
+/* Feature buttons */
+.feature-btn {
+  text-align:center;
+  padding:25px 0;
+  border-radius:1.2rem;
+  font-family:'Orbitron';
+  color:white;
+  font-size:1rem;
 }
+.feature-btn:hover {
+  box-shadow:0 0 25px rgba(0,240,255,0.4);
+  transform:scale(1.03);
+}
+
+.feature-icon {
+  width:50px;
+  margin:0 auto 10px auto;
+  filter:drop-shadow(0 0 10px rgba(0,255,255,0.7));
+}
+
 </style>
 </head>
 
@@ -107,11 +120,12 @@ body {
 
 <!-- HEADER -->
 <div class="header">
-  <h2 class="glow text-xl">Student Dashboard</h2>
+  <h2 class="glow">Student Dashboard</h2>
 
-  <img src="https://www.svgrepo.com/show/503029/logout.svg"
-       class="logout-btn"
-       onclick="logoutStudent()">
+  <!-- Logout SVG -->
+  <img src="https://www.svgrepo.com/show/503029/logout.svg" 
+       class="logout-btn" 
+       onclick="logout()">
 </div>
 
 <!-- WALLET CARD -->
@@ -121,67 +135,72 @@ body {
 
   <hr class="border-cyan-900 my-3">
 
-  <p class="text-cyan-300 text-sm">ZAC Balance</p>
+  <p class="text-cyan-300 text-sm">ZepCash Wallet</p>
   <h2 id="zacBalance" class="text-3xl font-semibold mt-1">0 ZAC</h2>
-
-  <p class="text-purple-300 text-xs mt-2 opacity-80">Base Mainnet</p>
+  <p class="text-purple-300 text-xs mt-1 opacity-75">Base Mainnet</p>
 </div>
 
-<!-- STUDENT FEATURE GRID -->
+<!-- FEATURES -->
 <div class="grid grid-cols-2 gap-4 mx-5">
 
-  <a href="delivery.html" class="glass text-center py-6">
-    <img src="https://www.svgrepo.com/show/502240/delivery.svg" class="mx-auto w-10 mb-2 footer-icon">
-    <p class="glow">Parcel On</p>
+  <a href="delivery.html" class="glass feature-btn">
+    <img class="feature-icon" src="https://www.svgrepo.com/show/488329/box-3d.svg">
+    Parcel On
   </a>
 
-  <a href="ride.hailing.html" class="glass text-center py-6">
-    <img src="https://www.svgrepo.com/show/532383/car-sport.svg" class="mx-auto w-10 mb-2 footer-icon">
-    <p class="glow">Swipe Rides</p>
+  <a href="ride.hailing.html" class="glass feature-btn">
+    <img class="feature-icon" src="https://www.svgrepo.com/show/486680/car-3d.svg">
+    Swipe Rides
   </a>
 
-  <a href="dashboard-store.html" class="glass text-center py-6">
-    <img src="https://www.svgrepo.com/show/500724/store.svg" class="mx-auto w-10 mb-2 footer-icon">
-    <p class="glow">ZepShop</p>
+  <a href="dashboard-store.html" class="glass feature-btn">
+    <img class="feature-icon" src="https://www.svgrepo.com/show/488415/store-3d.svg">
+    ZepShop Store
   </a>
 
-  <a href="learn-earn.html" class="glass text-center py-6">
-    <img src="https://www.svgrepo.com/show/376381/graduation-cap.svg" class="mx-auto w-10 mb-2 footer-icon">
-    <p class="glow">Earn ZAC</p>
+  <a href="learn-earn.html" class="glass feature-btn">
+    <img class="feature-icon" src="https://www.svgrepo.com/show/533299/coin-hand.svg">
+    Learn & Earn
   </a>
 
 </div>
 
-<!-- AI TUTOR -->
+<!-- ZEP AI -->
 <div class="glass mx-5 mt-6 mb-24">
-  <h2 class="glow text-lg mb-1">Zep Study Buddy AI</h2>
-  <p class="text-gray-300 text-sm">Your personal AI for assignments & learning.</p>
+  <h2 class="glow text-lg mb-1">Zep AI Study Buddy</h2>
+  <p class="text-gray-300 text-sm">Instant help with assignments & revision.</p>
 
   <a href="zep-ai.html">
-    <div class="mt-4 py-3 px-4 bg-gradient-to-r from-cyan-400 to-purple-500 text-black font-semibold rounded-xl text-center">
+    <div class="
+        mt-4 py-3 px-5
+        bg-gradient-to-r 
+        from-cyan-400 to-purple-500 
+        text-black font-semibold 
+        rounded-xl text-center">
       Launch Zep AI
     </div>
   </a>
 </div>
 
-<!-- FOOTER NAVIGATION -->
+<!-- FOOTER NAV -->
 <div class="footer-nav">
 
   <a href="student-dashboard.html">
-    <img src="https://www.svgrepo.com/show/503005/home-4.svg" class="footer-icon">
+    <img class="footer-icon" src="https://www.svgrepo.com/show/530434/dashboard-3d.svg">
   </a>
 
-  <a href="dashboard-store.html">
-    <img src="https://www.svgrepo.com/show/488486/bag-2.svg" class="footer-icon">
+  <a href="delivery.html">
+    <img class="footer-icon" src="https://www.svgrepo.com/show/488329/box-3d.svg">
   </a>
 
-  <a href="listing.html">
-    <img src="https://www.svgrepo.com/show/532001/add-circle.svg" class="footer-icon">
+  <a href="wallet.html">
+    <img class="footer-icon" src="https://www.svgrepo.com/show/488484/wallet.svg">
   </a>
 
   <a href="profile.html">
-    <img src="https://www.svgrepo.com/show/493468/user-circle.svg" class="footer-icon">
+    <img class="footer-icon" src="https://www.svgrepo.com/show/493468/user-circle.svg">
   </a>
+
 </div>
 
 <script>
@@ -191,7 +210,7 @@ body {
 window.addEventListener("load", () => {
   const student = JSON.parse(localStorage.getItem("zepStudent"));
   if (!student || !student.loggedIn) {
-    window.location.href = "login-student.html";
+    window.location.href = "student-login.html";
   } else {
     document.getElementById("walletAddress").innerHTML =
       student.wallet.slice(0,6) + "..." + student.wallet.slice(-4);
@@ -201,9 +220,9 @@ window.addEventListener("load", () => {
 /* -------------------------
    LOGOUT
 ------------------------- */
-function logoutStudent(){
+function logout(){
   localStorage.removeItem("zepStudent");
-  window.location.href = "login-student.html";
+  window.location.href = "student-login.html";
 }
 </script>
 
