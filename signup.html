@@ -6,7 +6,7 @@
 <title>Zep Swipe — Student Login</title>
 
 <!-- Fonts -->
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700&family=Poppins:wght@400;500;600&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet" />
 
 <!-- Tailwind -->
 <script src="https://cdn.tailwindcss.com"></script>
@@ -14,17 +14,16 @@
 <style>
 :root {
   --zep-blue:#00f0ff;
-  --zep-purple:#9c4dff;
-  --zep-dark:#050018;
+  --zep-violet:#9c4dff;
+  --glass: rgba(255,255,255,0.08);
 }
 
 body {
-  margin:0;
-  padding:0;
-  height:100vh;
-  background:radial-gradient(circle at 30% 10%, #070026 0%, #000010 100%);
   font-family:'Poppins',sans-serif;
+  background:radial-gradient(circle at 25% 10%, #06001c 0%, #000012 100%);
+  height:100vh;
   color:white;
+  margin:0;
   display:flex;
   flex-direction:column;
   justify-content:center;
@@ -32,129 +31,128 @@ body {
   overflow:hidden;
 }
 
-/* Floating neon orbs */
-.floating-orb {
-  position:absolute;
-  width:420px;
-  height:420px;
-  border-radius:50%;
-  opacity:0.18;
-  filter:blur(60px);
-  animation: float 6s ease-in-out infinite alternate;
-}
-
-@keyframes float {
-  from { transform:translateY(0); }
-  to   { transform:translateY(-25px); }
-}
-
-/* Title Glow */
-.title {
+/* LOGO TEXT */
+h1 {
   font-family:'Orbitron';
   font-size:2.2rem;
-  background:linear-gradient(90deg,var(--zep-blue),var(--zep-purple));
+  background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
   -webkit-background-clip:text;
   -webkit-text-fill-color:transparent;
-  animation:titlePulse 4s ease-in-out infinite alternate;
+  text-shadow:0 0 22px rgba(0,240,255,0.45);
+  margin-bottom:0.8rem;
+  animation: glowPulse 3s ease-in-out infinite;
 }
 
-@keyframes titlePulse {
-  0%   { text-shadow:0 0 18px rgba(0,240,255,0.4); }
-  100% { text-shadow:0 0 40px rgba(156,77,255,0.9); }
+@keyframes glowPulse {
+  0% { text-shadow:0 0 14px rgba(0,240,255,0.4); }
+  50% { text-shadow:0 0 38px rgba(156,77,255,0.9); }
+  100% { text-shadow:0 0 14px rgba(0,240,255,0.4); }
 }
 
-/* Connect Button */
-.connect-btn {
-  width:260px;
-  padding:15px 24px;
-  border-radius:999px;
+/* CARD */
+.login-box {
+  background: var(--glass);
+  padding: 2rem 2.2rem;
+  border-radius: 1.5rem;
+  border:1px solid rgba(255,255,255,0.15);
+  backdrop-filter: blur(18px);
+  box-shadow:0 0 35px rgba(0,240,255,0.25);
+  text-align:center;
+  width: 90%;
+  max-width: 380px;
+}
+
+/* Button */
+.glow-btn {
+  width: 100%;
+  padding: 14px;
+  margin-top: 14px;
   border:none;
-  cursor:pointer;
+  border-radius: 999px;
+  background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
   font-family:'Orbitron';
   font-weight:700;
-  font-size:1rem;
-  background:linear-gradient(90deg,var(--zep-blue),var(--zep-purple));
   color:#050018;
-  box-shadow:0 0 22px rgba(0,240,255,0.55);
-  transition:0.25s;
+  cursor:pointer;
+  box-shadow:0 0 22px rgba(0,240,255,0.45);
+  transition:0.3s;
 }
-
-.connect-btn:hover {
+.glow-btn:hover {
   transform:scale(1.05);
-  box-shadow:0 0 40px rgba(156,77,255,0.9);
+  box-shadow:0 0 45px rgba(156,77,255,0.7);
 }
 
-/* Glass tagline box */
-.glass {
-  background:rgba(255,255,255,0.06);
-  padding:14px 22px;
-  border-radius:14px;
-  border:1px solid rgba(255,255,255,0.18);
-  backdrop-filter:blur(15px);
-  margin-bottom:1.6rem;
-  font-size:0.9rem;
-  max-width:260px;
-  text-align:center;
+/* Floating background orbs */
+.orb {
+  position:absolute;
+  width:420px; height:420px;
+  border-radius:50%;
+  opacity:0.14;
+  filter:blur(40px);
+  animation:float 6s infinite alternate ease-in-out;
 }
-footer {
-  position:fixed;
-  bottom:18px;
-  opacity:0.5;
-  font-size:0.75rem;
-  text-align:center;
-  width:100%;
+@keyframes float {
+  from { transform: translateY(0); }
+  to { transform: translateY(-25px); }
 }
 </style>
 </head>
 
 <body>
 
-<!-- Floating neon orbs -->
-<div class="floating-orb" style="top:-90px; left:-90px; background:var(--zep-purple);"></div>
-<div class="floating-orb" style="bottom:-100px; right:-100px; background:var(--zep-blue);"></div>
+<!-- Background glowing circles -->
+<div class="orb" style="top:-120px; left:-140px; background:var(--zep-violet);"></div>
+<div class="orb" style="bottom:-150px; right:-150px; background:var(--zep-blue);"></div>
 
-<!-- TITLE -->
-<h1 class="title mb-5">Zep Swipe</h1>
+<h1>Zep Swipe</h1>
 
-<!-- GLASS TEXT BOX -->
-<div class="glass">
-  Connect your wallet to continue to your <strong>Student Dashboard</strong>.
+<div class="login-box">
+
+  <p class="text-sm opacity-80 mb-4">
+    Connect your wallet to access your <b>Student Dashboard</b>.
+  </p>
+
+  <button class="glow-btn" onclick="connectWallet()">
+    🔗 Connect Wallet
+  </button>
+
 </div>
 
-<!-- CONNECT BUTTON -->
-<button class="connect-btn" onclick="connectWallet()">🚀 Connect Wallet</button>
-
-<footer>© 2025 Zep Swipe — Student Web3 MVP</footer>
+<footer class="mt-6 opacity-40 text-xs">
+  © 2025 Zep Swipe — Student Web3 Network
+</footer>
 
 <script>
+/* -----------------------------
+   WALLET LOGIN LOGIC (unchanged)
+------------------------------*/
 async function connectWallet() {
   if (!window.ethereum) {
-    alert("🚨 No crypto wallet detected! Install MetaMask or open inside Coinbase Wallet.");
+    alert("🚨 No wallet detected! Install MetaMask or use Coinbase Wallet.");
     return;
   }
 
   try {
-    console.log("⏳ Requesting wallet access...");
-
+    console.log("⏳ Requesting wallet...");
     const accounts = await window.ethereum.request({
       method: "eth_requestAccounts"
     });
 
     if (!accounts || accounts.length === 0) {
-      alert("⚠️ Wallet connection failed.");
+      alert("⚠️ No wallet connected.");
       return;
     }
 
     const wallet = accounts[0];
     console.log("Wallet connected:", wallet);
 
-    // SAVE STUDENT SESSION
+    // Save student session
     localStorage.setItem(
       "zepStudent",
       JSON.stringify({ wallet, loggedIn: true })
     );
 
-    // MetaMask Mobile Focus Fix
+    // MetaMask mobile requires small delay
     setTimeout(() => {
       console.log("➡️ Redirecting to student-dashboard.html");
       window.location.href = "student-dashboard.html";
@@ -162,11 +160,11 @@ async function connectWallet() {
 
   } catch (err) {
     console.error("Login error:", err);
-    alert("⚠️ Wallet connection rejected.");
+    alert("⚠️ Wallet connection failed.");
   }
 }
 
-// AUTO-LOGIN if already authenticated
+// Auto login if already authenticated
 window.addEventListener("load", () => {
   const user = JSON.parse(localStorage.getItem("zepStudent"));
   if (user && user.loggedIn) {
