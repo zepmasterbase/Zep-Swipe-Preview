@@ -3,141 +3,118 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Zep Swipe — Student Login</title>
-
-<!-- Tailwind -->
+<title>Zep Swipe — Connect Wallet</title>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700&family=Poppins:wght@400;500;600&display=swap" rel="stylesheet" />
 <script src="https://cdn.tailwindcss.com"></script>
-
-<!-- Fonts -->
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
 
 <style>
 :root {
   --zep-blue:#00f0ff;
-  --zep-pink:#ff4dff;
-  --zep-purple:#9c4dff;
-  --glass:rgba(255,255,255,0.07);
+  --zep-violet:#9c4dff;
 }
-
 body {
-  background: radial-gradient(circle at 25% 10%, #050018, #000010, #090022);
   font-family:'Poppins',sans-serif;
-  color:white;
+  background:radial-gradient(circle at 25% 10%, #050018 0%, #000010 100%);
+  color:#fff;
   height:100vh;
+  margin:0;
   display:flex;
-  align-items:center;
+  flex-direction:column;
   justify-content:center;
+  align-items:center;
   overflow:hidden;
 }
-
-/* Floating glow circles */
-.glow-circle {
-  position:absolute;
-  width:420px; height:420px;
-  border-radius:50%;
-  opacity:0.13;
-  filter:blur(40px);
-  animation:float 6s infinite alternate ease-in-out;
-}
-@keyframes float {
-  0% { transform:translateY(0); }
-  100% { transform:translateY(-25px); }
-}
-
-/* LOGIN CARD */
-.login-card {
-  background:var(--glass);
-  border:1px solid rgba(255,255,255,0.15);
-  backdrop-filter:blur(18px);
-  width:92%;
-  max-width:380px;
-  padding:2.2rem 1.6rem;
-  border-radius:1.4rem;
-  box-shadow:0 0 30px rgba(0,255,255,0.25);
-  animation:fadeIn 1.2s ease;
-}
-@keyframes fadeIn {
-  from { opacity:0; transform:translateY(25px); }
-  to { opacity:1; transform:translateY(0); }
-}
-
-/* Title */
-.title {
+h1 {
   font-family:'Orbitron';
-  font-size:1.9rem;
-  text-align:center;
-  background:linear-gradient(90deg,var(--zep-blue),var(--zep-purple));
+  font-size:2rem;
+  background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
   -webkit-background-clip:text;
   -webkit-text-fill-color:transparent;
-  text-shadow:0 0 18px rgba(0,240,255,0.55);
-  animation:pulse 3s infinite alternate;
+  margin-bottom:1rem;
 }
-@keyframes pulse {
-  0% { text-shadow:0 0 12px rgba(0,240,255,0.4); }
-  100% { text-shadow:0 0 32px rgba(156,77,255,0.8); }
-}
-
-/* Button */
-.login-btn {
-  margin-top:1.8rem;
-  width:100%;
-  padding:14px;
+button {
+  width:260px;
+  padding:14px 24px;
+  border:none;
   border-radius:999px;
   font-family:'Orbitron';
   font-weight:700;
-  background:linear-gradient(90deg,var(--zep-blue),var(--zep-purple));
+  background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
   color:#050018;
-  font-size:1rem;
   cursor:pointer;
-  transition:0.3s;
-  box-shadow:0 0 22px rgba(0,240,255,0.5);
+  box-shadow:0 0 25px rgba(0,240,255,0.5);
 }
-.login-btn:hover {
+button:hover {
   transform:scale(1.05);
-  box-shadow:0 0 40px rgba(156,77,255,0.7);
 }
-
-.subtitle {
-  text-align:center;
-  opacity:0.75;
-  margin-top:0.6rem;
-  font-size:0.9rem;
-  letter-spacing:0.5px;
+footer {
+  position:fixed;
+  bottom:15px;
+  opacity:0.6;
+  font-size:0.8rem;
 }
 </style>
 </head>
 
 <body>
 
-<!-- Background Glow -->
-<div class="glow-circle" style="top:-120px; left:-120px; background:var(--zep-blue);"></div>
-<div class="glow-circle" style="bottom:-150px; right:-150px; background:var(--zep-purple);"></div>
+<h1>Zep Swipe</h1>
+<p style="opacity:0.7;max-width:260px;text-align:center;margin-bottom:1.5rem;">
+  Connect your wallet to continue to your Merchant Dashboard.
+</p>
 
-<!-- LOGIN CARD -->
-<div class="login-card">
-  <h1 class="title mb-3">Zep Swipe</h1>
-  <p class="subtitle">Student Wallet • Campus Marketplace • Learn & Earn</p>
+<button onclick="connectWallet()">🔗 Connect Wallet</button>
 
-  <button class="login-btn" onclick="studentLogin()">🚀 Enter Dashboard</button>
-</div>
+<footer>© 2025 Zep Swipe — Web3 Merchant MVP</footer>
 
 <script>
-// DEV-MODE LOGIN
-function studentLogin() {
-  localStorage.setItem("zepStudent", JSON.stringify({
-    loggedIn:true,
-    time:Date.now()
-  }));
-  window.location.href = "student-dashboard.html";
+async function connectWallet() {
+  if (!window.ethereum) {
+    alert("🚨 No wallet detected! Install MetaMask or open in Coinbase Wallet.");
+    return;
+  }
+
+  try {
+    console.log("⏳ Requesting wallet...");
+    const accounts = await window.ethereum.request({
+      method: "eth_requestAccounts"
+    });
+
+    if (!accounts || accounts.length === 0) {
+      alert("⚠️ No wallet connected.");
+      return;
+    }
+
+    const wallet = accounts[0];
+    console.log("Wallet connected:", wallet);
+
+    // Save merchant session
+    localStorage.setItem(
+      "zepUser",
+      JSON.stringify({ wallet, loggedIn: true })
+    );
+
+    // FIX FOR MOBILE METAMASK — Give the browser time to return focus
+    setTimeout(() => {
+      console.log("➡️ Redirecting to merchants-dashboard.html");
+      window.location.href = "merchants-dashboard.html";
+    }, 300); // 300ms works best on MetaMask mobile
+
+  } catch (err) {
+    console.error("Login error:", err);
+    alert("⚠️ Wallet connection failed.");
+  }
 }
 
-// AUTO LOGIN IF SESSION EXISTS
-window.onload = () => {
-  const s = JSON.parse(localStorage.getItem("zepStudent"));
-  if (s && s.loggedIn) {
-    window.location.href = "student-dashboard.html";
+// Auto-login if already saved
+window.addEventListener("load", () => {
+  const user = JSON.parse(localStorage.getItem("zepUser"));
+  if (user && user.loggedIn) {
+    setTimeout(() => {
+      window.location.href = "merchants-dashboard.html";
+    }, 300);
   }
-};
+});
 </script>
 
 </body>
