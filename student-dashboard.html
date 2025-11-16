@@ -3,118 +3,208 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Zep Swipe — Connect Wallet</title>
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700&family=Poppins:wght@400;500;600&display=swap" rel="stylesheet" />
+<title>Zep Swipe — Student Dashboard</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
 <script src="https://cdn.tailwindcss.com"></script>
 
 <style>
 :root {
   --zep-blue:#00f0ff;
-  --zep-violet:#9c4dff;
+  --zep-purple:#9c4dff;
+  --glass:rgba(255,255,255,0.07);
 }
+
 body {
+  background: radial-gradient(circle at 20% 20%, #050018, #000010, #0a0020);
+  color:white;
   font-family:'Poppins',sans-serif;
-  background:radial-gradient(circle at 25% 10%, #050018 0%, #000010 100%);
-  color:#fff;
-  height:100vh;
-  margin:0;
-  display:flex;
-  flex-direction:column;
-  justify-content:center;
-  align-items:center;
-  overflow:hidden;
+  padding-bottom:100px;
 }
-h1 {
+
+/* Glass Container */
+.glass {
+  background:var(--glass);
+  backdrop-filter:blur(18px);
+  border:1px solid rgba(255,255,255,0.15);
+  border-radius:1.2rem;
+  box-shadow:0 0 28px rgba(0,255,255,0.17);
+  padding:1.4rem;
+  transition:0.3s;
+}
+
+.glass:hover {
+  box-shadow:0 0 40px rgba(0,255,255,0.35);
+}
+
+/* Glow Text */
+.glow {
   font-family:'Orbitron';
-  font-size:2rem;
-  background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
+  background:linear-gradient(90deg,var(--zep-blue),var(--zep-purple));
   -webkit-background-clip:text;
   -webkit-text-fill-color:transparent;
-  margin-bottom:1rem;
+  animation:pulse 3s infinite ease-in-out;
 }
-button {
-  width:260px;
-  padding:14px 24px;
-  border:none;
-  border-radius:999px;
-  font-family:'Orbitron';
-  font-weight:700;
-  background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
-  color:#050018;
+
+@keyframes pulse {
+  0%{text-shadow:0 0 8px rgba(0,240,255,0.4);}
+  50%{text-shadow:0 0 22px rgba(156,77,255,0.9);}
+  100%{text-shadow:0 0 8px rgba(0,240,255,0.4);}
+}
+
+/* Header */
+.header {
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin:20px;
+  padding:14px 18px;
+  background:rgba(255,255,255,0.06);
+  border:1px solid rgba(255,255,255,0.15);
+  border-radius:16px;
+  backdrop-filter:blur(18px);
+  box-shadow:0 0 25px rgba(0,240,255,0.25);
+}
+
+/* Logout Icon */
+.logout-btn {
+  width:32px;
   cursor:pointer;
-  box-shadow:0 0 25px rgba(0,240,255,0.5);
+  filter:drop-shadow(0 0 8px #ff4444);
+  transition:0.2s;
 }
-button:hover {
-  transform:scale(1.05);
+.logout-btn:hover {
+  transform:scale(1.1);
+  filter:drop-shadow(0 0 12px #ff7777);
 }
-footer {
+
+/* Footer Navigation */
+.footer-nav {
   position:fixed;
-  bottom:15px;
-  opacity:0.6;
-  font-size:0.8rem;
+  bottom:0; left:0; right:0;
+  display:flex;
+  justify-content:space-around;
+  padding:14px 20px;
+  background:rgba(255,255,255,0.07);
+  border-top:1px solid rgba(255,255,255,0.14);
+  backdrop-filter:blur(20px);
+}
+
+.footer-icon {
+  width:34px;
+  filter:drop-shadow(0 0 12px rgba(0,255,255,0.7));
+  transition:0.3s;
+}
+
+.footer-icon:hover {
+  transform:scale(1.2);
+  filter:drop-shadow(0 0 22px rgba(156,77,255,1));
 }
 </style>
 </head>
 
 <body>
 
-<h1>Zep Swipe</h1>
-<p style="opacity:0.7;max-width:260px;text-align:center;margin-bottom:1.5rem;">
-  Connect your wallet to continue to your Merchant Dashboard.
-</p>
+<!-- HEADER -->
+<div class="header">
+  <h2 class="glow text-xl">Student Dashboard</h2>
 
-<button onclick="connectWallet()">🔗 Connect Wallet</button>
+  <img src="https://www.svgrepo.com/show/503029/logout.svg"
+       class="logout-btn"
+       onclick="logoutStudent()">
+</div>
 
-<footer>© 2025 Zep Swipe — Web3 Merchant MVP</footer>
+<!-- WALLET CARD -->
+<div class="glass mx-5 mb-5">
+  <p class="text-cyan-300 text-sm">Connected Wallet</p>
+  <p id="walletAddress" class="text-lg mt-1">Loading...</p>
+
+  <hr class="border-cyan-900 my-3">
+
+  <p class="text-cyan-300 text-sm">ZAC Balance</p>
+  <h2 id="zacBalance" class="text-3xl font-semibold mt-1">0 ZAC</h2>
+
+  <p class="text-purple-300 text-xs mt-2 opacity-80">Base Mainnet</p>
+</div>
+
+<!-- STUDENT FEATURE GRID -->
+<div class="grid grid-cols-2 gap-4 mx-5">
+
+  <a href="delivery.html" class="glass text-center py-6">
+    <img src="https://www.svgrepo.com/show/502240/delivery.svg" class="mx-auto w-10 mb-2 footer-icon">
+    <p class="glow">Parcel On</p>
+  </a>
+
+  <a href="ride.hailing.html" class="glass text-center py-6">
+    <img src="https://www.svgrepo.com/show/532383/car-sport.svg" class="mx-auto w-10 mb-2 footer-icon">
+    <p class="glow">Swipe Rides</p>
+  </a>
+
+  <a href="dashboard-store.html" class="glass text-center py-6">
+    <img src="https://www.svgrepo.com/show/500724/store.svg" class="mx-auto w-10 mb-2 footer-icon">
+    <p class="glow">ZepShop</p>
+  </a>
+
+  <a href="learn-earn.html" class="glass text-center py-6">
+    <img src="https://www.svgrepo.com/show/376381/graduation-cap.svg" class="mx-auto w-10 mb-2 footer-icon">
+    <p class="glow">Earn ZAC</p>
+  </a>
+
+</div>
+
+<!-- AI TUTOR -->
+<div class="glass mx-5 mt-6 mb-24">
+  <h2 class="glow text-lg mb-1">Zep Study Buddy AI</h2>
+  <p class="text-gray-300 text-sm">Your personal AI for assignments & learning.</p>
+
+  <a href="zep-ai.html">
+    <div class="mt-4 py-3 px-4 bg-gradient-to-r from-cyan-400 to-purple-500 text-black font-semibold rounded-xl text-center">
+      Launch Zep AI
+    </div>
+  </a>
+</div>
+
+<!-- FOOTER NAVIGATION -->
+<div class="footer-nav">
+
+  <a href="student-dashboard.html">
+    <img src="https://www.svgrepo.com/show/503005/home-4.svg" class="footer-icon">
+  </a>
+
+  <a href="dashboard-store.html">
+    <img src="https://www.svgrepo.com/show/488486/bag-2.svg" class="footer-icon">
+  </a>
+
+  <a href="listing.html">
+    <img src="https://www.svgrepo.com/show/532001/add-circle.svg" class="footer-icon">
+  </a>
+
+  <a href="profile.html">
+    <img src="https://www.svgrepo.com/show/493468/user-circle.svg" class="footer-icon">
+  </a>
+</div>
 
 <script>
-async function connectWallet() {
-  if (!window.ethereum) {
-    alert("🚨 No wallet detected! Install MetaMask or open in Coinbase Wallet.");
-    return;
-  }
-
-  try {
-    console.log("⏳ Requesting wallet...");
-    const accounts = await window.ethereum.request({
-      method: "eth_requestAccounts"
-    });
-
-    if (!accounts || accounts.length === 0) {
-      alert("⚠️ No wallet connected.");
-      return;
-    }
-
-    const wallet = accounts[0];
-    console.log("Wallet connected:", wallet);
-
-    // Save merchant session
-    localStorage.setItem(
-      "zepUser",
-      JSON.stringify({ wallet, loggedIn: true })
-    );
-
-    // FIX FOR MOBILE METAMASK — Give the browser time to return focus
-    setTimeout(() => {
-      console.log("➡️ Redirecting to merchants-dashboard.html");
-      window.location.href = "merchants-dashboard.html";
-    }, 300); // 300ms works best on MetaMask mobile
-
-  } catch (err) {
-    console.error("Login error:", err);
-    alert("⚠️ Wallet connection failed.");
-  }
-}
-
-// Auto-login if already saved
+/* -------------------------
+   AUTH CHECK
+------------------------- */
 window.addEventListener("load", () => {
-  const user = JSON.parse(localStorage.getItem("zepUser"));
-  if (user && user.loggedIn) {
-    setTimeout(() => {
-      window.location.href = "merchants-dashboard.html";
-    }, 300);
+  const student = JSON.parse(localStorage.getItem("zepStudent"));
+  if (!student || !student.loggedIn) {
+    window.location.href = "login-student.html";
+  } else {
+    document.getElementById("walletAddress").innerHTML =
+      student.wallet.slice(0,6) + "..." + student.wallet.slice(-4);
   }
 });
+
+/* -------------------------
+   LOGOUT
+------------------------- */
+function logoutStudent(){
+  localStorage.removeItem("zepStudent");
+  window.location.href = "login-student.html";
+}
 </script>
 
 </body>
