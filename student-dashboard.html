@@ -1,297 +1,206 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Zep Swipe — Dashboard</title>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Zep Swipe — Student Dashboard</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com"></script>
 
 <style>
 :root {
-  --zep-blue: #00f0ff;
-  --zep-pink: #ff00f0;
-  --zep-purple: #9c4dff;
-  --glass: rgba(255, 255, 255, 0.08);
+  --zep-blue:#00f0ff;
+  --zep-purple:#9c4dff;
+  --glass:rgba(255,255,255,0.08);
 }
-
-* { box-sizing: border-box; margin: 0; padding: 0; }
 
 body {
-  font-family: 'Poppins', sans-serif;
-  background: radial-gradient(circle at 25% 10%, #050018, #000010 90%);
-  color: #fff;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-height: 100vh;
-  overflow-x: hidden;
+  background: radial-gradient(circle at 25% 10%, #050018, #000010, #0a0020);
+  color:white;
+  font-family:'Poppins',sans-serif;
+  padding-bottom:110px;
 }
 
-/* Phone frame */
-.phone {
-  width: 375px;
-  max-width: 100%;
-  height: 812px;
-  max-height: 100vh;
-  background: rgba(10, 10, 25, 0.9);
-  border-radius: 40px;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  box-shadow: 0 0 25px rgba(156, 77, 255, 0.3);
-  overflow: hidden;
-  position: relative;
-  display: flex;
-  flex-direction: column;
+/* Glass Effect */
+.glass {
+  background:var(--glass);
+  backdrop-filter:blur(18px);
+  border:1px solid rgba(255,255,255,0.15);
+  border-radius:1.2rem;
+  padding:1.4rem;
+  box-shadow:0 0 28px rgba(0,255,255,0.15);
+  transition:0.3s;
+}
+
+/* Neon Glow */
+.glow {
+  font-family:'Orbitron';
+  background:linear-gradient(90deg,var(--zep-blue),var(--zep-purple));
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+  animation:pulse 3s infinite ease-in-out;
+}
+
+@keyframes pulse {
+  0% { text-shadow:0 0 8px rgba(0,240,255,0.4); }
+  50% { text-shadow:0 0 22px rgba(156,77,255,1); }
+  100% { text-shadow:0 0 8px rgba(0,240,255,0.4); }
 }
 
 /* Header */
 .header {
-  position: relative;
-  text-align: center;
-  font-size: 20px;
-  padding: 16px 0;
-  background: rgba(25, 10, 45, 0.65);
-  backdrop-filter: blur(12px);
-  font-weight: 700;
-  text-transform: uppercase;
-  color: transparent;
-  background-clip: text;
-  -webkit-background-clip: text;
-  background-image: linear-gradient(90deg, var(--zep-blue), var(--zep-pink), var(--zep-purple));
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-  text-shadow: 0 0 8px var(--zep-blue);
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin:20px;
+  padding:15px 20px;
+  background:rgba(255,255,255,0.06);
+  border-radius:16px;
+  backdrop-filter:blur(20px);
+  border:1px solid rgba(255,255,255,0.12);
+  box-shadow:0 0 25px rgba(0,255,255,0.25);
 }
 
-.menu-icon {
-  position: absolute;
-  left: 20px;
-  top: 50%;
-  transform: translateY(-50%);
-  cursor: pointer;
+/* Logout Button */
+.logout-btn {
+  width:32px;
+  cursor:pointer;
+  filter:drop-shadow(0 0 10px red);
+  transition:0.25s;
 }
-.menu-icon svg {
-  width: 24px;
-  height: 24px;
-  fill: url(#zepGradient);
-  filter: drop-shadow(0 0 6px var(--zep-blue));
-  transition: 0.3s;
-}
-.menu-icon:hover svg {
-  transform: scale(1.1);
-  filter: drop-shadow(0 0 12px var(--zep-pink));
+.logout-btn:hover {
+  transform:scale(1.15);
 }
 
-/* Balance Card */
-.balance-card {
-  background: var(--glass);
-  border-radius: 20px;
-  margin: 20px;
-  padding: 25px;
-  text-align: center;
-  box-shadow: 0 0 20px rgba(0, 240, 255, 0.08);
-  backdrop-filter: blur(10px);
-}
-.balance-card h3 { font-size: 14px; color: #b8c3ff; margin-bottom: 8px; }
-.balance-card h1 {
-  font-size: 36px;
-  background: linear-gradient(90deg, var(--zep-blue), var(--zep-pink), var(--zep-purple));
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  margin-bottom: 20px;
+/* Footer Nav */
+.footer-nav {
+  position:fixed;
+  bottom:0; left:0; right:0;
+  display:flex;
+  justify-content:space-around;
+  padding:14px 25px;
+  background:rgba(255,255,255,0.06);
+  border-top:1px solid rgba(255,255,255,0.12);
+  backdrop-filter:blur(20px);
 }
 
-/* Buttons */
-.balance-buttons {
-  display: flex;
-  justify-content: space-around;
-  gap: 10px;
-  flex-wrap: wrap;
+.footer-icon {
+  width:34px;
+  transition:0.3s;
+  filter:drop-shadow(0 0 14px rgba(0,255,255,0.8));
 }
-.balance-buttons button {
-  flex: 1;
-  background: rgba(255, 255, 255, 0.08);
-  border: 1px solid rgba(255, 255, 255, 0.15);
-  border-radius: 12px;
-  color: #fff;
-  padding: 10px;
-  font-weight: 500;
-  cursor: pointer;
-  transition: 0.3s;
-}
-.balance-buttons button:hover {
-  background: linear-gradient(90deg, var(--zep-blue), var(--zep-pink));
-  box-shadow: 0 0 12px rgba(0, 240, 255, 0.4);
+.footer-icon:hover {
+  transform:scale(1.22);
+  filter:drop-shadow(0 0 22px rgba(156,77,255,1));
 }
 
-/* Learn Card */
-.main-text { padding: 40px 25px; }
-.glass-placeholder {
-  display: block;
-  background: var(--glass);
-  border-radius: 20px;
-  padding: 30px 20px;
-  font-size: 26px;
-  font-weight: 700;
-  color: #fff;
-  text-decoration: none;
-  box-shadow: 0 0 15px rgba(0, 240, 255, 0.1);
-  backdrop-filter: blur(8px);
-  text-align: left;
-  line-height: 1.4;
-}
-.glass-placeholder span {
-  background: linear-gradient(90deg, var(--zep-blue), var(--zep-pink));
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-
-/* Footer */
-.footer {
-  margin-top: auto;
-  background: rgba(15, 15, 30, 0.8);
-  backdrop-filter: blur(12px);
-  border-top: 1px solid rgba(255, 255, 255, 0.1);
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-  padding: 10px 0;
-}
-.footer-btn {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  color: #aab2d5;
-  text-decoration: none;
-  font-size: 12px;
-  transition: 0.3s;
-}
-.footer-btn svg {
-  width: 24px;
-  height: 24px;
-  fill: url(#zepGradient);
-  filter: drop-shadow(0 0 6px var(--zep-blue));
-  margin-bottom: 3px;
-  transition: 0.3s;
-}
-.footer-btn:hover svg, .footer-btn.active svg {
-  filter: drop-shadow(0 0 10px var(--zep-pink));
-}
-.footer-btn.active { color: #fff; }
-
-/* Sidebar */
-.sidebar {
-  position: absolute;
-  top: 0;
-  left: -260px;
-  width: 240px;
-  height: 100%;
-  background: rgba(10, 20, 40, 0.85);
-  backdrop-filter: blur(18px);
-  border-right: 1px solid rgba(0,255,255,0.1);
-  box-shadow: 0 0 25px rgba(0, 240, 255, 0.15);
-  border-radius: 0 20px 20px 0;
-  transition: left 0.4s ease;
-  display: flex;
-  flex-direction: column;
-  padding-top: 80px;
-  z-index: 200;
-}
-.sidebar.active { left: 0; }
-
-.sidebar a {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  padding: 14px 20px;
-  color: #c9d8ff;
-  font-weight: 500;
-  text-decoration: none;
-  transition: 0.3s;
-}
-.sidebar a:hover {
-  background: rgba(0, 240, 255, 0.08);
-  color: #fff;
-}
-.sidebar a svg {
-  width: 22px;
-  height: 22px;
-  fill: url(#zepGradient);
-  filter: drop-shadow(0 0 4px var(--zep-blue));
-}
-
-/* Responsive */
-@media (min-width: 768px) {
-  .phone { width: 420px; height: 850px; }
-}
 </style>
 </head>
 
 <body>
 
-<svg width="0" height="0">
-  <linearGradient id="zepGradient" x1="0%" y1="0%" x2="100%" y2="0%">
-    <stop stop-color="#00f0ff" offset="0%" />
-    <stop stop-color="#ff00f0" offset="50%" />
-    <stop stop-color="#9c4dff" offset="100%" />
-  </linearGradient>
-</svg>
+<!-- HEADER -->
+<div class="header">
+  <h2 class="glow text-xl">Student Dashboard</h2>
+  <img src="https://www.svgrepo.com/show/503029/logout.svg" class="logout-btn" onclick="logoutStudent()">
+</div>
 
-<div class="phone">
+<!-- Wallet Card -->
+<div class="glass mx-5 mb-5">
+  <p class="text-cyan-300 text-sm">Connected Wallet</p>
+  <p id="walletAddress" class="text-lg mt-1">Loading...</p>
 
-  <!-- Sidebar -->
-  <div class="sidebar" id="sidebar">
-    <a href="delivery.html"><svg viewBox="0 0 24 24"><path d="M3 6h13l3 6v6h-2a3 3 0 1 1-6 0H8a3 3 0 1 1-6 0V6z"/></svg> ParcelOn</a>
-    <a href="ride-hailing.html"><svg viewBox="0 0 24 24"><path d="M5 11l1.5-4.5h11L19 11H5z"/></svg> Rides</a>
-    <a href="dashboard-wallet.html"><svg viewBox="0 0 24 24"><path d="M2 6a2 2 0 0 1 2-2h16v16H4a2 2 0 0 1-2-2V6z"/></svg> Wallet</a>
-    <a href="dashboard-store.html"><svg viewBox="0 0 24 24"><path d="M3 6h18l-2 12H5z"/></svg> Shop</a>
-    <a href="sell.html"><svg viewBox="0 0 24 24"><path d="M12 2l4 8H8l4-8zM4 22h16v-2H4v2z"/></svg> Sell</a>
-  </div>
+  <hr class="border-cyan-900 my-3">
 
-  <!-- Header -->
-  <div class="header">
-    <div class="menu-icon" onclick="toggleSidebar()">
-      <svg viewBox="0 0 24 24"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+  <p class="text-cyan-300 text-sm">ZAC Tokens</p>
+  <h2 class="text-3xl font-semibold mt-1">320 ZAC</h2>
+  <p class="text-purple-300 text-xs mt-2 opacity-80">Student Wallet — Base Mainnet</p>
+</div>
+
+<!-- Banner -->
+<div class="glass mx-5 mb-5 text-center">
+  <h2 class="glow text-lg">Become a Campus Entrepreneur</h2>
+  <p class="text-gray-300 text-sm mt-1">
+    Earn ZAC by selling services, helping students or delivering items.
+  </p>
+</div>
+
+<!-- Student Features -->
+<div class="grid grid-cols-2 gap-4 mx-5 mb-6">
+
+  <a href="delivery.html" class="glass text-center py-6">
+    <img src="https://www.svgrepo.com/show/510928/box-open.svg" class="mx-auto w-12 mb-2 footer-icon">
+    <p class="glow text-sm">Parcel On</p>
+  </a>
+
+  <a href="ride.hailing.html" class="glass text-center py-6">
+    <img src="https://www.svgrepo.com/show/509883/car-front.svg" class="mx-auto w-12 mb-2 footer-icon">
+    <p class="glow text-sm">Swipe Rides</p>
+  </a>
+
+  <a href="dashboard-store.html" class="glass text-center py-6">
+    <img src="https://www.svgrepo.com/show/532597/store.svg" class="mx-auto w-12 mb-2 footer-icon">
+    <p class="glow text-sm">ZepShop</p>
+  </a>
+
+  <a href="learn-earn.html" class="glass text-center py-6">
+    <img src="https://www.svgrepo.com/show/474755/rocket-launch.svg" class="mx-auto w-12 mb-2 footer-icon">
+    <p class="glow text-sm">Earn & Learn</p>
+  </a>
+
+</div>
+
+<!-- Zep AI Card -->
+<div class="glass mx-5 mb-24">
+  <h2 class="glow text-lg mb-1">Zep AI Study Buddy</h2>
+  <p class="text-gray-300 text-sm">Get help with assignments & projects instantly.</p>
+
+  <a href="zep-ai.html">
+    <div class="mt-4 py-3 px-4 bg-gradient-to-r from-cyan-400 to-purple-500 text-black rounded-xl text-center font-semibold">
+      Launch Zep AI
     </div>
-    ZEP SWIPE
-  </div>
+  </a>
+</div>
 
-  <!-- Balance -->
-  <div class="balance-card">
-    <h3>Total Portfolio Balance</h3>
-    <h1>$1,870.00</h1>
-    <div class="balance-buttons">
-      <button>Send</button>
-      <button>Receive</button>
-      <button>Swap</button>
-    </div>
-  </div>
+<!-- FOOTER NAV -->
+<div class="footer-nav">
 
-  <!-- Learn Section -->
-  <div class="main-text">
-    <a href="learn-earn-grow.html" class="glass-placeholder">
-      Learn. Earn.<br>Grow. <span>Zep Swipe</span>
-    </a>
-  </div>
+  <a href="student-dashboard.html">
+    <img src="https://www.svgrepo.com/show/533317/home-10.svg" class="footer-icon">
+  </a>
 
-  <!-- Footer -->
-  <div class="footer">
-    <a href="#" class="footer-btn active" title="Home">
-      <svg viewBox="0 0 24 24"><path d="M3 12l9-9 9 9v8a2 2 0 0 1-2 2h-4v-6H9v6H5a2 2 0 0 1-2-2v-8z"/></svg>
-      Home
-    </a>
-    <a href="#" class="footer-btn" title="Shop">
-      <svg viewBox="0 0 24 24"><path d="M3 6h18l-2 12H5z"/></svg>
-      Shop
-    </a>
-    <a href="#" class="footer-btn" title="Rides">
-      <svg viewBox="0 0 24 24"><path d="M5 11l1.5-4.5h11L19 11H5z"/></svg>
-      Rides
-    </a>
-  </div>
+  <a href="listing.html">
+    <img src="https://www.svgrepo.com/show/488985/add-circle.svg" class="footer-icon">
+  </a>
+
+  <a href="wallet.html">
+    <img src="https://www.svgrepo.com/show/488484/wallet.svg" class="footer-icon">
+  </a>
+
+  <a href="profile.html">
+    <img src="https://www.svgrepo.com/show/493468/user-circle.svg" class="footer-icon">
+  </a>
 </div>
 
 <script>
-function toggleSidebar() {
-  document.getElementById("sidebar").classList.toggle("active");
+/* AUTH CHECK */
+window.addEventListener("load", () => {
+  const user = JSON.parse(localStorage.getItem("zepStudent"));
+  if (!user || !user.loggedIn) {
+    window.location.href = "login.html";
+  } else {
+    document.getElementById("walletAddress").innerHTML = 
+      user.wallet.slice(0,6) + "..." + user.wallet.slice(-4);
+  }
+});
+
+/* LOGOUT */
+function logoutStudent(){
+  localStorage.removeItem("zepStudent");
+  window.location.href = "login.html";
 }
 </script>
+
 </body>
 </html>
