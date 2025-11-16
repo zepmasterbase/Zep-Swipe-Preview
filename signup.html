@@ -3,115 +3,175 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Zep Swipe — Connect Wallet</title>
+<title>Zep Swipe — Student Login</title>
+
+<!-- Fonts -->
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700&family=Poppins:wght@400;500;600&display=swap" rel="stylesheet" />
+
+<!-- Tailwind -->
 <script src="https://cdn.tailwindcss.com"></script>
 
 <style>
 :root {
   --zep-blue:#00f0ff;
-  --zep-violet:#9c4dff;
+  --zep-purple:#9c4dff;
+  --zep-dark:#050018;
 }
+
 body {
-  font-family:'Poppins',sans-serif;
-  background:radial-gradient(circle at 25% 10%, #050018 0%, #000010 100%);
-  color:#fff;
-  height:100vh;
   margin:0;
+  padding:0;
+  height:100vh;
+  background:radial-gradient(circle at 30% 10%, #070026 0%, #000010 100%);
+  font-family:'Poppins',sans-serif;
+  color:white;
   display:flex;
   flex-direction:column;
   justify-content:center;
   align-items:center;
   overflow:hidden;
 }
-h1 {
+
+/* Floating neon orbs */
+.floating-orb {
+  position:absolute;
+  width:420px;
+  height:420px;
+  border-radius:50%;
+  opacity:0.18;
+  filter:blur(60px);
+  animation: float 6s ease-in-out infinite alternate;
+}
+
+@keyframes float {
+  from { transform:translateY(0); }
+  to   { transform:translateY(-25px); }
+}
+
+/* Title Glow */
+.title {
   font-family:'Orbitron';
-  font-size:2rem;
-  background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
+  font-size:2.2rem;
+  background:linear-gradient(90deg,var(--zep-blue),var(--zep-purple));
   -webkit-background-clip:text;
   -webkit-text-fill-color:transparent;
-  margin-bottom:1rem;
+  animation:titlePulse 4s ease-in-out infinite alternate;
 }
-button {
+
+@keyframes titlePulse {
+  0%   { text-shadow:0 0 18px rgba(0,240,255,0.4); }
+  100% { text-shadow:0 0 40px rgba(156,77,255,0.9); }
+}
+
+/* Connect Button */
+.connect-btn {
   width:260px;
-  padding:14px 24px;
-  border:none;
+  padding:15px 24px;
   border-radius:999px;
+  border:none;
+  cursor:pointer;
   font-family:'Orbitron';
   font-weight:700;
-  background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
+  font-size:1rem;
+  background:linear-gradient(90deg,var(--zep-blue),var(--zep-purple));
   color:#050018;
-  cursor:pointer;
-  box-shadow:0 0 25px rgba(0,240,255,0.5);
+  box-shadow:0 0 22px rgba(0,240,255,0.55);
+  transition:0.25s;
 }
-button:hover {
+
+.connect-btn:hover {
   transform:scale(1.05);
+  box-shadow:0 0 40px rgba(156,77,255,0.9);
+}
+
+/* Glass tagline box */
+.glass {
+  background:rgba(255,255,255,0.06);
+  padding:14px 22px;
+  border-radius:14px;
+  border:1px solid rgba(255,255,255,0.18);
+  backdrop-filter:blur(15px);
+  margin-bottom:1.6rem;
+  font-size:0.9rem;
+  max-width:260px;
+  text-align:center;
 }
 footer {
   position:fixed;
-  bottom:15px;
-  opacity:0.6;
-  font-size:0.8rem;
+  bottom:18px;
+  opacity:0.5;
+  font-size:0.75rem;
+  text-align:center;
+  width:100%;
 }
 </style>
 </head>
 
 <body>
 
-<h1>Zep Swipe</h1>
-<p style="opacity:0.7;max-width:260px;text-align:center;margin-bottom:1.5rem;">
-  Connect your wallet to continue to your Merchant Dashboard.
-</p>
+<!-- Floating neon orbs -->
+<div class="floating-orb" style="top:-90px; left:-90px; background:var(--zep-purple);"></div>
+<div class="floating-orb" style="bottom:-100px; right:-100px; background:var(--zep-blue);"></div>
 
-<button onclick="connectWallet()">🔗 Connect Wallet</button>
+<!-- TITLE -->
+<h1 class="title mb-5">Zep Swipe</h1>
 
-<footer>© 2025 Zep Swipe — Web3 Merchant MVP</footer>
+<!-- GLASS TEXT BOX -->
+<div class="glass">
+  Connect your wallet to continue to your <strong>Student Dashboard</strong>.
+</div>
+
+<!-- CONNECT BUTTON -->
+<button class="connect-btn" onclick="connectWallet()">🚀 Connect Wallet</button>
+
+<footer>© 2025 Zep Swipe — Student Web3 MVP</footer>
 
 <script>
 async function connectWallet() {
   if (!window.ethereum) {
-    alert("🚨 No wallet detected! Install MetaMask or open in Coinbase Wallet.");
+    alert("🚨 No crypto wallet detected! Install MetaMask or open inside Coinbase Wallet.");
     return;
   }
 
   try {
-    console.log("⏳ Requesting wallet...");
+    console.log("⏳ Requesting wallet access...");
+
     const accounts = await window.ethereum.request({
       method: "eth_requestAccounts"
     });
 
     if (!accounts || accounts.length === 0) {
-      alert("⚠️ No wallet connected.");
+      alert("⚠️ Wallet connection failed.");
       return;
     }
 
     const wallet = accounts[0];
     console.log("Wallet connected:", wallet);
 
-    // Save merchant session
+    // SAVE STUDENT SESSION
     localStorage.setItem(
-      "zepUser",
+      "zepStudent",
       JSON.stringify({ wallet, loggedIn: true })
     );
 
-    // FIX FOR MOBILE METAMASK — Give the browser time to return focus
+    // MetaMask Mobile Focus Fix
     setTimeout(() => {
-      console.log("➡️ Redirecting to merchants-dashboard.html");
-      window.location.href = "merchants-dashboard.html";
-    }, 300); // 300ms works best on MetaMask mobile
+      console.log("➡️ Redirecting to student-dashboard.html");
+      window.location.href = "student-dashboard.html";
+    }, 300);
 
   } catch (err) {
     console.error("Login error:", err);
-    alert("⚠️ Wallet connection failed.");
+    alert("⚠️ Wallet connection rejected.");
   }
 }
 
-// Auto-login if already saved
+// AUTO-LOGIN if already authenticated
 window.addEventListener("load", () => {
-  const user = JSON.parse(localStorage.getItem("zepUser"));
+  const user = JSON.parse(localStorage.getItem("zepStudent"));
   if (user && user.loggedIn) {
     setTimeout(() => {
-      window.location.href = "merchants-dashboard.html";
+      window.location.href = "student-dashboard.html";
     }, 300);
   }
 });
