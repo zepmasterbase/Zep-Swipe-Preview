@@ -13,7 +13,7 @@
   --zep-blue:#00f0ff;
   --zep-violet:#9c4dff;
   --glass:rgba(255,255,255,0.06);
-  --bg:radial-gradient(circle at 20% 10%, #020014 0%, #000007 100%);
+  --bg:radial-gradient(circle at 25% 10%, #020014 0%, #00000a 100%);
 }
 
 /* Base */
@@ -41,29 +41,28 @@ body{
   display:flex;
   justify-content:space-between;
   align-items:center;
-  box-shadow:0 0 25px rgba(0,240,255,0.12);
-  animation:pulseHeader 3.5s infinite alternate ease-in-out;
+  animation:glowHeader 3.5s infinite alternate ease-in-out;
 }
-@keyframes pulseHeader{
-  0%{box-shadow:0 0 22px rgba(0,240,255,0.18);}
-  100%{box-shadow:0 0 44px rgba(156,77,255,0.35);}
+@keyframes glowHeader{
+  0%{box-shadow:0 0 18px rgba(0,240,255,0.20);}
+  100%{box-shadow:0 0 42px rgba(156,77,255,0.45);}
 }
 
 .brand{
   font-family:'Orbitron';
-  font-size:1.5rem;
+  font-size:1.7rem;
   font-weight:700;
   background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
   -webkit-background-clip:text;
   -webkit-text-fill-color:transparent;
-  text-shadow:0 0 20px rgba(0,240,255,0.6);
+  text-shadow:0 0 22px rgba(0,240,255,0.7);
 }
 
 /* Wallet Address */
 .addr{
   font-family:'Orbitron';
-  font-size:0.9rem;
-  color:#b8eeff;
+  font-size:0.95rem;
+  color:#d7faff;
   text-align:right;
 }
 
@@ -76,101 +75,131 @@ body{
   filter:drop-shadow(0 0 9px rgba(255,80,80,0.8));
 }
 
-/* KPI CARD */
-.card{
-  margin-top:18px;
-  padding:18px;
-  border-radius:16px;
-  background:rgba(255,255,255,0.03);
-  border:1px solid rgba(255,255,255,0.06);
-  backdrop-filter:blur(14px);
-  box-shadow:0 0 25px rgba(0,240,255,0.05);
-}
-
-/* ZAC + USDT BOX */
-.glass-box{
-  margin-top:20px;
-  border-radius:18px;
+/* Portfolio section */
+.portfolio-box{
+  margin-top:24px;
   padding:20px;
+  border-radius:18px;
   background:rgba(255,255,255,0.05);
   border:1px solid rgba(255,255,255,0.12);
-  backdrop-filter:blur(12px);
-  animation:pulseGlass 4s infinite alternate;
+  backdrop-filter:blur(16px);
+  animation:pulsePortfolio 4s infinite alternate ease-in-out;
 }
-@keyframes pulseGlass{
-  0%{box-shadow:0 0 20px rgba(0,240,255,0.2);}
-  100%{box-shadow:0 0 35px rgba(156,77,255,0.25);}
+@keyframes pulsePortfolio {
+  0%{box-shadow:0 0 22px rgba(0,240,255,0.20);}
+  100%{box-shadow:0 0 40px rgba(156,77,255,0.30);}
 }
 
-.glass-title{
+.section-title{
   font-family:'Orbitron';
+  font-size:1.25rem;
   background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
   -webkit-background-clip:text;
   -webkit-text-fill-color:transparent;
-  font-size:1.2rem;
-  margin-bottom:12px;
+  margin-bottom:16px;
 }
 
+/* Coin Box */
 .coin{
   width:70px;height:70px;
-  border-radius:18px;
+  border-radius:20px;
   background:linear-gradient(140deg,var(--zep-blue),var(--zep-violet));
   display:flex;align-items:center;justify-content:center;
   font-family:Orbitron;font-size:20px;color:#050015;
-  box-shadow:0 10px 35px rgba(0,240,255,0.15);
+  box-shadow:0 12px 40px rgba(0,240,255,0.15);
 }
 
-.balance-meta{
+.balance-text{
   margin-left:16px;
 }
-.balance-meta .big{
+.balance-text .big{
   font-family:'Orbitron';
-  font-size:24px;
+  font-size:26px;
 }
-.balance-meta .small{
+.balance-text .small{
   opacity:0.85;
   font-size:13px;
 }
 
-/* Disabled placeholder boxes */
+/* Grid for Wallet + Earn mini actions */
+.mini-grid{
+  margin-top:20px;
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:14px;
+}
+
+.mini-card{
+  padding:16px;
+  text-align:center;
+  background:rgba(255,255,255,0.05);
+  border-radius:16px;
+  backdrop-filter:blur(14px);
+  border:1px solid rgba(255,255,255,0.12);
+  animation:pulseMini 3s infinite alternate ease-in-out;
+}
+@keyframes pulseMini{
+  0%{box-shadow:0 0 14px rgba(0,240,255,0.15);}
+  100%{box-shadow:0 0 30px rgba(156,77,255,0.25);}
+}
+
+.mini-card h3{
+  margin:6px 0 0 0;
+  font-family:'Orbitron';
+  font-size:1rem;
+}
+
+/* Disabled placeholders */
 .disabled-card{
+  margin-top:12px;
   padding:18px;
   background:rgba(255,255,255,0.02);
-  border-radius:14px;
-  border:1px dashed rgba(255,255,255,0.05);
+  border-radius:15px;
+  border:1px dashed rgba(255,255,255,0.08);
   opacity:0.35;
   text-align:center;
   font-family:'Orbitron';
-  font-size:14px;
 }
 
-/* FOOTER */
+/* Floating AI */
+.ai-bubble{
+  position:fixed;
+  right:18px;
+  bottom:110px;
+  background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
+  padding:12px 20px;
+  border-radius:100px;
+  color:#050015;
+  font-family:'Orbitron';
+  font-weight:700;
+  cursor:pointer;
+  box-shadow:0 12px 40px rgba(156,77,255,0.35);
+}
+
+/* Footer Nav */
 .footer{
-  position:fixed;bottom:0;left:0;right:0;
+  position:fixed;
+  bottom:0;left:0;right:0;
+  padding:14px 22px;
   background:rgba(0,0,0,0.55);
-  backdrop-filter:blur(10px);
-  padding:12px 18px;
   display:flex;
   justify-content:space-around;
-  border-top:1px solid rgba(255,255,255,0.06);
+  backdrop-filter:blur(10px);
 }
 
 .fbtn{
-  width:58px;
-  height:58px;
+  width:58px;height:58px;
   border-radius:18px;
-  display:flex;
-  align-items:center;
-  justify-content:center;
   background:rgba(255,255,255,0.04);
-  border:1px solid rgba(255,255,255,0.06);
+  border:1px solid rgba(255,255,255,0.08);
+  display:flex;align-items:center;justify-content:center;
+  transition:0.25s;
   cursor:pointer;
-  transition:0.2s;
-  filter:drop-shadow(0 0 12px rgba(0,240,255,0.15));
+  filter:drop-shadow(0 0 14px rgba(0,240,255,0.15));
 }
 .fbtn:hover{
-  transform:translateY(-6px);
-  filter:drop-shadow(0 0 25px rgba(156,77,255,0.4));
+  transform:translateY(-7px);
+  filter:drop-shadow(0 0 35px rgba(156,77,255,0.45));
 }
 </style>
 </head>
@@ -185,7 +214,8 @@ body{
 
     <div style="text-align:right;">
       <div id="walletShort" class="addr">—</div>
-      <button class="logout" id="logoutBtn" title="Logout">
+
+      <button class="logout" id="logoutBtn">
         <svg width="22" height="22" fill="none" stroke="#ff6b6b" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
           <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/>
           <polyline points="16 17 21 12 16 7"/>
@@ -196,56 +226,76 @@ body{
   </div>
 
 
-  <!-- ZEP CASH + USDT PORTFOLIO -->
-  <div class="glass-box">
-    <div class="glass-title">Portfolio</div>
+  <!-- PORTFOLIO -->
+  <div class="portfolio-box">
 
+    <div class="section-title">Portfolio</div>
+
+    <!-- ZAC row -->
     <div style="display:flex;align-items:center;">
       <div class="coin">ZAC</div>
-      <div class="balance-meta">
+      <div class="balance-text">
         <div class="big" id="zacAmount">25 ZAC (test)</div>
         <div class="small" id="zacUsd">≈ $3.75 USD</div>
       </div>
     </div>
 
-    <hr style="opacity:0.1;margin:16px 0;">
+    <hr style="opacity:0.10;margin:16px 0;">
 
-    <div style="display:flex;justify-content:space-between;">
-      <div>USDT Price</div>
-      <div id="usdtPrice" style="font-family:Orbitron;">$1.00</div>
+    <!-- USDT row -->
+    <div style="display:flex;justify-content:space-between;font-family:Orbitron;">
+      <div>USDT Balance</div>
+      <div id="usdtBal">$0.00</div>
     </div>
   </div>
 
-  <!-- DISABLED FEATURES -->
-  <div class="disabled-card" style="margin-top:20px;">🛍 Marketplace (Coming Soon)</div>
-  <div class="disabled-card" style="margin-top:10px;">📦 Parcel On (Coming Soon)</div>
-  <div class="disabled-card" style="margin-top:10px;">🚗 Swipe Rides (Coming Soon)</div>
+
+  <!-- MINI GRID -->
+  <div class="mini-grid">
+    <a href="wallet.html" class="mini-card" style="text-decoration:none;color:#fff;">
+      <h3>Wallet</h3>
+    </a>
+
+    <a href="learn-earn.html" class="mini-card" style="text-decoration:none;color:#fff;">
+      <h3>Earn</h3>
+    </a>
+  </div>
+
+  <!-- DISABLED FUTURE FEATURES -->
+  <div class="disabled-card">🛍 Marketplace — Coming Soon</div>
+  <div class="disabled-card">📦 Parcel On — Coming Soon</div>
+  <div class="disabled-card">🚗 Swipe Rides — Coming Soon</div>
 
 </div>
 
-<!-- FOOTER NAV -->
+
+<!-- ZEP AI FLOAT -->
+<button class="ai-bubble" onclick="window.location.href='zep-ai.html'">
+  🤖 Ask Zep AI
+</button>
+
+
+<!-- FOOTER -->
 <div class="footer">
 
-  <a class="fbtn" href="wallet.html" title="Wallet">
-    <svg width="28" height="28" viewBox="0 0 24 24" stroke="url(#g1)" fill="none" stroke-width="1.5">
+  <a class="fbtn" href="wallet.html">
+    <svg width="26" height="26" fill="none" viewBox="0 0 24 24" stroke="url(#g1)" stroke-width="1.4">
       <rect x="3" y="7" width="18" height="13" rx="2"/>
       <path d="M3 11h18"/>
-      <defs>
-        <linearGradient id="g1"><stop stop-color="#00f0ff"/><stop offset="1" stop-color="#9c4dff"/></linearGradient>
-      </defs>
+      <defs><linearGradient id="g1"><stop stop-color="#00f0ff"/><stop offset="1" stop-color="#9c4dff"/></linearGradient></defs>
     </svg>
   </a>
 
-  <a class="fbtn" href="learn-earn.html" title="Earn">
-    <svg width="28" height="28" fill="none" stroke="url(#g2)" stroke-width="1.5" viewBox="0 0 24 24">
+  <a class="fbtn" href="learn-earn.html">
+    <svg width="26" height="26" fill="none" viewBox="0 0 24 24" stroke="url(#g2)" stroke-width="1.4">
       <circle cx="12" cy="12" r="8"/>
       <path d="M12 8v8M8 12h8"/>
       <defs><linearGradient id="g2"><stop stop-color="#00f0ff"/><stop offset="1" stop-color="#9c4dff"/></linearGradient></defs>
     </svg>
   </a>
 
-  <a class="fbtn" href="zep-ai.html" title="Zep AI">
-    <svg width="28" height="28" fill="none" stroke="url(#g3)" stroke-width="1.5" viewBox="0 0 24 24">
+  <a class="fbtn" href="zep-ai.html">
+    <svg width="26" height="26" fill="none" viewBox="0 0 24 24" stroke="url(#g3)" stroke-width="1.4">
       <circle cx="12" cy="12" r="9"/>
       <circle cx="9" cy="10" r="1"/>
       <circle cx="15" cy="10" r="1"/>
@@ -254,8 +304,8 @@ body{
     </svg>
   </a>
 
-  <a class="fbtn" href="profile.html" title="Profile">
-    <svg width="28" height="28" fill="none" stroke="url(#g4)" stroke-width="1.5" viewBox="0 0 24 24">
+  <a class="fbtn" href="profile.html">
+    <svg width="26" height="26" fill="none" viewBox="0 0 24 24" stroke="url(#g4)" stroke-width="1.4">
       <circle cx="12" cy="8" r="3"/>
       <path d="M4 20c1.5-4 7-6 8-6s6.5 2 8 6"/>
       <defs><linearGradient id="g4"><stop stop-color="#00f0ff"/><stop offset="1" stop-color="#9c4dff"/></linearGradient></defs>
@@ -269,27 +319,41 @@ body{
 /* SHORT ADDRESS */
 function shortAddr(a){return a?`${a.slice(0,6)}...${a.slice(-4)}`:'—';}
 
-/* AUTH */
+/* LOGOUT */
 document.getElementById("logoutBtn").onclick = ()=>{
   localStorage.removeItem("zepStudent");
   location.href="student-login.html";
 };
 
-window.onload = ()=>{
+/* Base USDT contract */
+const USDT = "0xdAC17F958D2ee523a2206206994597C13D831ec7";
+const ERC20_ABI = [
+  "function balanceOf(address owner) view returns (uint256)",
+  "function decimals() view returns (uint8)"
+];
+
+/* ON LOAD */
+window.onload = async ()=>{
+
   const s = JSON.parse(localStorage.getItem("zepStudent"));
   if(!s){ location.href="student-login.html"; return; }
+
   document.getElementById("walletShort").textContent = shortAddr(s.wallet);
-  fetchUSDT();
+
+  fetchUSDT(s.wallet);
 };
 
-/* LIVE USDT PRICE FROM COINGECKO */
-async function fetchUSDT(){
+/* Fetch USDT Balance using Base RPC */
+async function fetchUSDT(wallet){
   try{
-    let r = await fetch("https://api.coingecko.com/api/v3/simple/price?ids=tether&vs_currencies=usd");
-    let j = await r.json();
-    document.getElementById("usdtPrice").textContent = "$"+j.tether.usd.toFixed(2);
+    const provider = new ethers.JsonRpcProvider("https://mainnet.base.org");
+    const c = new ethers.Contract(USDT, ERC20_ABI, provider);
+    const dec = await c.decimals();
+    const bal = await c.balanceOf(wallet);
+    const f = Number(ethers.formatUnits(bal, dec));
+    document.getElementById("usdtBal").textContent = "$" + f.toFixed(2);
   }catch(e){
-    document.getElementById("usdtPrice").textContent = "$1.00";
+    document.getElementById("usdtBal").textContent = "$0.00";
   }
 }
 </script>
