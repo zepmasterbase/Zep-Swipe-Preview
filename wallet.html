@@ -1,169 +1,541 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Zep Swipe — Student Wallet</title>
 
-  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Fonts + Ethers -->
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet"/>
+  <script src="https://cdn.jsdelivr.net/npm/ethers@6.6.0/dist/ethers.min.js"></script>
 
   <style>
-    body {
-      background: #00000f;
-      font-family: 'Poppins', sans-serif;
-      color: white;
+    :root{
+      --zep-blue:#00f0ff;
+      --zep-violet:#9c4dff;
+      --bg: radial-gradient(circle at 20% 10%, #020014 0%, #000007 100%);
+      --glass: rgba(255,255,255,0.05);
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family:'Poppins',sans-serif;
+      background:var(--bg);
+      color:#fff;
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+    }
+    .container{
+      max-width:980px;
+      margin:28px auto;
+      padding:18px;
     }
 
-    .neon-btn {
-      background: rgba(255,255,255,0.06);
-      border: 1px solid rgba(255,255,255,0.14);
-      backdrop-filter: blur(12px);
-      border-radius: 1rem;
-      padding: 1rem;
-      text-align: center;
-      transition: .3s;
+    /* Header */
+    .header{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      padding:14px;
+      border-radius:14px;
+      background:var(--glass);
+      border:1px solid rgba(255,255,255,0.08);
+      backdrop-filter:blur(12px);
+      box-shadow:0 10px 40px rgba(0,240,255,0.04);
+      animation:headerPulse 3.5s infinite alternate;
+    }
+    @keyframes headerPulse{
+      from{box-shadow:0 6px 20px rgba(0,240,255,0.06)}
+      to{box-shadow:0 12px 36px rgba(156,77,255,0.08)}
+    }
+    .brand{
+      font-family:'Orbitron';
+      font-size:20px;
+      background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
+      -webkit-background-clip:text;
+      -webkit-text-fill-color:transparent;
+      text-shadow:0 0 14px rgba(0,240,255,0.15);
+    }
+    .walletAddr{
+      text-align:right;
+      font-family:'Orbitron';
+      color:#bffcff;
+      font-size:0.95rem;
+    }
+    .logoutBtn{
+      margin-left:10px;
+      background:transparent;border:0;cursor:pointer;padding:6px;border-radius:8px;
+      filter:drop-shadow(0 0 8px rgba(255,80,80,0.85));
     }
 
-    .neon-btn:hover {
-      box-shadow: 0 0 18px #00f0ff55;
-      transform: scale(1.04);
+    /* Portfolio card */
+    .grid{
+      display:grid;
+      grid-template-columns:1fr 360px;
+      gap:18px;
+      margin-top:18px;
+    }
+    @media (max-width:900px){ .grid{grid-template-columns:1fr} }
+
+    .card{
+      background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+      border-radius:14px;
+      padding:16px;
+      border:1px solid rgba(255,255,255,0.06);
+      box-shadow:0 12px 40px rgba(0,240,255,0.02);
+      backdrop-filter:blur(10px);
     }
 
-    .footer-icon {
-      opacity: 0.6;
-      transition: .3s;
+    .portfolio{
+      border-radius:16px;
+      padding:18px;
+      background:rgba(255,255,255,0.03);
+      border:1px solid rgba(255,255,255,0.08);
+      box-shadow:0 14px 50px rgba(0,240,255,0.04);
+      animation:pulseGlass 4s infinite alternate;
+    }
+    @keyframes pulseGlass{
+      from{box-shadow:0 10px 30px rgba(0,240,255,0.08)}
+      to{box-shadow:0 18px 60px rgba(156,77,255,0.10)}
     }
 
-    .footer-icon:hover {
-      opacity: 1;
-      transform: scale(1.15);
+    .coinRow{display:flex;align-items:center;gap:14px}
+    .coinBadge{
+      width:72px;height:72px;border-radius:16px;
+      display:flex;align-items:center;justify-content:center;
+      background:linear-gradient(135deg,var(--zep-blue),var(--zep-violet));
+      color:#050015;font-family:Orbitron;font-weight:700;font-size:18px;
+      box-shadow:0 12px 40px rgba(0,240,255,0.12);
     }
+    .meta {flex:1}
+    .meta .big{font-family:Orbitron;font-size:20px;margin:0}
+    .meta .small{opacity:0.85;font-size:13px;margin-top:6px;color:#d8f8ff}
+
+    .miniGrid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-top:12px}
+    .mini{padding:12px;border-radius:12px;background:linear-gradient(90deg, rgba(0,240,255,0.02), rgba(156,77,255,0.02));text-align:center;cursor:pointer;border:1px solid rgba(255,255,255,0.03)}
+    .mini.disabled{opacity:0.45;cursor:not-allowed;filter:none;box-shadow:none}
+
+    .btn-primary{
+      display:inline-block;
+      margin-top:12px;
+      padding:10px 14px;
+      border-radius:12px;
+      background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
+      color:#050015;font-weight:700;font-family:Orbitron;
+      border:none;cursor:pointer;
+      box-shadow:0 12px 30px rgba(0,240,255,0.12);
+    }
+
+    /* Right column quick actions */
+    .rightBox{display:flex;flex-direction:column;gap:12px}
+    .actionCard{padding:14px;border-radius:12px;background:linear-gradient(180deg, rgba(255,255,255,0.015), rgba(255,255,255,0.01));border:1px solid rgba(255,255,255,0.04)}
+    .smallMuted{font-size:13px;opacity:0.8;color:#bfefff}
+
+    /* Footer */
+    .footer{
+      position:fixed;left:0;right:0;bottom:0;padding:12px 20px;
+      background:rgba(0,0,0,0.55);backdrop-filter:blur(8px);
+      display:flex;justify-content:space-around;gap:12px;
+      border-top:1px solid rgba(255,255,255,0.03);
+    }
+    .fbtn{
+      width:68px;height:68px;border-radius:16px;background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+      display:flex;align-items:center;justify-content:center;cursor:pointer;border:1px solid rgba(255,255,255,0.03);
+      filter:drop-shadow(0 8px 20px rgba(0,240,255,0.04));transition:transform .18s;
+    }
+    .fbtn:hover{transform:translateY(-6px);filter:drop-shadow(0 14px 40px rgba(156,77,255,0.12));}
+
+    /* AI bubble */
+    .aiBubble{
+      position:fixed;right:18px;bottom:110px;background:linear-gradient(90deg,var(--zep-blue),var(--zep-violet));
+      color:#050015;padding:12px 16px;border-radius:999px;font-family:Orbitron;font-weight:700;cursor:pointer;box-shadow:0 12px 35px rgba(156,77,255,0.14);
+    }
+
+    /* Modal simple */
+    .modalBack{position:fixed;inset:0;background:rgba(0,0,0,0.6);display:none;align-items:center;justify-content:center;z-index:999}
+    .modal{width:420px;max-width:92%;background:var(--glass);padding:16px;border-radius:14px;border:1px solid rgba(255,255,255,0.08);backdrop-filter:blur(12px)}
+    .field{margin-top:10px}
+    input[type="text"], input[type="number"]{width:100%;padding:10px;border-radius:10px;border:1px solid rgba(255,255,255,0.08);background:transparent;color:#fff}
+
+    .muted{opacity:0.8;color:#cfeffd;font-size:13px}
 
   </style>
 </head>
-
-<body class="min-h-screen pb-24">
-
-  <!-- Balance Header -->
-  <div class="px-6 pt-6">
-    <h1 class="text-4xl font-semibold">US$0.00</h1>
-    <p class="text-cyan-300 mt-1">+$0 (+0.00%)</p>
-  </div>
-
-  <!-- Action Buttons -->
-  <div class="grid grid-cols-4 gap-4 px-6 mt-6">
-    <div class="neon-btn">
-      <img src="https://cdn-icons-png.flaticon.com/512/679/679922.png" class="w-6 mx-auto mb-1">
-      <p class="text-xs">Fund</p>
-    </div>
-
-    <div class="neon-btn">
-      <img src="https://cdn-icons-png.flaticon.com/512/1186/1186026.png" class="w-6 mx-auto mb-1">
-      <p class="text-xs">Swap</p>
-    </div>
-
-    <div class="neon-btn">
-      <img src="https://cdn-icons-png.flaticon.com/512/2985/2985150.png" class="w-6 mx-auto mb-1">
-      <p class="text-xs">Send</p>
-    </div>
-
-    <div class="neon-btn">
-      <img src="https://cdn-icons-png.flaticon.com/512/2985/2985153.png" class="w-6 mx-auto mb-1">
-      <p class="text-xs">Receive</p>
-    </div>
-  </div>
-
-  <!-- Tokens Section -->
-  <div class="px-6 mt-8">
-    <p class="text-lg font-semibold">Tokens</p>
-
-    <div class="mt-4 bg-[#0c0c20] rounded-xl p-4">
-
-      <!-- ZAC -->
-      <div class="flex items-center justify-between mb-4">
-        <div class="flex items-center gap-3">
-          <div class="w-10 h-10 bg-black rounded-full flex items-center justify-center">
-            <span class="font-bold">Z</span>
-          </div>
-          <div>
-            <p class="font-semibold">Zep Cash (ZAC)</p>
-            <p class="text-green-400 text-xs">+0.00%</p>
-          </div>
+<body>
+  <div class="container">
+    <div class="header">
+      <div class="brand">Zep Swipe</div>
+      <div>
+        <div id="loggedAddr" class="walletAddr">—</div>
+        <div style="text-align:right;margin-top:8px">
+          <button class="logoutBtn" id="logoutBtn" title="Logout">
+            <!-- logout -->
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#ff6b6b" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/>
+              <polyline points="16 17 21 12 16 7"/>
+              <line x1="21" y1="12" x2="9" y2="12"/>
+            </svg>
+          </button>
         </div>
-        <div class="text-right">
-          <p class="font-semibold">5,000,000 ZAC</p>
-          <p class="text-xs text-gray-400">$0.00</p>
+      </div>
+    </div>
+
+    <div class="grid">
+      <!-- left: portfolio & actions -->
+      <div>
+        <div class="card portfolio">
+          <div style="display:flex;justify-content:space-between;align-items:center">
+            <div>
+              <div class="smallMuted">Portfolio</div>
+              <div style="font-family:Orbitron;font-size:18px;margin-top:6px">Your holdings</div>
+            </div>
+            <div class="smallMuted">Base Mainnet</div>
+          </div>
+
+          <div style="display:flex;align-items:center;margin-top:12px">
+            <div class="coinBadge">ZAC</div>
+            <div class="meta">
+              <div class="big" id="zacAmount">25 ZAC</div>
+              <div class="small" id="zacUsd">≈ $3.75 USD</div>
+            </div>
+          </div>
+
+          <hr style="opacity:0.08;margin:14px 0">
+
+          <div style="display:flex;justify-content:space-between;align-items:center">
+            <div class="smallMuted">USDT balance</div>
+            <div id="usdtBal" style="font-family:Orbitron">—</div>
+          </div>
+
+          <div class="miniGrid">
+            <div class="mini" id="sendBtn">Send</div>
+            <div class="mini" id="receiveBtn">Receive</div>
+            <!-- Disabled features -->
+            <div class="mini disabled">ZepShop (soon)</div>
+            <div class="mini disabled">ParcelOn (soon)</div>
+          </div>
+
+        </div>
+
+        <div class="card" style="margin-top:16px">
+          <h4 style="margin:0;font-family:Orbitron">Activity</h4>
+          <div class="muted" style="margin-top:8px">Recent transactions & rewards (demo)</div>
+          <div style="margin-top:12px">
+            <div style="display:flex;justify-content:space-between;margin-bottom:8px">
+              <div><strong>Earned</strong><div class="muted">Zep quiz — +25 ZAC</div></div>
+              <div style="font-family:Orbitron">+25 ZAC</div>
+            </div>
+            <div style="display:flex;justify-content:space-between">
+              <div><strong>Sale</strong><div class="muted">Guide sold — +8 ZAC</div></div>
+              <div style="font-family:Orbitron">+8 ZAC</div>
+            </div>
+          </div>
         </div>
       </div>
 
-      <!-- USDT -->
-      <div class="flex items-center justify-between mb-4">
-        <div class="flex items-center gap-3">
-          <div class="w-10 h-10 bg-[#0c4] rounded-full flex items-center justify-center">
-            <span class="font-bold">T</span>
+      <!-- right column -->
+      <div class="rightBox">
+        <div class="actionCard">
+          <div style="display:flex;justify-content:space-between;align-items:center">
+            <div>
+              <div class="smallMuted">Quick</div>
+              <div style="font-family:Orbitron">Add funds / Swap</div>
+            </div>
+            <button class="btn-primary" id="addFunds">Add Funds</button>
           </div>
-          <div>
-            <p class="font-semibold">Tether (USDT)</p>
-            <p class="text-red-400 text-xs">-0.12%</p>
+          <div class="muted" style="margin-top:10px">Swap support (coming soon)</div>
+        </div>
+
+        <div class="actionCard">
+          <div style="display:flex;justify-content:space-between;align-items:center">
+            <div>
+              <div class="smallMuted">Zep Study</div>
+              <div style="font-family:Orbitron">Learn & earn</div>
+            </div>
+            <button class="btn-primary" id="learnBtn">Open</button>
           </div>
         </div>
-        <div class="text-right">
-          <p class="font-semibold">0 USDT</p>
-          <p class="text-xs text-gray-400">$0.00</p>
+
+        <div class="actionCard">
+          <div style="display:flex;justify-content:space-between;align-items:center">
+            <div>
+              <div class="smallMuted">Withdraw</div>
+              <div style="font-family:Orbitron">To bank (placeholder)</div>
+            </div>
+            <button class="btn-primary disabled" disabled>Withdraw</button>
+          </div>
         </div>
       </div>
+    </div>
+  </div>
 
-      <!-- ETH -->
-      <div class="flex items-center justify-between">
-        <div class="flex items-center gap-3">
-          <div class="w-10 h-10 bg-blue-700 rounded-full flex items-center justify-center">
-            <span class="font-bold">Ξ</span>
-          </div>
-          <div>
-            <p class="font-semibold">Ethereum (ETH)</p>
-            <p class="text-red-400 text-xs">-1.03%</p>
-          </div>
-        </div>
-        <div class="text-right">
-          <p class="font-semibold">0 ETH</p>
-          <p class="text-xs text-gray-400">$0.00</p>
-        </div>
+  <!-- footer -->
+  <div class="footer">
+    <a class="fbtn" href="student-dashboard.html" title="Home">
+      <!-- home replaced with store icon per earlier ask -->
+      <svg width="32" height="32" viewBox="0 0 24 24" fill="none">
+        <rect x="3" y="7" width="18" height="13" rx="2" stroke="url(#s1)" stroke-width="1.3"/>
+        <path d="M3 11h18" stroke="url(#s1)" stroke-width="1.3"/>
+        <defs><linearGradient id="s1" x1="0" x2="1"><stop stop-color="#00f0ff"/><stop offset="1" stop-color="#9c4dff"/></linearGradient></defs>
+      </svg>
+    </a>
+
+    <a class="fbtn" href="activities.html" title="Activities">
+      <svg width="28" height="28" viewBox="0 0 24 24" fill="none">
+        <path d="M3 12h18" stroke="url(#a1)" stroke-width="1.6"/>
+        <path d="M3 6h18" stroke="url(#a1)" stroke-width="1.2"/>
+        <defs><linearGradient id="a1" x1="0" x2="1"><stop stop-color="#00f0ff"/><stop offset="1" stop-color="#9c4dff"/></linearGradient></defs>
+      </svg>
+    </a>
+
+    <a class="fbtn" href="student-wallet.html" title="Wallet">
+      <svg width="30" height="30" viewBox="0 0 24 24" fill="none">
+        <rect x="2" y="6" width="20" height="12" rx="2" stroke="url(#w1)" stroke-width="1.4"/>
+        <defs><linearGradient id="w1" x1="0" x2="1"><stop stop-color="#00f0ff"/><stop offset="1" stop-color="#9c4dff"/></linearGradient></defs>
+      </svg>
+    </a>
+
+    <a class="fbtn" href="profile.html" title="Profile">
+      <svg width="28" height="28" viewBox="0 0 24 24" fill="none">
+        <circle cx="12" cy="8" r="3" stroke="url(#p1)" stroke-width="1.4"/>
+        <path d="M4 20c1.5-4 7-6 8-6s6.5 2 8 6" stroke="url(#p1)" stroke-width="1.4"/>
+        <defs><linearGradient id="p1" x1="0" x2="1"><stop stop-color="#00f0ff"/><stop offset="1" stop-color="#9c4dff"/></linearGradient></defs>
+      </svg>
+    </a>
+  </div>
+
+  <!-- AI bubble -->
+  <button class="aiBubble" id="openAI">💬 Zep AI</button>
+
+  <!-- Send / Receive modal -->
+  <div class="modalBack" id="modalBack">
+    <div class="modal" id="modal">
+      <div id="modalTitle" style="font-family:Orbitron;font-weight:700">Send</div>
+      <div class="muted" id="modalSub">Send USDT to another address</div>
+
+      <div class="field">
+        <label class="muted">Recipient address</label>
+        <input type="text" id="toAddr" placeholder="0x..." />
       </div>
 
+      <div class="field">
+        <label class="muted">Amount (USDT)</label>
+        <input type="number" id="amount" placeholder="0.00" min="0" step="0.000001" />
+      </div>
+
+      <div style="display:flex;gap:8px;margin-top:12px">
+        <button id="confirmSend" class="btn-primary">Confirm & Send</button>
+        <button id="closeModal" class="btn-primary" style="background:transparent;color:#fff;border:1px solid rgba(255,255,255,0.08)">Cancel</button>
+      </div>
+
+      <div id="txStatus" style="margin-top:10px;font-size:13px;color:#cfeffd"></div>
     </div>
   </div>
 
-  <!-- Add Funds -->
-  <div class="px-6 mt-8">
-    <button class="w-full py-3 rounded-xl bg-white text-black font-semibold text-center">
-      Add Funds
-    </button>
-  </div>
+<script>
+/* -------------------------
+   CONFIG / TOKEN ADDRESS
+   - Replace USDT_TOKEN_ADDRESS with the Base mainnet USDT contract if different.
+------------------------- */
+// Example placeholder; replace with official Base-USDT if you have one:
+const USDT_TOKEN_ADDRESS = "0xdAC17F958D2ee523a2206206994597C13D831ec7"; // <-- CHANGE if needed
+const ZAC_TOKEN_ADDRESS = "0xfe4119a9cac1425d808526905e92386b4234bf2a"; // ZAC (simulated)
+const ERC20_ABI = [
+  "function balanceOf(address) view returns (uint256)",
+  "function decimals() view returns (uint8)",
+  "function transfer(address to, uint256 amount) returns (bool)"
+];
+const BASE_RPC = "https://mainnet.base.org";
 
-  <!-- Footer Nav -->
-  <div class="fixed bottom-0 left-0 w-full bg-[#050513] border-t border-gray-800 py-3 flex justify-around">
+/* -------------------------
+   UI Elements
+------------------------- */
+const loggedAddrEl = document.getElementById('loggedAddr');
+const zacAmountEl = document.getElementById('zacAmount');
+const zacUsdEl = document.getElementById('zacUsd');
+const usdtBalEl = document.getElementById('usdtBal');
 
-    <div class="footer-icon text-center">
-      <img src="https://cdn-icons-png.flaticon.com/512/25/25694.png" class="w-6 mx-auto">
-      <p class="text-xs">Home</p>
-    </div>
+const modalBack = document.getElementById('modalBack');
+const modalTitle = document.getElementById('modalTitle');
+const modalSub = document.getElementById('modalSub');
+const toAddrInput = document.getElementById('toAddr');
+const amountInput = document.getElementById('amount');
+const confirmSendBtn = document.getElementById('confirmSend');
+const closeModalBtn = document.getElementById('closeModal');
+const txStatus = document.getElementById('txStatus');
 
-    <div class="footer-icon text-center">
-      <img src="https://cdn-icons-png.flaticon.com/512/3603/3603178.png" class="w-6 mx-auto">
-      <p class="text-xs">Wallet</p>
-    </div>
+const sendBtn = document.getElementById('sendBtn');
+const receiveBtn = document.getElementById('receiveBtn');
 
-    <div class="footer-icon text-center">
-      <img src="https://cdn-icons-png.flaticon.com/512/3524/3524659.png" class="w-6 mx-auto">
-      <p class="text-xs">Activity</p>
-    </div>
+const aiBtn = document.getElementById('openAI');
 
-    <div class="footer-icon text-center">
-      <img src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png" class="w-6 mx-auto">
-      <p class="text-xs">Settings</p>
-    </div>
+/* -------------------------
+   Auth check & setup
+------------------------- */
+function shortAddr(a){ return a ? `${a.slice(0,6)}...${a.slice(-4)}` : '—'; }
+function money(n){ return Number(n).toLocaleString(undefined,{minimumFractionDigits:2,maximumFractionDigits:2}); }
 
-  </div>
+function redirectToLogin(){ location.href = 'student-login.html'; }
 
+window.addEventListener('load', async ()=>{
+  const session = JSON.parse(localStorage.getItem('zepStudent'));
+  if(!session || !session.wallet || !session.loggedIn){
+    redirectToLogin();
+    return;
+  }
+
+  loggedAddrEl.textContent = shortAddr(session.wallet);
+
+  // show simulated ZAC for now
+  const simulatedZacAmount = session.zacAmount ?? 25;
+  zacAmountEl.textContent = `${simulatedZacAmount} ZAC`;
+  const zacPrice = 0.15; // simulated USD price per ZAC
+  zacUsdEl.textContent = `≈ $${money(simulatedZacAmount * zacPrice)} USD`;
+
+  // Start fetching real USDT balance
+  await refreshUSDT(session.wallet);
+  // refresh periodically
+  setInterval(()=> refreshUSDT(session.wallet), 20000);
+
+  // wallet listeners
+  setupWalletListeners();
+});
+
+/* -------------------------
+   Wallet provider listeners (injected wallets)
+------------------------- */
+function setupWalletListeners(){
+  if(window.ethereum && window.ethereum.on){
+    window.ethereum.on('accountsChanged', (accounts)=>{
+      if(!accounts || accounts.length === 0){
+        localStorage.removeItem('zepStudent');
+        redirectToLogin();
+      } else {
+        const w = accounts[0];
+        const cur = JSON.parse(localStorage.getItem('zepStudent')) || {};
+        cur.wallet = w; cur.loggedIn = true;
+        localStorage.setItem('zepStudent', JSON.stringify(cur));
+        loggedAddrEl.textContent = shortAddr(w);
+        refreshUSDT(w);
+      }
+    });
+    window.ethereum.on('chainChanged', (cId)=>{
+      console.log('chainChanged', cId);
+      const cur = JSON.parse(localStorage.getItem('zepStudent')) || {};
+      if(cur && cur.wallet) refreshUSDT(cur.wallet);
+    });
+  }
+}
+
+/* -------------------------
+   Fetch ERC20 balance (USDT)
+------------------------- */
+async function refreshUSDT(wallet){
+  try{
+    const provider = new ethers.JsonRpcProvider(BASE_RPC);
+    const token = new ethers.Contract(USDT_TOKEN_ADDRESS, ERC20_ABI, provider);
+    const [decimals, raw] = await Promise.all([ token.decimals(), token.balanceOf(wallet) ]);
+    const formatted = Number(ethers.formatUnits(raw, decimals));
+    usdtBalEl.textContent = `${money(formatted)} USDT`;
+  }catch(err){
+    console.warn('USDT fetch fail', err);
+    usdtBalEl.textContent = '—';
+  }
+}
+
+/* -------------------------
+   Send USDT flow (uses injected wallet/signers)
+------------------------- */
+async function openSendModal(){
+  modalTitle.textContent = "Send USDT";
+  modalSub.textContent = "Send USDT from your wallet";
+  toAddrInput.value = "";
+  amountInput.value = "";
+  txStatus.textContent = "";
+  modalBack.style.display = "flex";
+}
+
+async function openReceiveModal(){
+  // show address & simple copy button
+  modalTitle.textContent = "Receive";
+  modalSub.textContent = "Share this address or scan QR";
+  const session = JSON.parse(localStorage.getItem('zepStudent'));
+  modalBack.style.display = "flex";
+  toAddrInput.value = session.wallet || "";
+  amountInput.value = "";
+  txStatus.textContent = "";
+  // make toAddr read-only in receive mode
+  toAddrInput.disabled = true;
+  confirmSendBtn.style.display = 'none';
+}
+
+function closeModal(){
+  modalBack.style.display = 'none';
+  toAddrInput.disabled = false;
+  confirmSendBtn.style.display = 'inline-block';
+}
+
+/* build signer and transfer */
+async function confirmSend(){
+  txStatus.textContent = "Preparing transaction...";
+  const to = toAddrInput.value.trim();
+  const amt = Number(amountInput.value);
+  if(!ethers.isAddress(to)) { txStatus.textContent = "Invalid recipient address."; return; }
+  if(!amt || amt <= 0) { txStatus.textContent = "Enter a valid amount."; return; }
+
+  if(!window.ethereum) { txStatus.textContent = "No injected wallet found."; return; }
+
+  try{
+    // Connect to injected wallet (user will approve)
+    const provider = new ethers.BrowserProvider(window.ethereum);
+    const signer = await provider.getSigner();
+    const decimals = await (new ethers.Contract(USDT_TOKEN_ADDRESS, ERC20_ABI, provider)).decimals();
+
+    // convert to smallest unit
+    const amountUnits = ethers.parseUnits(String(amt), decimals);
+
+    // create contract connected to signer
+    const tokenWithSigner = new ethers.Contract(USDT_TOKEN_ADDRESS, ERC20_ABI, signer);
+
+    txStatus.textContent = "Requesting wallet approval...";
+    const tx = await tokenWithSigner.transfer(to, amountUnits);
+
+    txStatus.textContent = `Sent. Awaiting confirmation (tx: ${tx.hash.slice(0,8)}...)`;
+    await tx.wait();
+
+    txStatus.textContent = `Success ✅ (tx: ${tx.hash.slice(0,12)})`;
+    // refresh balances
+    const s = JSON.parse(localStorage.getItem('zepStudent')) || {};
+    if(s.wallet) setTimeout(()=> refreshUSDT(s.wallet), 1500);
+  }catch(err){
+    console.error(err);
+    txStatus.textContent = err?.message?.slice(0,240) || "Transaction failed or rejected";
+  }
+}
+
+/* -------------------------
+   UI wiring
+------------------------- */
+sendBtn.addEventListener('click', openSendModal);
+receiveBtn.addEventListener('click', openReceiveModal);
+closeModalBtn.addEventListener('click', closeModal);
+confirmSendBtn.addEventListener('click', confirmSend);
+
+document.getElementById('addFunds').addEventListener('click', ()=>{
+  alert('Add funds flow coming soon.');
+});
+document.getElementById('learnBtn').addEventListener('click', ()=>{
+  window.location.href = 'learn-earn.html';
+});
+
+document.getElementById('logoutBtn').addEventListener('click', ()=>{
+  localStorage.removeItem('zepStudent');
+  location.href = 'student-login.html';
+});
+
+aiBtn.addEventListener('click', ()=>{
+  window.open('zep-ai.html','zepai','width=420,height=640');
+});
+</script>
 </body>
 </html>
