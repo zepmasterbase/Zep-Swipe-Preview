@@ -30,78 +30,79 @@
       overflow-x: hidden;
     }
 
-    /* ===== Header ===== */
+    /* ===== Header (new centered layout) ===== */
     header {
       width: 100%;
       position: fixed;
       top: 0;
       left: 0;
       z-index: 50;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 12px 18px;
-      background: rgba(15, 10, 30, 0.8);
-      backdrop-filter: blur(16px);
-      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-      box-shadow: 0 0 18px rgba(0, 240, 255, 0.2);
-      animation: headerGlow 3s infinite alternate ease-in-out;
+      text-align: center;
+      padding: 18px 12px;
+      background: rgba(15, 10, 30, 0.85);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+      box-shadow: 0 0 22px rgba(0,240,255,0.25);
+      animation: headerGlow 3s infinite alternate;
     }
 
     @keyframes headerGlow {
       0% {
-        box-shadow: 0 0 14px rgba(0, 240, 255, 0.2),
-                    0 0 25px rgba(156, 77, 255, 0.15);
+        box-shadow: 0 0 18px rgba(0,240,255,0.20),
+                    0 0 25px rgba(156,77,255,0.15);
       }
       100% {
-        box-shadow: 0 0 25px rgba(0, 240, 255, 0.35),
-                    0 0 45px rgba(156, 77, 255, 0.25);
+        box-shadow: 0 0 35px rgba(0,240,255,0.35),
+                    0 0 55px rgba(156,77,255,0.25);
       }
     }
 
+    /* Centered ZEP SWIPE logo */
     .logo {
       font-family: "Orbitron", sans-serif;
-      font-size: 1.5rem;
+      font-size: 1.9rem;
       font-weight: 700;
       background: linear-gradient(90deg, var(--zep-blue), var(--zep-violet));
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
-      text-shadow: 0 0 10px rgba(0, 240, 255, 0.5);
-      animation: textPulse 3s infinite alternate;
+      text-shadow: 0 0 16px rgba(0,240,255,0.6);
+      animation: textPulse 3s infinite alternate ease-in-out;
+      margin-bottom: 12px;
     }
 
     @keyframes textPulse {
-      0% { text-shadow: 0 0 10px rgba(0,240,255,0.5); }
-      100% { text-shadow: 0 0 25px rgba(156,77,255,0.6); }
+      0% { text-shadow: 0 0 12px rgba(0,240,255,0.5); }
+      100% { text-shadow: 0 0 28px rgba(156,77,255,0.6); }
     }
 
-    /* ===== Navigation Menu ===== */
+    /* ===== Navigation Styled Under Logo ===== */
     nav {
       display: flex;
-      gap: 1rem;
-      align-items: center;
-      background: rgba(255, 255, 255, 0.05);
-      padding: 6px 14px;
-      border-radius: 12px;
-      backdrop-filter: blur(8px);
-      border: 1px solid rgba(255, 255, 255, 0.08);
-      box-shadow: 0 0 12px rgba(0, 240, 255, 0.15);
+      justify-content: center;
+      gap: 26px;
+      padding: 6px 20px;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 16px;
+      backdrop-filter: blur(12px);
+      width: fit-content;
+      margin: 0 auto;
+      box-shadow: 0 0 20px rgba(0,240,255,0.18);
       animation: navPulse 4s infinite alternate ease-in-out;
     }
 
     @keyframes navPulse {
-      0% { box-shadow: 0 0 10px rgba(0,240,255,0.15); }
-      100% { box-shadow: 0 0 25px rgba(156,77,255,0.25); }
+      0% { box-shadow: 0 0 12px rgba(0,240,255,0.15); }
+      100% { box-shadow: 0 0 30px rgba(156,77,255,0.25); }
     }
 
     nav a {
-      color: #b8cfff;
-      font-weight: 600;
-      font-size: 0.9rem;
-      text-decoration: none;
+      color: #b8d4ff;
       font-family: "Orbitron";
-      transition: 0.3s;
-      position: relative;
+      text-decoration: none;
+      font-size: 0.9rem;
+      font-weight: 600;
+      transition: 0.25s;
     }
 
     nav a:hover {
@@ -109,25 +110,9 @@
       text-shadow: 0 0 10px var(--zep-violet);
     }
 
-    nav a::after {
-      content: "";
-      position: absolute;
-      left: 0;
-      bottom: -3px;
-      width: 0%;
-      height: 2px;
-      background: linear-gradient(90deg, var(--zep-blue), var(--zep-violet));
-      transition: 0.3s ease-in-out;
-      border-radius: 2px;
-    }
-
-    nav a:hover::after {
-      width: 100%;
-    }
-
     /* ===== Hero Section ===== */
     .hero {
-      margin-top: 7.5rem;
+      margin-top: 9.5rem;
       text-align: center;
       padding: 1rem;
       max-width: 95%;
@@ -163,19 +148,17 @@
       background: rgba(255,255,255,0.05);
       backdrop-filter: blur(10px);
       border: 1px solid rgba(255,255,255,0.12);
-      box-shadow: 0 0 20px rgba(0,240,255,0.1);
-      animation: pulseGlass 3s infinite alternate;
+      box-shadow: 0 0 20px rgba(0,240,255,0.15);
+      animation: glassPulse 3s infinite alternate;
     }
 
-    @keyframes pulseGlass {
+    @keyframes glassPulse {
       0% {
-        box-shadow: 0 0 15px rgba(0,240,255,0.15),
-                    0 0 25px rgba(156,77,255,0.2);
+        box-shadow: 0 0 20px rgba(0,240,255,0.20);
         transform: scale(1);
       }
       100% {
-        box-shadow: 0 0 25px rgba(0,240,255,0.3),
-                    0 0 40px rgba(156,77,255,0.3);
+        box-shadow: 0 0 38px rgba(156,77,255,0.35);
         transform: scale(1.05);
       }
     }
@@ -268,6 +251,8 @@
   <!-- HEADER -->
   <header>
     <div class="logo">ZEP SWIPE</div>
+
+    <!-- centered nav under logo -->
     <nav>
       <a href="login.html">Login</a>
       <a href="about.html">About</a>
@@ -284,7 +269,7 @@
       <img src="https://cdn-icons-png.flaticon.com/512/706/706830.png" alt="Student Icon" />
     </div>
 
-    <!-- ✅ Only this link changed -->
+    <!-- Join Beta button linked to login -->
     <a href="login.html" class="btn">Join the Beta</a>
 
     <div class="placeholder">
