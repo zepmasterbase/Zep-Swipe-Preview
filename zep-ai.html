@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Zep AI — Global Merchants Assistant</title>
+<title>Zep AI — Global Student Assistant</title>
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700&family=Poppins:wght@400;500;600&display=swap" rel="stylesheet" />
 <script src="https://cdn.tailwindcss.com"></script>
 
@@ -167,7 +167,6 @@ footer{
 ::-webkit-scrollbar{width:6px;}
 ::-webkit-scrollbar-thumb{background:rgba(0,240,255,0.3);border-radius:3px;}
 
-/* Responsive */
 @media(max-width:600px){
   .logo{font-size:1rem;}
   .chat-box{max-width:100%;height:calc(100vh - 150px);}
@@ -177,8 +176,12 @@ footer{
 </head>
 
 <body>
+
+<!-- ===== HEADER ===== -->
 <header>
   <div class="logo">Zep AI</div>
+
+  <!-- LOGOUT → index.html -->
   <button class="logout-btn" onclick="window.location.href='index.html'" title="Logout">
     <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="#00f0ff" viewBox="0 0 24 24" width="26" height="26" stroke-width="1.8">
       <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/>
@@ -188,9 +191,11 @@ footer{
   </button>
 </header>
 
+<!-- ===== MAIN ===== -->
 <main>
   <div class="chat-box">
     <div class="chat-area" id="chatArea"></div>
+
     <div class="input-bar">
       <input type="text" id="userInput" placeholder="Ask Zep AI anything..." onkeypress="if(event.key==='Enter'){sendMessage()}" />
       <button class="send-btn" onclick="sendMessage()">Send</button>
@@ -198,21 +203,38 @@ footer{
   </div>
 </main>
 
+<!-- ===== FOOTER (STUDENT VERSION) ===== -->
 <footer>
-  <a href="merchants-dashboard.html" class="footer-icon" title="Home">
+  <!-- HOME -->
+  <a href="student-dashboard.html" class="footer-icon" title="Home">
     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.8">
-      <path d="M3 9.5l9-7 9 7v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-10z"/>
-      <polyline points="9 22 9 12 15 12 15 22"/>
+      <rect x="3" y="7" width="18" height="13" rx="2"/>
+      <path d="M3 11h18"/>
     </svg>
   </a>
+
+  <!-- WALLET -->
   <a href="wallet.html" class="footer-icon" title="Wallet">
-    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.8"><rect x="3" y="6" width="18" height="12" rx="2"/><path d="M16 12h4"/></svg>
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.8">
+      <rect x="3" y="6" width="18" height="12" rx="2"/>
+      <path d="M16 12h4"/>
+    </svg>
   </a>
-  <a href="zepshop.html" class="footer-icon" title="Store">
-    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.8"><path d="M3 6h18l-2 12H5z"/></svg>
+
+  <!-- REWARD (replaces store) -->
+  <a href="learn-earn.html" class="footer-icon" title="Reward">
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.8">
+      <circle cx="12" cy="12" r="7"/>
+      <path d="M12 8v8M8 12h8"/>
+    </svg>
   </a>
+
+  <!-- PROFILE -->
   <a href="profile.html" class="footer-icon" title="Profile">
-    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.8"><circle cx="12" cy="7" r="4"/><path d="M4 20c0-4 4-6 8-6s8 2 8 6"/></svg>
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.8">
+      <circle cx="12" cy="7" r="4"/>
+      <path d="M4 20c0-4 4-6 8-6s8 2 8 6"/>
+    </svg>
   </a>
 </footer>
 
@@ -225,7 +247,7 @@ window.addEventListener('load', () => {
   else {
     const welcome = document.createElement('div');
     welcome.className = 'msg ai';
-    welcome.innerHTML = "👋 Hey there! I'm <strong>Zep AI</strong> — your on-chain business assistant. Ask about sales, insights, or market trends anytime.";
+    welcome.innerHTML = "👋 Hey student! I'm <strong>Zep AI</strong> — your study, wallet and earning assistant. Ask me anything!";
     chatArea.appendChild(welcome);
   }
   chatArea.scrollTop = chatArea.scrollHeight;
@@ -238,19 +260,24 @@ function sendMessage(){
   const input=document.getElementById('userInput');
   const text=input.value.trim();
   if(!text)return;
+
   const chat=document.getElementById('chatArea');
+
   const userMsg=document.createElement('div');
   userMsg.className='msg user';
   userMsg.textContent=text;
   chat.appendChild(userMsg);
+
   input.value='';
   chat.scrollTop=chat.scrollHeight;
   saveChat();
+
   const aiMsg=document.createElement('div');
   aiMsg.className='msg ai';
   aiMsg.textContent='Zep AI is typing...';
   chat.appendChild(aiMsg);
   chat.scrollTop=chat.scrollHeight;
+
   setTimeout(()=>{
     typeEffect(aiMsg,generateAIResponse(text));
     saveChat();
@@ -272,21 +299,25 @@ function typeEffect(element,text){
   type();
 }
 
-// === AI Logic ===
+// === AI Responses ===
 function generateAIResponse(q){
   const lower=q.toLowerCase();
-  if(lower.includes('sales'))
-    return "📈 Your weekly sales are up 14%. Top item: *Wireless Earbuds Z1*. Offer bundle deals for higher conversion!";
-  if(lower.includes('trend'))
-    return "🔥 Market Trend: Students are buying eBooks + course bundles. Try listing digital combos!";
-  if(lower.includes('withdraw')||lower.includes('payout'))
-    return "💸 To withdraw, go to Wallet → Withdraw → Bank Account. All global merchants supported.";
-  if(lower.includes('hello')||lower.includes('hi'))
-    return "👋 Hey! I'm Zep AI — your always-on merchant analyst. What would you like to explore today?";
-  if(lower.includes('performance'))
-    return "📊 Conversion rate: 4.6%. Tip: Update your product cover images for +10% engagement.";
-  return "🤖 I'm learning fast! Ask me about trends, sales analytics, or payout insights.";
+
+  if(lower.includes("zac"))
+    return "💰 ZAC powers the student economy — payments, rewards, marketplace earnings & more.";
+
+  if(lower.includes("earn"))
+    return "🎓 Earn ZAC by completing Learn & Earn quizzes, selling digital products, or doing campus micro-tasks.";
+
+  if(lower.includes("wallet"))
+    return "💼 Your Zep Wallet supports ZAC + USDT on Base. You can send, receive, and track rewards easily.";
+
+  if(lower.includes("hello")||lower.includes("hi"))
+    return "👋 Hey! I'm Zep AI — your on-chain learning & earning assistant. What would you like help with?";
+
+  return "🤖 I'm here for anything — ZAC, wallet, rewards, Learn & Earn, campus digital economy, and more!";
 }
 </script>
+
 </body>
 </html>
