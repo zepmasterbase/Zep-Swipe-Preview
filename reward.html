@@ -26,13 +26,7 @@
       flex-direction:column;
     }
 
-    .wrap{
-      max-width:980px;
-      margin:28px auto;
-      padding:18px;
-      width:100%;
-      flex:1 0 auto;
-    }
+    .wrap{max-width:980px;margin:28px auto;padding:18px;width:100%;flex:1 0 auto;}
 
     .header{
       display:flex;justify-content:space-between;align-items:center;
@@ -149,13 +143,13 @@
 
     <div class="card" style="margin-top:12px">
       <div class="title">Zep Swipe — Learn & Earn</div>
-      <div class="desc">Answer a short 10-question quiz. Score <strong>8/10</strong> or higher to unlock <strong>Level 5</strong> and claim a simulated ZAC reward added to your local wallet record. Progress is saved locally.</div>
+      <div class="desc">Answer the short quiz. Score <strong>3/10</strong> or higher to unlock <strong>Level 4</strong> and claim a simulated <strong>25 ZAC</strong> reward. Progress is saved to your browser.</div>
 
       <div class="quiz-area">
         <div class="progress"><i id="progBar"></i></div>
 
         <div class="question-box" id="questionBox">
-          <!-- question injected here -->
+          <!-- Question content injected here -->
         </div>
 
         <div class="meta-row">
@@ -183,7 +177,6 @@
   <!-- footer -->
   <div class="footer">
     <a class="fbtn" href="student-dashboard.html" title="Home" aria-label="Home">
-      <!-- home/store icon -->
       <svg width="30" height="30" viewBox="0 0 24 24" fill="none">
         <rect x="3" y="7" width="18" height="13" rx="2" stroke="url(#gH)" stroke-width="1.2"/>
         <path d="M3 11h18" stroke="url(#gH)" stroke-width="1.2"/>
@@ -192,7 +185,6 @@
     </a>
 
     <a class="fbtn" href="send.html" title="Send" aria-label="Send">
-      <!-- send icon -->
       <svg width="28" height="28" viewBox="0 0 24 24" fill="none">
         <path d="M22 2L11 13" stroke="url(#gS)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
         <path d="M22 2l-7 20" stroke="url(#gS)" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
@@ -201,7 +193,6 @@
     </a>
 
     <a class="fbtn" href="profile.html" title="Profile" aria-label="Profile">
-      <!-- profile icon -->
       <svg width="28" height="28" viewBox="0 0 24 24" fill="none">
         <circle cx="12" cy="8" r="3" stroke="url(#gP)" stroke-width="1.4"/>
         <path d="M4 20c1.5-4 7-6 8-6s6.5 2 8 6" stroke="url(#gP)" stroke-width="1.4"/>
@@ -211,7 +202,7 @@
   </div>
 
 <script>
-  // ====== Quiz data ======
+  // ====== Quiz data (same 10 Qs) ======
   const QUESTIONS = [
     { q: "What is the biggest advantage of selling BOTH on-chain and off-chain with Zep Swipe?", choices: ["You pay higher fees","You earn from two customer groups at the same time","You can only sell physical goods","ZAC becomes fiat"], answer: 1 },
     { q: "What makes $ZAC a suitable student currency for micro-payments?", choices: ["It fluctuates like Bitcoin","It is designed for African student spending + fast cross-border transfers","It can only be used by vendors","It requires mining"], answer: 1 },
@@ -225,14 +216,16 @@
     { q: "Why is Zep Swipe considered a “Student Super App”?", choices: ["It allows students to play games","It combines wallet + marketplace + rewards + vendor payments in one place","It is only used for sending crypto","It competes with universities"], answer: 1 }
   ];
 
+  // ====== Settings: pass threshold 3 => unlock Level 4; reward 25 ZAC
+  const PASS_THRESHOLD = 3;
+  const REWARD_ZAC = 25;
+
   // ====== State ======
   let curIndex = 0;
   let selected = Array(QUESTIONS.length).fill(null);
   let score = 0;
-  const PASS_THRESHOLD = 8;
-  const REWARD_ZAC = 50;
 
-  // Elements
+  // UI refs
   const qBox = document.getElementById('questionBox');
   const progBar = document.getElementById('progBar');
   const qCounter = document.getElementById('qCounter');
@@ -247,14 +240,13 @@
   const statBadge = document.getElementById('statBadge');
   const statClaim = document.getElementById('statClaim');
 
-  // Load session & progress
-  function getStudentSession(){ try{ return JSON.parse(localStorage.getItem('zepStudent')) || null; }catch(e){return null;} }
+  // session helpers
+  function getStudentSession(){ try{ return JSON.parse(localStorage.getItem('zepStudent')) || null;}catch(e){return null;} }
   function saveLearnProgress(){ localStorage.setItem('zepLearn', JSON.stringify({ selected, score, curIndex, timestamp:Date.now() })); }
   function loadLearnProgress(){ try{ const obj = JSON.parse(localStorage.getItem('zepLearn')); if(obj){ selected = obj.selected || selected; score = obj.score || 0; curIndex = obj.curIndex || 0; } }catch(e){} }
-
   function shortAddr(a){ return a ? `${a.slice(0,6)}...${a.slice(-4)}` : '—'; }
 
-  // Render question
+  // render
   function renderQuestion(){
     const q = QUESTIONS[curIndex];
     qBox.innerHTML = '';
@@ -316,7 +308,7 @@
     resultArea.innerHTML = '';
     const r = document.createElement('div'); r.className = 'result';
     r.innerHTML = `<div style="font-weight:800;font-family:Orbitron;font-size:18px">${s} / ${QUESTIONS.length}</div>
-                   <div style="margin-top:8px">${s >= PASS_THRESHOLD ? '🎉 Level 5 UNLOCKED' : 'Keep Practising — Reach 8/10 to unlock Level 5'}</div>`;
+                   <div style="margin-top:8px">${s >= PASS_THRESHOLD ? '🎉 Level 4 UNLOCKED' : 'Keep Practising — Reach 3/10 to unlock Level 4'}</div>`;
     resultArea.appendChild(r);
 
     if(s >= PASS_THRESHOLD){
@@ -327,7 +319,7 @@
       claimBtn.onclick = claimReward;
       resultArea.appendChild(claimBtn);
 
-      const badge = document.createElement('div'); badge.className='badge'; badge.textContent='Level 5 Badge';
+      const badge = document.createElement('div'); badge.className='badge'; badge.textContent='Level 4 Badge';
       resultArea.appendChild(badge);
     } else {
       const tip = document.createElement('div'); tip.style.marginTop='12px'; tip.className='small-muted';
@@ -335,7 +327,7 @@
       resultArea.appendChild(tip);
     }
 
-    // detailed feedback
+    // feedback per question
     const details = document.createElement('div'); details.style.marginTop='14px';
     QUESTIONS.forEach((Q, idx)=>{
       const row = document.createElement('div'); row.style.marginTop='8px';
@@ -351,47 +343,43 @@
     });
     resultArea.appendChild(details);
 
-    // show analytics panel
+    // analytics
     analyticsArea.style.display = 'flex';
     statScore.textContent = `Score: ${s}/${QUESTIONS.length}`;
     const learnData = JSON.parse(localStorage.getItem('zepLearn')) || {};
-    statBadge.textContent = `Badges: ${learnData.level5 ? 'Level 5' : '—'}`;
+    statBadge.textContent = `Badges: ${learnData.level4 ? 'Level 4' : '—'}`;
     statClaim.textContent = `Reward Claimed: ${learnData.rewardClaimed ? learnData.rewardAmount + ' ZAC' : 'No'}`;
   }
 
   function claimReward(){
     const session = getStudentSession();
-    if(!session || !session.wallet){ alert('No session found. Please login.'); return; }
-
-    // Prevent duplicate claims
+    if(!session || !session.wallet){ alert('No student session found. Please login first.'); return; }
     const existing = JSON.parse(localStorage.getItem('zepLearn')) || {};
-    if(existing.rewardClaimed){
-      alert('Reward already claimed.');
-      return;
-    }
+    if(existing.rewardClaimed){ alert('Reward already claimed.'); return; }
 
-    // Update zepStudent stored wallet balance (simulated)
+    // update zepStudent (simulated)
     const cur = JSON.parse(localStorage.getItem('zepStudent')) || {};
     const prev = Number(cur.zacAmount ?? 0);
     cur.zacAmount = prev + REWARD_ZAC;
-    cur.levels = cur.levels || {}; cur.levels.level5 = true;
+    cur.levels = cur.levels || {}; cur.levels.level4 = true;
     localStorage.setItem('zepStudent', JSON.stringify(cur));
 
-    // Mark learn progress
+    // store learn progress
     existing.rewardClaimed = true;
     existing.rewardAmount = REWARD_ZAC;
+    existing.level4 = true;
     existing.passedAt = Date.now();
     localStorage.setItem('zepLearn', JSON.stringify(existing));
 
-    // UI update
-    statBadge.textContent = `Badges: Level 5`;
+    // UI updates
+    statBadge.textContent = `Badges: Level 4`;
     statClaim.textContent = `Reward Claimed: ${REWARD_ZAC} ZAC`;
     const success = document.createElement('div'); success.className='badge'; success.style.marginTop='12px';
-    success.textContent = `+${REWARD_ZAC} ZAC added (simulated) — Level 5 unlocked`;
+    success.textContent = `+${REWARD_ZAC} ZAC added (simulated) — Level 4 unlocked`;
     resultArea.appendChild(success);
   }
 
-  // Initialize page
+  // init
   function init(){
     const s = getStudentSession();
     if(!s || !s.loggedIn || !s.wallet){
@@ -399,15 +387,11 @@
       return;
     }
     walletShort.textContent = shortAddr(s.wallet);
-
-    // show current ZAC in header analytics (if present)
-    const currentZac = Number(s.zacAmount ?? 0);
-    // persist zepLearn if missing
     loadLearnProgress();
     renderQuestion();
   }
 
-  // Wire controls
+  // controls
   prevBtn.addEventListener('click', ()=>goPrev());
   nextBtn.addEventListener('click', ()=>goNext());
   submitBtn.addEventListener('click', ()=>{
@@ -418,12 +402,11 @@
     showResult();
   });
 
-  // Logout with fade out
+  // logout fade + redirect to index
   document.getElementById('logoutBtn').addEventListener('click', ()=>{
     document.body.classList.add('fade-out');
     setTimeout(()=>{
       localStorage.removeItem('zepStudent');
-      // keep learn progress but remove session
       location.href = 'index.html';
     }, 550);
   });
