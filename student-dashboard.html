@@ -319,10 +319,10 @@ body{
 /* SHORT ADDRESS */
 function shortAddr(a){return a?`${a.slice(0,6)}...${a.slice(-4)}`:'—';}
 
-/* LOGOUT */
+/* LOGOUT — UPDATED HERE ONLY */
 document.getElementById("logoutBtn").onclick = ()=>{
   localStorage.removeItem("zepStudent");
-  location.href="student-login.html";
+  location.href="index.html";   // ✅ UPDATED FROM student-login.html TO index.html
 };
 
 /* Base USDT contract */
